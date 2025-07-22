@@ -294,12 +294,9 @@ const Page = () => {
           <img
             src="/coordinated.webp"
             alt="Experience Background"
-           
+            // className="w- h-full object-cover object-center"
             width="100%"
             height="auto"
-           
-           
-   
             style={{
               objectFit: 'cover',
               objectPosition: 'center top',
@@ -544,41 +541,41 @@ const Page = () => {
                   <div className="w-2 h-2 border border-black mr-1 mt-0.5 flex-shrink-0 flex items-center justify-center">
                     <span style={{ fontSize: '6px', lineHeight: '1' }}>✓</span>
                   </div>
-                  <span style={{ fontSize: '8px' }}>Chapter study</span>
+                  <span style={{ fontSize: '8px', textDecoration: 'line-through', filter: 'blur(1px)' }}>Chapter study</span>
                 </div>
                 <div className="flex items-start">
                   <div className="w-2 h-2 border border-black mr-1 mt-0.5 flex-shrink-0"></div>
-                  <span style={{ fontSize: '8px' }}>Meditation</span>
+                  <span style={{ fontSize: '8px', filter: 'blur(1px)' }}>Meditation</span>
                 </div>
                 <div className="flex items-start">
                   <div className="w-2 h-2 border border-black mr-1 mt-0.5 flex-shrink-0 flex items-center justify-center">
                     <span style={{ fontSize: '6px', lineHeight: '1' }}>✓</span>
                   </div>
-                  <span style={{ fontSize: '8px' }}>Water plants</span>
+                  <span style={{ fontSize: '8px', textDecoration: 'line-through', filter: 'blur(1px)' }}>Water plants</span>
                 </div>
                 <div className="flex items-start">
                   <div className="w-2 h-2 border border-black mr-1 mt-0.5 flex-shrink-0"></div>
-                  <span style={{ fontSize: '8px' }}>Draw up a guide</span>
+                  <span style={{ fontSize: '8px', filter: 'blur(1px)' }}>Draw up a guide</span>
                 </div>
                 <div className="flex items-start">
                   <div className="w-2 h-2 border border-black mr-1 mt-0.5 flex-shrink-0 flex items-center justify-center">
                     <span style={{ fontSize: '6px', lineHeight: '1' }}>✓</span>
                   </div>
-                  <span style={{ fontSize: '8px' }}>One on one call</span>
+                  <span style={{ fontSize: '8px', textDecoration: 'line-through', filter: 'blur(1px)' }}>One on one call</span>
                 </div>
                 <div className="flex items-start">
                   <div className="w-2 h-2 border border-black mr-1 mt-0.5 flex-shrink-0"></div>
-                  <span style={{ fontSize: '8px' }}>Post edits</span>
+                  <span style={{ fontSize: '8px', filter: 'blur(1px)' }}>Post edits</span>
                 </div>
                 <div className="flex items-start">
                   <div className="w-2 h-2 border border-black mr-1 mt-0.5 flex-shrink-0"></div>
-                  <span style={{ fontSize: '8px' }}>Check and respond to emails</span>
+                  <span style={{ fontSize: '8px', filter: 'blur(1px)' }}>Check and respond to emails</span>
                 </div>
                 <div className="flex items-start">
                   <div className="w-2 h-2 border border-black mr-1 mt-0.5 flex-shrink-0 flex items-center justify-center">
                     <span style={{ fontSize: '6px', lineHeight: '1' }}>✓</span>
                   </div>
-                  <span style={{ fontSize: '8px' }}>Update playlist</span>
+                  <span style={{ fontSize: '8px', textDecoration: 'line-through', filter: 'blur(1px)' }}>Update playlist</span>
                 </div>
               </div>
             </div>
@@ -666,6 +663,60 @@ const Page = () => {
                 width={16}
                 height={16}
                 className="w-4 h-4"
+              />
+            </div>
+          </div>
+
+          {/* Cloud Card Clip Path (for future image) */}
+          <div
+            className="absolute"
+            style={{
+              left: '66vw', // nudged slightly to the left
+              top: '31vh',  // nudged slightly more up
+              width: '8.5vw', // increased width slightly
+              height: '5.5vw', // increased height slightly
+              zIndex: 2,
+            }}
+          >
+            <div
+              className="w-full h-full"
+              style={{
+                background: '#fff', // fully opaque background
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                position: 'relative',
+                overflow: 'hidden',
+              }}
+              onClick={() => {
+                // Placeholder for future interaction
+                console.log('Cloud card clip path clicked!');
+              }}
+            >
+              {/* Image placed here */}
+              <img
+                src="/scene1.jpg"
+                alt="Scene 1"
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover',
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                }}
+              />
+              {/* Black overlay at 50% opacity */}
+              <div
+                style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  width: '100%',
+                  height: '100%',
+                  background: 'rgba(0,0,0,0.5)',
+                  pointerEvents: 'none',
+                }}
               />
             </div>
           </div>
