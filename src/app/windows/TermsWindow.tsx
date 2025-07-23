@@ -2,6 +2,7 @@
 import React, { useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { gsap } from 'gsap';
+import { processTextContent } from '@/lib/textProcessing';
 
 interface TermsWindowProps {
   onClose: () => void;
@@ -54,110 +55,110 @@ const TermsWindow = ({ onClose }: TermsWindowProps) => {
                 <section>
                   <h2 className="text-xl font-semibold text-[#5C3262] mb-3">Welcome to The Coordinated Living!</h2>
                   <p className="mb-4">
-                    These terms and conditions outline the rules and regulations for the use of the Website, located at https://thecoordinatedliving.com/.
+                    {processTextContent("These terms and conditions outline the rules and regulations for the use of the Website, located at https://thecoordinatedliving.com/.")}
                   </p>
                   <p className="mb-4">
-                    The Terms and Conditions on this webpage, as may without notice, be amended from time to time, shall apply to all our services directly or indirectly (through our authorized agents and sub-agents) made available online, any mobile device, by email or by telephone, as well as any other electronic media.
+                    {processTextContent("The Terms and Conditions on this webpage, as may without notice, be amended from time to time, shall apply to all our services directly or indirectly (through our authorized agents and sub-agents) made available online, any mobile device, by email or by telephone, as well as any other electronic media.")}
                   </p>
                   <p className="mb-4">
-                    By accessing, browsing and using our website or any of our platform (hereafter collectively referred to as the "website") and/or by completing a booking, you recognize and agree to have read, understood and agreed to the terms and conditions, including the privacy statement as set out below. You must NOT use this website if you disagree with any of the Terms and Conditions as stated below.
+                    {processTextContent('By accessing, browsing and using our website or any of our platform (hereafter collectively referred to as the "website") and/or by completing a booking, you recognize and agree to have read, understood and agreed to the terms and conditions, including the privacy statement as set out below. You must NOT use this website if you disagree with any of the Terms and Conditions as stated below.')}
                   </p>
                   <p className="mb-4">
-                    The pages, content and set-up of these pages, and the services provided on these pages and through the website are owned, operated and provide by THE COORDINATE LIVING (hereinafter referred to as IKOORDINATE) and are provided for your personal, non-commercial use only, subject to the terms and conditions set out below.
+                    {processTextContent("The pages, content and set-up of these pages, and the services provided on these pages and through the website are owned, operated and provide by THE COORDINATE LIVING (hereinafter referred to as IKOORDINATE) and are provided for your personal, non-commercial use only, subject to the terms and conditions set out below.")}
                   </p>
                   <p className="mb-4">
-                    The following terminology applies to these Terms and Conditions, Privacy Statement and Disclaimer Notice and all Agreements: "Client", "You" and "Your" refers to you, the person log on this website and compliant to the Company's terms and conditions. "The Company", "Ourselves", "We", "Our" and "Us", refers to our Company. "Party", "Parties", or "Us", refers to both the Client and ourselves. All terms refer to the offer, acceptance and consideration of payment necessary to undertake the process of our assistance to the Client in the most appropriate manner for the express purpose of meeting the Client's needs in respect of provision of the Company's stated services, in accordance with and subject to, prevailing law of Ghana. Any use of the above terminology or other words in the singular, plural, capitalization and/or he/she or they, are taken as interchangeable and therefore as referring to same.
+                    {processTextContent('The following terminology applies to these Terms and Conditions, Privacy Statement and Disclaimer Notice and all Agreements: "Client", "You" and "Your" refers to you, the person log on this website and compliant to the Company\'s terms and conditions. "The Company", "Ourselves", "We", "Our" and "Us", refers to our Company. "Party", "Parties", or "Us", refers to both the Client and ourselves. All terms refer to the offer, acceptance and consideration of payment necessary to undertake the process of our assistance to the Client in the most appropriate manner for the express purpose of meeting the Client\'s needs in respect of provision of the Company\'s stated services, in accordance with and subject to, prevailing law of Ghana. Any use of the above terminology or other words in the singular, plural, capitalization and/or he/she or they, are taken as interchangeable and therefore as referring to same.')}
                   </p>
                   <p className="mb-4">
-                    IKOORDINATE reserves the right to modify all information, including Terms and Conditions, as well as all other features at any time without giving you prior notice. Your use of this website following any modifications constitutes your agreement to follow and be bound by the Terms and Conditions as modified.
+                    {processTextContent("IKOORDINATE reserves the right to modify all information, including Terms and Conditions, as well as all other features at any time without giving you prior notice. Your use of this website following any modifications constitutes your agreement to follow and be bound by the Terms and Conditions as modified.")}
                   </p>
                 </section>
 
                 <section>
                   <h2 className="text-xl font-semibold text-[#5C3262] mb-3">Table of Contents</h2>
                   <ol className="list-decimal pl-6 mb-4 space-y-1">
-                    <li>1. Definitions</li>
-                    <li>2. Scope of Service</li>
-                    <li>3. Privacy Policy</li>
-                    <li>4. Children's Privacy</li>
-                    <li>5. Cookies</li>
-                    <li>6. License</li>
-                    <li>7. Hyperlinking to our Content</li>
-                    <li>8. Content Liability</li>
-                    <li>9. Reservation of Rights</li>
-                    <li>10. Prices</li>
-                    <li>11. Payment</li>
-                    <li>12. Correspondence and Communication</li>
-                    <li>13. Disclaimer</li>
-                    <li>14. Intellectual property rights</li>
-                    <li>15. Dispute Resolution</li>
-                    <li>16. Removal of links</li>
+                    <li> Definitions</li>
+                    <li> Scope of Service</li>
+                    <li> Privacy Policy</li>
+                    <li> Children's Privacy</li>
+                    <li> Cookies</li>
+                    <li> License</li>
+                    <li> Hyperlinking to our Content</li>
+                    <li> Content Liability</li>
+                    <li> Reservation of Rights</li>
+                    <li> Prices</li>
+                    <li> Payment</li>
+                    <li> Correspondence and Communication</li>
+                    <li> Disclaimer</li>
+                    <li> Intellectual property rights</li>
+                    <li> Dispute Resolution</li>
+                    <li> Removal of links</li>
                   </ol>
                 </section>
 
                 <section>
                   <h2 className="text-xl font-semibold text-[#5C3262] mb-3">1. 1. DEFINITIONS</h2>
                   <p className="mb-4">
-                    "IKOORDINATE", "we", "us", "our", "the company" means THE COORDINATE LIVING.
+                    {processTextContent('"IKOORDINATE", "we", "us", "our", "the company" means THE COORDINATE LIVING.')}
                   </p>
                   <p className="mb-4">
-                    "IKOORDINATE", is the trade name for THE COORDINATE LIVING, a Sole Proprietorship registered under the laws of Ghana, and having its registered address at Number 26 Ntreh Street, Adenta- Greater Accra Region.
+                    {processTextContent('"IKOORDINATE", is the trade name for THE COORDINATE LIVING, a Sole Proprietorship registered under the laws of Ghana, and having its registered address at Number 26 Ntreh Street, Adenta- Greater Accra Region.')}
                   </p>
                   <p className="mb-4">
-                    The words of which the initial letter is capitalized have meanings defined under the following conditions. The following definitions shall have the same meaning regardless of whether they appear in singular or in plural.
+                    {processTextContent("The words of which the initial letter is capitalized have meanings defined under the following conditions. The following definitions shall have the same meaning regardless of whether they appear in singular or in plural.")}
                   </p>
                   <p className="mb-4">For the purposes of this Privacy Policy:</p>
                   <p className="mb-4">
-                    "Account" means a unique account created for You to access our Service or parts of our Service.
+                    {processTextContent('"Account" means a unique account created for You to access our Service or parts of our Service.')}
                   </p>
                   <p className="mb-4">
-                    "Affiliate" means an entity that controls, is controlled by or is under common control with a party, where "control" means ownership of 50% or more of the shares, equity interest or other securities entitled to vote for election of directors or other managing authority.
+                    {processTextContent('"Affiliate" means an entity that controls, is controlled by or is under common control with a party, where "control" means ownership of 50% or more of the shares, equity interest or other securities entitled to vote for election of directors or other managing authority.')}
                   </p>
                   <p className="mb-4">
-                    "Company" (referred to as either "the Company", "We", "Us" or "Our" in this Agreement) refers to Ikoordinate, Accra, Ghana.
+                    {processTextContent('"Company" (referred to as either "the Company", "We", "Us" or "Our" in this Agreement) refers to Ikoordinate, Accra, Ghana.')}
                   </p>
                   <p className="mb-4">
-                    "Cookies" are small files that are placed on Your computer, mobile device or any other device by a website, containing the details of Your browsing history on that website among its many uses.
+                    {processTextContent('"Cookies" are small files that are placed on Your computer, mobile device or any other device by a website, containing the details of Your browsing history on that website among its many uses.')}
                   </p>
                   <p className="mb-4">
-                    "Country" refers to: Ghana
+                    {processTextContent('"Country" refers to: Ghana')}
                   </p>
                   <p className="mb-4">
-                    "Device" means any device that can access the Service such as a computer, a cellphone or a digital tablet.
+                    {processTextContent('"Device" means any device that can access the Service such as a computer, a cellphone or a digital tablet.')}
                   </p>
                   <p className="mb-4">
-                    "Personal Data" is any information that relates to an identified or identifiable individual.
+                    {processTextContent('"Personal Data" is any information that relates to an identified or identifiable individual.')}
                   </p>
                   <p className="mb-4">
-                    "Platform" means the (mobile) website and apps on which the Service is made available, owned, controlled, managed, maintained and/or hosted by IKOORDINATE
+                    {processTextContent('"Platform" means the (mobile) website and apps on which the Service is made available, owned, controlled, managed, maintained and/or hosted by IKOORDINATE')}
                   </p>
                   <p className="mb-4">
-                    "Service" means the online facility booking avenue (including the facilitation of payments) of various products and services made available by IKOORDINATE.
+                    {processTextContent('"Service" means the online facility booking avenue (including the facilitation of payments) of various products and services made available by IKOORDINATE.')}
                   </p>
                   <p className="mb-4">
-                    "Service Provider" means any natural or legal person who processes the data on behalf of the Company. It refers to third-party companies or individuals employed by the Company to facilitate the Service, to provide the Service on behalf of the Company, to perform services related to the Service or to assist the Company in analyzing how the Service is used.
+                    {processTextContent('"Service Provider" means any natural or legal person who processes the data on behalf of the Company. It refers to third-party companies or individuals employed by the Company to facilitate the Service, to provide the Service on behalf of the Company, to perform services related to the Service or to assist the Company in analyzing how the Service is used.')}
                   </p>
                   <p className="mb-4">
-                    "Usage Data" refers to data collected automatically, either generated by the use of the Service or from the Service infrastructure itself (for example, the duration of a page visit).
+                    {processTextContent('"Usage Data" refers to data collected automatically, either generated by the use of the Service or from the Service infrastructure itself (for example, the duration of a page visit).')}
                   </p>
                   <p className="mb-4">
-                    "Website" refers to The Coordinated Living, accessible from https://thecoordinatedliving.com/
+                    {processTextContent('"Website" refers to The Coordinated Living, accessible from https://thecoordinatedliving.com/')}
                   </p>
                   <p className="mb-4">
-                    "You" means the individual accessing or using the Service, or the company, or other legal entity on behalf of which such individual is accessing or using the Service, as applicable.
+                    {processTextContent('"You" means the individual accessing or using the Service, or the company, or other legal entity on behalf of which such individual is accessing or using the Service, as applicable.')}
                   </p>
                 </section>
 
                 <section>
                   <h2 className="text-xl font-semibold text-[#5C3262] mb-3">1. 2. SCOPE OF SERVICE</h2>
                   <p className="mb-4">
-                    IKOORDINATE and its agents and partners shall provide an online service through the Platform, on which visitors/individuals of the Platform and by subscribing to the website, you enter into a direct (legally binding) contractual relationship with IKOORDINATE.
+                    {processTextContent("IKOORDINATE and its agents and partners shall provide an online service through the Platform, on which visitors/individuals of the Platform and by subscribing to the website, you enter into a direct (legally binding) contractual relationship with IKOORDINATE.")}
                   </p>
                   <p className="mb-4">
-                    We would employ optimum use of reasonable skill and care in the provision of our service. We rely on information provided to us by other service providers in the provisions of our services. We therefore cannot guarantee that all information is accurate, complete or correct, nor can we be held liable for any such information, errors (whether patent or latent), any interruptions (whether due to any temporary and/or partial breakdown, repair, upgrade or maintenance of our Platform or otherwise).
+                    {processTextContent("We would employ optimum use of reasonable skill and care in the provision of our service. We rely on information provided to us by other service providers in the provisions of our services. We therefore cannot guarantee that all information is accurate, complete or correct, nor can we be held liable for any such information, errors (whether patent or latent), any interruptions (whether due to any temporary and/or partial breakdown, repair, upgrade or maintenance of our Platform or otherwise).")}
                   </p>
                   <p className="mb-4">
-                    Our service is made available for personal and non-commercial use only. Therefore, you are not allowed to re-sell, deep-link, use, copy, monitor, display, download or reproduce any content or information, software, bookings, tickets, products or services available on our Platform for any commercial or competitive activity or purpose without our prior knowledge.
+                    {processTextContent("Our service is made available for personal and non-commercial use only. Therefore, you are not allowed to re-sell, deep-link, use, copy, monitor, display, download or reproduce any content or information, software, bookings, tickets, products or services available on our Platform for any commercial or competitive activity or purpose without our prior knowledge.")}
                   </p>
                 </section>
 
@@ -289,7 +290,7 @@ const TermsWindow = ({ onClose }: TermsWindowProps) => {
                   <p className="mb-4">
                     You are advised to review this Privacy Policy periodically for any changes. Changes to this Privacy Policy are effective when they are posted on this page. If you have any questions about this Privacy Policy, you can contact us:
                   </p>
-                  <p className="mb-4">By email: letstalk@thecoordinatedliving.com</p>
+                  <p className="mb-4">By email: {processTextContent("letstalk@thecoordinatedliving.com")}</p>
                 </section>
 
                 <section>
@@ -423,7 +424,7 @@ const TermsWindow = ({ onClose }: TermsWindowProps) => {
                     These organizations may link to our home page so long as the link: (a) is not in any way deceptive; (b) does not falsely imply sponsorship, endorsement or approval of the linking party and its products or services; and (c) fits within the context of the linking party's site.
                   </p>
                   <p className="mb-4">
-                    If you are one of the organizations listed in paragraph 2 above and are interested in linking to our website, you must inform us by sending an e-mail to ikoordinate. Please include your name, your organization name, contact information as well as the URL of your site, a list of any URLs from which you intend to link to our website, and a list of the URLs on our site to which you would like to link. Wait 2-3 weeks for a response.
+                    {processTextContent("If you are one of the organizations listed in paragraph 2 above and are interested in linking to our website, you must inform us by sending an e-mail to ikoordinate. Please include your name, your organization name, contact information as well as the URL of your site, a list of any URLs from which you intend to link to our website, and a list of the URLs on our site to which you would like to link. Wait 2-3 weeks for a response.")}
                   </p>
                   <p className="mb-4">
                     Approved organizations may hyperlink to our website as follows:

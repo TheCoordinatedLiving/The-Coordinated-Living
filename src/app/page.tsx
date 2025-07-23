@@ -1076,28 +1076,45 @@ const Page = () => {
                 Return to Desk
               </button>
               
-              {/* Videos content - centered */}
+              {/* Videos content - split layout */}
               <div className="absolute inset-0 flex items-center justify-center p-16">
-                <div className="relative z-10 max-w-2xl text-center">
-                  {/* Title */}
-                  <h1 className="text-7xl font-serif text-white mb-8 leading-tight">
-                    Deep Dive &<br />Exclusive Teachings
-                  </h1>
+                <div className="relative z-10 flex items-center justify-between w-full max-w-6xl">
+                  {/* Left side - Content */}
+                  <div className="flex-1 max-w-2xl">
+                    {/* Title */}
+                    <h1 className="text-7xl font-serif text-white mb-8 leading-tight">
+                      Deep Dive<br />& Exclusive<br />Teachings
+                    </h1>
+                    
+                    {/* Description */}
+                    <p className="text-xl text-white mb-10 leading-relaxed opacity-90">
+                      Explore profound biblical insights and exclusive teachings that will deepen your understanding of God&apos;s Word. Join us for in-depth discussions, spiritual guidance, and transformative lessons that will enrich your faith journey and strengthen your relationship with Christ.
+                    </p>
+                    
+                    {/* Join Channel Button */}
+                    <div className="flex justify-start">
+                      <Image
+                        src="/join-channel-new.svg"
+                        alt="Join Channel"
+                        width={200}
+                        height={60}
+                        className="cursor-pointer hover:opacity-80 transition-opacity"
+                        onClick={() => console.log('Join Channel clicked!')}
+                      />
+                    </div>
+                  </div>
                   
-                  {/* Description */}
-                  <p className="text-xl text-white mb-12 leading-relaxed opacity-90">
-                    Explore profound biblical insights and exclusive teachings that will deepen your understanding of God&apos;s Word. Join us for in-depth discussions, spiritual guidance, and transformative lessons that will enrich your faith journey and strengthen your relationship with Christ.
-                  </p>
-                  
-                  {/* Join Channel Button */}
-                  <div className="flex justify-center">
+                  {/* Right side - Image */}
+                  <div className="flex-1 flex justify-end items-end">
                     <Image
-                      src="/join-channel-new.svg"
+                      src="/join-channel.png"
                       alt="Join Channel"
-                      width={200}
-                      height={60}
-                      className="cursor-pointer hover:opacity-80 transition-opacity"
-                      onClick={() => console.log('Join Channel clicked!')}
+                      width={4500}
+                      height={6750}
+                      className="object-contain"
+                      style={{
+                        transform: 'translateX(20%) translateY(15%)'
+                      }}
                     />
                   </div>
                 </div>

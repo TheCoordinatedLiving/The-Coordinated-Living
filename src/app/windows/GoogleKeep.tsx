@@ -98,7 +98,8 @@ const GoogleKeep = ({ onClose }: GoogleKeepProps) => {
             <div className="flex-1 bg-white">
                {activeTab === 'Posts' && <PostsContent />}
                {activeTab === 'Books' && <BooksContent />}
-               {activeTab !== 'Posts' && activeTab !== 'Books' && <div className="w-full h-full flex items-center justify-center"><p className="text-gray-500">Content for {activeTab}</p></div>}
+               {activeTab === 'Archive' && <div className="w-full h-full flex items-center justify-center"><p className="text-gray-500">NO ARCHIVED POSTS OR GUIDES</p></div>}
+               {activeTab === 'Bin' && <div className="w-full h-full flex items-center justify-center"><p className="text-gray-500">NO GUIDES OR POSTS DELETED</p></div>}
             </div>
           </div>
         </div>
@@ -119,13 +120,24 @@ const NavItem = ({ icon, label, isActive, onClick }: NavItemProps) => {
   return (
     <button 
       onClick={onClick}
-      className={`flex items-center w-[95%] pl-6 py-2 space-x-4 text-sm font-medium transition-colors ${
+      className={`flex items-center w-[95%] pl-6 py-2 space-x-4 text-sm font-medium transition-colors cursor-pointer rounded-r-full ${
         isActive 
-          ? 'bg-yellow-200/50 text-gray-900 rounded-r-full' 
-          : 'text-gray-700 hover:bg-gray-200/50 rounded-r-full'
+          ? 'text-white' 
+          : 'text-gray-700 hover:bg-gray-200/50'
       }`}
+      style={{
+        backgroundColor: isActive ? '#50A0D8' : 'transparent'
+      }}
     >
-      <Image src={icon} width={20} height={20} alt={label} />
+      <Image 
+        src={icon} 
+        width={20} 
+        height={20} 
+        alt={label} 
+        style={{
+          filter: isActive ? 'brightness(0) invert(1)' : 'none'
+        }}
+      />
       <span>{label}</span>
     </button>
   );
