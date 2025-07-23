@@ -7,6 +7,7 @@ import GlassTaskbar from './GlassTaskbar';
 import AskAQuestion from './AskAQuestion';
 import GoogleKeep from './GoogleKeep';
 import AboutMeWindow from './AboutMeWindow';
+import TermsWindow from './TermsWindow';
 
 
 const WindowsLockScreen = ({ onUnlock }: { onUnlock: () => void }) => {
@@ -67,6 +68,7 @@ const WindowsHomeScreen = () => {
   const [isKeepOpen, setIsKeepOpen] = useState(false);
   const [isAboutMeSelected, setIsAboutMeSelected] = useState(false);
   const [isAboutMeOpen, setIsAboutMeOpen] = useState(false);
+  const [isTermsOpen, setIsTermsOpen] = useState(false);
 
   const openQuestionWindow = () => setIsQuestionWindowOpen(true);
   const closeQuestionWindow = () => setIsQuestionWindowOpen(false);
@@ -158,12 +160,31 @@ const WindowsHomeScreen = () => {
                     Home
                 </p>
             </div>
+            
+            {/* Terms Icon */}
+            <div 
+                className="flex flex-col items-center space-y-2 w-24 text-center cursor-pointer p-2 rounded-md"
+                onClick={() => {
+                    setIsTermsOpen(true);
+                }}
+            >
+                <Image
+                    src="/terms.svg"
+                    width={60}
+                    height={60}
+                    alt="Terms"
+                />
+                <p className="text-white text-sm font-medium" style={{ textShadow: '1px 1px 3px rgba(0, 0, 0, 0.5)' }}>
+                    Terms
+                </p>
+            </div>
         </div>
 
         <GlassTaskbar onAskQuestionClick={openQuestionWindow} onResourcesClick={toggleKeep} />
         {isQuestionWindowOpen && <AskAQuestion onClose={closeQuestionWindow} />}
         {isKeepOpen && <GoogleKeep onClose={toggleKeep} />}
         {isAboutMeOpen && <AboutMeWindow onClose={handleCloseAboutMe} />}
+        {isTermsOpen && <TermsWindow onClose={() => setIsTermsOpen(false)} />}
     </div>
   );
 };

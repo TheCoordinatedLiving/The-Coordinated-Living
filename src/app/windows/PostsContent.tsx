@@ -62,7 +62,7 @@ const PostsContent = () => {
         {/* Header Section */}
         <div className="flex justify-between items-start mb-8">
           <div className="max-w-xl">
-            <h1 className="text-3xl font-bold text-gray-800 mb-2">POSTS</h1>
+            <h1 className="text-3xl font-bold text-gray-800 mb-2">Posts</h1>
             <p className="text-sm text-gray-500 leading-relaxed">
               Navigate the changing scenes of life with faith through our brief, insightful
               reflections and biblical insights. We aim to help you recognize God&apos;s abundant grace

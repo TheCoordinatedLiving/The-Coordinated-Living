@@ -12,23 +12,51 @@ const AskAQuestion = ({ onClose }: AskAQuestionProps) => {
   const [userEmail, setUserEmail] = useState('');
   const [subject, setSubject] = useState('');
   const [message, setMessage] = useState('');
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [isSending, setIsSending] = useState(false);
 
   const handleCardClick = (newSubject: string, newMessage: string) => {
     setSubject(newSubject);
     setMessage(newMessage);
   };
 
-  const handleSend = () => {
+  const handleSend = async () => {
     if (!userEmail || !subject || !message) {
       alert('Please fill in all fields');
       return;
     }
 
-    // Create mailto link with all the information
-    const mailtoLink = `mailto:thecoordinatedliving@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(`From: ${userEmail}\n\n${message}`)}`;
-    
-    // Open the default email client
-    window.open(mailtoLink);
+    setIsSending(true);
+
+    try {
+      // Send email via API
+      const response = await fetch('/api/send-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          userEmail,
+          subject,
+          message
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        // Show success modal
+        setShowSuccessModal(true);
+      } else {
+        throw new Error(data.error || 'Failed to send email');
+      }
+
+    } catch (error) {
+      console.error('Error sending email:', error);
+      alert('Failed to send email. Please try again.');
+    } finally {
+      setIsSending(false);
+    }
   };
 
   useEffect(() => {
@@ -138,6 +166,15 @@ const AskAQuestion = ({ onClose }: AskAQuestionProps) => {
                         <div className="border-b border-gray-300 py-2">
                             <input 
                                 type="email" 
+                                placeholder="To: ohenegyan159@gmail.com" 
+                                className="w-full text-sm text-black placeholder-gray-500 focus:outline-none bg-transparent"
+                                value="To: ohenegyan159@gmail.com"
+                                readOnly
+                            />
+                        </div>
+                        <div className="border-b border-gray-300 py-2">
+                            <input 
+                                type="email" 
                                 placeholder="Your email address" 
                                 className="w-full text-sm text-black placeholder-gray-500 focus:outline-none bg-transparent"
                                 value={userEmail}
@@ -166,9 +203,10 @@ const AskAQuestion = ({ onClose }: AskAQuestionProps) => {
                     <div className="px-4 py-3 bg-white rounded-b-lg">
                         <button 
                             onClick={handleSend}
-                            className="bg-[#5C3262] hover:bg-[#4A2A50] text-white font-bold py-2 px-5 rounded-full flex items-center text-sm transition-all duration-200 hover:scale-105 cursor-pointer"
+                            disabled={isSending}
+                            className={`bg-[#5C3262] hover:bg-[#4A2A50] text-white font-bold py-2 px-5 rounded-full flex items-center text-sm transition-all duration-200 hover:scale-105 cursor-pointer ${isSending ? 'opacity-50 cursor-not-allowed' : ''}`}
                         >
-                            Send
+                            {isSending ? 'Sending...' : 'Send'}
                             <span className="ml-2 border-l border-white/30 pl-2 text-xs">▼</span>
                         </button>
                     </div>
@@ -210,6 +248,35 @@ const AskAQuestion = ({ onClose }: AskAQuestionProps) => {
         </div>
 
       </div>
+
+      {/* Success Modal */}
+      {showSuccessModal && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-[60]">
+          <div className="bg-white rounded-lg p-8 max-w-md mx-4 text-center shadow-2xl">
+            <div className="mb-4">
+              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">Message Sent!</h3>
+              <p className="text-gray-600">Your email has been sent successfully to ohenegyan159@gmail.com</p>
+            </div>
+            <button
+              onClick={() => {
+                setShowSuccessModal(false);
+                // Clear form
+                setUserEmail('');
+                setSubject('');
+                setMessage('');
+              }}
+              className="bg-[#5C3262] hover:bg-[#4A2A50] text-white font-bold py-2 px-6 rounded-full transition-all duration-200 hover:scale-105"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

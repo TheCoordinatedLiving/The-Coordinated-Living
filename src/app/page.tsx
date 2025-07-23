@@ -721,6 +721,194 @@ const Page = () => {
             </div>
           </div>
 
+          {/* White Notice/Paper Clip Path (far right, beneath images) */}
+          <div
+            className="absolute"
+            style={{
+              left: '71vw', // moved slightly to the right
+              top: '42vh',  // moved down a bit more
+              width: '6vw',
+              height: '10vh', // increased height a bit
+              zIndex: 2,
+            }}
+          >
+            <div
+              className="w-full h-full"
+              style={{
+                background: '#fff', // white background to match the paper
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                position: 'relative',
+                overflow: 'hidden',
+                padding: '8px',
+                textAlign: 'center',
+              }}
+              onClick={() => {
+                // Placeholder for future interaction
+                console.log('White notice clip path clicked!');
+              }}
+            >
+              {/* Bible Verse Content */}
+              <div style={{ fontSize: '12px', fontWeight: '900', marginBottom: '4px', color: '#000' }}>
+                John 16:33
+              </div>
+              <div style={{ fontSize: '8px', lineHeight: '1.2', color: '#333', fontStyle: 'italic' }}>
+                "In the world you will have tribulation. But take heart; I have overcome the world."
+              </div>
+              
+              {/* Black overlay at 50% opacity */}
+              <div
+                style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  width: '100%',
+                  height: '100%',
+                  background: 'rgba(0,0,0,0.5)',
+                  pointerEvents: 'none',
+                }}
+              />
+            </div>
+          </div>
+
+          {/* Small White Notice Clip Path (middle section, right of landscape photo) */}
+          <div
+            className="absolute"
+            style={{
+              left: '46vw', // moved even more to the left
+              top: '40vh',  // moved down even more
+              width: '6.5vw', // increased width slightly
+              height: '10vh', // increased height
+              zIndex: 2,
+            }}
+          >
+            <div
+              className="w-full h-full"
+              style={{
+                background: '#fff', // white background to match the paper
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                position: 'relative',
+                overflow: 'hidden',
+                padding: '6px',
+                textAlign: 'center',
+              }}
+              onClick={() => {
+                // Placeholder for future interaction
+                console.log('Small white notice clip path clicked!');
+              }}
+            >
+              {/* Bible Verse Content */}
+              <div style={{ fontSize: '9px', fontWeight: '900', marginBottom: '3px', color: '#000' }}>
+                Romans 8:28
+              </div>
+              <div style={{ fontSize: '7px', lineHeight: '1.2', color: '#333', fontStyle: 'italic' }}>
+                "And we know that for those who love God all things work together for good, for those who are called according to His purpose."
+              </div>
+              
+              {/* Black overlay at 60% opacity */}
+              <div
+                style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  width: '100%',
+                  height: '100%',
+                  background: 'rgba(0,0,0,0.6)',
+                  pointerEvents: 'none',
+                }}
+              />
+            </div>
+          </div>
+
+          {/* Green Card Clip Path (beneath envelope) */}
+          <div
+            className="absolute"
+            style={{
+              left: '32.5vw', // moved slightly to the left
+              top: '43vh',  // moved up a bit
+              width: '6vw', // increased width a bit
+              height: '7vh', // increased height a bit
+              zIndex: 2,
+            }}
+          >
+            <div
+              className="w-full h-full"
+              style={{
+                background: '#fff', // white background
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                position: 'relative',
+                overflow: 'hidden',
+              }}
+              onClick={() => {
+                // Placeholder for future interaction
+                console.log('Green card clip path clicked!');
+              }}
+            >
+              {/* Image placed here */}
+              <img
+                src="/landscape.jpg"
+                alt="Landscape"
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover',
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                }}
+              />
+              {/* Black overlay at 50% opacity */}
+              <div
+                style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  width: '100%',
+                  height: '100%',
+                  background: 'rgba(0,0,0,0.5)',
+                  pointerEvents: 'none',
+                }}
+              />
+            </div>
+          </div>
+
+          {/* White Notice Clip Path (beneath to-do list) */}
+          <div
+            className="absolute"
+            style={{
+              left: '55vw', // moved slightly to the right
+              top: '34vh',  // moved up a little more
+              width: '8vw', // increased width
+              height: '18vh', // increased height a little bit more
+              zIndex: 2,
+            }}
+          >
+            <div
+              className="w-full h-full"
+              style={{
+                background: '#fff', // white background to match the paper
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                position: 'relative',
+                overflow: 'hidden',
+              }}
+              onClick={() => {
+                // Placeholder for future interaction
+                console.log('White notice beneath to-do list clip path clicked!');
+              }}
+            >
+              {/* Content will be placed here later */}
+            </div>
+          </div>
+
           <style jsx>{`
               .letter-glow {
                 /* Removed glow effect to make clip path invisible */

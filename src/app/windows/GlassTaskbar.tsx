@@ -2,6 +2,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { format } from 'date-fns';
+import { gsap } from 'gsap';
 
 
 interface GlassTaskbarProps {
