@@ -32,12 +32,12 @@ The `EMAIL_PASS` should be an **App Password**, not your regular Gmail password:
 1. Start your development server: `npm run dev`
 2. Navigate to the "Ask Me A Question" window
 3. Fill in the form and click "Send"
-4. Check your email at `ohenegyan159@gmail.com`
+4. Check your email at `letstalk@thecoordinatedliving.com`
 
 ## 📧 How It Works
 
 - **From**: Users fill out the form in the Gmail interface
-- **To**: All emails are sent to `ohenegyan159@gmail.com`
+- **To**: All emails are sent to `letstalk@thecoordinatedliving.com`
 - **Subject**: Uses the subject line from the form
 - **Message**: Includes the user's email and message content
 - **Format**: Sends both plain text and HTML versions

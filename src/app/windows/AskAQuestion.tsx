@@ -14,15 +14,47 @@ const AskAQuestion = ({ onClose }: AskAQuestionProps) => {
   const [message, setMessage] = useState('');
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [isSending, setIsSending] = useState(false);
+  const [validationErrors, setValidationErrors] = useState<{
+    userEmail: boolean;
+    subject: boolean;
+    message: boolean;
+  }>({
+    userEmail: false,
+    subject: false,
+    message: false
+  });
+  const [showValidationErrors, setShowValidationErrors] = useState(false);
+  const [networkError, setNetworkError] = useState('');
 
   const handleCardClick = (newSubject: string, newMessage: string) => {
     setSubject(newSubject);
     setMessage(newMessage);
   };
 
+  const validateForm = () => {
+    const errors = {
+      userEmail: !userEmail.trim(),
+      subject: !subject.trim(),
+      message: !message.trim()
+    };
+    
+    setValidationErrors(errors);
+    setShowValidationErrors(true);
+    
+    return !errors.userEmail && !errors.subject && !errors.message;
+  };
+
+  const handleFieldChange = (field: 'userEmail' | 'subject' | 'message', value: string) => {
+    if (showValidationErrors) {
+      setValidationErrors(prev => ({
+        ...prev,
+        [field]: !value.trim()
+      }));
+    }
+  };
+
   const handleSend = async () => {
-    if (!userEmail || !subject || !message) {
-      alert('Please fill in all fields');
+    if (!validateForm()) {
       return;
     }
 
@@ -47,13 +79,14 @@ const AskAQuestion = ({ onClose }: AskAQuestionProps) => {
       if (response.ok) {
         // Show success modal
         setShowSuccessModal(true);
+        setNetworkError(''); // Clear any previous errors
       } else {
         throw new Error(data.error || 'Failed to send email');
       }
 
     } catch (error) {
       console.error('Error sending email:', error);
-      alert('Failed to send email. Please try again.');
+      setNetworkError('Failed to send email. Please check your connection and try again.');
     } finally {
       setIsSending(false);
     }
@@ -166,41 +199,86 @@ const AskAQuestion = ({ onClose }: AskAQuestionProps) => {
                         <div className="border-b border-gray-300 py-2">
                             <input 
                                 type="email" 
-                                placeholder="To: ohenegyan159@gmail.com" 
+                                placeholder="To: letstalk@thecoordinatedliving.com" 
                                 className="w-full text-sm text-black placeholder-gray-500 focus:outline-none bg-transparent"
-                                value="To: ohenegyan159@gmail.com"
+                                value="To: letstalk@thecoordinatedliving.com"
                                 readOnly
                             />
                         </div>
-                        <div className="border-b border-gray-300 py-2">
+                        <div className={`border-b py-2 ${validationErrors.userEmail && showValidationErrors ? 'border-red-500' : 'border-gray-300'}`}>
                             <input 
                                 type="email" 
                                 placeholder="Your email address" 
-                                className="w-full text-sm text-black placeholder-gray-500 focus:outline-none bg-transparent"
+                                className={`w-full text-sm text-black placeholder-gray-500 focus:outline-none bg-transparent ${validationErrors.userEmail && showValidationErrors ? 'text-red-600' : ''}`}
                                 value={userEmail}
-                                onChange={(e) => setUserEmail(e.target.value)}
+                                onChange={(e) => {
+                                  setUserEmail(e.target.value);
+                                  handleFieldChange('userEmail', e.target.value);
+                                }}
                             />
+                            {validationErrors.userEmail && showValidationErrors && (
+                              <div className="text-red-500 text-xs mt-1 flex items-center">
+                                <svg className="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                  <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                                </svg>
+                                Please enter your email address
+                              </div>
+                            )}
                         </div>
-                        <div className="border-b border-gray-300 py-2">
+                        <div className={`border-b py-2 ${validationErrors.subject && showValidationErrors ? 'border-red-500' : 'border-gray-300'}`}>
                             <input 
                                 type="text" 
                                 placeholder="Subject" 
-                                className="w-full text-sm text-black placeholder-gray-900 focus:outline-none bg-transparent"
+                                className={`w-full text-sm text-black placeholder-gray-900 focus:outline-none bg-transparent ${validationErrors.subject && showValidationErrors ? 'text-red-600' : ''}`}
                                 value={subject}
-                                onChange={(e) => setSubject(e.target.value)}
+                                onChange={(e) => {
+                                  setSubject(e.target.value);
+                                  handleFieldChange('subject', e.target.value);
+                                }}
                             />
+                            {validationErrors.subject && showValidationErrors && (
+                              <div className="text-red-500 text-xs mt-1 flex items-center">
+                                <svg className="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                  <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                                </svg>
+                                Please enter a subject
+                              </div>
+                            )}
                         </div>
-                        <textarea 
-                            className="flex-1 w-full py-2 text-sm resize-none text-black focus:outline-none bg-transparent placeholder-gray-900"
-                            aria-label="Message body"
-                            placeholder="Enter message"
-                            value={message}
-                            onChange={(e) => setMessage(e.target.value)}
-                        ></textarea>
+                        <div className={`flex-1 ${validationErrors.message && showValidationErrors ? 'border-red-500' : ''}`}>
+                            <textarea 
+                                className={`w-full py-2 text-sm resize-none text-black focus:outline-none bg-transparent placeholder-gray-900 ${validationErrors.message && showValidationErrors ? 'text-red-600' : ''}`}
+                                aria-label="Message body"
+                                placeholder="Enter message"
+                                value={message}
+                                onChange={(e) => {
+                                  setMessage(e.target.value);
+                                  handleFieldChange('message', e.target.value);
+                                }}
+                            ></textarea>
+                            {validationErrors.message && showValidationErrors && (
+                              <div className="text-red-500 text-xs mt-1 flex items-center">
+                                <svg className="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                  <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                                </svg>
+                                Please enter a message
+                              </div>
+                            )}
+                        </div>
                     </div>
                     
                     {/* Footer */}
                     <div className="px-4 py-3 bg-white rounded-b-lg">
+                        {networkError && (
+                          <div className="mb-3 p-3 bg-red-50 border border-red-200 rounded-lg">
+                            <div className="flex items-center text-red-600 text-sm">
+                              <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                              </svg>
+                              {networkError}
+                            </div>
+                          </div>
+                        )}
                         <button 
                             onClick={handleSend}
                             disabled={isSending}
@@ -260,7 +338,7 @@ const AskAQuestion = ({ onClose }: AskAQuestionProps) => {
                 </svg>
               </div>
               <h3 className="text-xl font-semibold text-gray-900 mb-2">Message Sent!</h3>
-              <p className="text-gray-600">Your email has been sent successfully to ohenegyan159@gmail.com</p>
+              <p className="text-gray-600">Your email has been sent successfully to letstalk@thecoordinatedliving.com</p>
             </div>
             <button
               onClick={() => {

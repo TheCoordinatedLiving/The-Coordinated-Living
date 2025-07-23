@@ -29,7 +29,8 @@ export async function POST(request: NextRequest) {
 
     const mailOptions = {
       from: `"Ask Me A Question" <${process.env.EMAIL_USER}>`,
-      to: 'ohenegyan159@gmail.com',
+      to: 'letstalk@thecoordinatedliving.com',
+      replyTo: userEmail,
       subject: subject || 'New Message from Ask Me A Question',
       text: `
 New message from Ask Me A Question:
