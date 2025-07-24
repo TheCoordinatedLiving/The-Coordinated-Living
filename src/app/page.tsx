@@ -118,6 +118,7 @@ const Page = () => {
   const [showLesleyLetter, setShowLesleyLetter] = useState(false);
   const [showVideos, setShowVideos] = useState(false);
   const [showWelcomeModal, setShowWelcomeModal] = useState(false);
+  const [showPostModal, setShowPostModal] = useState(false);
   const [fromWindows, setFromWindows] = useState(false);
   const pageRef = useRef<HTMLDivElement>(null);
   const curtainRef = useRef<HTMLDivElement>(null);
@@ -459,6 +460,184 @@ const Page = () => {
             />
           </div>
 
+          {/* White Notice Paper (top left) */}
+          <div
+            className="absolute white-notice-glow"
+            style={{ 
+              left: '31.5vw', 
+              top: '10vh', 
+              width: '11.8vw', 
+              height: '19vh', 
+              zIndex: 2,
+            }}
+          >
+            <div
+              className="w-full h-full cursor-pointer"
+              style={{
+                background: '#fff',
+                position: 'relative',
+                overflow: 'hidden',
+                padding: '8px',
+              }}
+              onClick={() => {
+                console.log('White notice paper clicked!');
+                setShowPostModal(true);
+              }}
+            >
+              {/* Content text - subtly visible */}
+              <div
+                style={{
+                  fontSize: '8px',
+                  lineHeight: '1.2',
+                  color: '#000',
+                  opacity: 0.2,
+                  filter: 'blur(0.3px)',
+                  textAlign: 'justify',
+                  fontFamily: 'serif',
+                  pointerEvents: 'none',
+                }}
+              >
+                "A thousand times I failed, still your mercy remains, should I stumble out here still I'm caught in your grace." This Hillsong lyric has always echoed in my heart, and its truth resonates even stronger today. I'm here today, sharing the very nature and gifts the Father blessed me with.
+                <br /><br />
+                For years, I pursued other paths, pouring tireless effort into fields he hadn't called me to, only to find no lasting fruit. That rollercoaster of emotions, the unpleasant experiences, the endless accusations and judgments thrown around – they're hallmarks of a mind out of alignment. We defy the very nature of the One who modeled us in His image, yet we stand confident, feeling fully justified.
+                <br /><br />
+                Want to know the root cause? It's simply a lack of trust in the Father. No matter how you rationalize it, we constantly try to force a fit where there isn't one.
+                <br /><br />
+                But in Christ, we step into the true identity the Father created for us. This identity comes with specific tasks, assignments, and responsibilities, all of which we are perfectly equipped for. It's there we discover an unexplainable peace, joy, and confidence. This is the rest of God.
+              </div>
+              
+              {/* Black overlay at 30% opacity */}
+              <div
+                style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  width: '100%',
+                  height: '100%',
+                  background: 'rgba(0,0,0,0.3)',
+                  pointerEvents: 'none',
+                }}
+              />
+            </div>
+          </div>
+
+          {/* Yellow Card with "430" (beneath white notice) */}
+          <div
+            className="absolute"
+            style={{ 
+              left: '35.3vw', 
+              top: '26vh', 
+              width: '5vw', 
+              height: '5vh', 
+              zIndex: 2,
+            }}
+          >
+            <div
+              className="w-full h-full"
+              style={{
+                background: '#FD8D37',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                position: 'relative',
+                overflow: 'hidden',
+                borderRadius: '2px',
+              }}
+              onClick={() => {
+                console.log('Yellow card with 430 clicked!');
+                // TODO: Add interaction logic
+              }}
+            >
+              {/* Date and time text */}
+              <div style={{ 
+                fontSize: '14px', 
+                fontWeight: 'bold', 
+                color: '#000',
+                textAlign: 'center',
+                lineHeight: '1.1'
+              }}>
+                <div>4:30</div>
+                <div style={{ fontSize: '12px' }}>23/7</div>
+              </div>
+              
+              {/* Black overlay at 50% opacity */}
+              <div
+                style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  width: '100%',
+                  height: '100%',
+                  background: 'rgba(0,0,0,0.5)',
+                  pointerEvents: 'none',
+                }}
+              />
+            </div>
+          </div>
+
+          {/* White Notice with Lines (bottom left) */}
+          <div
+            className="absolute"
+            style={{ 
+              left: '31vw', 
+              top: '33vh', 
+              width: '6.5vw', 
+              height: '11.5vh', 
+              zIndex: 2,
+            }}
+          >
+                          <div
+                className="w-full h-full"
+                style={{
+                  background: '#fff',
+                  position: 'relative',
+                  overflow: 'hidden',
+                  padding: '8px',
+                }}
+              >
+                {/* Psalm content */}
+                <div
+                  style={{
+                    fontSize: '9px',
+                    lineHeight: '1.2',
+                    color: '#000',
+                    opacity: 0.8,
+                    filter: 'blur(0.3px)',
+                    textAlign: 'justify',
+                    fontFamily: 'serif',
+                    pointerEvents: 'none',
+                    userSelect: 'none',
+                    WebkitUserSelect: 'none',
+                    MozUserSelect: 'none',
+                    msUserSelect: 'none',
+                  }}
+                >
+                  <div style={{ fontWeight: 'bold', marginBottom: '2px' }}>
+                    Psalm 94:18–19
+                  </div>
+                  <div>
+                    When I thought, "My foot slips," Your steadfast love, O LORD, helped me up. When the cares of my heart are many, Your consolations cheer my soul.
+                  </div>
+                </div>
+
+              
+              {/* Black overlay at 60% opacity */}
+              <div
+                style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  width: '100%',
+                  height: '100%',
+                  background: 'rgba(0,0,0,0.6)',
+                  pointerEvents: 'none',
+                }}
+              />
+            </div>
+          </div>
+
+
+
           {/* Noticeboard Profile Image clip path */}
           <div
             className="absolute"
@@ -751,10 +930,28 @@ const Page = () => {
               }}
             >
               {/* Bible Verse Content */}
-              <div style={{ fontSize: '12px', fontWeight: '900', marginBottom: '4px', color: '#000' }}>
+              <div style={{ 
+                fontSize: '12px', 
+                fontWeight: '900', 
+                marginBottom: '4px', 
+                color: '#000',
+                userSelect: 'none',
+                WebkitUserSelect: 'none',
+                MozUserSelect: 'none',
+                msUserSelect: 'none',
+              }}>
                 John 16:33
               </div>
-              <div style={{ fontSize: '8px', lineHeight: '1.2', color: '#333', fontStyle: 'italic' }}>
+              <div style={{ 
+                fontSize: '8px', 
+                lineHeight: '1.2', 
+                color: '#333', 
+                fontStyle: 'italic',
+                userSelect: 'none',
+                WebkitUserSelect: 'none',
+                MozUserSelect: 'none',
+                msUserSelect: 'none',
+              }}>
                 "In the world you will have tribulation. But take heart; I have overcome the world."
               </div>
               
@@ -803,10 +1000,28 @@ const Page = () => {
               }}
             >
               {/* Bible Verse Content */}
-              <div style={{ fontSize: '9px', fontWeight: '900', marginBottom: '3px', color: '#000' }}>
+              <div style={{ 
+                fontSize: '9px', 
+                fontWeight: '900', 
+                marginBottom: '3px', 
+                color: '#000',
+                userSelect: 'none',
+                WebkitUserSelect: 'none',
+                MozUserSelect: 'none',
+                msUserSelect: 'none',
+              }}>
                 Romans 8:28
               </div>
-              <div style={{ fontSize: '7px', lineHeight: '1.2', color: '#333', fontStyle: 'italic' }}>
+              <div style={{ 
+                fontSize: '7px', 
+                lineHeight: '1.2', 
+                color: '#333', 
+                fontStyle: 'italic',
+                userSelect: 'none',
+                WebkitUserSelect: 'none',
+                MozUserSelect: 'none',
+                msUserSelect: 'none',
+              }}>
                 "And we know that for those who love God all things work together for good, for those who are called according to His purpose."
               </div>
               
@@ -883,7 +1098,7 @@ const Page = () => {
           <div
             className="absolute"
             style={{
-              left: '55vw', // moved slightly to the right
+              left: '54.8vw', // moved slightly more to the right
               top: '34vh',  // moved up a little more
               width: '8vw', // increased width
               height: '18vh', // increased height a little bit more
@@ -906,6 +1121,42 @@ const Page = () => {
               }}
             >
               {/* Content will be placed here later */}
+              
+              {/* Black overlay at 60% opacity */}
+              <div
+                style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  width: '100%',
+                  height: '100%',
+                  background: 'rgba(0,0,0,0.6)',
+                  pointerEvents: 'none',
+                }}
+              />
+            </div>
+          </div>
+
+          {/* Envelope clip path */}
+          <div
+            className="absolute"
+            style={{ 
+              left: '59vw', 
+              top: '45vh', 
+              width: '16vw', 
+              height: '9vh', 
+              zIndex: 2,
+              transform: 'rotate(-5deg)',
+            }}
+          >
+            <div className="relative w-full h-full">
+              <Image
+                src="/envelope.svg"
+                alt="Envelope"
+                width={100}
+                height={75}
+                className="w-full h-full object-contain"
+              />
             </div>
           </div>
 
@@ -1004,6 +1255,19 @@ const Page = () => {
               }
               
               @keyframes profileGlow {
+                0%, 100% {
+                  box-shadow: 0 0 15px rgba(255, 255, 255, 0.3), 0 0 30px rgba(255, 255, 255, 0.2), 0 0 45px rgba(255, 255, 255, 0.1);
+                }
+                50% {
+                  box-shadow: 0 0 25px rgba(255, 255, 255, 0.5), 0 0 50px rgba(255, 255, 255, 0.3), 0 0 75px rgba(255, 255, 255, 0.2);
+                }
+              }
+              
+              .white-notice-glow {
+                animation: whiteNoticeGlow 3s ease-in-out infinite;
+              }
+              
+              @keyframes whiteNoticeGlow {
                 0%, 100% {
                   box-shadow: 0 0 15px rgba(255, 255, 255, 0.3), 0 0 30px rgba(255, 255, 255, 0.2), 0 0 45px rgba(255, 255, 255, 0.1);
                 }
@@ -1116,6 +1380,88 @@ const Page = () => {
                         transform: 'translateX(20%) translateY(15%)'
                       }}
                     />
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Post Modal */}
+          {showPostModal && (
+            <div className="fixed inset-0 z-50">
+              {/* Glass background blur */}
+              <div 
+                className="absolute inset-0"
+                style={{ 
+                  backgroundColor: 'rgba(0, 0, 0, 0.15)',
+                  backdropFilter: 'blur(16px)',
+                  WebkitBackdropFilter: 'blur(16px)'
+                }}
+                onClick={() => setShowPostModal(false)}
+              />
+              
+              {/* Return to Desk button - top left */}
+              <button
+                onClick={() => setShowPostModal(false)}
+                className="absolute top-6 left-6 z-20 bg-white bg-opacity-80 backdrop-blur-sm text-gray-800 px-4 py-2 rounded-lg font-medium hover:bg-opacity-100 transition-all shadow-lg cursor-pointer return-desk-glow"
+              >
+                Return to Desk
+              </button>
+              
+              {/* Post content - centered */}
+              <div className="absolute inset-0 flex items-center justify-center p-8">
+                <div className="relative z-10 max-w-2xl w-full">
+                  {/* White card with content */}
+                  <div 
+                    className="p-8 text-center post-modal-card"
+                    style={{
+                      backgroundColor: '#FFFFFF',
+                      borderRadius: '0px',
+                      boxShadow: '10.23px 10.23px 0px rgba(0, 0, 0, 0.25)'
+                    }}
+                  >
+                    {/* Post Title */}
+                    <div className="mb-6">
+                      <h1 className="text-xl font-bold text-gray-900 mb-2 leading-tight">
+                        "A THOUSAND TIMES I FAILED, STILL YOUR MERCY REMAINS.
+                        <br />
+                        SHOULD I STUMBLE AGAIN, STILL I'M CAUGHT IN YOUR GRACE."
+                      </h1>
+                      <div className="w-16 h-0.5 bg-gray-900 mx-auto"></div>
+                    </div>
+                    
+                    {/* Post Content */}
+                    <div className="text-left">
+                      <p className="text-gray-800 text-base leading-relaxed mb-4">
+                        "A thousand times I failed, still your mercy remains, should I stumble out here still I'm caught in your grace." This Hillsong lyric has always echoed in my heart, and its truth resonates even stronger today. I'm here today, sharing the very nature and gifts the Father blessed me with.
+                      </p>
+                      <p className="text-gray-800 text-base leading-relaxed mb-4">
+                        For years, I pursued other paths, pouring tireless effort into fields he hadn't called me to, only to find no lasting fruit. That rollercoaster of emotions, the unpleasant experiences, the endless accusations and judgments thrown around – they're hallmarks of a mind out of alignment. We defy the very nature of the One who modeled us in His image, yet we stand confident, feeling fully justified.
+                      </p>
+                      <p className="text-gray-800 text-base leading-relaxed mb-4">
+                        Want to know the root cause? It's simply a lack of trust in the Father. No matter how you rationalize it, we constantly try to force a fit where there isn't one.
+                      </p>
+                      <p className="text-gray-800 text-base leading-relaxed mb-4">
+                        But in Christ, we step into the true identity the Father created for us. This identity comes with specific tasks, assignments, and responsibilities, all of which we are perfectly equipped for. It's there we discover an unexplainable peace, joy, and confidence. This is the rest of God.
+                      </p>
+                      <p className="text-gray-800 text-base leading-relaxed font-semibold text-center">
+                        This is the rest of God.
+                      </p>
+                    </div>
+                  </div>
+                  
+                  {/* Navigation arrows - outside the card */}
+                  <div className="flex justify-center space-x-12 mt-6">
+                    <button className="w-10 h-10 rounded-full bg-white text-gray-800 flex items-center justify-center hover:bg-gray-100 transition-colors shadow-lg">
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                      </svg>
+                    </button>
+                    <button className="w-10 h-10 rounded-full bg-white text-gray-800 flex items-center justify-center hover:bg-gray-100 transition-colors shadow-lg">
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
+                    </button>
                   </div>
                 </div>
               </div>

@@ -105,6 +105,25 @@ const NoticeBoard: React.FC = () => {
           onClick={() => alert(`${paper.label} clicked!`)}
         />
       ))}
+      
+      {/* White clip-path overlay on the white card with lines (top left) */}
+      <div
+        className="absolute cursor-pointer"
+        style={{
+          left: '40px',
+          top: '40px',
+          width: '268px',
+          height: '320px',
+          transform: 'rotate(-2deg)',
+          zIndex: 10,
+          background: 'rgba(0, 0, 0, 0.8)',
+          clipPath: 'polygon(5% 5%, 95% 5%, 95% 95%, 5% 95%)',
+        }}
+        onClick={() => {
+          console.log('White card with lines clicked!');
+          // TODO: Add interaction logic
+        }}
+      />
     </div>
   );
 };
