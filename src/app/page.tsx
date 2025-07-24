@@ -117,6 +117,7 @@ const Page = () => {
   const [experienceVisible, setExperienceVisible] = useState(false);
   const [laptopZoomed, setLaptopZoomed] = useState(false);
   const [showLesleyLetter, setShowLesleyLetter] = useState(false);
+  // Remove isLetterLoaded state
   const [showVideos, setShowVideos] = useState(false);
   const [showWelcomeModal, setShowWelcomeModal] = useState(false);
   const [showPostModal, setShowPostModal] = useState(false);
@@ -434,12 +435,13 @@ const Page = () => {
             onClick={() => {
               console.log('Letter clicked!');
               setShowLesleyLetter(true);
+              // Remove setIsLetterLoaded(false)
             }}
           />
           {/* cup- clippath */}
           <div
             className="absolute group"
-            style={{ right: '16vw', top: '60vh', width: '5vw', height: '9vh', zIndex: 10 }}
+            style={{ right: '14vw', top: '60vh', width: '7vw', height: '11vh', zIndex: 10 }}
           >
             <div
               className="cursor-pointer cup-glow heartbeat cup-float cup-hover-glow w-full h-full"
@@ -458,7 +460,7 @@ const Page = () => {
                   animationData={fumaaAnimation}
                   loop={true}
                   autoplay={true}
-                  style={{ width: '150%', height: '150%' }}
+                  style={{ width: '200%', height: '200%' }}
                 />
               </div>
             )}
@@ -1272,7 +1274,7 @@ const Page = () => {
               .cup-hover-glow:hover {
                 transform: scale(1.2);
                 filter: blur(3px);
-                box-shadow: 0 0 30px rgba(255, 255, 255, 0.8), 0 0 60px rgba(255, 255, 255, 0.4), 0 0 90px rgba(255, 255, 255, 0.2), 0 0 120px rgba(255, 255, 255, 0.1);
+                box-shadow: none;
                 transition: all 0.3s ease-in-out;
               }
               
