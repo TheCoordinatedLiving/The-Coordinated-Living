@@ -414,7 +414,7 @@ const Page = () => {
 
           {/* Letter clip-path overlay */}
           <div
-            className="absolute cursor-pointer letter-glow letter-clip-path"
+            className="absolute cursor-pointer letter-pulse-glow letter-clip-path"
             onClick={() => {
               console.log('Letter clicked!');
               setShowLesleyLetter(true);
@@ -438,7 +438,7 @@ const Page = () => {
           </div> */}
           {/* phone- clippath */}
           <div
-            className="absolute phone-glow phone-yellow-glow"
+            className="absolute phone-pulse-glow phone-yellow-glow"
             style={{ 
               left: '13vw', 
               bottom: '8vh', 
@@ -1098,7 +1098,7 @@ const Page = () => {
           <div
             className="absolute"
             style={{
-              left: '54.8vw', // moved slightly more to the right
+              left: '54.8vw', // moved back to original position
               top: '34vh',  // moved up a little more
               width: '8vw', // increased width
               height: '18vh', // increased height a little bit more
@@ -1120,7 +1120,19 @@ const Page = () => {
                 console.log('White notice beneath to-do list clip path clicked!');
               }}
             >
-              {/* Content will be placed here later */}
+              {/* Bridge Image */}
+              <img
+                src="/bridge.jpg"
+                alt="Bridge"
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover',
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                }}
+              />
               
               {/* Black overlay at 60% opacity */}
               <div
@@ -1273,6 +1285,61 @@ const Page = () => {
                 }
                 50% {
                   box-shadow: 0 0 25px rgba(255, 255, 255, 0.5), 0 0 50px rgba(255, 255, 255, 0.3), 0 0 75px rgba(255, 255, 255, 0.2);
+                }
+              }
+              
+              .letter-glow {
+                animation: letterGlow 3s ease-in-out infinite;
+              }
+              
+              @keyframes letterGlow {
+                0%, 100% {
+                  box-shadow: 0 0 15px rgba(255, 255, 255, 0.3), 0 0 30px rgba(255, 255, 255, 0.2), 0 0 45px rgba(255, 255, 255, 0.1);
+                }
+                50% {
+                  box-shadow: 0 0 25px rgba(255, 255, 255, 0.5), 0 0 50px rgba(255, 255, 255, 0.3), 0 0 75px rgba(255, 255, 255, 0.2);
+                }
+              }
+              
+              .letter-pulse-glow {
+                animation: letterPulseGlow 2.5s ease-in-out infinite;
+              }
+              
+              @keyframes letterPulseGlow {
+                0%, 100% {
+                  box-shadow: 
+                    0 0 20px rgba(255, 215, 0, 0.4),
+                    0 0 40px rgba(255, 165, 0, 0.3),
+                    0 0 60px rgba(255, 69, 0, 0.2),
+                    0 0 80px rgba(255, 140, 0, 0.1);
+                }
+                50% {
+                  box-shadow: 
+                    0 0 30px rgba(255, 215, 0, 0.7),
+                    0 0 60px rgba(255, 165, 0, 0.5),
+                    0 0 90px rgba(255, 69, 0, 0.4),
+                    0 0 120px rgba(255, 140, 0, 0.2);
+                }
+              }
+              
+              .phone-pulse-glow {
+                animation: phonePulseGlow 3s ease-in-out infinite;
+              }
+              
+              @keyframes phonePulseGlow {
+                0%, 100% {
+                  box-shadow: 
+                    0 0 20px rgba(255, 255, 255, 0.4), 
+                    0 0 40px rgba(255, 255, 255, 0.3), 
+                    0 0 60px rgba(255, 255, 255, 0.2), 
+                    0 0 80px rgba(255, 255, 255, 0.1);
+                }
+                50% {
+                  box-shadow: 
+                    0 0 40px rgba(255, 255, 255, 0.6), 
+                    0 0 80px rgba(255, 255, 255, 0.4), 
+                    0 0 120px rgba(255, 255, 255, 0.3), 
+                    0 0 160px rgba(255, 255, 255, 0.1);
                 }
               }
             `}</style>
