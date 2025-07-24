@@ -3,6 +3,7 @@ import { useRef, useLayoutEffect, useState, useEffect } from 'react';
 import Image from "next/image";
 import { gsap } from 'gsap';
 import { useRouter } from 'next/navigation';
+import Lottie from 'lottie-react';
 
 const Loader = () => {
   const logoRef = useRef(null);
@@ -120,10 +121,25 @@ const Page = () => {
   const [showWelcomeModal, setShowWelcomeModal] = useState(false);
   const [showPostModal, setShowPostModal] = useState(false);
   const [fromWindows, setFromWindows] = useState(false);
+  const [fumaaAnimation, setFumaaAnimation] = useState(null);
   const pageRef = useRef<HTMLDivElement>(null);
   const curtainRef = useRef<HTMLDivElement>(null);
   const experienceRef = useRef<HTMLDivElement>(null);
   const laptopRef = useRef<HTMLDivElement>(null);
+
+  // Load Fumaa Lottie animation
+  useEffect(() => {
+    const loadAnimation = async () => {
+      try {
+        const response = await fetch('/Fumaa.json');
+        const animation = await response.json();
+        setFumaaAnimation(animation);
+      } catch (error) {
+        console.error('Failed to load Fumaa animation:', error);
+      }
+    };
+    loadAnimation();
+  }, []);
 
   // Check if coming back from Windows page
   useEffect(() => {
@@ -428,18 +444,24 @@ const Page = () => {
             <div
               className="cursor-pointer cup-glow heartbeat cup-float cup-hover-glow w-full h-full"
               style={{
-                backgroundColor: 'rgba(255, 0, 0, 0.3)',
                 filter: 'blur(2px)',
               }}
               onClick={() => console.log('Cup clicked!')}
             />
-            {/* Fumaa.json content - hidden but functional */}
-            <div
-              className="absolute inset-0 opacity-0 pointer-events-none"
-              style={{ display: 'none' }}
-            >
-              {/* JSON content is loaded but not visible */}
-            </div>
+            {/* Fumaa Lottie Animation */}
+            {fumaaAnimation && (
+              <div
+                className="absolute inset-0 pointer-events-none flex items-center justify-center"
+                style={{ zIndex: 1 }}
+              >
+                <Lottie
+                  animationData={fumaaAnimation}
+                  loop={true}
+                  autoplay={true}
+                  style={{ width: '150%', height: '150%' }}
+                />
+              </div>
+            )}
           </div>
           {/* phone- clippath */}
           <div
