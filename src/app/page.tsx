@@ -420,22 +420,27 @@ const Page = () => {
               setShowLesleyLetter(true);
             }}
           />
-          {/* cup- clippath - temporarily hidden */}
-          {/* <div
+          {/* cup- clippath */}
+          <div
             className="absolute group"
-            style={{ right: '14.6vw', bottom: '17.6vh', width: '1.5vw', height: '1.5vh', zIndex: 2 }}
+            style={{ right: '16vw', top: '60vh', width: '5vw', height: '9vh', zIndex: 10 }}
           >
             <div
               className="cursor-pointer cup-glow heartbeat cup-float cup-hover-glow w-full h-full"
               style={{
-                backgroundColor: 'rgba(255, 255, 255, 0.9)',
-                clipPath: 'circle(50% at 50% 50%)',
-                borderRadius: '50%',
+                backgroundColor: 'rgba(255, 0, 0, 0.3)',
                 filter: 'blur(2px)',
               }}
               onClick={() => console.log('Cup clicked!')}
             />
-          </div> */}
+            {/* Fumaa.json content - hidden but functional */}
+            <div
+              className="absolute inset-0 opacity-0 pointer-events-none"
+              style={{ display: 'none' }}
+            >
+              {/* JSON content is loaded but not visible */}
+            </div>
+          </div>
           {/* phone- clippath */}
           <div
             className="absolute phone-pulse-glow phone-yellow-glow"
