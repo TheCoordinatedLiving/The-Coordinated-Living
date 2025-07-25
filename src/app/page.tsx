@@ -123,6 +123,8 @@ const Page = () => {
   const [showPostModal, setShowPostModal] = useState(false);
   const [fromWindows, setFromWindows] = useState(false);
   const [fumaaAnimation, setFumaaAnimation] = useState(null);
+  const [showFumaaModal, setShowFumaaModal] = useState(false);
+
   const pageRef = useRef<HTMLDivElement>(null);
   const curtainRef = useRef<HTMLDivElement>(null);
   const experienceRef = useRef<HTMLDivElement>(null);
@@ -320,7 +322,9 @@ const Page = () => {
               objectPosition: 'center top',
  
             }}
+           
           />
+
           <div style={{
            position: 'absolute',
            top: 0,
@@ -448,7 +452,7 @@ const Page = () => {
               style={{
                 filter: 'blur(2px)',
               }}
-              onClick={() => console.log('Cup clicked!')}
+              onClick={() => setShowFumaaModal(true)}
             />
             {/* Fumaa Lottie Animation */}
             {fumaaAnimation && (
@@ -516,10 +520,10 @@ const Page = () => {
               {/* Content text - subtly visible */}
               <div
                 style={{
-                  fontSize: '8px',
+                  fontSize: '7px',
                   lineHeight: '1.2',
                   color: '#000',
-                  opacity: 0.2,
+                  opacity: 0.12,
                   filter: 'blur(0.3px)',
                   textAlign: 'justify',
                   fontFamily: 'serif',
@@ -1440,7 +1444,7 @@ const Page = () => {
               <div className="absolute inset-0 flex items-center justify-center p-16">
                 <div className="relative z-10 flex items-center justify-between w-full max-w-6xl">
                   {/* Left side - Content */}
-                  <div className="flex-1 max-w-2xl">
+                  <div className="flex-1 max-w-2xl relative">
                     {/* Title */}
                     <h1 className="text-7xl font-serif text-white mb-8 leading-tight">
                       Deep Dive<br />& Exclusive<br />Teachings
@@ -1462,10 +1466,12 @@ const Page = () => {
                         onClick={() => console.log('Join Channel clicked!')}
                       />
                     </div>
+
                   </div>
+
                   
                   {/* Right side - Image */}
-                  <div className="flex-1 flex justify-end items-end">
+                  <div className="flex-1 flex justify-end items-end relative">
                     <Image
                       src="/join-channel.png"
                       alt="Join Channel"
@@ -1476,6 +1482,40 @@ const Page = () => {
                         transform: 'translateX(20%) translateY(15%)'
                       }}
                     />
+          <div
+            className="absolute cursor-pointer letter-pulse-glow"
+            style={{
+              right: '-55px',
+              top: '200px',
+              width: '500px',
+              height: '100vh',
+              zIndex: 10,
+              backgroundColor: 'transparent',
+              clipPath: 'polygon(33% 3%, 100% 0, 68% 100%, 0.5% 100%)',
+            }}
+          >
+            {/* Portrait Video Player */}
+            <video
+              autoPlay
+              muted={false}
+              controls
+              loop
+              playsInline
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                clipPath: 'polygon(35% 3%, 100% 0, 68% 100%, 0.5% 100%)',
+              }}
+            >
+              {/* Cloudinary Video Source */}
+              <source src="https://res.cloudinary.com/dg41c7v3d/video/upload/v1753388692/counseling_q6a4zj.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+          </div>
                   </div>
                 </div>
               </div>
@@ -1588,7 +1628,7 @@ const Page = () => {
                   }}
                 >
                   {/* Coordinated Living Logo */}
-                  <div className="mb-6 flex justify-center">
+                  <div className="flex justify-center" style={{ marginBottom: '24px' }}>
                     <Image
                       src="/modal-logo.svg"
                       alt="Coordinated Living Logo"
@@ -1600,24 +1640,27 @@ const Page = () => {
 
                   {/* Welcome Banner */}
                   <div
-                    className="px-4 py-2 mb-6"
+                    className="px-4 py-2"
                     style={{
                       backgroundColor: '#1D1C1E',
                       color: 'white',
                       borderRadius: '33.86px',
+                      maxWidth: '300px',
+                      margin: '0 auto',
+                      marginBottom: '24px',
                     }}
                   >
-                    <h2 className="text-white font-medium text-sm">
+                    <h2 className="text-white font-medium text-sm" style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                       Welcome to Your Interactive Workspace
                     </h2>
                   </div>
 
                   {/* Instructional Text */}
-                  <div className="mb-6 text-center">
-                    <p className="text-white font-bold text-lg mb-2">
+                  <div className="text-center" style={{ marginBottom: '24px' }}>
+                    <p className="text-white font-bold text-lg mb-2" style={{ fontSize: '1.2rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', marginBottom: '12px' }}>
                       Things aren&apos;t always what they seem.
                     </p>
-                    <p className="text-gray-300 text-base">
+                    <p className="text-gray-300 text-base" style={{ margin: 0 }}>
                       Explore the workspace — you might be surprised by what you find.
                     </p>
                   </div>
@@ -1646,6 +1689,58 @@ const Page = () => {
                   >
                     Get Started
                   </button>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Fumaa Modal */}
+          {showFumaaModal && (
+            <div className="fixed inset-0 z-50">
+              {/* Glass background blur */}
+              <div 
+                className="absolute inset-0"
+                style={{ 
+                  backgroundColor: 'rgba(0, 0, 0, 0.15)',
+                  backdropFilter: 'blur(16px)',
+                  WebkitBackdropFilter: 'blur(16px)'
+                }}
+                onClick={() => setShowFumaaModal(false)}
+              />
+              {/* Return to Desk button - top left */}
+              <button
+                onClick={() => setShowFumaaModal(false)}
+                className="absolute top-6 left-6 z-20 bg-white bg-opacity-80 backdrop-blur-sm text-gray-800 px-4 py-2 rounded-lg font-medium hover:bg-opacity-100 transition-all shadow-lg cursor-pointer return-desk-glow"
+              >
+                Return to Desk
+              </button>
+              {/* Modal content - centered */}
+              <div className="absolute inset-0 flex items-center justify-center p-8">
+                <div 
+                  className="relative z-10 max-w-2xl w-full p-10 border-2 border-black shadow-2xl drop-shadow-2xl bg-white"
+                  style={{ borderRadius: '0px' }}
+                >
+                  {/* Post Title */}
+                  <div className="mb-8">
+                    <h1 className="text-4xl font-extrabold text-gray-900 text-center tracking-wide uppercase mb-8">
+                      “A Cheerful Gift, a Full Cup”
+                    </h1>
+                  </div>
+                  {/* Post Content */}
+                  <div className="text-center">
+                    <p className="text-gray-800 text-xl leading-relaxed mb-8">
+                      Having my cuppa on my table is one sure comfort as I get work done. Your support would be a lovely way to keep it full every time I sit at my desk, and it genuinely helps me sustainably run this platform. Thank you for your kindness!"
+                    </p>
+                    <p className="text-gray-800 text-xl leading-relaxed mb-8">
+                      There's nothing quite like a warm cuppa by my side as I dive into work. Your support helps ensure my mug stays full, and more importantly, it directly fuels my ability to sustainably run this platform and keep creating for you. Thank you so much for your kind gesture and for being a part of this journey!"
+                    </p>
+                    <button
+                      className="mt-4 w-full py-5 bg-[#633366] text-white text-2xl font-medium rounded-full focus:outline-none focus:ring-2 focus:ring-[#633366] focus:ring-opacity-50 transition-all duration-200 shadow-md hover:scale-[1.02]"
+                      style={{ letterSpacing: '0.01em' }}
+                    >
+                      Fill My Cup
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>

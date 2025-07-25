@@ -25,6 +25,7 @@ const AskAQuestion = ({ onClose }: AskAQuestionProps) => {
   });
   const [showValidationErrors, setShowValidationErrors] = useState(false);
   const [networkError, setNetworkError] = useState('');
+  const sendTimeout = useRef<NodeJS.Timeout | null>(null);
 
   const handleCardClick = (newSubject: string, newMessage: string) => {
     setSubject(newSubject);
@@ -54,42 +55,43 @@ const AskAQuestion = ({ onClose }: AskAQuestionProps) => {
   };
 
   const handleSend = async () => {
-    if (!validateForm()) {
-      return;
-    }
-
+    if (isSending) return; // Prevent double submission
     setIsSending(true);
-
-    try {
-      // Send email via API
-      const response = await fetch('/api/send-email', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          userEmail,
-          subject,
-          message
-        }),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        // Show success modal
-        setShowSuccessModal(true);
-        setNetworkError(''); // Clear any previous errors
-      } else {
-        throw new Error(data.error || 'Failed to send email');
-      }
-
-    } catch (error) {
-      console.error('Error sending email:', error);
-      setNetworkError('Failed to send email. Please check your connection and try again.');
-    } finally {
-      setIsSending(false);
+    if (sendTimeout.current) {
+      clearTimeout(sendTimeout.current);
     }
+    sendTimeout.current = setTimeout(async () => {
+      if (!validateForm()) {
+        setIsSending(false);
+        return;
+      }
+      try {
+        // Send email via API
+        const response = await fetch('/api/send-email', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            userEmail,
+            subject,
+            message
+          }),
+        });
+        const data = await response.json();
+        if (response.ok) {
+          setShowSuccessModal(true);
+          setNetworkError('');
+        } else {
+          throw new Error(data.error || 'Failed to send email');
+        }
+      } catch (error) {
+        console.error('Error sending email:', error);
+        setNetworkError('Failed to send email. Please check your connection and try again.');
+      } finally {
+        setIsSending(false);
+      }
+    }, 200); // Debounce by 200ms
   };
 
   useEffect(() => {

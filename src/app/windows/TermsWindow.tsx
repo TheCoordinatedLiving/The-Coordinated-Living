@@ -38,7 +38,7 @@ const TermsWindow = ({ onClose }: TermsWindowProps) => {
             <Image src="/terms.svg" width={24} height={24} alt="Terms" />
             <h2 className="text-lg font-semibold text-gray-800">Terms & Conditions</h2>
           </div>
-          <button onClick={handleClose} className="text-gray-600 hover:text-gray-800">
+          <button onClick={handleClose} className="text-gray-600 hover:text-gray-800 cursor-pointer">
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             </svg>
