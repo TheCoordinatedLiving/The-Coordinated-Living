@@ -1152,10 +1152,10 @@ const Page = () => {
                 console.log('White notice beneath to-do list clip path clicked!');
               }}
             >
-              {/* Bridge Image */}
+              {/* James Town Image */}
               <img
-                src="/bridge.jpg"
-                alt="Bridge"
+                src="/james-town.jpeg"
+                alt="James Town"
                 style={{
                   width: '100%',
                   height: '100%',
