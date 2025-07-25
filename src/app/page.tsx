@@ -125,6 +125,9 @@ const Page = () => {
   const [fromWindows, setFromWindows] = useState(false);
   const [fumaaAnimation, setFumaaAnimation] = useState(null);
   const [showFumaaModal, setShowFumaaModal] = useState(false);
+  const [showLaptopTooltip, setShowLaptopTooltip] = useState(false);
+  const [showLetterTooltip, setShowLetterTooltip] = useState(false);
+
 
   const pageRef = useRef<HTMLDivElement>(null);
   const curtainRef = useRef<HTMLDivElement>(null);
@@ -352,7 +355,8 @@ const Page = () => {
           <div
             ref={laptopRef}
             className="absolute cursor-pointer laptop-iframe"
-           
+            onMouseEnter={() => setShowLaptopTooltip(true)}
+            onMouseLeave={() => setShowLaptopTooltip(false)}
             onClick={(e) => {
               // Don't zoom if clicking on the iframe content
               if (e.target !== e.currentTarget) {
@@ -427,9 +431,35 @@ const Page = () => {
             />
           </div>
 
+          {/* Laptop Tooltip - positioned outside the laptop container */}
+          <div className={`absolute text-white px-3 py-2 rounded-lg text-sm font-medium transition-all duration-500 pointer-events-none z-50 whitespace-nowrap laptop-tooltip-glow ${showLaptopTooltip ? 'opacity-90 scale-100' : 'opacity-0 scale-95'}`} style={{ 
+            top: '50%', 
+            right: '42%',
+            transform: 'translateY(-100%)',
+            backgroundColor: '#2481C2'
+          }}>
+            Click To Explore Experience
+            <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent" style={{ borderTopColor: '#2481C2', opacity: 0.9 }}></div>
+          </div>
+
+          {/* Letter Tooltip - positioned outside the letter container */}
+          <div className={`absolute text-white px-3 py-2 rounded-lg text-sm font-medium transition-all duration-500 pointer-events-none z-50 whitespace-nowrap letter-tooltip-glow ${showLetterTooltip ? 'opacity-90 scale-100' : 'opacity-0 scale-95'}`} style={{ 
+            top: '70%', 
+            left: '65%',
+            transform: 'translateY(-100%)',
+            backgroundColor: '#845399'
+          }}>
+            About Me
+            <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent" style={{ borderTopColor: '#845399', opacity: 0.9 }}></div>
+          </div>
+
+
+
           {/* Letter clip-path overlay */}
           <div
             className="absolute cursor-pointer letter-pulse-glow letter-clip-path"
+            onMouseEnter={() => setShowLetterTooltip(true)}
+            onMouseLeave={() => setShowLetterTooltip(false)}
             onClick={() => {
               console.log('Letter clicked!');
               setShowLesleyLetter(true);
@@ -465,7 +495,7 @@ const Page = () => {
           </div>
           {/* phone- clippath */}
           <div
-            className="absolute phone-pulse-glow phone-yellow-glow"
+            className="absolute phone-pulse-glow phone-yellow-glow group"
             style={{ 
               left: '13vw', 
               bottom: '8vh', 
@@ -485,6 +515,11 @@ const Page = () => {
                 setShowVideos(true);
               }}
             />
+            {/* Phone Tooltip */}
+            <div className="absolute -top-12 left-1/2 transform -translate-x-1/2 bg-[#35B2C2] text-black px-3 py-2 rounded-lg text-sm font-medium transition-all duration-500 pointer-events-none z-30 whitespace-nowrap phone-tooltip-glow group-hover:opacity-100 group-hover:scale-100 opacity-0 scale-95">
+             Join Our Channel
+              <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-[#35B2C2]"></div>
+            </div>
           </div>
 
           {/* White Notice Paper (top left) */}
@@ -1367,6 +1402,79 @@ const Page = () => {
                     0 0 80px rgba(255, 255, 255, 0.4), 
                     0 0 120px rgba(255, 255, 255, 0.3), 
                     0 0 160px rgba(255, 255, 255, 0.1);
+                }
+              }
+              
+              .phone-tooltip-glow {
+                animation: phoneTooltipGlow 2s ease-in-out infinite;
+              }
+              
+              @keyframes phoneTooltipGlow {
+                0%, 100% {
+                  box-shadow: 
+                    0 0 10px rgba(53, 178, 194, 0.6), 
+                    0 0 20px rgba(53, 178, 194, 0.4), 
+                    0 0 30px rgba(53, 178, 194, 0.2);
+                }
+                50% {
+                  box-shadow: 
+                    0 0 20px rgba(53, 178, 194, 0.8), 
+                    0 0 40px rgba(53, 178, 194, 0.6), 
+                    0 0 60px rgba(53, 178, 194, 0.4), 
+                    0 0 80px rgba(53, 178, 194, 0.2);
+                }
+              }
+              
+              .letter-tooltip-glow {
+                animation: letterTooltipGlow 2s ease-in-out infinite;
+              }
+              
+              @keyframes letterTooltipGlow {
+                0%, 100% {
+                  box-shadow: 
+                    0 0 10px rgba(132, 83, 153, 0.6), 
+                    0 0 20px rgba(132, 83, 153, 0.4), 
+                    0 0 30px rgba(132, 83, 153, 0.2);
+                }
+                50% {
+                  box-shadow: 
+                    0 0 20px rgba(132, 83, 153, 0.8), 
+                    0 0 40px rgba(132, 83, 153, 0.6), 
+                    0 0 60px rgba(132, 83, 153, 0.4), 
+                    0 0 80px rgba(132, 83, 153, 0.2);
+                }
+              }
+              
+
+              
+              @keyframes fadeInScale {
+                0% {
+                  opacity: 0;
+                  transform: translateY(-100%) scale(0.8);
+                }
+                100% {
+                  opacity: 0.9;
+                  transform: translateY(-100%) scale(1);
+                }
+              }
+              
+              .laptop-tooltip-glow {
+                animation: laptopTooltipGlow 2s ease-in-out infinite;
+              }
+              
+              @keyframes laptopTooltipGlow {
+                0%, 100% {
+                  box-shadow: 
+                    0 0 10px rgba(36, 129, 194, 0.6), 
+                    0 0 20px rgba(36, 129, 194, 0.4), 
+                    0 0 30px rgba(36, 129, 194, 0.2);
+                }
+                50% {
+                  box-shadow: 
+                    0 0 20px rgba(36, 129, 194, 0.8), 
+                    0 0 40px rgba(36, 129, 194, 0.6), 
+                    0 0 60px rgba(36, 129, 194, 0.4), 
+                    0 0 80px rgba(36, 129, 194, 0.2);
                 }
               }
             `}</style>
