@@ -83,11 +83,11 @@ const AskAQuestion = ({ onClose }: AskAQuestionProps) => {
           setShowSuccessModal(true);
           setNetworkError('');
         } else {
-          throw new Error(data.error || 'Failed to send email');
+          throw new Error(data.error || 'Failed to send email. Please try again.');
         }
       } catch (error) {
         console.error('Error sending email:', error);
-        setNetworkError('Failed to send email. Please check your connection and try again.');
+        setNetworkError('Failed to send email. Please check your connection and try again. If the problem persists, the email may have been sent but could be in the recipient\'s spam folder.');
       } finally {
         setIsSending(false);
       }
@@ -341,6 +341,7 @@ const AskAQuestion = ({ onClose }: AskAQuestionProps) => {
               </div>
               <h3 className="text-xl font-semibold text-gray-900 mb-2">Message Sent!</h3>
               <p className="text-gray-600">Your email has been sent successfully to letstalk@thecoordinatedliving.com</p>
+              <p className="text-gray-500 text-sm mt-2">Note: If the recipient doesn't see the email, please ask them to check their spam/junk folder.</p>
             </div>
             <button
               onClick={() => {

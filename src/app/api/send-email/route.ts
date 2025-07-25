@@ -9,8 +9,6 @@ export async function POST(request: NextRequest) {
   try {
     const { userEmail, subject, message } = await request.json();
 
-
-
     // Validate required fields
     if (!userEmail || !subject || !message) {
       return NextResponse.json(
@@ -19,13 +17,46 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(userEmail)) {
+      return NextResponse.json(
+        { error: 'Invalid email format' },
+        { status: 400 }
+      );
+    }
+
+    // Check if environment variables are set
+    if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
+      console.error('Missing email environment variables');
+      return NextResponse.json(
+        { error: 'Email configuration error' },
+        { status: 500 }
+      );
+    }
+
+    console.log('Creating email transporter...');
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS,
       },
+      debug: true, // Enable debug output
+      logger: true, // Log to console
     });
+
+    // Verify transporter configuration
+    try {
+      await transporter.verify();
+      console.log('Email transporter verified successfully');
+    } catch (verifyError) {
+      console.error('Email transporter verification failed:', verifyError);
+      return NextResponse.json(
+        { error: 'Email service configuration error' },
+        { status: 500 }
+      );
+    }
 
     const mailOptions = {
       from: `"Ask Me A Question" <${process.env.EMAIL_USER}>`,
@@ -62,13 +93,38 @@ This message was sent from the Coordinated Living website.
       `,
     };
 
-    await transporter.sendMail(mailOptions);
+    console.log('Sending email...');
+    console.log('From:', mailOptions.from);
+    console.log('To:', mailOptions.to);
+    console.log('Subject:', mailOptions.subject);
 
-    return NextResponse.json({ success: true, message: 'Email sent successfully' });
+    const result = await transporter.sendMail(mailOptions);
+    console.log('Email sent successfully:', result.messageId);
+
+    return NextResponse.json({ 
+      success: true, 
+      message: 'Email sent successfully',
+      messageId: result.messageId 
+    });
   } catch (error) {
     console.error('Email error:', error);
+    
+    // Provide more specific error messages
+    let errorMessage = 'Failed to send email';
+    if (error instanceof Error) {
+      if (error.message.includes('Invalid login')) {
+        errorMessage = 'Email authentication failed - check app password';
+      } else if (error.message.includes('quota')) {
+        errorMessage = 'Email quota exceeded';
+      } else if (error.message.includes('timeout')) {
+        errorMessage = 'Email service timeout';
+      } else {
+        errorMessage = error.message;
+      }
+    }
+    
     return NextResponse.json(
-      { success: false, error: 'Failed to send email' },
+      { success: false, error: errorMessage },
       { status: 500 }
     );
   }
