@@ -581,16 +581,15 @@ const Page = () => {
                 // TODO: Add interaction logic
               }}
             >
-              {/* Date and time text */}
+              {/* Time text only */}
               <div style={{ 
-                fontSize: '14px', 
+                fontSize: '16px', 
                 fontWeight: 'bold', 
-                color: '#000',
+                color: '#845399',
                 textAlign: 'center',
                 lineHeight: '1.1'
               }}>
-                <div>4:30</div>
-                <div style={{ fontSize: '12px' }}>23/7</div>
+                4:30
               </div>
               
               {/* Black overlay at 50% opacity */}
@@ -883,8 +882,8 @@ const Page = () => {
           <div
             className="absolute"
             style={{
-              left: '66vw', // nudged slightly to the left
-              top: '31vh',  // nudged slightly more up
+              left: '54.5vw', // moved a tiny bit to the left
+              top: '32vh',  // moved down just a little bit
               width: '8.5vw', // increased width slightly
               height: '5.5vw', // increased height slightly
               zIndex: 2,
@@ -937,9 +936,9 @@ const Page = () => {
           <div
             className="absolute"
             style={{
-              left: '71vw', // moved slightly to the right
-              top: '42vh',  // moved down a bit more
-              width: '6vw',
+              left: '54vw', // moved slightly to the right
+              top: '42vh',  // moved up a tiny step
+              width: '10vw', // increased width more
               height: '10vh', // increased height a bit
               zIndex: 2,
             }}
@@ -1131,8 +1130,8 @@ const Page = () => {
           <div
             className="absolute"
             style={{
-              left: '54.8vw', // moved back to original position
-              top: '34vh',  // moved up a little more
+              left: '66.5vw', // moved a tiny bit to the right
+              top: '30vh',  // moved up a little more
               width: '8vw', // increased width
               height: '18vh', // increased height a little bit more
               zIndex: 2,
@@ -1186,10 +1185,10 @@ const Page = () => {
           <div
             className="absolute"
             style={{ 
-              left: '59vw', 
-              top: '45vh', 
-              width: '16vw', 
-              height: '9vh', 
+              left: '65vw', 
+              top: '44vh', 
+              width: '19vw', 
+              height: '12vh', 
               zIndex: 2,
               transform: 'rotate(-5deg)',
             }}

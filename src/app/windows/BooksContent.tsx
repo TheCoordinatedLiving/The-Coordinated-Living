@@ -4,7 +4,13 @@ import Image from 'next/image';
 const BookCard = ({ image, title, description }: { image: string, title: string, description: string }) => (
   <div className="text-center flex flex-col items-center">
     <div className="w-40 h-56 relative mb-4">
-      <Image src={image} layout="fill" objectFit="cover" alt={title} className="rounded-md" />
+      <Image 
+        src={image} 
+        alt={title} 
+        fill
+        className="rounded-md object-cover"
+        sizes="160px"
+      />
     </div>
     <h3 className="font-semibold text-md mb-1 text-black">{title}</h3>
     <p className="text-xs text-gray-500 max-w-xs">{description}</p>
@@ -16,7 +22,7 @@ const BooksContent = () => {
     { image: '/keep/book1.svg', title: 'Heart Of Counseling', description: 'A faith-centred guide to compassionate and purposeful counseling.' },
     { image: '/keep/book2.svg', title: 'Counselling & Therapy', description: 'A guide to healing through faith-based counselling and therapy.' },
     { image: '/keep/book3.svg', title: 'Preparing For Marriage', description: 'A faith-centred guide to compassionate and purposeful counseling.' },
-    { image: '/keep/book4.svg', 'title': 'Heart Of Counselling', description: 'A faith-centred guide to compassionate and purposeful counseling.' },
+    { image: '/keep/book4.svg', title: 'Heart Of Counselling', description: 'A faith-centred guide to compassionate and purposeful counseling.' },
   ];
 
   return (
