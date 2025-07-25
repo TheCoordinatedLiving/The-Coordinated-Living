@@ -306,8 +306,7 @@ const AskAQuestion = ({ onClose }: AskAQuestionProps) => {
                   
                   {/* Card 1 - Positioned on top */}
                   <div 
-                    onClick={() => handleCardClick('keep it simple and direct', 'What is the context of the parable of the [specific parable]?')} 
-                    className="cursor-pointer transition-transform hover:scale-[1.02] absolute"
+                    className="absolute"
                     style={{ top: '65px', left: '12px' }}
                   >
                     <Image src="/broswer/keep-it-simple.svg" width={226} height={80} alt="Keep it simple and direct" />
@@ -315,8 +314,7 @@ const AskAQuestion = ({ onClose }: AskAQuestionProps) => {
 
                   {/* Card 2 - Positioned on top */}
                   <div 
-                    onClick={() => handleCardClick('be honest and open', "I have this feeling, and I don't know if it's from God.")} 
-                    className="cursor-pointer transition-transform hover:scale-[1.02] absolute"
+                    className="absolute"
                     style={{ top: '155px', left: '12px' }}
                   >
                     <Image src="/broswer/be-honest.svg" width={226} height={80} alt="Be honest and open" />

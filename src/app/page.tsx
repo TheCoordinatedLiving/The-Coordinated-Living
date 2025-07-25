@@ -1731,11 +1731,9 @@ const Page = () => {
                     <p className="text-gray-800 text-xl leading-relaxed mb-8">
                       Having my cuppa on my table is one sure comfort as I get work done. Your support would be a lovely way to keep it full every time I sit at my desk, and it genuinely helps me sustainably run this platform. Thank you for your kindness!"
                     </p>
-                    <p className="text-gray-800 text-xl leading-relaxed mb-8">
-                      There's nothing quite like a warm cuppa by my side as I dive into work. Your support helps ensure my mug stays full, and more importantly, it directly fuels my ability to sustainably run this platform and keep creating for you. Thank you so much for your kind gesture and for being a part of this journey!"
-                    </p>
+
                     <button
-                      className="mt-4 w-full py-5 bg-[#633366] text-white text-2xl font-medium rounded-full focus:outline-none focus:ring-2 focus:ring-[#633366] focus:ring-opacity-50 transition-all duration-200 shadow-md hover:scale-[1.02]"
+                      className="mt-4 w-full py-5 bg-[#633366] text-white text-2xl font-medium rounded-full focus:outline-none focus:ring-2 focus:ring-[#633366] focus:ring-opacity-50 transition-all duration-200 shadow-md hover:scale-[1.02] cursor-pointer"
                       style={{ letterSpacing: '0.01em' }}
                     >
                       Fill My Cup
