@@ -1,0 +1,68 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+"use client";
+import React from 'react';
+import { useResponsiveOverlays } from '@/hooks/useResponsiveOverlays';
+
+interface ResponsiveOverlayContainerProps {
+    children: React.ReactNode;
+    className?: string;
+}
+
+export const ResponsiveOverlayContainer: React.FC<ResponsiveOverlayContainerProps> = ({
+    children,
+    className = ""
+}) => {
+    const positions = useResponsiveOverlays();
+
+    return (
+        <div className={`relative w-full h-full ${className}`}>
+            {/* Background image container with proper aspect ratio */}
+            <div className="relative w-full h-full overflow-hidden">
+                <img
+                    src="/coordinated.webp"
+                    alt="Experience Background"
+                    className="w-full h-full object-cover object-center"
+                    style={{
+                        minHeight: '100vh',
+                        minWidth: '100vw'
+                    }}
+                />
+
+                {/* Overlay container that maintains aspect ratio */}
+                <div
+                    className="absolute inset-0"
+                    style={{
+                        aspectRatio: '16/9',
+                        maxWidth: '100%',
+                        maxHeight: '100%',
+                        margin: 'auto'
+                    }}
+                >
+                    {React.Children.map(children, (child, index) => {
+                        if (React.isValidElement(child)) {
+                            const overlayType = child.props['data-overlay-type'];
+                            const position = positions[overlayType as keyof typeof positions];
+
+                            if (position) {
+                                return React.cloneElement(child, {
+                                    style: {
+                                        ...child.props.style,
+                                        position: 'absolute',
+                                        left: position.left,
+                                        top: position.top,
+                                        bottom: position.bottom,
+                                        right: position.right,
+                                        width: position.width,
+                                        height: position.height,
+                                        transform: overlayType === 'laptop' ? 'translate(-50%, -50%)' : undefined
+                                    }
+                                });
+                            }
+                        }
+                        return child;
+                    })}
+                </div>
+            </div>
+        </div>
+    );
+};

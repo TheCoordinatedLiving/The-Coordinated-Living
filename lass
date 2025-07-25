@@ -347,12 +347,20 @@ const Page = () => {
 
            }}></div>
           </div>
-
+          <ResponsiveOverlayContainer>
           {/* Laptop iframe overlay */}
           <div
             ref={laptopRef}
             className="absolute cursor-pointer laptop-iframe"
-           
+            style={{
+              left: '47.2vw',
+              top: '67vh',
+              width: '26vw',
+              height: '24vh',
+              transform: 'translate(-50%, -50%)',
+              clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)',
+              zIndex: 2,
+            }}
             onClick={(e) => {
               // Don't zoom if clicking on the iframe content
               if (e.target !== e.currentTarget) {
@@ -1197,7 +1205,7 @@ const Page = () => {
               />
             </div>
           </div>
-
+          </ResponsiveOverlayContainer>
 
           <style jsx>{`
               .letter-glow {

@@ -30,6 +30,16 @@ body {
   box-shadow: 0 0 6px 1px rgba(255,255,255,0.22), 0 0 16px 2px rgba(255,255,255,0.09);
 }
 
+.laptop-iframe {
+  left: 713px;
+  bottom: 80px;
+  width: 392px;
+  height: 207px;
+  transform: translate(-50%, -50%);
+  clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+  z-index: 2;
+}
+
 .letter-clip-path {
   left: 72%;
   top: 88%;
