@@ -307,25 +307,25 @@ const Page = () => {
   }, [isLoaded]);
 
   return (
-    <div ref={pageRef} className="relative w-screen h-screen">
+    <div ref={pageRef} className="relative ">
       {/* Experience page hidden behind */}
       {experienceVisible && (
         <div
           ref={experienceRef}
-          className="fixed inset-0 w-screen h-screen bg-black"
+          className=" w-screen h-screen bg-black relative overflow-hidden"
           style={{ zIndex: 1 }}
         >
-          <img
-            src="/coordinated-3.svg"
+          <img 
+            src="/coordinated-3.webp"
             alt="Experience Background"
-            // className="w- h-full object-cover object-center"
-            width="100%"
-            height="auto"
-            style={{
-              objectFit: 'cover',
-              objectPosition: 'center top',
+            className="absolute top-0 left-0 right-0 bottom-0"
+            // width="100%"
+            // height="auto"
+            // style={{
+            //   objectFit: 'cover',
+            //   objectPosition: 'center top',
  
-            }}
+            // }}
            
           />
 
@@ -354,7 +354,7 @@ const Page = () => {
           {/* Laptop iframe overlay */}
           <div
             ref={laptopRef}
-            className="absolute cursor-pointer laptop-iframe"
+            className="absolute cursor-pointer laptop-iframe inset-0"
             onMouseEnter={() => setShowLaptopTooltip(true)}
             onMouseLeave={() => setShowLaptopTooltip(false)}
             onClick={(e) => {
@@ -395,17 +395,19 @@ const Page = () => {
             <iframe
               src="/windows"
               style={{
-                width: '300%',
-                height: '300%',
+                width: '77vw',
+                height: '40vw',
                 border: 'none',
                 borderRadius: '0',
                 backgroundColor: 'transparent',
                 transform: 'scale(0.3)',
                 transformOrigin: 'center center',
                 position: 'absolute',
-                top: '-100%',
-                left: '-100%',
+                top: '-13.5vw',
+                left: '-25.8vw',
                 pointerEvents: laptopZoomed ? 'auto' : 'none',
+                cursor: 'pointer',
+                
               }}
               onLoad={() => {
                 // Ensure iframe doesn't capture keyboard events when zoomed
@@ -457,7 +459,7 @@ const Page = () => {
 
           {/* Letter clip-path overlay */}
           <div
-            className="absolute cursor-pointer letter-pulse-glow letter-clip-path"
+            className="absolute cursor-pointer letter-pulse-glow letter-clip-path inset-0"
             onMouseEnter={() => setShowLetterTooltip(true)}
             onMouseLeave={() => setShowLetterTooltip(false)}
             onClick={() => {
@@ -469,10 +471,10 @@ const Page = () => {
           {/* cup- clippath */}
           <div
             className="absolute group"
-            style={{ right: '14vw', top: '60vh', width: '7vw', height: '11vh', zIndex: 10 }}
+            style={{ right: '14vw', top: '34vw', width: '7vw', height: '11vh', zIndex: 10 }}
           >
             <div
-              className="cursor-pointer cup-glow heartbeat cup-float cup-hover-glow w-full h-full"
+              className="cursor-pointer cup-glow heartbeat cup-float cup-hover-glow w-full h-full "
               style={{
                 filter: 'blur(2px)',
               }}
@@ -518,14 +520,17 @@ const Page = () => {
           </div>
           {/* phone- clippath */}
           <div
-            className="absolute phone-pulse-glow phone-yellow-glow group"
+            className="absolute inset-0  phone-pulse-glow phone-yellow-glow group cursor-pointer"
             style={{ 
               left: '18vw', 
-              bottom: '3dvw', 
+              top: '45vw', 
               width: '8vw', 
               height: '8vw', 
              
-              backgroundColor: 'red',
+            }}
+            onClick={() => {
+              console.log('Phone clicked!');
+              setShowVideos(true);
             }}
           >
             <div
@@ -534,10 +539,7 @@ const Page = () => {
                 clipPath: 'polygon(18% 65%, 43% 60%, 70% 84%, 39% 90%)',
                 borderRadius: '50% 50% 0 0',
               }}
-              onClick={() => {
-                console.log('Phone clicked!');
-                setShowVideos(true);
-              }}
+            
             />
             {/* Phone Tooltip */}
             <div className="absolute -top-12 left-1/2 transform -translate-x-1/2 bg-[#35B2C2] text-black px-3 py-2 rounded-lg text-sm font-medium transition-all duration-500 pointer-events-none z-30 whitespace-nowrap phone-tooltip-glow group-hover:opacity-100 group-hover:scale-100 opacity-0 scale-95">
@@ -957,7 +959,7 @@ const Page = () => {
             className="absolute"
             style={{
               left: '54.5vw', // moved a tiny bit to the left
-              top: '19vw',  // moved down just a little bit
+              top: '18vw',  // moved down just a little bit
               width: '8.5vw', // increased width slightly
               height: '5.5vw', // increased height slightly
               zIndex: 2,
