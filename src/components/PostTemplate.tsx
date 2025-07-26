@@ -17,6 +17,8 @@ export default function PostTemplate({
   currentPage = 1,
   totalPages = 1
 }: PostTemplateProps) {
+  // Use title to avoid unused variable warning
+  const displayTitle = title;
   return (
     <div className="bg-white">
       <div className="max-w-2xl mx-auto px-6 py-2">
@@ -52,9 +54,7 @@ export default function PostTemplate({
           <div className="flex justify-between items-start mb-2">
             <div className="flex-1 pt-12 ml-0">
               <h1 className="text-4xl font-bold leading-tight" style={{ color: "#000000" }}>
-                POST
-                <br />
-                TITLE HERE
+                {displayTitle}
               </h1>
             </div>
             <div className="ml-4">
