@@ -134,7 +134,7 @@ const Page = () => {
   useEffect(() => {
     const loadAnimation = async () => {
       try {
-        const response = await fetch('/Fumaa.json');
+        await fetch('/Fumaa.json');
         // Animation loaded but not used currently
       } catch (error) {
         console.error('Failed to load Fumaa animation:', error);
@@ -1867,9 +1867,9 @@ const Page = () => {
                     {/* Post Title */}
                     <div className="mb-6">
                       <h1 className="text-xl font-bold text-gray-900 mb-2 leading-tight">
-                        "A THOUSAND TIMES I FAILED, STILL YOUR MERCY REMAINS.
+                        &quot;A THOUSAND TIMES I FAILED, STILL YOUR MERCY REMAINS.
                         <br />
-                        SHOULD I STUMBLE AGAIN, STILL I'M CAUGHT IN YOUR GRACE."
+                        SHOULD I STUMBLE AGAIN, STILL I&apos;M CAUGHT IN YOUR GRACE.&quot;
                       </h1>
                       <div className="w-16 h-0.5 bg-gray-900 mx-auto"></div>
                     </div>
