@@ -2,6 +2,7 @@
 import { useRef, useLayoutEffect, useState, useEffect } from 'react';
 import Image from "next/image";
 import { gsap } from 'gsap';
+import PostTemplate from '../components/PostTemplate';
 
 const Loader = () => {
   const logoRef = useRef(null);
@@ -119,11 +120,108 @@ const Page = () => {
   const [showVideos, setShowVideos] = useState(false);
   const [showWelcomeModal, setShowWelcomeModal] = useState(false);
   const [showPostModal, setShowPostModal] = useState(false);
+  const [currentPostIndex, setCurrentPostIndex] = useState(0);
   const [fromWindows, setFromWindows] = useState(false);
   const [showFumaaModal, setShowFumaaModal] = useState(false);
   const [showLaptopTooltip, setShowLaptopTooltip] = useState(false);
   const [showLetterTooltip, setShowLetterTooltip] = useState(false);
 
+  // Sample posts data
+  const posts = [
+    {
+      title: "POST TITLE HERE",
+      leftContent: (
+        <>
+          <p className="text-base leading-relaxed" style={{ color: "#000000" }}>
+            "A thousand times I failed, still your mercy remains, should I stumble out here still I'm caught in your grace." This Hillsong lyric has always echoed in my heart, and its truth resonates even stronger today.
+          </p>
+          <p className="text-base leading-relaxed" style={{ color: "#000000" }}>
+            For years, I pursued other paths, pouring tireless effort into fields he hadn't called me to, only to find no lasting fruit. That rollercoaster of emotions, the unpleasant experiences, the endless accusations and judgments thrown around – they're hallmarks of a mind out of alignment.
+          </p>
+        </>
+      ),
+      rightContent: (
+        <>
+          <p className="text-base leading-relaxed" style={{ color: "#000000" }}>
+            Want to know the root cause? It's simply a lack of trust in the Father. No matter how you rationalize it, we constantly try to force a fit where there isn't one.
+          </p>
+          <p className="text-base leading-relaxed" style={{ color: "#000000" }}>
+            But in Christ, we step into the true identity the Father created for us. This identity comes with specific tasks, assignments, and responsibilities, all of which we are perfectly equipped for. It's there we discover an unexplainable peace, joy, and confidence.
+          </p>
+        </>
+      ),
+      bottomRightContent: (
+        <p className="text-base leading-relaxed" style={{ color: "#000000" }}>
+          When we align ourselves with God's purpose for our lives, we find a peace that surpasses all understanding. This isn't about perfection – it's about walking in the identity He has given us, trusting that He has equipped us for every good work.
+        </p>
+      )
+    },
+    {
+      title: "SECOND POST TITLE",
+      leftContent: (
+        <>
+          <p className="text-base leading-relaxed" style={{ color: "#000000" }}>
+            "In all things God works for the good of those who love him." This promise from Romans 8:28 has been my anchor through many storms. When life seems chaotic and uncertain, this truth reminds me that God is always at work.
+          </p>
+          <p className="text-base leading-relaxed" style={{ color: "#000000" }}>
+            Too often we try to control every aspect of our lives, forgetting that we serve a God who sees the bigger picture. Our limited perspective can't comprehend the intricate ways He weaves our experiences together for His glory and our good.
+          </p>
+        </>
+      ),
+      rightContent: (
+        <>
+          <p className="text-base leading-relaxed" style={{ color: "#000000" }}>
+            Trusting God doesn't mean we become passive or indifferent to our circumstances. Instead, it means we actively seek His will while resting in His sovereignty. We pray, we work, we serve, but we do so with open hands.
+          </p>
+          <p className="text-base leading-relaxed" style={{ color: "#000000" }}>
+            The peace that comes from this kind of trust is unlike anything the world can offer. It's not dependent on circumstances, but on the unchanging character of our Heavenly Father who loves us beyond measure.
+          </p>
+        </>
+      ),
+      bottomRightContent: (
+        <p className="text-base leading-relaxed" style={{ color: "#000000" }}>
+          As we learn to trust God more deeply, we begin to see His hand in every detail of our lives. What once seemed like random events become part of a beautiful tapestry He's weaving for our good and His glory.
+        </p>
+      )
+    },
+    {
+      title: "THIRD POST TITLE",
+      leftContent: (
+        <>
+          <p className="text-base leading-relaxed" style={{ color: "#000000" }}>
+            "Be still and know that I am God." These words from Psalm 46:10 have become increasingly precious to me in our fast-paced world. In the midst of constant noise and endless demands, God calls us to stillness.
+          </p>
+          <p className="text-base leading-relaxed" style={{ color: "#000000" }}>
+            Stillness isn't just about physical quiet, though that's important. It's about quieting our hearts and minds before the Lord, allowing His peace to wash over us and His voice to be heard above the chaos.
+          </p>
+        </>
+      ),
+      rightContent: (
+        <>
+          <p className="text-base leading-relaxed" style={{ color: "#000000" }}>
+            In those moments of stillness, we remember who God is and who we are in Him. We're reminded that He is sovereign, He is good, and He is working all things together for our good.
+          </p>
+          <p className="text-base leading-relaxed" style={{ color: "#000000" }}>
+            The world tells us to hustle, to strive, to never stop moving. But God invites us to rest in Him, to find our strength in quietness and trust. This is the counter-cultural way of the Kingdom.
+          </p>
+        </>
+      ),
+      bottomRightContent: (
+        <p className="text-base leading-relaxed" style={{ color: "#000000" }}>
+          As we practice stillness, we discover that God's presence is our greatest treasure. In Him we find rest for our souls, peace for our minds, and strength for our journey.
+        </p>
+      )
+    }
+  ];
+
+  // Navigation functions
+  const handlePreviousPost = () => {
+    setCurrentPostIndex(prev => Math.max(0, prev - 1));
+  };
+
+  const handleNextPost = () => {
+    setCurrentPostIndex(prev => Math.min(posts.length - 1, prev + 1));
+  };
 
   const pageRef = useRef<HTMLDivElement>(null);
   const curtainRef = useRef<HTMLDivElement>(null);
@@ -1852,61 +1950,63 @@ const Page = () => {
                 Return to Desk
               </button>
               
-              {/* Post content - centered */}
-              <div className="absolute inset-0 flex items-center justify-center p-8">
-                <div className="relative z-10 max-w-2xl w-full">
-                  {/* White card with content */}
-                  <div 
-                    className="p-8 text-center post-modal-card"
-                    style={{
-                      backgroundColor: '#FFFFFF',
-                      borderRadius: '0px',
-                      boxShadow: '10.23px 10.23px 0px rgba(0, 0, 0, 0.25)'
-                    }}
+                            {/* Post Template Content */}
+              <div className="absolute inset-0 flex items-center justify-center p-16">
+                {/* Left Navigation Button */}
+                {currentPostIndex > 0 && (
+                  <button
+                    onClick={handlePreviousPost}
+                    className="absolute left-8 top-1/2 transform -translate-y-1/2 z-20 w-12 h-12 bg-white rounded-full shadow-lg flex items-center justify-center hover:bg-gray-50 transition-colors duration-200 cursor-pointer"
+                    style={{ backgroundColor: 'rgba(255, 255, 255, 0.9)' }}
                   >
-                    {/* Post Title */}
-                    <div className="mb-6">
-                      <h1 className="text-xl font-bold text-gray-900 mb-2 leading-tight">
-                        &quot;A THOUSAND TIMES I FAILED, STILL YOUR MERCY REMAINS.
-                        <br />
-                        SHOULD I STUMBLE AGAIN, STILL I&apos;M CAUGHT IN YOUR GRACE.&quot;
-                      </h1>
-                      <div className="w-16 h-0.5 bg-gray-900 mx-auto"></div>
-                    </div>
-                    
-                    {/* Post Content */}
-                    <div className="text-left">
-                      <p className="text-gray-800 text-base leading-relaxed mb-4">
-                        &quot;A thousand times I failed, still your mercy remains, should I stumble out here still I&apos;m caught in your grace.&quot; This Hillsong lyric has always echoed in my heart, and its truth resonates even stronger today. I&apos;m here today, sharing the very nature and gifts the Father blessed me with.
-                      </p>
-                      <p className="text-gray-800 text-base leading-relaxed mb-4">
-                        For years, I pursued other paths, pouring tireless effort into fields he hadn&apos;t called me to, only to find no lasting fruit. That rollercoaster of emotions, the unpleasant experiences, the endless accusations and judgments thrown around – they&apos;re hallmarks of a mind out of alignment. We defy the very nature of the One who modeled us in His image, yet we stand confident, feeling fully justified.
-                      </p>
-                      <p className="text-gray-800 text-base leading-relaxed mb-4">
-                        Want to know the root cause? It&apos;s simply a lack of trust in the Father. No matter how you rationalize it, we constantly try to force a fit where there isn&apos;t one.
-                      </p>
-                      <p className="text-gray-800 text-base leading-relaxed mb-4">
-                        But in Christ, we step into the true identity the Father created for us. This identity comes with specific tasks, assignments, and responsibilities, all of which we are perfectly equipped for. It&apos;s there we discover an unexplainable peace, joy, and confidence. This is the rest of God.
-                      </p>
-                      <p className="text-gray-800 text-base leading-relaxed font-semibold text-center">
-                        This is the rest of God.
-                      </p>
-                    </div>
-                  </div>
-                  
-                  {/* Navigation arrows - outside the card */}
-                  <div className="flex justify-center space-x-12 mt-6">
-                    <button className="w-10 h-10 rounded-full bg-white text-gray-800 flex items-center justify-center hover:bg-gray-100 transition-colors shadow-lg">
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                      </svg>
-                    </button>
-                    <button className="w-10 h-10 rounded-full bg-white text-gray-800 flex items-center justify-center hover:bg-gray-100 transition-colors shadow-lg">
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                      </svg>
-                    </button>
-                  </div>
+                    <svg
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="text-gray-700"
+                    >
+                      <polyline points="15,18 9,12 15,6"></polyline>
+                    </svg>
+                  </button>
+                )}
+
+                {/* Right Navigation Button */}
+                {currentPostIndex < posts.length - 1 && (
+                  <button
+                    onClick={handleNextPost}
+                    className="absolute right-8 top-1/2 transform -translate-y-1/2 z-20 w-12 h-12 bg-white rounded-full shadow-lg flex items-center justify-center hover:bg-gray-50 transition-colors duration-200 cursor-pointer"
+                    style={{ backgroundColor: 'rgba(255, 255, 255, 0.9)' }}
+                  >
+                    <svg
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="text-gray-700"
+                    >
+                      <polyline points="9,18 15,12 9,6"></polyline>
+                    </svg>
+                  </button>
+                )}
+
+                <div className="relative z-10 max-w-2xl w-full bg-white rounded-lg shadow-2xl overflow-hidden">
+                  <PostTemplate
+                    title={posts[currentPostIndex].title}
+                    currentPage={currentPostIndex + 1}
+                    totalPages={posts.length}
+                    leftContent={posts[currentPostIndex].leftContent}
+                    rightContent={posts[currentPostIndex].rightContent}
+                    bottomRightContent={posts[currentPostIndex].bottomRightContent}
+                  />
                 </div>
               </div>
             </div>
