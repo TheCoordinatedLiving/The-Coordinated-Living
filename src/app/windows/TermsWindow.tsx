@@ -80,7 +80,7 @@ const TermsWindow = ({ onClose }: TermsWindowProps) => {
                     <li> Definitions</li>
                     <li> Scope of Service</li>
                     <li> Privacy Policy</li>
-                    <li> Children's Privacy</li>
+                    <li> Children&apos;s Privacy</li>
                     <li> Cookies</li>
                     <li> License</li>
                     <li> Hyperlinking to our Content</li>
@@ -274,12 +274,12 @@ const TermsWindow = ({ onClose }: TermsWindowProps) => {
                 </section>
 
                 <section>
-                  <h2 className="text-xl font-semibold text-[#5C3262] mb-3">1. 4. CHILDREN'S PRIVACY</h2>
+                  <h2 className="text-xl font-semibold text-[#5C3262] mb-3">1. 4. CHILDREN&apos;S PRIVACY</h2>
                   <p className="mb-4">
                     Our Service does not address anyone under the age of 13. We do not knowingly collect personally identifiable information from anyone under the age of 13. If You are a parent or guardian and You are aware that Your child has provided Us with Personal Data, please contact Us. If We become aware that We have collected Personal Data from anyone under the age of 13 without verification of parental consent, we take steps to remove that information from Our servers.
                   </p>
                   <p className="mb-4">
-                    If we need to rely on consent as a legal basis for processing Your information and Your country requires consent from a parent, we may require Your parent's consent before We collect and use that information.
+                    If we need to rely on consent as a legal basis for processing Your information and Your country requires consent from a parent, we may require Your parent&apos;s consent before We collect and use that information.
                   </p>
                   <p className="mb-4">
                     We may update Our Privacy Policy from time to time. We will notify You of any changes by posting the new Privacy Policy on this page.
@@ -299,10 +299,10 @@ const TermsWindow = ({ onClose }: TermsWindowProps) => {
                     Cookies are used for different purposes. They allow you to be recognized as the same user across the pages of a website, between websites or in your usage of an app. The types of information that we collect through cookies include IP address; device ID; viewed pages; browser type; browsing information; operating system; internet service provider; timestamp; responses to advertisements; the referring URL; and features used or activities engaged in within the website/apps.
                   </p>
                   <p className="mb-4">
-                    We employ the use of cookies. By accessing website, you agree to use cookies in agreement with the ikoordinate's Privacy Policy.
+                    We employ the use of cookies. By accessing website, you agree to use cookies in agreement with the ikoordinate&apos;s Privacy Policy.
                   </p>
                   <p className="mb-4">
-                    Most interactive websites use cookies to let us retrieve the user's details for each visit. Cookies are used by our website to enable the functionality of certain areas to make it easier for people visiting our website. Some of our affiliate/advertising partners may also use cookies.
+                    Most interactive websites use cookies to let us retrieve the user&apos;s details for each visit. Cookies are used by our website to enable the functionality of certain areas to make it easier for people visiting our website. Some of our affiliate/advertising partners may also use cookies.
                   </p>
                   <p className="mb-4">
                     Our website and apps use cookies for different purposes, these include;
@@ -435,7 +435,7 @@ const TermsWindow = ({ onClose }: TermsWindowProps) => {
                     <li>By use of any other description of our website being linked to that makes sense within the context and format of content on the linking party's site.</li>
                   </ul>
                   <p className="mb-4">
-                    No use of ikoordinate's logo or other artwork will be allowed for linking absent a trademark license agreement.
+                    No use of ikoordinate&apos;s logo or other artwork will be allowed for linking absent a trademark license agreement.
                   </p>
                 </section>
 
@@ -449,7 +449,7 @@ const TermsWindow = ({ onClose }: TermsWindowProps) => {
                 <section>
                   <h2 className="text-xl font-semibold text-[#5C3262] mb-3">1. 9. RESERVATION OF RIGHTS</h2>
                   <p className="mb-4">
-                    We reserve the right to request that you remove all links or any particular link to our website. You approve to immediately remove all links to our Website upon request. We also reserve the right to these terms and conditions and it's linking policy at any time. By continuously linking to our website, you agree to be bound to and follow these linking terms and conditions.
+                    We reserve the right to request that you remove all links or any particular link to our website. You approve to immediately remove all links to our Website upon request. We also reserve the right to these terms and conditions and it&apos;s linking policy at any time. By continuously linking to our website, you agree to be bound to and follow these linking terms and conditions.
                   </p>
                 </section>
 

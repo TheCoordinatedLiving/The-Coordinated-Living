@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 import React from 'react';
+import Image from 'next/image';
 import { useResponsiveOverlays } from '@/hooks/useResponsiveOverlays';
 
 interface ResponsiveOverlayContainerProps {
@@ -18,10 +19,11 @@ export const ResponsiveOverlayContainer: React.FC<ResponsiveOverlayContainerProp
         <div className={`relative w-full h-full ${className}`}>
             {/* Background image container with proper aspect ratio */}
             <div className="relative w-full h-full overflow-hidden">
-                <img
+                <Image
                     src="/coordinated.webp"
                     alt="Experience Background"
-                    className="w-full h-full object-cover object-center"
+                    fill
+                    className="object-cover object-center"
                     style={{
                         minHeight: '100vh',
                         minWidth: '100vw'

@@ -1,6 +1,7 @@
 'use client'
 import React, { useState } from 'react';
-import { X, Smartphone, Monitor, Coffee, Lightbulb, Leaf, PenTool, FileText, Cloud, Calendar } from 'lucide-react';
+import { X, Smartphone, Monitor, Coffee, Lightbulb, Leaf, PenTool, FileText, Calendar } from 'lucide-react';
+import Image from 'next/image';
 
 // Define the type for workspace items
 interface WorkspaceItem {
@@ -102,10 +103,11 @@ const InteractiveWorkspace = () => {
     <div className="relative w-full min-h-screen bg-gray-100">
       {/* Background Image Container */}
       <div className="relative w-full h-screen overflow-hidden">
-        <img 
+        <Image 
           src="https://i.snipboard.io/gCti5j.jpg"
           alt="Workspace"
-          className="w-full h-full object-contain"
+          fill
+          className="object-contain"
         />
         {/* Interactive Hotspots */}
         <div className="absolute inset-0">

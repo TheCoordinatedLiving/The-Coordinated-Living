@@ -8,7 +8,7 @@ export const processTextContent = (text: string): React.ReactNode[] => {
   // Quote regex pattern - matches text within quotes
   const quoteRegex = /"([^"]+)"/g;
   
-  let processedText = text;
+  const processedText = text;
   const elements: React.ReactNode[] = [];
   let lastIndex = 0;
   
@@ -48,7 +48,7 @@ export const processTextContent = (text: string): React.ReactNode[] => {
   
   elements.forEach((element, elementIndex) => {
     if (typeof element === 'string') {
-      let text = element;
+      const text = element;
       let quoteLastIndex = 0;
       const quoteMatches = Array.from(text.matchAll(quoteRegex));
       

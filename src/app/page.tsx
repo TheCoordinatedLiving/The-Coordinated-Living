@@ -2,9 +2,6 @@
 import { useRef, useLayoutEffect, useState, useEffect } from 'react';
 import Image from "next/image";
 import { gsap } from 'gsap';
-import { useRouter } from 'next/navigation';
-import Lottie from 'lottie-react';
-import { ResponsiveOverlayContainer } from '@/components/ResponsiveOverlayContainers';
 
 const Loader = () => {
   const logoRef = useRef(null);
@@ -123,7 +120,6 @@ const Page = () => {
   const [showWelcomeModal, setShowWelcomeModal] = useState(false);
   const [showPostModal, setShowPostModal] = useState(false);
   const [fromWindows, setFromWindows] = useState(false);
-  const [fumaaAnimation, setFumaaAnimation] = useState(null);
   const [showFumaaModal, setShowFumaaModal] = useState(false);
   const [showLaptopTooltip, setShowLaptopTooltip] = useState(false);
   const [showLetterTooltip, setShowLetterTooltip] = useState(false);
@@ -140,7 +136,7 @@ const Page = () => {
       try {
         const response = await fetch('/Fumaa.json');
         const animation = await response.json();
-        setFumaaAnimation(animation);
+        // Animation loaded but not used currently
       } catch (error) {
         console.error('Failed to load Fumaa animation:', error);
       }
@@ -315,18 +311,14 @@ const Page = () => {
           className=" w-screen h-screen bg-black relative overflow-hidden"
           style={{ zIndex: 1 }}
         >
-          <img 
+          <Image 
             src="/coordinated-3.webp"
             alt="Experience Background"
-            className="absolute top-0 left-0 right-0 bottom-0"
-            // width="100%"
-            // height="auto"
-            // style={{
-            //   objectFit: 'cover',
-            //   objectPosition: 'center top',
- 
-            // }}
-           
+            fill
+            style={{
+              objectFit: 'cover',
+              objectPosition: 'center top',
+            }}
           />
 
           {/* <div style={{
@@ -585,13 +577,13 @@ const Page = () => {
                   pointerEvents: 'none',
                 }}
               >
-                "A thousand times I failed, still your mercy remains, should I stumble out here still I'm caught in your grace." This Hillsong lyric has always echoed in my heart, and its truth resonates even stronger today. I'm here today, sharing the very nature and gifts the Father blessed me with.
+                &quot;A thousand times I failed, still your mercy remains, should I stumble out here still I&apos;m caught in your grace.&quot; This Hillsong lyric has always echoed in my heart, and its truth resonates even stronger today. I&apos;m here today, sharing the very nature and gifts the Father blessed me with.
                 <br /><br />
-                For years, I pursued other paths, pouring tireless effort into fields he hadn't called me to, only to find no lasting fruit. That rollercoaster of emotions, the unpleasant experiences, the endless accusations and judgments thrown around – they're hallmarks of a mind out of alignment. We defy the very nature of the One who modeled us in His image, yet we stand confident, feeling fully justified.
+                For years, I pursued other paths, pouring tireless effort into fields he hadn&apos;t called me to, only to find no lasting fruit. That rollercoaster of emotions, the unpleasant experiences, the endless accusations and judgments thrown around – they&apos;re hallmarks of a mind out of alignment. We defy the very nature of the One who modeled us in His image, yet we stand confident, feeling fully justified.
                 <br /><br />
-                Want to know the root cause? It's simply a lack of trust in the Father. No matter how you rationalize it, we constantly try to force a fit where there isn't one.
+                Want to know the root cause? It&apos;s simply a lack of trust in the Father. No matter how you rationalize it, we constantly try to force a fit where there isn&apos;t one.
                 <br /><br />
-                But in Christ, we step into the true identity the Father created for us. This identity comes with specific tasks, assignments, and responsibilities, all of which we are perfectly equipped for. It's there we discover an unexplainable peace, joy, and confidence. This is the rest of God.
+                But in Christ, we step into the true identity the Father created for us. This identity comes with specific tasks, assignments, and responsibilities, all of which we are perfectly equipped for. It&apos;s there we discover an unexplainable peace, joy, and confidence. This is the rest of God.
               </div>
               
               {/* Black overlay at 30% opacity */}
@@ -703,7 +695,7 @@ const Page = () => {
                     Psalm 94:18–19
                   </div>
                   <div>
-                    When I thought, "My foot slips," Your steadfast love, O LORD, helped me up. When the cares of my heart are many, Your consolations cheer my soul.
+                    When I thought, &quot;My foot slips,&quot; Your steadfast love, O LORD, helped me up. When the cares of my heart are many, Your consolations cheer my soul.
                   </div>
                 </div>
 
@@ -981,16 +973,12 @@ const Page = () => {
               }}
             >
               {/* Image placed here */}
-              <img
+              <Image
                 src="/scene1.jpg"
                 alt="Scene 1"
+                fill
                 style={{
-                  width: '100%',
-                  height: '100%',
                   objectFit: 'cover',
-                  position: 'absolute',
-                  top: 0,
-                  left: 0,
                 }}
               />
               {/* Black overlay at 50% opacity */}
@@ -1197,16 +1185,12 @@ const Page = () => {
               }}
             >
               {/* Image placed here */}
-              <img
+              <Image
                 src="/landscape.jpg"
                 alt="Landscape"
+                fill
                 style={{
-                  width: '100%',
-                  height: '100%',
                   objectFit: 'cover',
-                  position: 'absolute',
-                  top: 0,
-                  left: 0,
                 }}
               />
               {/* Black overlay at 50% opacity */}
@@ -1251,16 +1235,12 @@ const Page = () => {
               }}
             >
               {/* James Town Image */}
-              <img
+              <Image
                 src="/james-town.jpeg"
                 alt="James Town"
+                fill
                 style={{
-                  width: '100%',
-                  height: '100%',
                   objectFit: 'cover',
-                  position: 'absolute',
-                  top: 0,
-                  left: 0,
                 }}
               />
               
@@ -1898,16 +1878,16 @@ const Page = () => {
                     {/* Post Content */}
                     <div className="text-left">
                       <p className="text-gray-800 text-base leading-relaxed mb-4">
-                        "A thousand times I failed, still your mercy remains, should I stumble out here still I'm caught in your grace." This Hillsong lyric has always echoed in my heart, and its truth resonates even stronger today. I'm here today, sharing the very nature and gifts the Father blessed me with.
+                        &quot;A thousand times I failed, still your mercy remains, should I stumble out here still I&apos;m caught in your grace.&quot; This Hillsong lyric has always echoed in my heart, and its truth resonates even stronger today. I&apos;m here today, sharing the very nature and gifts the Father blessed me with.
                       </p>
                       <p className="text-gray-800 text-base leading-relaxed mb-4">
-                        For years, I pursued other paths, pouring tireless effort into fields he hadn't called me to, only to find no lasting fruit. That rollercoaster of emotions, the unpleasant experiences, the endless accusations and judgments thrown around – they're hallmarks of a mind out of alignment. We defy the very nature of the One who modeled us in His image, yet we stand confident, feeling fully justified.
+                        For years, I pursued other paths, pouring tireless effort into fields he hadn&apos;t called me to, only to find no lasting fruit. That rollercoaster of emotions, the unpleasant experiences, the endless accusations and judgments thrown around – they&apos;re hallmarks of a mind out of alignment. We defy the very nature of the One who modeled us in His image, yet we stand confident, feeling fully justified.
                       </p>
                       <p className="text-gray-800 text-base leading-relaxed mb-4">
-                        Want to know the root cause? It's simply a lack of trust in the Father. No matter how you rationalize it, we constantly try to force a fit where there isn't one.
+                        Want to know the root cause? It&apos;s simply a lack of trust in the Father. No matter how you rationalize it, we constantly try to force a fit where there isn&apos;t one.
                       </p>
                       <p className="text-gray-800 text-base leading-relaxed mb-4">
-                        But in Christ, we step into the true identity the Father created for us. This identity comes with specific tasks, assignments, and responsibilities, all of which we are perfectly equipped for. It's there we discover an unexplainable peace, joy, and confidence. This is the rest of God.
+                        But in Christ, we step into the true identity the Father created for us. This identity comes with specific tasks, assignments, and responsibilities, all of which we are perfectly equipped for. It&apos;s there we discover an unexplainable peace, joy, and confidence. This is the rest of God.
                       </p>
                       <p className="text-gray-800 text-base leading-relaxed font-semibold text-center">
                         This is the rest of God.
@@ -2058,7 +2038,7 @@ const Page = () => {
                   {/* Post Content */}
                   <div className="text-center">
                     <p className="text-gray-800 text-xl leading-relaxed mb-8">
-                      Having my cuppa on my table is one sure comfort as I get work done. Your support would be a lovely way to keep it full every time I sit at my desk, and it genuinely helps me sustainably run this platform. Thank you for your kindness!"
+                      Having my cuppa on my table is one sure comfort as I get work done. Your support would be a lovely way to keep it full every time I sit at my desk, and it genuinely helps me sustainably run this platform. Thank you for your kindness!
                     </p>
 
                     <button

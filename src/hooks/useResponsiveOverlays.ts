@@ -3,7 +3,7 @@ import { useState, useEffect, useCallback } from 'react';
 
 interface OverlayPosition {
   left: string;
-  top: string;
+  top?: string;
   width: string;
   height: string;
   bottom?: string;
@@ -31,7 +31,7 @@ const CHROME_BREAKPOINTS = {
 
 
 
-const getResponsivePositions = (screenWidth: number, screenHeight: number): ResponsivePositions => {
+const getResponsivePositions = (screenWidth: number): ResponsivePositions => {
   console.log("📐 Screen width:", screenWidth);
 
   if (screenWidth <= CHROME_BREAKPOINTS.mobileS) {
@@ -134,12 +134,11 @@ const getResponsivePositions = (screenWidth: number, screenHeight: number): Resp
 
 export const useResponsiveOverlays = () => {
   const [positions, setPositions] = useState<ResponsivePositions>(() =>
-    getResponsivePositions(typeof window !== 'undefined' ? window.innerWidth : 1920,
-                          typeof window !== 'undefined' ? window.innerHeight : 1080)
+    getResponsivePositions(typeof window !== 'undefined' ? window.innerWidth : 1920)
   );
 
   const updatePositions = useCallback(() => {
-    const newPositions = getResponsivePositions(window.innerWidth, window.innerHeight);
+    const newPositions = getResponsivePositions(window.innerWidth);
     setPositions(newPositions);
   }, []);
 

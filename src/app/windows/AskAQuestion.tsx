@@ -27,11 +27,6 @@ const AskAQuestion = ({ onClose }: AskAQuestionProps) => {
   const [networkError, setNetworkError] = useState('');
   const sendTimeout = useRef<NodeJS.Timeout | null>(null);
 
-  const handleCardClick = (newSubject: string, newMessage: string) => {
-    setSubject(newSubject);
-    setMessage(newMessage);
-  };
-
   const validateForm = () => {
     const errors = {
       userEmail: !userEmail.trim(),
@@ -87,7 +82,7 @@ const AskAQuestion = ({ onClose }: AskAQuestionProps) => {
         }
       } catch (error) {
         console.error('Error sending email:', error);
-        setNetworkError('Failed to send email. Please check your connection and try again. If the problem persists, the email may have been sent but could be in the recipient\'s spam folder.');
+        setNetworkError('Failed to send email. Please check your connection and try again. If the problem persists, the email may have been sent but could be in the recipient&apos;s spam folder.');
       } finally {
         setIsSending(false);
       }
