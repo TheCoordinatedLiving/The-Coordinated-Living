@@ -4,6 +4,29 @@ import Image from "next/image";
 import { gsap } from 'gsap';
 import PostTemplate from '../components/PostTemplate';
 
+// Mobile Overlay Component
+const MobileOverlay = () => {
+  return (
+    <div className="fixed inset-0 z-[9999] w-screen h-screen bg-gradient-to-r from-[#3A2F50] to-[#306D7A] flex flex-col items-center justify-center p-8">
+      {/* Circular Loading Icon */}
+      <div className="mb-8">
+        <div className="relative">
+          {/* Outer circle */}
+          <div className="w-16 h-16 border-2 border-dotted border-[#66C2D9] rounded-full animate-spin"></div>
+          {/* Inner circle */}
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-12 h-12 border-2 border-dotted border-[#66C2D9] rounded-full animate-spin" style={{ animationDirection: 'reverse' }}></div>
+        </div>
+      </div>
+      
+      {/* Text Content */}
+      <div className="text-center text-white">
+        <p className="text-lg font-bold mb-2">For Best Experience Open</p>
+        <p className="text-lg font-bold">In A Browser.</p>
+      </div>
+    </div>
+  );
+};
+
 const Loader = () => {
   const logoRef = useRef(null);
   const containerRef = useRef(null);
@@ -125,6 +148,7 @@ const Page = () => {
   const [showFumaaModal, setShowFumaaModal] = useState(false);
   const [showLaptopTooltip, setShowLaptopTooltip] = useState(false);
   const [showLetterTooltip, setShowLetterTooltip] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   // Sample posts data
   const posts = [
@@ -268,6 +292,19 @@ const Page = () => {
     }
   }, []);
 
+  // Mobile detection
+  useEffect(() => {
+    const checkMobile = () => {
+      const isMobileDevice = window.innerWidth < 768 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+      setIsMobile(isMobileDevice);
+    };
+
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   useEffect(() => {
     // Don't start the loader timer if coming from Windows
     if (fromWindows) return;
@@ -401,6 +438,9 @@ const Page = () => {
 
   return (
     <div ref={pageRef} className="relative ">
+      {/* Mobile Overlay */}
+      {isMobile && <MobileOverlay />}
+      
       {/* Experience page hidden behind */}
       {experienceVisible && (
         <div
@@ -1669,6 +1709,7 @@ const Page = () => {
                 transform-origin: 50% 50%;
                 animation: smoke1 3s linear infinite;
                 animation-delay: 0.5s;
+                will-change: transform, opacity, filter;
               }
 
               .smoke-animation2 {
@@ -1676,6 +1717,7 @@ const Page = () => {
                 transform-origin: 50% 50%;
                 animation: smoke2 3s linear infinite;
                 animation-delay: 1.5s;
+                will-change: transform, opacity, filter;
               }
 
               .smoke-animation3 {
@@ -1683,6 +1725,7 @@ const Page = () => {
                 transform-origin: 50% 50%;
                 animation: smoke3 4s linear infinite;
                 animation-delay: 2.5s;
+                will-change: transform, opacity, filter;
               }
 
               @keyframes smoke1 {
