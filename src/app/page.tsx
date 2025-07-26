@@ -135,7 +135,6 @@ const Page = () => {
     const loadAnimation = async () => {
       try {
         const response = await fetch('/Fumaa.json');
-        const animation = await response.json();
         // Animation loaded but not used currently
       } catch (error) {
         console.error('Failed to load Fumaa animation:', error);
@@ -1070,7 +1069,7 @@ const Page = () => {
                 MozUserSelect: 'none',
                 msUserSelect: 'none',
               }}>
-                "In the world you will have tribulation. But take heart; I have overcome the world."
+                &quot;In the world you will have tribulation. But take heart; I have overcome the world.&quot;
               </div>
               
               {/* Black overlay at 50% opacity */}
@@ -1140,7 +1139,7 @@ const Page = () => {
                 MozUserSelect: 'none',
                 msUserSelect: 'none',
               }}>
-                "And we know that for those who love God all things work together for good, for those who are called according to His purpose."
+                &quot;And we know that for those who love God all things work together for good, for those who are called according to His purpose.&quot;
               </div>
               
               {/* Black overlay at 60% opacity */}
@@ -2032,7 +2031,7 @@ const Page = () => {
                   {/* Post Title */}
                   <div className="mb-8">
                     <h1 className="text-4xl font-extrabold text-gray-900 text-center tracking-wide uppercase mb-8">
-                      "A Cheerful Gift, a Full Cup"
+                      &quot;A Cheerful Gift, a Full Cup&quot;
                     </h1>
                   </div>
                   {/* Post Content */}

@@ -184,7 +184,7 @@ const TermsWindow = ({ onClose }: TermsWindowProps) => {
                     <li>To provide and maintain our Service, including to monitor the usage of our Service.</li>
                     <li>To manage Your Account: to manage Your registration as a user of the Service. The Personal Data You provide can give You access to different functionalities of the Service that are available to You as a registered user.</li>
                     <li>For the performance of a contract: the development, compliance and undertaking of the purchase contract for the products, items or services You have purchased or of any other contract with Us through the Service.</li>
-                    <li>To contact You: To contact You by email, telephone calls, SMS, or other equivalent forms of electronic communication, such as a mobile application's push notifications regarding updates or informative communications related to the functionalities, products or contracted services, including the security updates, when necessary or reasonable for their implementation.</li>
+                    <li>To contact You: To contact You by email, telephone calls, SMS, or other equivalent forms of electronic communication, such as a mobile application&apos;s push notifications regarding updates or informative communications related to the functionalities, products or contracted services, including the security updates, when necessary or reasonable for their implementation.</li>
                     <li>To provide you with news, special offers and general information about other goods, services and events which we offer that are similar to those that you have already purchased or enquired about unless You have opted not to receive such information.</li>
                     <li>To manage Your requests: To attend and manage Your requests to Us.</li>
                     <li>For business transfers: We may use Your information to evaluate or conduct a merger, divestiture, restructuring, reorganization, dissolution, or other sale or transfer of some or all of Our assets, whether as a going concern or as part of bankruptcy, liquidation, or similar proceeding, in which Personal Data held by Us about our Service users is among the assets transferred.</li>
@@ -214,7 +214,7 @@ const TermsWindow = ({ onClose }: TermsWindowProps) => {
                     <strong>Transfer of Your Personal Data</strong>
                   </p>
                   <p className="mb-4">
-                    Your information, including Personal Data, is processed at the Company's operating offices and in any other places where the parties involved in the processing are located. It means that this information may be transferred to and maintained on computers located outside of Your state, province, country or other governmental jurisdiction where the data protection laws may differ than those from Your jurisdiction.
+                    Your information, including Personal Data, is processed at the Company&apos;s operating offices and in any other places where the parties involved in the processing are located. It means that this information may be transferred to and maintained on computers located outside of Your state, province, country or other governmental jurisdiction where the data protection laws may differ than those from Your jurisdiction.
                   </p>
                   <p className="mb-4">
                     Your consent to this Privacy Policy followed by Your submission of such information represents Your agreement to that transfer.
@@ -285,7 +285,7 @@ const TermsWindow = ({ onClose }: TermsWindowProps) => {
                     We may update Our Privacy Policy from time to time. We will notify You of any changes by posting the new Privacy Policy on this page.
                   </p>
                   <p className="mb-4">
-                    We will let You know via email and/or a prominent notice on Our Service, prior to the change becoming effective and update the "Last updated" date at the top of this Privacy Policy.
+                    We will let You know via email and/or a prominent notice on Our Service, prior to the change becoming effective and update the &quot;Last updated&quot; date at the top of this Privacy Policy.
                   </p>
                   <p className="mb-4">
                     You are advised to review this Privacy Policy periodically for any changes. Changes to this Privacy Policy are effective when they are posted on this page. If you have any questions about this Privacy Policy, you can contact us:
@@ -326,7 +326,7 @@ const TermsWindow = ({ onClose }: TermsWindowProps) => {
                     <strong>Web Beacons.</strong> Certain sections of our Service and our emails may contain small electronic files known as web beacons (also referred to as clear gifs, pixel tags, and single-pixel gifs) that permit the Company, for example, to count users who have visited those pages or opened an email and for other related website statistics (for example, recording the popularity of a certain section and verifying system and server integrity).
                   </p>
                   <p className="mb-4">
-                    Cookies can be "Persistent" or "Session" Cookies. Persistent Cookies remain on Your personal computer or mobile device when You go offline, while Session Cookies are deleted as soon as You close Your web browser.
+                    Cookies can be &quot;Persistent&quot; or &quot;Session&quot; Cookies. Persistent Cookies remain on Your personal computer or mobile device when You go offline, while Session Cookies are deleted as soon as You close Your web browser.
                   </p>
                   <p className="mb-4">
                     We use both Session and Persistent Cookies for the purposes set out below:
@@ -356,7 +356,7 @@ const TermsWindow = ({ onClose }: TermsWindowProps) => {
                     For more information about the cookies we use and your choices regarding cookies, please visit our Cookies Policy or the cookies section of our Privacy Policy
                   </p>
                   <p className="mb-4">
-                    <strong>Commercial cookies:</strong> We use third-party cookies as well as our own to display personalized advertisements on our websites and on other websites. This is called "retargeting," and it is based on browsing activities, such as the destinations you have been searching for, the product you have viewed and the prices you have been shown.
+                    <strong>Commercial cookies:</strong> We use third-party cookies as well as our own to display personalized advertisements on our websites and on other websites. This is called &quot;retargeting,&quot; and it is based on browsing activities, such as the destinations you have been searching for, the product you have viewed and the prices you have been shown.
                   </p>
                 </section>
 
