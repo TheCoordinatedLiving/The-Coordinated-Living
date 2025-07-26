@@ -42,13 +42,14 @@ export const ResponsiveOverlayContainer: React.FC<ResponsiveOverlayContainerProp
                 >
                     {React.Children.map(children, (child, index) => {
                         if (React.isValidElement(child)) {
-                            const overlayType = child.props['data-overlay-type'];
+                            const childProps = child.props as { 'data-overlay-type'?: string; style?: React.CSSProperties };
+                            const overlayType = childProps['data-overlay-type'];
                             const position = positions[overlayType as keyof typeof positions];
 
                             if (position) {
-                                return React.cloneElement(child, {
+                                return React.cloneElement(child as React.ReactElement<any>, {
                                     style: {
-                                        ...child.props.style,
+                                        ...childProps.style,
                                         position: 'absolute',
                                         left: position.left,
                                         top: position.top,
