@@ -47,7 +47,7 @@ export const ResponsiveOverlayContainer: React.FC<ResponsiveOverlayContainerProp
                             const position = positions[overlayType as keyof typeof positions];
 
                             if (position) {
-                                return React.cloneElement(child as React.ReactElement<any>, {
+                                return React.cloneElement(child as React.ReactElement<{ style?: React.CSSProperties; 'data-overlay-type'?: string }>, {
                                     style: {
                                         ...childProps.style,
                                         position: 'absolute',
