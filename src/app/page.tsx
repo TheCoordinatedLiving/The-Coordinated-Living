@@ -307,7 +307,7 @@ const Page = () => {
   }, [isLoaded]);
 
   return (
-    <div ref={pageRef} className="relative w-screen h-screen overflow-y-auto">
+    <div ref={pageRef} className="relative w-screen h-screen">
       {/* Experience page hidden behind */}
       {experienceVisible && (
         <div
@@ -316,7 +316,7 @@ const Page = () => {
           style={{ zIndex: 1 }}
         >
           <img
-            src="/coordinated.webp"
+            src="/coordinated-3.svg"
             alt="Experience Background"
             // className="w- h-full object-cover object-center"
             width="100%"
@@ -329,7 +329,7 @@ const Page = () => {
            
           />
 
-          <div style={{
+          {/* <div style={{
            position: 'absolute',
            top: 0,
            bottom: 0,
@@ -349,7 +349,7 @@ const Page = () => {
 
 
            }}></div>
-          </div>
+          </div> */}
 
           {/* Laptop iframe overlay */}
           <div
@@ -438,7 +438,7 @@ const Page = () => {
             transform: 'translateY(-100%)',
             backgroundColor: '#2481C2'
           }}>
-            Click To Explore Experience
+            Explore Experience
             <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent" style={{ borderTopColor: '#2481C2', opacity: 0.9 }}></div>
           </div>
 
@@ -478,30 +478,54 @@ const Page = () => {
               }}
               onClick={() => setShowFumaaModal(true)}
             />
-            {/* Fumaa Lottie Animation */}
-            {fumaaAnimation && (
-              <div
-                className="absolute inset-0 pointer-events-none flex items-center justify-center"
-                style={{ zIndex: 1 }}
-              >
-                <Lottie
-                  animationData={fumaaAnimation}
-                  loop={true}
-                  autoplay={true}
-                  style={{ width: '200%', height: '200%' }}
-                />
-              </div>
-            )}
+            {/* Smoke Images */}
+            <div
+              className="absolute inset-0 pointer-events-none flex items-center justify-center"
+              style={{ zIndex: 1, top: '-110%', left: '-15%' }}
+            >
+              <Image
+                src="/smoke.png"
+                alt="Smoke"
+                width={200}
+                height={200}
+                className="w-full h-full object-contain smoke-animation"
+              />
+            </div>
+            <div
+              className="absolute inset-0 pointer-events-none flex items-center justify-center"
+              style={{ zIndex: 1, top: '-110%', left: '-15%' }}
+            >
+              <Image
+                src="/smoke.png"
+                alt="Smoke"
+                width={200}
+                height={200}
+                className="w-full h-full object-contain smoke-animation2"
+              />
+            </div>
+            <div
+              className="absolute inset-0 pointer-events-none flex items-center justify-center"
+              style={{ zIndex: 1, top: '-110%', left: '-15%' }}
+            >
+              <Image
+                src="/smoke.png"
+                alt="Smoke"
+                width={200}
+                height={200}
+                className="w-full h-full object-contain smoke-animation3"
+              />
+            </div>
           </div>
           {/* phone- clippath */}
           <div
             className="absolute phone-pulse-glow phone-yellow-glow group"
             style={{ 
-              left: '13vw', 
-              bottom: '8vh', 
-              width: '22vw', 
-              height: '28vh', 
-              zIndex: 2,
+              left: '18vw', 
+              bottom: '3dvw', 
+              width: '8vw', 
+              height: '8vw', 
+             
+              backgroundColor: 'red',
             }}
           >
             <div
@@ -527,7 +551,7 @@ const Page = () => {
             className="absolute white-notice-glow"
             style={{ 
               left: '31.5vw', 
-              top: '10vh', 
+              top: '6vw', 
               width: '11.8vw', 
               height: '19vh', 
               zIndex: 2,
@@ -588,7 +612,7 @@ const Page = () => {
             className="absolute"
             style={{ 
               left: '35.3vw', 
-              top: '26vh', 
+              top: '15vw', 
               width: '5vw', 
               height: '5vh', 
               zIndex: 2,
@@ -641,7 +665,7 @@ const Page = () => {
             className="absolute"
             style={{ 
               left: '31vw', 
-              top: '33vh', 
+              top: '20vw', 
               width: '6.5vw', 
               height: '11.5vh', 
               zIndex: 2,
@@ -699,12 +723,33 @@ const Page = () => {
 
 
 
+          {/* Noticeboard Letter Image (left side) */}
+          <div
+            className="absolute"
+            style={{ 
+              left: '37vw', 
+              top: '22vw', 
+              width: '7vw', 
+              height: '9vh', 
+              zIndex: 1,
+              transform: 'rotate(-3deg)',
+            }}
+          >
+            <Image
+              src="/letter.png"
+              alt="Letter"
+              width={150}
+              height={200}
+              className="w-full h-full object-contain"
+            />
+          </div>
+
           {/* Noticeboard Profile Image clip path */}
           <div
             className="absolute"
             style={{ 
               left: '67vw', 
-              top: '14vh', 
+              top: '8vw', 
               width: '8vw', 
               height: '8vw', 
               zIndex: 2,
@@ -729,9 +774,9 @@ const Page = () => {
             className="absolute"
             style={{ 
               left: '54.5vw', 
-              top: '11.3vh', 
+              top: '7vw', 
               width: '8.5vw', 
-              height: '19vh', 
+              height: '160px', 
               zIndex: 2,
               backgroundColor: 'white',
             }}
@@ -740,7 +785,7 @@ const Page = () => {
               className="absolute inset-0 bg-black opacity-50"
             />
             <div
-              className="cursor-pointer w-full h-full"
+              className="cursor-pointer w-full "
               style={{
                 clipPath: 'polygon(5% 5%, 95% 5%, 95% 95%, 5% 95%)',
               }}
@@ -826,7 +871,7 @@ const Page = () => {
             className="absolute"
             style={{ 
               left: '45vw', 
-              top: '11.50vh', 
+              top: '7vw', 
               width: '8vw', 
               height: '6vw', 
               zIndex: 2,
@@ -869,7 +914,7 @@ const Page = () => {
             className="absolute"
             style={{ 
               left: '46.5vw', 
-              top: '26.5vh', 
+              top: '15vw', 
               width: '6vw', 
               height: '6vw', 
               zIndex: 2,
@@ -912,7 +957,7 @@ const Page = () => {
             className="absolute"
             style={{
               left: '54.5vw', // moved a tiny bit to the left
-              top: '32vh',  // moved down just a little bit
+              top: '19vw',  // moved down just a little bit
               width: '8.5vw', // increased width slightly
               height: '5.5vw', // increased height slightly
               zIndex: 2,
@@ -961,15 +1006,37 @@ const Page = () => {
             </div>
           </div>
 
+          {/* Polaroid Collage on Notice Board */}
+          <div
+            className="absolute"
+            style={{
+              left: '55vw',
+              top: '24vw',
+              width: '9vw',
+              height: '11vh',
+              zIndex: 2,
+              transform: 'rotate(5deg)',
+            }}
+          >
+            <Image
+              src="/Polaroid-3.png"
+              alt="Polaroid Collage"
+              width={200}
+              height={250}
+              className="w-full h-full object-contain"
+            />
+          </div>
+
           {/* White Notice/Paper Clip Path (far right, beneath images) */}
           <div
             className="absolute"
             style={{
-              left: '54vw', // moved slightly to the right
-              top: '42vh',  // moved up a tiny step
-              width: '10vw', // increased width more
-              height: '10vh', // increased height a bit
-              zIndex: 2,
+              left: '69.5vw', // moved slightly more to the right
+              top: '26vw',  // moved down a bit more
+              width: '6vw', // further reduced width
+              height: '6vh', // further reduced height
+              zIndex: 3, // higher z-index to appear on top
+              transform: 'rotate(3deg)',
             }}
           >
             <div
@@ -992,9 +1059,9 @@ const Page = () => {
             >
               {/* Bible Verse Content */}
               <div style={{ 
-                fontSize: '12px', 
+                fontSize: '9px', 
                 fontWeight: '900', 
-                marginBottom: '4px', 
+                marginBottom: '3px', 
                 color: '#000',
                 userSelect: 'none',
                 WebkitUserSelect: 'none',
@@ -1004,7 +1071,7 @@ const Page = () => {
                 John 16:33
               </div>
               <div style={{ 
-                fontSize: '8px', 
+                fontSize: '6px', 
                 lineHeight: '1.2', 
                 color: '#333', 
                 fontStyle: 'italic',
@@ -1036,7 +1103,7 @@ const Page = () => {
             className="absolute"
             style={{
               left: '46vw', // moved even more to the left
-              top: '40vh',  // moved down even more
+              top: '23.5vw',  // moved down even more
               width: '6.5vw', // increased width slightly
               height: '10vh', // increased height
               zIndex: 2,
@@ -1106,7 +1173,7 @@ const Page = () => {
             className="absolute"
             style={{
               left: '32.5vw', // moved slightly to the left
-              top: '43vh',  // moved up a bit
+              top: '25.5vw',  // moved up a bit
               width: '6vw', // increased width a bit
               height: '7vh', // increased height a bit
               zIndex: 2,
@@ -1160,7 +1227,7 @@ const Page = () => {
             className="absolute"
             style={{
               left: '66.5vw', // moved a tiny bit to the right
-              top: '30vh',  // moved up a little more
+              top: '18vw',  // moved up a little more
               width: '8vw', // increased width
               height: '18vh', // increased height a little bit more
               zIndex: 2,
@@ -1214,15 +1281,15 @@ const Page = () => {
           <div
             className="absolute"
             style={{ 
-              left: '65vw', 
-              top: '44vh', 
-              width: '19vw', 
-              height: '12vh', 
+              left: '33vw', 
+              top: '36vw', 
+              width: '15vw', 
+              height: '10vh', 
               zIndex: 2,
               transform: 'rotate(-5deg)',
             }}
           >
-            <div className="relative w-full h-full">
+            {/* <div className="relative w-full h-full">
               <Image
                 src="/envelope.svg"
                 alt="Envelope"
@@ -1230,8 +1297,47 @@ const Page = () => {
                 height={75}
                 className="w-full h-full object-contain"
               />
+            </div> */}
+          </div>
+
+          {/* Polaroid Collage Clip Path - Hidden for now */}
+          {/*
+          <div
+            className="absolute"
+            style={{
+              left: '55vw',
+              top: '42vh',
+              width: '8vw',
+              height: '10vh',
+              zIndex: 2,
+              transform: 'rotate(3deg)',
+            }}
+          >
+            <div
+              className="w-full h-full"
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                position: 'relative',
+                overflow: 'hidden',
+              }}
+              onClick={() => {
+                console.log('Polaroid collage clicked!');
+              }}
+            >
+              <img
+                src="/Polaroid-collage.svg"
+                alt="Polaroid Collage"
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'contain',
+                }}
+              />
             </div>
           </div>
+          */}
 
 
           <style jsx>{`
@@ -1477,6 +1583,124 @@ const Page = () => {
                     0 0 80px rgba(36, 129, 194, 0.2);
                 }
               }
+
+              /* Smoke Animations */
+              .smoke-animation {
+                filter: blur(5px);
+                transform-origin: 50% 50%;
+                animation: smoke1 3s linear infinite;
+                animation-delay: 0.5s;
+              }
+
+              .smoke-animation2 {
+                filter: blur(5px);
+                transform-origin: 50% 50%;
+                animation: smoke2 3s linear infinite;
+                animation-delay: 1.5s;
+              }
+
+              .smoke-animation3 {
+                filter: blur(5px);
+                transform-origin: 50% 50%;
+                animation: smoke3 4s linear infinite;
+                animation-delay: 2.5s;
+              }
+
+              @keyframes smoke1 {
+                0% {
+                  filter: blur(0px);
+                  transform: translateY(0px) scale(-1, 1);
+                  opacity: 0;
+                }
+
+                25% {
+                  filter: blur(3px);
+                  transform: translateY(-10px) scale(-1, 1.05);
+                  opacity: 0.5;
+                }
+
+                50% {
+                  filter: blur(5px);
+                  transform: translateY(-20px) scale(-1, 1.1);
+                  opacity: 1;
+                }
+
+                75% {
+                  filter: blur(5px);
+                  transform: translateY(-30px) scale(-1, 1.15);
+                  opacity: 0.5;
+                }
+
+                100% {
+                  filter: blur(7px);
+                  transform: translateY(-40px) scale(-1, 1.2);
+                  opacity: 0;
+                }
+              }
+
+              @keyframes smoke2 {
+                0% {
+                  filter: blur(0px);
+                  transform: translateY(0px) scale(1);
+                  opacity: 0;
+                }
+
+                25% {
+                  filter: blur(3px);
+                  transform: translateY(-10px) scale(1.05);
+                  opacity: 0.5;
+                }
+
+                50% {
+                  filter: blur(5px);
+                  transform: translateY(-20px) scale(1.1);
+                  opacity: 1;
+                }
+
+                75% {
+                  filter: blur(5px);
+                  transform: translateY(-30px) scale(1.15);
+                  opacity: 0.5;
+                }
+
+                100% {
+                  filter: blur(7px);
+                  transform: translateY(-40px) scale(1.2);
+                  opacity: 0;
+                }
+              }
+
+              @keyframes smoke3 {
+                0% {
+                  filter: blur(0px);
+                  transform: translateY(0px) scale(1);
+                  opacity: 0;
+                }
+
+                25% {
+                  filter: blur(3px);
+                  transform: translateY(-20px) scale(1.05);
+                  opacity: 0.5;
+                }
+
+                50% {
+                  filter: blur(5px);
+                  transform: translateY(-40px) scale(1.1);
+                  opacity: 1;
+                }
+
+                75% {
+                  filter: blur(5px);
+                  transform: translateY(-60px) scale(1.15);
+                  opacity: 0.5;
+                }
+
+                100% {
+                  filter: blur(7px);
+                  transform: translateY(-80px) scale(1.2);
+                  opacity: 0;
+                }
+              }
             `}</style>
 
           {/* Lesley Letter Overlay */}
@@ -1503,14 +1727,14 @@ const Page = () => {
               
               {/* Letter content - centered */}
               <div className="absolute inset-0 flex items-center justify-center p-8">
-                <div className="relative z-10 bg-white bg-opacity-80 backdrop-blur-md rounded-lg shadow-2xl max-w-2xl w-full">
+                <div className="relative z-10 max-w-xl w-full">
                   {/* SVG Letter */}
                   <div className="w-full flex justify-center">
                     <Image
                       src="/lesley.svg"
                       alt="Lesley's Letter"
-                      width={600}
-                      height={450}
+                      width={400}
+                      height={300}
                       className="w-full h-auto object-contain"
                       priority
                     />
@@ -1826,7 +2050,7 @@ const Page = () => {
                   {/* Post Title */}
                   <div className="mb-8">
                     <h1 className="text-4xl font-extrabold text-gray-900 text-center tracking-wide uppercase mb-8">
-                      “A Cheerful Gift, a Full Cup”
+                      "A Cheerful Gift, a Full Cup"
                     </h1>
                   </div>
                   {/* Post Content */}
