@@ -1008,7 +1008,7 @@ const Page = () => {
             }}
           >
             <Image
-              src="/Polaroid-3.png"
+              src="/polaroid-3.png"
               alt="Polaroid Collage"
               width={200}
               height={250}
