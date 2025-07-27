@@ -818,10 +818,10 @@ const Page = () => {
           <div
             className="absolute"
             style={{ 
-              left: '37vw', 
+              left: '35.5vw', 
               top: '22vw', 
-              width: '7vw', 
-              height: '9vh', 
+              width: '10.5vw', 
+              height: '12.5vh', 
               zIndex: 1,
               transform: 'rotate(-3deg)',
             }}
@@ -829,8 +829,8 @@ const Page = () => {
             <Image
               src="/letter.png"
               alt="Letter"
-              width={150}
-              height={200}
+              width={230}
+              height={270}
               className="w-full h-full object-contain"
             />
           </div>
