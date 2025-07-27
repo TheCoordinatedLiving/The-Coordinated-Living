@@ -24,7 +24,7 @@ const GlassTaskbar = ({ onAskQuestionClick, onResourcesClick }: GlassTaskbarProp
   }, []);
 
   const handleGoHome = () => {
-    // Create smooth transition back to Windows lock screen
+    // Create smooth zoom-out transition back to experience page
     const container = document.querySelector('.windows-home-screen');
     if (container) {
       gsap.to(container, {
@@ -33,13 +33,13 @@ const GlassTaskbar = ({ onAskQuestionClick, onResourcesClick }: GlassTaskbarProp
         duration: 1.2,
         ease: 'power2.inOut',
         onComplete: () => {
-          // Reset to lock screen instead of going back to main page
-          window.location.reload();
+          // Navigate back to the experience page with coordinated.webp
+          window.location.href = '/?fromWindows=true';
         }
       });
     } else {
       // Fallback if container not found
-      window.location.reload();
+      window.location.href = '/?fromWindows=true';
     }
   };
 

@@ -298,16 +298,8 @@ const Page = () => {
           duration: 1.5,
           ease: 'power2.inOut',
           zIndex: 1,
-          onComplete: () => {
-            setLaptopZoomed(false);
-            // Disable iframe interaction when zoomed out
-            const iframe = document.querySelector('iframe');
-            if (iframe) {
-              iframe.style.pointerEvents = 'none';
-              iframe.style.cursor = 'pointer';
-            }
-          }
         });
+        setLaptopZoomed(false);
       }
     };
 
@@ -451,10 +443,9 @@ const Page = () => {
           {/* Laptop iframe overlay */}
           <div
             ref={laptopRef}
-            className={`absolute cursor-pointer laptop-iframe ${!laptopZoomed ? 'inset-0' : ''}`}
-            style={laptopZoomed ? { pointerEvents: 'none' } : {}}
-            onMouseEnter={() => !laptopZoomed && setShowLaptopTooltip(true)}
-            onMouseLeave={() => !laptopZoomed && setShowLaptopTooltip(false)}
+            className="absolute cursor-pointer laptop-iframe inset-0"
+            onMouseEnter={() => setShowLaptopTooltip(true)}
+            onMouseLeave={() => setShowLaptopTooltip(false)}
             onClick={(e) => {
               // Don't zoom if clicking on the iframe content
               if (e.target !== e.currentTarget) {
@@ -466,26 +457,14 @@ const Page = () => {
                 gsap.to(experienceRef.current, {
                   scale: 3,
                   x: '0%',
-                  y: '-65%',
+                  y: '-45%',
                   duration: 1.5,
                   ease: 'power2.inOut',
                   zIndex: 20,
                   onComplete: () => {
                     setLaptopZoomed(true);
-                    // Enable iframe interaction when zoomed
-                    const iframe = document.querySelector('iframe');
-                    if (iframe) {
-                      iframe.style.pointerEvents = 'auto';
-                      iframe.style.cursor = 'default';
-                      // Focus the iframe to ensure it can receive interactions
-                      setTimeout(() => {
-                        try {
-                          iframe.focus();
-                        } catch (e) {
-                          console.log('Could not focus iframe:', e);
-                        }
-                      }, 100);
-                    }
+                    // Navigate immediately when zoom completes
+                    window.location.href = '/windows';
                   }
                 });
               } else {
@@ -497,16 +476,8 @@ const Page = () => {
                   duration: 1.5,
                   ease: 'power2.inOut',
                   zIndex: 1,
-                  onComplete: () => {
-                    setLaptopZoomed(false);
-                    // Disable iframe interaction when not zoomed
-                    const iframe = document.querySelector('iframe');
-                    if (iframe) {
-                      iframe.style.pointerEvents = 'none';
-                      iframe.style.cursor = 'pointer';
-                    }
-                  }
                 });
+                setLaptopZoomed(false);
               }
             }}
           >
@@ -524,16 +495,19 @@ const Page = () => {
                 top: '-13.5vw',
                 left: '-25.8vw',
                 pointerEvents: laptopZoomed ? 'auto' : 'none',
-                cursor: laptopZoomed ? 'default' : 'pointer',
-                transition: 'pointer-events 0.3s ease',
-                zIndex: laptopZoomed ? 100 : 1,
+                cursor: 'pointer',
+                
               }}
               onLoad={() => {
-                // Ensure iframe doesn't capture keyboard events when not zoomed
-                if (!laptopZoomed) {
+                // Ensure iframe doesn't capture keyboard events when zoomed
+                if (laptopZoomed) {
                   const iframe = document.querySelector('iframe');
-                  if (iframe) {
-                    iframe.style.pointerEvents = 'none';
+                  if (iframe && iframe.contentWindow) {
+                    try {
+                      iframe.contentWindow.focus();
+                    } catch (e) {
+                      console.log('Could not focus iframe:', e);
+                    }
                   }
                 }
               }}
@@ -545,8 +519,6 @@ const Page = () => {
                   document.body.focus();
                 }
               }}
-              allow="fullscreen"
-              allowFullScreen
             />
           </div>
 
@@ -574,19 +546,17 @@ const Page = () => {
 
 
 
-          {/* Letter clip-path overlay - hidden when iframe is zoomed */}
-          {!laptopZoomed && (
-            <div
-              className="absolute cursor-pointer letter-pulse-glow letter-clip-path inset-0"
-              onMouseEnter={() => setShowLetterTooltip(true)}
-              onMouseLeave={() => setShowLetterTooltip(false)}
-              onClick={() => {
-                console.log('Letter clicked!');
-                setShowLesleyLetter(true);
-                // Remove setIsLetterLoaded(false)
-              }}
-            />
-          )}
+          {/* Letter clip-path overlay */}
+          <div
+            className="absolute cursor-pointer letter-pulse-glow letter-clip-path inset-0"
+            onMouseEnter={() => setShowLetterTooltip(true)}
+            onMouseLeave={() => setShowLetterTooltip(false)}
+            onClick={() => {
+              console.log('Letter clicked!');
+              setShowLesleyLetter(true);
+              // Remove setIsLetterLoaded(false)
+            }}
+          />
           {/* cup- clippath */}
           <div
             className="absolute group"
