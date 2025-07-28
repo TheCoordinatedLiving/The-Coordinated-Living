@@ -3,6 +3,7 @@ import { useRef, useLayoutEffect, useState, useEffect } from 'react';
 import Image from "next/image";
 import { gsap } from 'gsap';
 import PostTemplate from '../components/PostTemplate';
+import { generatePDFFromPostData, generatePostPDF } from '../lib/pdfGenerator';
 
 const Loader = () => {
   const logoRef = useRef(null);
@@ -125,6 +126,10 @@ const Page = () => {
   const [showFumaaModal, setShowFumaaModal] = useState(false);
   const [showLaptopTooltip, setShowLaptopTooltip] = useState(false);
   const [showLetterTooltip, setShowLetterTooltip] = useState(false);
+  const [showShareOptions, setShowShareOptions] = useState(false);
+  const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
+  const postTemplateRef = useRef<HTMLDivElement>(null);
 
   // Sample posts data
   const posts = [
@@ -221,6 +226,76 @@ const Page = () => {
 
   const handleNextPost = () => {
     setCurrentPostIndex(prev => Math.min(posts.length - 1, prev + 1));
+  };
+
+  // Share function
+  const handleShare = async (type: 'link' | 'pdf') => {
+    const postId = (currentPostIndex + 1).toString();
+    const postTitle = posts[currentPostIndex].title;
+    
+    if (type === 'link') {
+      // Generate shareable link
+      const shareUrl = `${window.location.origin}/post/${postId}`;
+      
+      try {
+        await navigator.share({
+          title: postTitle,
+          text: `Check out this post: ${postTitle}`,
+          url: shareUrl,
+        });
+      } catch (error) {
+        // Fallback to clipboard copy
+        await navigator.clipboard.writeText(shareUrl);
+        setToastMessage('Link copied to clipboard!');
+        setShowToast(true);
+        setTimeout(() => setShowToast(false), 3000); // Hide after 3 seconds
+      }
+    } else if (type === 'pdf') {
+      // Generate PDF from the actual rendered PostTemplate
+      if (postTemplateRef.current) {
+        const success = await generatePostPDF(postTemplateRef.current, posts[currentPostIndex].title);
+        
+        if (success) {
+          setToastMessage('PDF generated successfully!');
+          setShowToast(true);
+          setTimeout(() => setShowToast(false), 3000);
+        }
+      } else {
+        // Fallback to data-based generation
+        const currentPost = posts[currentPostIndex];
+        
+        // Extract text content from React nodes
+        const extractText = (node: React.ReactNode): string => {
+          if (typeof node === 'string') return node;
+          if (typeof node === 'number') return node.toString();
+          if (Array.isArray(node)) return node.map(extractText).join(' ');
+          if (node && typeof node === 'object' && 'props' in node) {
+            const props = node as { props: { children?: React.ReactNode } };
+            return extractText(props.props.children);
+          }
+          return '';
+        };
+
+        const leftContent = extractText(currentPost.leftContent);
+        const rightContent = extractText(currentPost.rightContent);
+        const bottomRightContent = extractText(currentPost.bottomRightContent);
+
+        const success = await generatePDFFromPostData(
+          currentPost.title,
+          leftContent,
+          rightContent,
+          bottomRightContent,
+          currentPostIndex + 1,
+          posts.length
+        );
+
+        if (success) {
+          setToastMessage('PDF generated successfully!');
+          setShowToast(true);
+          setTimeout(() => setShowToast(false), 3000);
+        }
+      }
+    }
   };
 
   const pageRef = useRef<HTMLDivElement>(null);
@@ -2001,15 +2076,65 @@ const Page = () => {
                   </button>
                 )}
 
-                <div className="relative z-10 max-w-2xl w-full bg-white rounded-lg shadow-2xl overflow-hidden">
-                  <PostTemplate
-                    title={posts[currentPostIndex].title}
-                    currentPage={currentPostIndex + 1}
-                    totalPages={posts.length}
-                    leftContent={posts[currentPostIndex].leftContent}
-                    rightContent={posts[currentPostIndex].rightContent}
-                    bottomRightContent={posts[currentPostIndex].bottomRightContent}
-                  />
+                <div className="relative z-10 max-w-2xl w-full">
+                  <div className="bg-white rounded-lg shadow-2xl overflow-hidden">
+                    <div ref={postTemplateRef}>
+                      <PostTemplate
+                        title={posts[currentPostIndex].title}
+                        currentPage={currentPostIndex + 1}
+                        totalPages={posts.length}
+                        postId={(currentPostIndex + 1).toString()}
+                        leftContent={posts[currentPostIndex].leftContent}
+                        rightContent={posts[currentPostIndex].rightContent}
+                        bottomRightContent={posts[currentPostIndex].bottomRightContent}
+                      />
+                    </div>
+                  </div>
+                  
+                  {/* Share button - outside template */}
+                  <div className="flex justify-center mt-6">
+                    <div className="relative">
+                      <button
+                        onClick={() => setShowShareOptions(!showShareOptions)}
+                        className="bg-white bg-opacity-80 backdrop-blur-sm text-gray-800 px-4 py-2 rounded-lg font-medium hover:bg-opacity-100 transition-all shadow-lg cursor-pointer"
+                        title="Share post"
+                      >
+                        Share This Post
+                      </button>
+                      
+                      {/* Share options dropdown */}
+                      {showShareOptions && (
+                        <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 w-48 bg-white rounded-md shadow-lg border border-gray-200 z-30">
+                          <div className="py-1">
+                            <button
+                              onClick={() => {
+                                handleShare('link');
+                                setShowShareOptions(false);
+                              }}
+                              className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                            >
+                              <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                              </svg>
+                              Share as Link
+                            </button>
+                            <button
+                              onClick={() => {
+                                handleShare('pdf');
+                                setShowShareOptions(false);
+                              }}
+                              className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                            >
+                              <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                              </svg>
+                              View as PDF
+                            </button>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -2166,6 +2291,18 @@ const Page = () => {
         <Loader />
         {!fromWindows && <WelcomeScreen onEnterClick={handleEnterClick} />}
       </div>
+
+      {/* Toast Notification */}
+      {showToast && (
+        <div className="fixed bottom-4 right-4 z-50">
+          <div className="bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg flex items-center space-x-2 animate-in slide-in-from-bottom-2">
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+            </svg>
+            <span className="font-medium">{toastMessage}</span>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

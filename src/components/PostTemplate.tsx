@@ -1,4 +1,5 @@
 import Image from "next/image"
+import { useState } from "react"
 
 interface PostTemplateProps {
   title: string;
@@ -7,6 +8,7 @@ interface PostTemplateProps {
   bottomRightContent?: React.ReactNode;
   currentPage?: number;
   totalPages?: number;
+  postId?: string; // Add post ID for sharing
 }
 
 export default function PostTemplate({
@@ -15,10 +17,37 @@ export default function PostTemplate({
   rightContent,
   bottomRightContent,
   currentPage = 1,
-  totalPages = 1
+  totalPages = 1,
+  postId
 }: PostTemplateProps) {
+  const [showShareOptions, setShowShareOptions] = useState(false);
+  
   // Use title to avoid unused variable warning
   const displayTitle = title;
+
+  const handleShare = async (type: 'link' | 'pdf') => {
+    if (type === 'link') {
+      // Generate shareable link
+      const shareUrl = `${window.location.origin}/post/${postId || 'default'}`;
+      
+      try {
+        await navigator.share({
+          title: displayTitle,
+          text: `Check out this post: ${displayTitle}`,
+          url: shareUrl,
+        });
+      } catch (error) {
+        // Fallback to clipboard copy
+        await navigator.clipboard.writeText(shareUrl);
+        alert('Link copied to clipboard!');
+      }
+    } else if (type === 'pdf') {
+      // Generate PDF view
+      const pdfUrl = `${window.location.origin}/post/${postId || 'default'}/pdf`;
+      window.open(pdfUrl, '_blank');
+    }
+  };
+
   return (
     <div className="bg-white relative">
       {/* Watermark in the center */}
@@ -126,5 +155,5 @@ export default function PostTemplate({
         </div>
       </div>
     </div>
-  )
+  );
 } 
