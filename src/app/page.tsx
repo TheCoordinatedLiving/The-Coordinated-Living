@@ -243,7 +243,7 @@ const Page = () => {
           text: `Check out this post: ${postTitle}`,
           url: shareUrl,
         });
-      } catch (error) {
+      } catch {
         // Fallback to clipboard copy
         try {
           // Ensure document is focused

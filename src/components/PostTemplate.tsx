@@ -1,5 +1,4 @@
 import Image from "next/image"
-import { useState } from "react"
 
 interface PostTemplateProps {
   title: string;
@@ -20,33 +19,8 @@ export default function PostTemplate({
   totalPages = 1,
   postId
 }: PostTemplateProps) {
-  const [showShareOptions, setShowShareOptions] = useState(false);
-  
   // Use title to avoid unused variable warning
   const displayTitle = title;
-
-  const handleShare = async (type: 'link' | 'pdf') => {
-    if (type === 'link') {
-      // Generate shareable link
-      const shareUrl = `${window.location.origin}/post/${postId || 'default'}`;
-      
-      try {
-        await navigator.share({
-          title: displayTitle,
-          text: `Check out this post: ${displayTitle}`,
-          url: shareUrl,
-        });
-      } catch (error) {
-        // Fallback to clipboard copy
-        await navigator.clipboard.writeText(shareUrl);
-        alert('Link copied to clipboard!');
-      }
-    } else if (type === 'pdf') {
-      // Generate PDF view
-      const pdfUrl = `${window.location.origin}/post/${postId || 'default'}/pdf`;
-      window.open(pdfUrl, '_blank');
-    }
-  };
 
   return (
     <div className="bg-white relative">

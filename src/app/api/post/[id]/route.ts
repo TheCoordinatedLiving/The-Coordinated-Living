@@ -17,7 +17,7 @@ export async function GET(
 }
 
 // Add an endpoint to get all posts (useful for the PostsContent component)
-export async function POST(request: NextRequest) {
+export async function POST() {
   const posts = getAllPosts();
   return NextResponse.json({ posts });
 } 
