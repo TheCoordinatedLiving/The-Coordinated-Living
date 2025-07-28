@@ -2108,7 +2108,6 @@ const Page = () => {
                         title={posts[currentPostIndex].title}
                         currentPage={currentPostIndex + 1}
                         totalPages={posts.length}
-                        postId={(currentPostIndex + 1).toString()}
                         leftContent={posts[currentPostIndex].leftContent}
                         rightContent={posts[currentPostIndex].rightContent}
                         bottomRightContent={posts[currentPostIndex].bottomRightContent}
