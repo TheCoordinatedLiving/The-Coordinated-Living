@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from 'react';
 import PostTemplate from '@/components/PostTemplate';
+import { getPostById } from '@/lib/posts';
 
 interface Post {
   id: string;
@@ -17,9 +18,9 @@ export default function PostPage({ params }: { params: { id: string } }) {
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const response = await fetch(`/api/post/${params.id}`);
-        if (response.ok) {
-          const postData = await response.json();
+        // Use the centralized posts data instead of API
+        const postData = getPostById(params.id);
+        if (postData) {
           setPost(postData);
         } else {
           console.error('Post not found');
@@ -55,7 +56,6 @@ export default function PostPage({ params }: { params: { id: string } }) {
       <div className="max-w-4xl mx-auto">
         <PostTemplate
           title={post.title}
-          postId={post.id}
           leftContent={<p className="text-base leading-relaxed text-black">{post.leftContent}</p>}
           rightContent={<p className="text-base leading-relaxed text-black">{post.rightContent}</p>}
           bottomRightContent={<p className="text-base leading-relaxed text-black">{post.bottomRightContent}</p>}
