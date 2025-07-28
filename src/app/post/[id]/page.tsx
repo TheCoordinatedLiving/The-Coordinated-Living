@@ -11,15 +11,18 @@ interface Post {
   bottomRightContent: string;
 }
 
-export default function PostPage({ params }: { params: { id: string } }) {
+export default async function PostPage({ params }: { params: Promise<{ id: string }> }) {
   const [post, setPost] = useState<Post | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchPost = async () => {
       try {
+        // Await the params to get the id
+        const { id } = await params;
+        
         // Use the centralized posts data instead of API
-        const postData = getPostById(params.id);
+        const postData = getPostById(id);
         if (postData) {
           setPost(postData);
         } else {
@@ -33,7 +36,7 @@ export default function PostPage({ params }: { params: { id: string } }) {
     };
 
     fetchPost();
-  }, [params.id]);
+  }, [params]);
 
   if (loading) {
     return (
