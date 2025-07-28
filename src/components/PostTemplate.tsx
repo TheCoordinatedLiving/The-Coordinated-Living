@@ -20,8 +20,19 @@ export default function PostTemplate({
   // Use title to avoid unused variable warning
   const displayTitle = title;
   return (
-    <div className="bg-white">
-      <div className="max-w-2xl mx-auto px-6 py-2">
+    <div className="bg-white relative">
+      {/* Watermark in the center */}
+      <div className="absolute inset-0 flex items-center justify-center opacity-10 pointer-events-none z-0">
+        <Image
+          src="/watermark.svg"
+          alt="Watermark"
+          width={200}
+          height={200}
+          className="w-72 h-72"
+        />
+      </div>
+      
+      <div className="max-w-2xl mx-auto px-6 py-2 relative z-10">
         {/* Header with page number and decorative elements */}
         <div className="flex justify-between items-center mb-2">
           <div className="flex items-center space-x-3">
@@ -57,17 +68,6 @@ export default function PostTemplate({
                 {displayTitle}
               </h1>
             </div>
-            <div className="ml-4">
-              <div className="w-36 h-36 rounded-full overflow-hidden">
-                <Image
-                  src="/post-hero.png"
-                  alt="Open book with pen"
-                  width={144}
-                  height={144}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-            </div>
           </div>
 
           {/* Two-column text content */}
@@ -83,18 +83,32 @@ export default function PostTemplate({
           {/* Bottom section with coffee image and text */}
           <div className="grid grid-cols-2 gap-6">
             <div className="flex justify-center">
-              <div className="w-64 h-28 rounded-full overflow-hidden">
+              <div className="w-48 h-48 rounded-full overflow-hidden">
                 <Image
-                  src="/post-footer.png"
-                  alt="Coffee cup on wooden table"
+                  src="/post-hero.png"
+                  alt="Open book with pen"
                   width={256}
                   height={112}
                   className="w-full h-full object-cover"
                 />
               </div>
             </div>
-            <div className="pt-2">
-              {bottomRightContent}
+            <div className="pt-2 relative">
+              {/* Watermark background */}
+              <div className="absolute inset-0 flex items-end justify-end opacity-20 pointer-events-none">
+                <Image
+                  src="/watermark.svg"
+                  alt="Watermark"
+                  width={120}
+                  height={120}
+                  className="w-24 h-24"
+                  style={{ opacity: 0.3 }}
+                />
+              </div>
+              {/* Content on top */}
+              <div className="relative z-10">
+                {bottomRightContent}
+              </div>
             </div>
           </div>
         </div>
