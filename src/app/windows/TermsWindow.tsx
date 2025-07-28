@@ -31,14 +31,14 @@ const TermsWindow = ({ onClose }: TermsWindowProps) => {
 
   return (
     <div ref={windowRef} className="absolute inset-x-0 top-0 bottom-16 bg-black/30 flex items-center justify-center z-50 opacity-0">
-      <div className="w-[90vw] h-[90vh] max-w-[1200px] bg-white rounded-lg shadow-2xl flex flex-col">
+      <div className="w-[90vw] h-[90vh] max-w-[1200px] bg-gray-900 rounded-lg shadow-2xl flex flex-col">
         {/* Window Header */}
-        <div className="bg-[#F1F3F4] rounded-t-lg flex items-center justify-between px-4 py-2">
+        <div className="bg-gray-800 rounded-t-lg flex items-center justify-between px-4 py-2">
           <div className="flex items-center space-x-3">
             <Image src="/terms.svg" width={24} height={24} alt="Terms" />
-            <h2 className="text-lg font-semibold text-gray-800">Terms & Conditions</h2>
+            <h2 className="text-lg font-semibold text-gray-200">Terms & Conditions</h2>
           </div>
-          <button onClick={handleClose} className="text-gray-600 hover:text-gray-800 cursor-pointer">
+          <button onClick={handleClose} className="text-gray-400 hover:text-gray-200 cursor-pointer">
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             </svg>
@@ -47,13 +47,13 @@ const TermsWindow = ({ onClose }: TermsWindowProps) => {
 
         {/* Content Area */}
         <div className="flex-1 overflow-hidden p-6">
-          <div className="h-full overflow-y-auto pr-4">
+          <div className="h-full overflow-y-auto pr-4 custom-scrollbar">
             <div className="max-w-4xl mx-auto">
-              <h1 className="text-2xl font-bold text-[#5C3262] mb-6">TERMS AND CONDITIONS</h1>
+              <h1 className="text-2xl font-bold text-white mb-6">TERMS AND CONDITIONS</h1>
               
-              <div className="space-y-6 text-gray-700 leading-relaxed">
+              <div className="space-y-6 text-gray-300 leading-relaxed">
                 <section>
-                  <h2 className="text-xl font-semibold text-[#5C3262] mb-3">Welcome to The Coordinated Living!</h2>
+                  <h2 className="text-xl font-bold text-white mb-3">Welcome to The Coordinated Living!</h2>
                   <p className="mb-4">
                     {processTextContent("These terms and conditions outline the rules and regulations for the use of the Website, located at https://thecoordinatedliving.com/.")}
                   </p>
@@ -75,8 +75,8 @@ const TermsWindow = ({ onClose }: TermsWindowProps) => {
                 </section>
 
                 <section>
-                  <h2 className="text-xl font-semibold text-[#5C3262] mb-3">Table of Contents</h2>
-                  <ol className="list-decimal pl-6 mb-4 space-y-1">
+                  <h2 className="text-xl font-bold text-white mb-3">Table of Contents</h2>
+                  <ol className="list-decimal pl-6 mb-4 space-y-1 text-gray-300">
                     <li> Definitions</li>
                     <li> Scope of Service</li>
                     <li> Privacy Policy</li>
@@ -97,7 +97,7 @@ const TermsWindow = ({ onClose }: TermsWindowProps) => {
                 </section>
 
                 <section>
-                  <h2 className="text-xl font-semibold text-[#5C3262] mb-3">1. 1. DEFINITIONS</h2>
+                  <h2 className="text-xl font-bold text-white mb-3">1. 1. DEFINITIONS</h2>
                   <p className="mb-4">
                     {processTextContent('"IKOORDINATE", "we", "us", "our", "the company" means THE COORDINATE LIVING.')}
                   </p>
@@ -150,7 +150,7 @@ const TermsWindow = ({ onClose }: TermsWindowProps) => {
                 </section>
 
                 <section>
-                  <h2 className="text-xl font-semibold text-[#5C3262] mb-3">1. 2. SCOPE OF SERVICE</h2>
+                  <h2 className="text-xl font-bold text-white mb-3">1. 2. SCOPE OF SERVICE</h2>
                   <p className="mb-4">
                     {processTextContent("IKOORDINATE and its agents and partners shall provide an online service through the Platform, on which visitors/individuals of the Platform and by subscribing to the website, you enter into a direct (legally binding) contractual relationship with IKOORDINATE.")}
                   </p>
@@ -163,14 +163,14 @@ const TermsWindow = ({ onClose }: TermsWindowProps) => {
                 </section>
 
                 <section>
-                  <h2 className="text-xl font-semibold text-[#5C3262] mb-3">1. 3. PRIVACY POLICY</h2>
+                  <h2 className="text-xl font-bold text-white mb-3">1. 3. PRIVACY POLICY</h2>
                   <p className="mb-4">
                     IKOORDINATE respects your privacy and are committed to ensuring the safety of the information you provide us. In order to constantly improve upon the services that we provide you with, we may collect and use information which you provide to us.
                   </p>
                   <p className="mb-4">
                     While using Our Service, we may ask You to provide Us with certain personally identifiable information that can be used to contact or identify You. Personally identifiable information may include, but is not limited to:
                   </p>
-                  <ul className="list-disc pl-6 mb-4 space-y-2">
+                  <ul className="list-disc pl-6 mb-4 space-y-2 text-gray-300">
                     <li>Email address</li>
                     <li>First name and last name</li>
                     <li>Phone number</li>
@@ -180,7 +180,7 @@ const TermsWindow = ({ onClose }: TermsWindowProps) => {
                   <p className="mb-4">
                     The Company may use Personal Data for the following purposes:
                   </p>
-                  <ul className="list-disc pl-6 mb-4 space-y-2">
+                  <ul className="list-disc pl-6 mb-4 space-y-2 text-gray-300">
                     <li>To provide and maintain our Service, including to monitor the usage of our Service.</li>
                     <li>To manage Your Account: to manage Your registration as a user of the Service. The Personal Data You provide can give You access to different functionalities of the Service that are available to You as a registered user.</li>
                     <li>For the performance of a contract: the development, compliance and undertaking of the purchase contract for the products, items or services You have purchased or of any other contract with Us through the Service.</li>
@@ -193,7 +193,7 @@ const TermsWindow = ({ onClose }: TermsWindowProps) => {
                   <p className="mb-4">
                     We may share Your personal information in the following situations:
                   </p>
-                  <ul className="list-disc pl-6 mb-4 space-y-2">
+                  <ul className="list-disc pl-6 mb-4 space-y-2 text-gray-300">
                     <li>With Service Providers: We may share Your personal information with Service Providers to monitor and analyze the use of our Service, to contact You.</li>
                     <li>For business transfers: We may share or transfer Your personal information in connection with, or during negotiations of, any merger, sale of Company assets, financing, or acquisition of all or a portion of Our business to another company.</li>
                     <li>With Affiliates: We may share Your information with Our affiliates, in which case we will require those affiliates to honor this Privacy Policy. Affiliates include Our parent company and any other subsidiaries, joint venture partners or other companies that We control or that are under common control with Us.</li>
@@ -258,7 +258,7 @@ const TermsWindow = ({ onClose }: TermsWindowProps) => {
                   <p className="mb-4">
                     The Company may disclose Your Personal Data in the good faith belief that such action is necessary to:
                   </p>
-                  <ul className="list-disc pl-6 mb-4 space-y-2">
+                  <ul className="list-disc pl-6 mb-4 space-y-2 text-gray-300">
                     <li>Comply with a legal obligation</li>
                     <li>Protect and defend the rights or property of the Company</li>
                     <li>Prevent or investigate possible wrongdoing in connection with the Service</li>
@@ -274,7 +274,7 @@ const TermsWindow = ({ onClose }: TermsWindowProps) => {
                 </section>
 
                 <section>
-                  <h2 className="text-xl font-semibold text-[#5C3262] mb-3">1. 4. CHILDREN&apos;S PRIVACY</h2>
+                  <h2 className="text-xl font-bold text-white mb-3">1. 4. CHILDREN&apos;S PRIVACY</h2>
                   <p className="mb-4">
                     Our Service does not address anyone under the age of 13. We do not knowingly collect personally identifiable information from anyone under the age of 13. If You are a parent or guardian and You are aware that Your child has provided Us with Personal Data, please contact Us. If We become aware that We have collected Personal Data from anyone under the age of 13 without verification of parental consent, we take steps to remove that information from Our servers.
                   </p>
@@ -294,7 +294,7 @@ const TermsWindow = ({ onClose }: TermsWindowProps) => {
                 </section>
 
                 <section>
-                  <h2 className="text-xl font-semibold text-[#5C3262] mb-3">1. 5. COOKIES</h2>
+                  <h2 className="text-xl font-bold text-white mb-3">1. 5. COOKIES</h2>
                   <p className="mb-4">
                     Cookies are used for different purposes. They allow you to be recognized as the same user across the pages of a website, between websites or in your usage of an app. The types of information that we collect through cookies include IP address; device ID; viewed pages; browser type; browsing information; operating system; internet service provider; timestamp; responses to advertisements; the referring URL; and features used or activities engaged in within the website/apps.
                   </p>
@@ -361,12 +361,12 @@ const TermsWindow = ({ onClose }: TermsWindowProps) => {
                 </section>
 
                 <section>
-                  <h2 className="text-xl font-semibold text-[#5C3262] mb-3">1. 6. LICENSE</h2>
+                  <h2 className="text-xl font-bold text-white mb-3">1. 6. LICENSE</h2>
                   <p className="mb-4">
                     Unless otherwise stated ikoordinate and/or its licensors own the intellectual property rights for all material on the website. All intellectual property rights are reserved. You may access this from The Coordinated Living for your own personal use subjected to restrictions set in these terms and conditions.
                   </p>
                   <p className="mb-4">You must not:</p>
-                  <ul className="list-disc pl-6 mb-4 space-y-2">
+                  <ul className="list-disc pl-6 mb-4 space-y-2 text-gray-300">
                     <li>Republish material from THE COORDINATE LIVING</li>
                     <li>Sell, rent or sub-license material from THE COORDINATE LIVING</li>
                     <li>Reproduce, duplicate or copy material from THE COORDINATE LIVING</li>
@@ -379,7 +379,7 @@ const TermsWindow = ({ onClose }: TermsWindowProps) => {
                     ikoordinate reserves the right to monitor all Comments and to remove any Comments which can be considered inappropriate, offensive or causes breach of these Terms and Conditions.
                   </p>
                   <p className="mb-4">You warrant and represent that:</p>
-                  <ul className="list-disc pl-6 mb-4 space-y-2">
+                  <ul className="list-disc pl-6 mb-4 space-y-2 text-gray-300">
                     <li>You are entitled to post the Comments on our website and have all necessary licenses and consents to do so;</li>
                     <li>The Comments do not invade any intellectual property right, including without limitation copyright, patent or trademark of any third party;</li>
                     <li>The Comments do not contain any defamatory, libelous, offensive, indecent or otherwise unlawful material which is an invasion of privacy</li>
@@ -391,11 +391,11 @@ const TermsWindow = ({ onClose }: TermsWindowProps) => {
                 </section>
 
                 <section>
-                  <h2 className="text-xl font-semibold text-[#5C3262] mb-3">1. 7. HYPERLINKING TO OUR CONTENT</h2>
+                  <h2 className="text-xl font-bold text-white mb-3">1. 7. HYPERLINKING TO OUR CONTENT</h2>
                   <p className="mb-4">
                     The following organizations may link to our website without prior written approval:
                   </p>
-                  <ul className="list-disc pl-6 mb-4 space-y-2">
+                  <ul className="list-disc pl-6 mb-4 space-y-2 text-gray-300">
                     <li>Government agencies;</li>
                     <li>Search engines;</li>
                     <li>News organizations;</li>
@@ -408,7 +408,7 @@ const TermsWindow = ({ onClose }: TermsWindowProps) => {
                   <p className="mb-4">
                     We may consider and approve other link requests from the following types of organizations:
                   </p>
-                  <ul className="list-disc pl-6 mb-4 space-y-2">
+                  <ul className="list-disc pl-6 mb-4 space-y-2 text-gray-300">
                     <li>commonly-known consumer and/or business information sources;</li>
                     <li>dot.com community sites;</li>
                     <li>associations or other groups representing charities;</li>
@@ -440,28 +440,28 @@ const TermsWindow = ({ onClose }: TermsWindowProps) => {
                 </section>
 
                 <section>
-                  <h2 className="text-xl font-semibold text-[#5C3262] mb-3">1. 8. CONTENT LIABILITY</h2>
+                  <h2 className="text-xl font-bold text-white mb-3">1. 8. CONTENT LIABILITY</h2>
                   <p className="mb-4">
                     We shall not be held responsible for any content that appears on your Website. You agree to protect and defend us against all claims that is rising on your Website. No link(s) should appear on any Website that may be interpreted as libelous, obscene or criminal, or which infringes, otherwise violates, or advocates the infringement or other violation of, any third-party rights.
                   </p>
                 </section>
 
                 <section>
-                  <h2 className="text-xl font-semibold text-[#5C3262] mb-3">1. 9. RESERVATION OF RIGHTS</h2>
+                  <h2 className="text-xl font-bold text-white mb-3">1. 9. RESERVATION OF RIGHTS</h2>
                   <p className="mb-4">
                     We reserve the right to request that you remove all links or any particular link to our website. You approve to immediately remove all links to our Website upon request. We also reserve the right to these terms and conditions and it&apos;s linking policy at any time. By continuously linking to our website, you agree to be bound to and follow these linking terms and conditions.
                   </p>
                 </section>
 
                 <section>
-                  <h2 className="text-xl font-semibold text-[#5C3262] mb-3">1. 10. PRICES</h2>
+                  <h2 className="text-xl font-bold text-white mb-3">1. 10. PRICES</h2>
                   <p className="mb-4">
                     The prices on our Platform are highly competitive. All our services are at a subscription fee including VAT/sales tax and all other taxes (subject to change of such taxes), unless stated otherwise on our Platforms or the confirmation email.
                   </p>
                 </section>
 
                 <section>
-                  <h2 className="text-xl font-semibold text-[#5C3262] mb-3">1. 11. PAYMENT</h2>
+                  <h2 className="text-xl font-bold text-white mb-3">1. 11. PAYMENT</h2>
                   <p className="mb-4">
                     If applicable and available, you may be required to make full or part-payment of subscription fee as required under the payment policy of website in question by means of secure online payment (all to the extent offered and supported by your bank). In some cases, mobile money payment may be allowed.
                   </p>
@@ -480,12 +480,12 @@ const TermsWindow = ({ onClose }: TermsWindowProps) => {
                 </section>
 
                 <section>
-                  <h2 className="text-xl font-semibold text-[#5C3262] mb-3">1. 12. CORRESPONDENCE AND COMMUNICATION</h2>
+                  <h2 className="text-xl font-bold text-white mb-3">1. 12. CORRESPONDENCE AND COMMUNICATION</h2>
                   <p className="mb-4">
                     Ikoordinate shall communicate to prospective subscribers via one or more of the following means – SMS, Email, Phone Call, etc. Customers may also reach the company through our CONTACT US mediums during work hours.
                   </p>
                   <p className="mb-4">By subscribing, you agree to receive from us</p>
-                  <ul className="list-disc pl-6 mb-4 space-y-2">
+                  <ul className="list-disc pl-6 mb-4 space-y-2 text-gray-300">
                     <li>an email, SMS, phone call or any of our communication mediums as listed above, shortly after your successful subscription providing you with certain information relevant to the website.</li>
                     <li>an email containing a receipt of your subscription fee. Please see our privacy and cookies policy for more information about how we may contact you</li>
                   </ul>
@@ -498,11 +498,11 @@ const TermsWindow = ({ onClose }: TermsWindowProps) => {
                 </section>
 
                 <section>
-                  <h2 className="text-xl font-semibold text-[#5C3262] mb-3">1. 13. DISCLAIMER</h2>
+                  <h2 className="text-xl font-bold text-white mb-3">1. 13. DISCLAIMER</h2>
                   <p className="mb-4">
                     To the maximum extent permitted by applicable law, we exclude all representations, warranties and conditions relating to our website and the use of this website. Nothing in this disclaimer will:
                   </p>
-                  <ul className="list-disc pl-6 mb-4 space-y-2">
+                  <ul className="list-disc pl-6 mb-4 space-y-2 text-gray-300">
                     <li>limit or exclude our or your liability for death or personal injury;</li>
                     <li>limit or exclude our or your liability for fraud or fraudulent misrepresentation;</li>
                     <li>limit any of our or your liabilities in any way that is not permitted under applicable law; or</li>
@@ -517,7 +517,7 @@ const TermsWindow = ({ onClose }: TermsWindowProps) => {
                 </section>
 
                 <section>
-                  <h2 className="text-xl font-semibold text-[#5C3262] mb-3">1. 14. INTELLECTUAL PROPERTY RIGHTS</h2>
+                  <h2 className="text-xl font-bold text-white mb-3">1. 14. INTELLECTUAL PROPERTY RIGHTS</h2>
                   <p className="mb-4">
                     Unless stated otherwise, the software required for our services or available at or used by our Website/Platform and the intellectual property rights (including the copyrights) of the contents and information of and material on our Platform are owned by Ikoordinate, its suppliers or providers.
                   </p>
@@ -527,21 +527,21 @@ const TermsWindow = ({ onClose }: TermsWindowProps) => {
                 </section>
 
                 <section>
-                  <h2 className="text-xl font-semibold text-[#5C3262] mb-3">1. 15. GOVERNING LAW</h2>
+                  <h2 className="text-xl font-bold text-white mb-3">1. 15. GOVERNING LAW</h2>
                   <p className="mb-4">
                     To the extent permitted by law, these Terms and Conditions and the provision of our services shall be governed by and construed in accordance with the laws of the Republic of Ghana.
                   </p>
                 </section>
 
                 <section>
-                  <h2 className="text-xl font-semibold text-[#5C3262] mb-3">1. 16. DISPUTE RESOLUTION</h2>
+                  <h2 className="text-xl font-bold text-white mb-3">1. 16. DISPUTE RESOLUTION</h2>
                   <p className="mb-4">
                     Any dispute arising out of these general terms and conditions and our services shall in the first instance be settled amicably through mediation, failing which such dispute shall be submitted to a Court of competent jurisdiction in Accra, Ghana.
                   </p>
                 </section>
 
                 <section>
-                  <h2 className="text-xl font-semibold text-[#5C3262] mb-3">1. 17. REMOVAL OF LINKS FROM OUR WEBSITE</h2>
+                  <h2 className="text-xl font-bold text-white mb-3">1. 17. REMOVAL OF LINKS FROM OUR WEBSITE</h2>
                   <p className="mb-4">
                     If you find any link on our website that is offensive for any reason, you are free to contact and inform us any moment. We will consider requests to remove links but we are not obligated to or so or to respond to you directly.
                   </p>
@@ -559,3 +559,21 @@ const TermsWindow = ({ onClose }: TermsWindowProps) => {
 };
 
 export default TermsWindow; 
+
+<style jsx global>{`
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 8px;
+    background: transparent;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #fff;
+    border-radius: 4px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .custom-scrollbar {
+    scrollbar-color: #fff transparent;
+    scrollbar-width: thin;
+  }
+`}</style> 

@@ -1,29 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-
-// Mock post data - in a real app, this would come from a database
-const posts = [
-  {
-    id: '1',
-    title: 'POST TITLE HERE',
-    leftContent: 'Content for left side...',
-    rightContent: 'Content for right side...',
-    bottomRightContent: 'Content for bottom right...'
-  },
-  {
-    id: '2', 
-    title: 'SECOND POST TITLE',
-    leftContent: 'Content for left side...',
-    rightContent: 'Content for right side...',
-    bottomRightContent: 'Content for bottom right...'
-  },
-  {
-    id: '3',
-    title: 'THIRD POST TITLE', 
-    leftContent: 'Content for left side...',
-    rightContent: 'Content for right side...',
-    bottomRightContent: 'Content for bottom right...'
-  }
-];
+import { getPostById, getAllPosts } from '@/lib/posts';
 
 export async function GET(
   request: NextRequest,
@@ -31,11 +7,17 @@ export async function GET(
 ) {
   const { id } = params;
   
-  const post = posts.find(p => p.id === id);
+  const post = getPostById(id);
   
   if (!post) {
     return NextResponse.json({ error: 'Post not found' }, { status: 404 });
   }
   
   return NextResponse.json(post);
+}
+
+// Add an endpoint to get all posts (useful for the PostsContent component)
+export async function POST(request: NextRequest) {
+  const posts = getAllPosts();
+  return NextResponse.json({ posts });
 } 

@@ -56,9 +56,9 @@ export default function PostPage({ params }: { params: { id: string } }) {
         <PostTemplate
           title={post.title}
           postId={post.id}
-          leftContent={<p className="text-base leading-relaxed">{post.leftContent}</p>}
-          rightContent={<p className="text-base leading-relaxed">{post.rightContent}</p>}
-          bottomRightContent={<p className="text-base leading-relaxed">{post.bottomRightContent}</p>}
+          leftContent={<p className="text-base leading-relaxed text-black">{post.leftContent}</p>}
+          rightContent={<p className="text-base leading-relaxed text-black">{post.rightContent}</p>}
+          bottomRightContent={<p className="text-base leading-relaxed text-black">{post.bottomRightContent}</p>}
         />
       </div>
     </div>

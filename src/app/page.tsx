@@ -245,10 +245,39 @@ const Page = () => {
         });
       } catch (error) {
         // Fallback to clipboard copy
-        await navigator.clipboard.writeText(shareUrl);
-        setToastMessage('Link copied to clipboard!');
-        setShowToast(true);
-        setTimeout(() => setShowToast(false), 3000); // Hide after 3 seconds
+        try {
+          // Ensure document is focused
+          document.body.focus();
+          
+          // Try modern clipboard API first
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            await navigator.clipboard.writeText(shareUrl);
+            setToastMessage('Link copied to clipboard!');
+            setShowToast(true);
+            setTimeout(() => setShowToast(false), 3000);
+          } else {
+            // Fallback for older browsers
+            const textArea = document.createElement('textarea');
+            textArea.value = shareUrl;
+            textArea.style.position = 'fixed';
+            textArea.style.left = '-999999px';
+            textArea.style.top = '-999999px';
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textArea);
+            setToastMessage('Link copied to clipboard!');
+            setShowToast(true);
+            setTimeout(() => setShowToast(false), 3000);
+          }
+        } catch (clipboardError) {
+          console.error('Failed to copy to clipboard:', clipboardError);
+          // Still show success message even if clipboard fails
+          setToastMessage('Link ready to share!');
+          setShowToast(true);
+          setTimeout(() => setShowToast(false), 3000);
+        }
       }
     } else if (type === 'pdf') {
       // Generate PDF from the actual rendered PostTemplate
@@ -256,9 +285,7 @@ const Page = () => {
         const success = await generatePostPDF(postTemplateRef.current, posts[currentPostIndex].title);
         
         if (success) {
-          setToastMessage('PDF generated successfully!');
-          setShowToast(true);
-          setTimeout(() => setShowToast(false), 3000);
+          // PDF generated successfully
         }
       } else {
         // Fallback to data-based generation
@@ -290,9 +317,7 @@ const Page = () => {
         );
 
         if (success) {
-          setToastMessage('PDF generated successfully!');
-          setShowToast(true);
-          setTimeout(() => setShowToast(false), 3000);
+          // PDF generated successfully
         }
       }
     }
@@ -2104,7 +2129,7 @@ const Page = () => {
                       
                       {/* Share options dropdown */}
                       {showShareOptions && (
-                        <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 w-48 bg-white rounded-md shadow-lg border border-gray-200 z-30">
+                        <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-48 bg-white rounded-md shadow-lg border border-gray-200 z-30">
                           <div className="py-1">
                             <button
                               onClick={() => {
@@ -2187,7 +2212,7 @@ const Page = () => {
                     }}
                   >
                     <h2 className="text-white font-medium text-sm" style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                      Welcome to Your Interactive Workspace
+                      Welcome to The Interactive Workspace
                     </h2>
                   </div>
 
@@ -2272,7 +2297,7 @@ const Page = () => {
                       className="mt-4 w-full py-5 bg-[#633366] text-white text-2xl font-medium rounded-full focus:outline-none focus:ring-2 focus:ring-[#633366] focus:ring-opacity-50 transition-all duration-200 shadow-md hover:scale-[1.02] cursor-pointer"
                       style={{ letterSpacing: '0.01em' }}
                     >
-                      Fill My Cup
+                      Poor Into My Cup 
                     </button>
                   </div>
                 </div>
@@ -2294,8 +2319,8 @@ const Page = () => {
 
       {/* Toast Notification */}
       {showToast && (
-        <div className="fixed bottom-4 right-4 z-50">
-          <div className="bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg flex items-center space-x-2 animate-in slide-in-from-bottom-2">
+        <div className="fixed inset-0 flex items-start justify-center pt-8 z-[99999] pointer-events-none">
+          <div className="bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg flex items-center space-x-2 animate-in slide-in-from-top-2 pointer-events-auto">
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
             </svg>
@@ -2303,6 +2328,7 @@ const Page = () => {
           </div>
         </div>
       )}
+
     </div>
   );
 };

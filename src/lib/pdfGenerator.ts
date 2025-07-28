@@ -3,6 +3,26 @@ import html2canvas from 'html2canvas';
 
 export const generatePostPDF = async (postElement: HTMLElement, title: string) => {
   try {
+    // Wait for images to load and ensure they're fully rendered
+    await new Promise(resolve => setTimeout(resolve, 3000));
+    
+    // Pre-load all required images
+    const imagesToLoad = [
+      '/post-hero.png',
+      '/watermark.svg',
+      '/post-logo.svg'
+    ];
+    
+    await Promise.all(imagesToLoad.map(src => {
+      return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.crossOrigin = 'anonymous';
+        img.onload = resolve;
+        img.onerror = reject;
+        img.src = src;
+      });
+    }));
+    
     // Convert the post element to canvas
     const canvas = await html2canvas(postElement, {
       scale: 2, // Higher resolution
@@ -11,30 +31,50 @@ export const generatePostPDF = async (postElement: HTMLElement, title: string) =
       backgroundColor: '#ffffff',
       width: 800,
       height: 1200,
+      logging: false,
+      imageTimeout: 30000,
+      onclone: (clonedDoc) => {
+        // Ensure all images are loaded in the cloned document
+        const images = clonedDoc.querySelectorAll('img');
+        images.forEach(img => {
+          // Force reload of images to ensure they're properly loaded
+          if (img.src.includes('post-hero.png')) {
+            img.src = '/post-hero.png';
+            img.crossOrigin = 'anonymous';
+          }
+          if (img.src.includes('watermark.svg')) {
+            img.src = '/watermark.svg';
+            img.crossOrigin = 'anonymous';
+          }
+          if (img.src.includes('post-logo.svg')) {
+            img.src = '/post-logo.svg';
+            img.crossOrigin = 'anonymous';
+          }
+        });
+      }
     });
 
-    // Create PDF
+    // Create PDF - fit everything on one page
     const pdf = new jsPDF('p', 'mm', 'a4');
-    const imgWidth = 210; // A4 width in mm
-    const pageHeight = 295; // A4 height in mm
+    const pdfWidth = pdf.internal.pageSize.getWidth();
+    const pdfHeight = pdf.internal.pageSize.getHeight();
+    
+    // Calculate dimensions to fit on one page with proper margins
+    const margin = 15; // 15mm margin on all sides
+    const imgWidth = pdfWidth - (margin * 2);
     const imgHeight = (canvas.height * imgWidth) / canvas.width;
-    let heightLeft = imgHeight;
-
-    let position = 0; // Start position
-
-    // Add the image to PDF
-    pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, position, imgWidth, imgHeight);
-    heightLeft -= pageHeight;
-
-    // Add new pages if content is longer than one page
-    while (heightLeft >= 0) {
-      position = heightLeft - imgHeight;
-      pdf.addPage();
-      pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, position, imgWidth, imgHeight);
-      heightLeft -= pageHeight;
-    }
-
-    // Save the PDF
+    
+    // If image is too tall, scale it down to fit on one page
+    const maxHeight = pdfHeight - (margin * 2);
+    const scale = imgHeight > maxHeight ? maxHeight / imgHeight : 1;
+    const finalWidth = imgWidth * scale;
+    const finalHeight = imgHeight * scale;
+    
+    // Center the image on the page
+    const x = (pdfWidth - finalWidth) / 2;
+    const y = (pdfHeight - finalHeight) / 2;
+    
+    pdf.addImage(canvas.toDataURL('image/png'), 'PNG', x, y, finalWidth, finalHeight);
     pdf.save(`${title.replace(/[^a-zA-Z0-9]/g, '_')}.pdf`);
     
     return true;
@@ -71,7 +111,7 @@ export const generatePDFFromPostData = async (
       <div style="max-width: 720px; margin: 0 auto; position: relative;">
         <!-- Watermark in the center -->
         <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; opacity: 0.1; pointer-events: none; z-index: 0;">
-          <img src="/watermark.svg" alt="Watermark" style="width: 288px; height: 288px;" />
+          <img src="/watermark.svg" alt="Watermark" style="width: 288px; height: 288px; display: block;" />
         </div>
 
         <div style="position: relative; z-index: 10;">
@@ -92,7 +132,7 @@ export const generatePDFFromPostData = async (
           <div style="position: relative;">
             <!-- Small circular logo -->
             <div style="position: absolute; top: 0; left: 0;">
-              <img src="/post-logo.svg" alt="Post Logo" style="width: 32px; height: 32px;" />
+              <img src="/post-logo.svg" alt="Post Logo" style="width: 32px; height: 32px; display: block;" />
             </div>
 
             <!-- Main heading -->
@@ -115,14 +155,14 @@ export const generatePDFFromPostData = async (
             <!-- Bottom section with image and text -->
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
               <div style="display: flex; justify-content: center;">
-                <div style="width: 288px; height: 288px; border-radius: 50%; overflow: hidden;">
-                  <img src="/post-hero.png" alt="Open book with pen" style="width: 100%; height: 100%; object-fit: cover;" />
+                <div style="width: 288px; height: 288px; border-radius: 50%; overflow: hidden; background-color: #f0f0f0;">
+                  <img src="/post-hero.png" alt="Open book with pen" style="width: 100%; height: 100%; object-fit: cover; display: block;" />
                 </div>
               </div>
               <div style="padding-top: 8px; position: relative;">
                 <!-- Watermark background -->
                 <div style="position: absolute; inset: 0; display: flex; align-items: flex-end; justify-content: flex-end; opacity: 0.2; pointer-events: none;">
-                  <img src="/watermark.svg" alt="Watermark" style="width: 96px; height: 96px; opacity: 0.3;" />
+                  <img src="/watermark.svg" alt="Watermark" style="width: 96px; height: 96px; opacity: 0.3; display: block;" />
                 </div>
                 <!-- Content on top -->
                 <div style="position: relative; z-index: 10; font-size: 16px; line-height: 1.6; color: #000;">
