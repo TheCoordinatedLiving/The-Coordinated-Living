@@ -7,7 +7,6 @@ interface PostTemplateProps {
   bottomRightContent?: React.ReactNode;
   currentPage?: number;
   totalPages?: number;
-  postId?: string; // Add post ID for sharing
 }
 
 export default function PostTemplate({
@@ -16,8 +15,7 @@ export default function PostTemplate({
   rightContent,
   bottomRightContent,
   currentPage = 1,
-  totalPages = 1,
-  postId
+  totalPages = 1
 }: PostTemplateProps) {
   // Use title to avoid unused variable warning
   const displayTitle = title;
