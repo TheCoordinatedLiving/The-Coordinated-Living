@@ -718,7 +718,7 @@ const Page = () => {
               top: '45vw', 
               width: '8vw', 
               height: '8vw', 
-              backgroundColor:'red'
+              // backgroundColor:'red'
              
             }}
             onClick={() => {
