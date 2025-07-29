@@ -57,6 +57,35 @@ const WindowsLockScreen = ({ onUnlock }: { onUnlock: () => void }) => {
               className="cursor-pointer mx-auto mt-16"
             />
           </div>
+          <div 
+            onClick={() => {
+              // Create smooth zoom-out transition back to experience page
+              const container = document.querySelector('.windows-lock-screen');
+              if (container) {
+                gsap.to(container, {
+                  scale: 0.8,
+                  opacity: 0,
+                  duration: 1.2,
+                  ease: 'power2.inOut',
+                  onComplete: () => {
+                    // Navigate back to the experience page
+                    window.location.href = '/?fromWindows=true';
+                  }
+                });
+              } else {
+                // Fallback if container not found
+                window.location.href = '/?fromWindows=true';
+              }
+            }}
+          >
+            <Image
+              src="/windows/experience-back.svg"
+              width={80}
+              height={16}
+              alt="Go Back"
+              className="cursor-pointer mx-auto mt-4"
+            />
+          </div>
         </div>
       </div>
     </div>

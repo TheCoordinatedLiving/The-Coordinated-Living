@@ -512,10 +512,13 @@ const Page = () => {
             src="/coordinated-3.webp"
             alt="Experience Background"
             fill
+            sizes="100vw"
+            className="w-full h-full"
             style={{
               objectFit: 'cover',
               objectPosition: 'center top',
             }}
+            priority
           />
 
           {/* <div style={{
@@ -715,6 +718,7 @@ const Page = () => {
               top: '45vw', 
               width: '8vw', 
               height: '8vw', 
+              backgroundColor:'red'
              
             }}
             onClick={() => {
@@ -725,7 +729,6 @@ const Page = () => {
             <div
               className="cursor-pointer w-full h-full"
               style={{
-                clipPath: 'polygon(18% 65%, 43% 60%, 70% 84%, 39% 90%)',
                 borderRadius: '50% 50% 0 0',
               }}
             
@@ -1990,41 +1993,7 @@ const Page = () => {
                         transform: 'translateX(20%) translateY(15%)'
                       }}
                     />
-          <div
-            className="absolute cursor-pointer letter-pulse-glow"
-            style={{
-              right: '-55px',
-              top: '200px',
-              width: '500px',
-              height: '100vh',
-              zIndex: 10,
-              backgroundColor: 'transparent',
-              clipPath: 'polygon(13% 3%, 100% 0, 68% 100%, 0.5% 100%)',
-            }}
-          >
-            {/* Portrait Video Player */}
-            <video
-              autoPlay
-              muted={false}
-              controls
-              loop
-              playsInline
-              style={{
-                width: '100%',
-                height: '100%',
-                objectFit: 'cover',
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                clipPath: 'polygon(35% 3%, 100% 0, 68% 100%, 0.5% 100%)',
-                borderRadius: '15px',
-              }}
-            >
-              {/* Cloudinary Video Source */}
-              <source src="https://res.cloudinary.com/dg41c7v3d/video/upload/v1753388692/counseling_q6a4zj.mp4" type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
-          </div>
+
                   </div>
                 </div>
               </div>
