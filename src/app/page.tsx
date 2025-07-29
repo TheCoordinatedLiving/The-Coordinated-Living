@@ -505,21 +505,16 @@ const Page = () => {
       {experienceVisible && (
         <div
           ref={experienceRef}
-          className=" w-screen h-screen bg-black relative overflow-hidden"
-          style={{ zIndex: 1 }}
+          className="w-screen h-screen bg-black relative overflow-hidden"
+          style={{ 
+            zIndex: 1,
+            backgroundImage: `url('/coordinated-3.webp')`,
+            backgroundRepeat: 'no-repeat',
+            backgroundPosition: 'center top',
+            backgroundSize: 'cover'
+          }}
         >
-          <Image 
-            src="/coordinated-3.webp"
-            alt="Experience Background"
-            fill
-            sizes="100vw"
-            className="w-full h-full"
-            style={{
-              objectFit: 'cover',
-              objectPosition: 'center top',
-            }}
-            priority
-          />
+         
 
           {/* <div style={{
            position: 'absolute',
