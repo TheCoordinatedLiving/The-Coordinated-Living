@@ -91,6 +91,22 @@ body {
   }
 }
 
+/* Laptop pulse glow effect */
+.laptop-pulse-glow {
+  animation: laptopPulseGlow 3s ease-in-out infinite !important;
+}
+
+@keyframes laptopPulseGlow {
+  0%, 100% {
+    opacity: 0.3;
+    filter: blur(6px);
+  }
+  50% {
+    opacity: 0.6;
+    filter: blur(8px);
+  }
+}
+
 /* Smoke Animations */
 .smoke-animation {
   filter: blur(5px);

@@ -637,6 +637,31 @@ const Page = () => {
            }}></div>
           </div> */}
 
+          {/* Laptop Glow - positioned behind iframe */}
+          <div
+            className="absolute pointer-events-none laptop-glow-animation laptop-pulse-glow"
+            style={{ 
+              left: '47.2vw',
+              top: '38.4vw',
+              transform: 'translate(-50%, -50%)',
+              zIndex: 1,
+              width: '25vw',
+              height: '13vw',
+              filter: 'blur(6px)',
+              opacity: 0.4,
+            }}
+          >
+            <div
+              style={{
+                width: '100%',
+                height: '100%',
+                clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)',
+                background: 'linear-gradient(45deg, rgba(53, 178, 194, 1) 0%, rgba(53, 178, 194, 0.9) 20%, rgba(53, 178, 194, 0.7) 40%, rgba(53, 178, 194, 0.5) 60%, rgba(53, 178, 194, 0.3) 80%, rgba(53, 178, 194, 0.1) 100%)',
+                boxShadow: '0 0 30px rgba(53, 178, 194, 1), 0 0 60px rgba(53, 178, 194, 0.8), 0 0 90px rgba(53, 178, 194, 0.6), 0 0 120px rgba(53, 178, 194, 0.4)',
+              }}
+            />
+          </div>
+
           {/* Laptop iframe overlay */}
           <div
             ref={laptopRef}
@@ -732,11 +757,34 @@ const Page = () => {
 
 
 
+                    {/* Letter Glow - positioned relative to letter */}
+          <div
+            className="absolute pointer-events-none letter-glow-animation"
+            style={{ 
+              left: '73vw',
+              top: '50vw',
+              transform: 'translate(-50%, -50%) rotate(-95deg) skewY(-57deg)',
+              zIndex: 1,
+              width: '8vw',
+              height: '16vw',
+              filter: 'blur(12px)',
+              opacity: 0.7,
+            }}
+          >
+            <div
+              style={{
+                width: '100%',
+                height: '100%',
+                clipPath: 'polygon(12% 30%, 85% 22%, 95% 82%, 22% 90%)',
+                background: 'linear-gradient(45deg, rgba(36, 129, 194, 1) 0%, rgba(36, 129, 194, 1) 15%, rgba(36, 129, 194, 0.9) 30%, rgba(36, 129, 194, 0.7) 50%, rgba(36, 129, 194, 0.5) 70%, rgba(36, 129, 194, 0.2) 85%, rgba(36, 129, 194, 0) 100%)',
+                boxShadow: '0 0 25px rgba(36, 129, 194, 1), 0 0 50px rgba(36, 129, 194, 0.9), 0 0 75px rgba(36, 129, 194, 0.7), 0 0 100px rgba(36, 129, 194, 0.5)',
+              }}
+            />
+          </div>
+
           {/* Letter clip-path overlay */}
           <div
             className="absolute cursor-pointer letter-pulse-glow letter-clip-path inset-0"
-            onMouseEnter={() => setShowLetterTooltip(true)}
-            onMouseLeave={() => setShowLetterTooltip(false)}
             onClick={() => {
               console.log('Letter clicked!');
               setShowLesleyLetter(true);
@@ -801,6 +849,7 @@ const Page = () => {
               top: '45vw', 
               width: '8vw', 
               height: '8vw', 
+              zIndex: 2,
               // backgroundColor:'red'
              
             }}
@@ -809,6 +858,33 @@ const Page = () => {
               setShowVideos(true);
             }}
           >
+            {/* Phone Glow - inside clip path container */}
+            <div
+              className="absolute pointer-events-none phone-glow-animation"
+              style={{ 
+                left: '2vw', 
+                top: '0vw', 
+                width: '8vw', 
+                height: '8vw',
+                zIndex: -1,
+                filter: 'blur(12px)',
+                opacity: 0.7,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}
+            >
+              <div
+                style={{
+                  width: '8vw',
+                  height: '3vw',
+                  borderRadius: '50% 50% 0 0',
+                  background: 'linear-gradient(67.04deg, rgba(255, 255, 0, 1) 0%, rgba(255, 255, 0, 0.9) 15%, rgba(255, 255, 0, 0.7) 30%, rgba(255, 255, 0, 0.5) 50%, rgba(255, 255, 0, 0.3) 70%, rgba(255, 255, 0, 0.1) 85%, rgba(255, 255, 0, 0) 100%)',
+                  boxShadow: '0 0 25px rgba(255, 255, 0, 0.9), 0 0 50px rgba(255, 255, 0, 0.7), 0 0 75px rgba(255, 255, 0, 0.5), 0 0 100px rgba(255, 255, 0, 0.3)',
+                  clipPath: 'polygon(0% 0%, 100% 0%, 100% 85%, 50% 100%, 0% 85%)',
+                }}
+              />
+            </div>
             <div
               className="cursor-pointer w-full h-full"
               style={{
@@ -816,11 +892,6 @@ const Page = () => {
               }}
             
             />
-            {/* Phone Tooltip */}
-            <div className="absolute -top-12 left-1/2 transform -translate-x-1/2 bg-[#35B2C2] text-black px-3 py-2 rounded-lg text-sm font-medium transition-all duration-500 pointer-events-none z-30 whitespace-nowrap phone-tooltip-glow group-hover:opacity-100 group-hover:scale-100 opacity-0 scale-95">
-             Join Our Channel
-              <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-[#35B2C2]"></div>
-            </div>
           </div>
 
           {/* White Notice Paper (top left) */}
@@ -1793,6 +1864,40 @@ const Page = () => {
                     0 0 40px rgba(53, 178, 194, 0.6), 
                     0 0 60px rgba(53, 178, 194, 0.4), 
                     0 0 80px rgba(53, 178, 194, 0.2);
+                }
+              }
+              
+              .phone-glow-animation {
+                animation: phoneGlowPulse 4s ease-in-out infinite;
+              }
+              
+              @keyframes phoneGlowPulse {
+                0%, 100% {
+                  opacity: 0.5;
+                  transform: scale(1);
+                  filter: blur(12px);
+                }
+                50% {
+                  opacity: 0.9;
+                  transform: scale(1.05);
+                  filter: blur(12px);
+                }
+              }
+              
+              .letter-glow-animation {
+                animation: letterGlowPulse 4s ease-in-out infinite;
+              }
+              
+              @keyframes letterGlowPulse {
+                0%, 100% {
+                  opacity: 0.5;
+                  transform: translate(-50%, -50%) rotate(-95deg) skewY(-57deg) scale(1);
+                  filter: blur(12px);
+                }
+                50% {
+                  opacity: 0.9;
+                  transform: translate(-50%, -50%) rotate(-95deg) skewY(-57deg) scale(1.05);
+                  filter: blur(12px);
                 }
               }
               
