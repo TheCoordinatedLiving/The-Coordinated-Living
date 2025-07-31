@@ -88,7 +88,7 @@ const AboutMeWindow = ({ onClose }: AboutMeWindowProps) => {
         
         {/* Menu File positioned directly under the tab-view */}
         <div className="absolute top-[34px] left-0" style={{ marginTop: 0 }}>
-          <img 
+          <Image 
             src="/aboutlesley/menu-file.svg" 
             width={800} 
             height={33} 
@@ -99,7 +99,7 @@ const AboutMeWindow = ({ onClose }: AboutMeWindowProps) => {
         
         {/* About Me Body positioned directly under the menu-file */}
         <div className="absolute top-[62px] left-0" style={{ marginTop: 0 }}>
-          <img 
+          <Image 
             src="/aboutlesley/about-me-body.svg" 
             width={800} 
             height={538} 
@@ -110,7 +110,7 @@ const AboutMeWindow = ({ onClose }: AboutMeWindowProps) => {
         
         {/* About Me Status positioned directly under the body */}
         <div className="absolute top-[570px] left-0" style={{ marginTop: 0 }}>
-          <img 
+          <Image 
             src="/aboutlesley/about-me-status.svg" 
             width={800} 
             height={50} 

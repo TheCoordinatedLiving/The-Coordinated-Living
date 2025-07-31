@@ -124,7 +124,6 @@ const Page = () => {
   const [currentPostIndex, setCurrentPostIndex] = useState(0);
   const [fromWindows, setFromWindows] = useState(false);
   const [showFumaaModal, setShowFumaaModal] = useState(false);
-  const [showLaptopTooltip, setShowLaptopTooltip] = useState(false);
   const [showLetterTooltip, setShowLetterTooltip] = useState(false);
   const [showShareOptions, setShowShareOptions] = useState(false);
   const [showToast, setShowToast] = useState(false);
@@ -1949,7 +1948,7 @@ const Page = () => {
                     
                     {/* Description */}
                     <p className="text-xl text-white mb-10 leading-relaxed opacity-90" style={{ fontFamily: 'Roboto, sans-serif' }}>
-                      Are you longing for an in-depth exploration of God's Word and its application to the complexities of life? Our videos, delivered through an exclusive paid WhatsApp channel, provide detailed teaching and deeper insights. Join our community to journey further into understanding how His grace abounds even in the most profound changing scenes of life and cultivate an intimate relationship with the Lord.
+                      Are you longing for an in-depth exploration of God&apos;s Word and its application to the complexities of life? Our videos, delivered through an exclusive paid WhatsApp channel, provide detailed teaching and deeper insights. Join our community to journey further into understanding how His grace abounds even in the most profound changing scenes of life and cultivate an intimate relationship with the Lord.
                     </p>
                     
                     {/* Join Channel Button */}
