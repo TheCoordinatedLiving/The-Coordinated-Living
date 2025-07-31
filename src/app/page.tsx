@@ -2461,6 +2461,7 @@ const Page = () => {
                     {/* Title */}
                     <h1 
                       className="text-7xl font-serif text-white mb-8 leading-tight opacity-0 cup-title"
+                      style={{ fontFamily: 'Amita, serif' }}
                       ref={(el) => {
                         if (el) {
                           gsap.fromTo(el, 
@@ -2487,6 +2488,7 @@ const Page = () => {
                     {/* Description */}
                     <p 
                       className="text-xl text-white mb-10 leading-relaxed opacity-0 cup-description"
+                      style={{ fontFamily: 'Roboto, sans-serif' }}
                       ref={(el) => {
                         if (el) {
                           gsap.fromTo(el, 

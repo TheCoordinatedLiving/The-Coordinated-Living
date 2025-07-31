@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 
 const BookCard = ({ image, title, description }: { image: string, title: string, description: string }) => (
-  <div className="text-center flex flex-col items-center">
+  <div className="text-center flex flex-col items-center group cursor-pointer hover:scale-105 transition-transform duration-200">
     <div className="w-40 h-56 relative mb-4">
       <Image 
         src={image} 
@@ -13,7 +13,24 @@ const BookCard = ({ image, title, description }: { image: string, title: string,
       />
     </div>
     <h3 className="font-semibold text-md mb-1 text-black">{title}</h3>
-    <p className="text-xs text-black max-w-xs">{description}</p>
+    <p className="text-xs text-black max-w-xs mb-3">{description}</p>
+    <button 
+      className="text-white px-6 py-2 rounded-full text-sm font-medium transition-colors duration-200 cursor-pointer"
+      style={{ backgroundColor: '#5C3C6E' }}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.backgroundColor = '#4A2F5A';
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.backgroundColor = '#5C3C6E';
+      }}
+      onClick={(e) => {
+        e.stopPropagation();
+        console.log(`Downloading ${title}`);
+        // Add download functionality here
+      }}
+    >
+      Download
+    </button>
   </div>
 );
 
