@@ -124,7 +124,7 @@ const Page = () => {
   const [currentPostIndex, setCurrentPostIndex] = useState(0);
   const [fromWindows, setFromWindows] = useState(false);
   const [showFumaaModal, setShowFumaaModal] = useState(false);
-  const [showLetterTooltip, setShowLetterTooltip] = useState(false);
+
   const [showShareOptions, setShowShareOptions] = useState(false);
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
@@ -744,16 +744,7 @@ const Page = () => {
 
 
 
-          {/* Letter Tooltip - positioned outside the letter container */}
-          <div className={`absolute text-white px-3 py-2 rounded-lg text-sm font-medium transition-all duration-500 pointer-events-none z-50 whitespace-nowrap letter-tooltip-glow ${showLetterTooltip ? 'opacity-90 scale-100' : 'opacity-0 scale-95'}`} style={{ 
-            top: '70%', 
-            left: '65%',
-            transform: 'translateY(-100%)',
-            backgroundColor: '#845399'
-          }}>
-            About Me
-            <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent" style={{ borderTopColor: '#845399', opacity: 0.9 }}></div>
-          </div>
+
 
 
 
