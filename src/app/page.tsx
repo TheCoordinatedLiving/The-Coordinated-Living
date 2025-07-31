@@ -498,6 +498,85 @@ const Page = () => {
     }
   }, [isLoaded]);
 
+  const handleCloseVideos = () => {
+    // Create a timeline for smooth exit animation
+    const tl = gsap.timeline();
+    
+    // Animate all elements out smoothly
+    tl.to('.video-title, .video-description, .video-button, .video-image', {
+      opacity: 0,
+      y: -40,
+      scale: 0.95,
+      duration: 0.6,
+      ease: "power2.in",
+      stagger: 0.05
+    });
+    
+    // Close modal after animation completes
+    tl.call(() => {
+      setShowVideos(false);
+    });
+  };
+
+  const handleCloseLesleyLetter = () => {
+    // Animate lesley letter out
+    const letter = document.querySelector('[data-lesley-letter]');
+    
+    gsap.to(letter, {
+      opacity: 0,
+      y: -40,
+      scale: 0.9,
+      duration: 0.8,
+      ease: "power2.in",
+      onComplete: () => {
+        setShowLesleyLetter(false);
+      }
+    });
+  };
+
+  const handleClosePostModal = () => {
+    // Animate post modal out
+    const postContent = document.querySelector('.post-modal-content');
+    const shareButton = document.querySelector('.post-share-button');
+    
+    const tl = gsap.timeline();
+    
+    tl.to([postContent, shareButton], {
+      opacity: 0,
+      y: -30,
+      scale: 0.95,
+      duration: 0.6,
+      ease: "power2.in",
+      stagger: 0.1
+    });
+    
+    tl.call(() => {
+      setShowPostModal(false);
+    });
+  };
+
+  const handleCloseFumaaModal = () => {
+    // Create a timeline for smooth exit animation
+    const tl = gsap.timeline();
+    
+    // Animate all elements out smoothly
+    tl.to('.cup-title, .cup-description, .cup-button, .cup-image', {
+      opacity: 0,
+      y: -40,
+      scale: 0.95,
+      duration: 0.6,
+      ease: "power2.in",
+      stagger: 0.05
+    });
+    
+    // Close modal after animation completes
+    tl.call(() => {
+      setShowFumaaModal(false);
+    });
+  };
+
+
+
   return (
     <div ref={pageRef} className="relative ">
       {/* Experience page hidden behind */}
@@ -1884,12 +1963,12 @@ const Page = () => {
                   backdropFilter: 'blur(16px)',
                   WebkitBackdropFilter: 'blur(16px)'
                 }}
-                onClick={() => setShowLesleyLetter(false)}
+                onClick={handleCloseLesleyLetter}
               />
               
               {/* Return to Desk button - top left */}
               <button
-                onClick={() => setShowLesleyLetter(false)}
+                onClick={handleCloseLesleyLetter}
                 className="absolute top-6 left-6 z-20 bg-white bg-opacity-80 backdrop-blur-sm text-gray-800 px-4 py-2 rounded-lg font-medium hover:bg-opacity-100 transition-all shadow-lg cursor-pointer return-desk-glow"
               >
                 Return to Desk
@@ -1899,7 +1978,29 @@ const Page = () => {
               <div className="absolute inset-0 flex items-center justify-center p-8">
                 <div className="relative z-10 max-w-xl w-full">
                   {/* SVG Letter */}
-                  <div className="w-full flex justify-center">
+                  <div 
+                    className="w-full flex justify-center opacity-0"
+                    data-lesley-letter
+                    ref={(el) => {
+                      if (el) {
+                        gsap.fromTo(el, 
+                          { 
+                            opacity: 0, 
+                            y: 60,
+                            scale: 0.9
+                          },
+                          { 
+                            opacity: 1, 
+                            y: 0, 
+                            scale: 1,
+                            duration: 1.4,
+                            ease: "power2.out",
+                            delay: 0.3
+                          }
+                        );
+                      }
+                    }}
+                  >
                     <Image
                       src="/lesley.svg"
                       alt="Lesley's Letter"
@@ -1925,12 +2026,12 @@ const Page = () => {
                   backdropFilter: 'blur(16px)',
                   WebkitBackdropFilter: 'blur(16px)'
                 }}
-                onClick={() => setShowVideos(false)}
+                onClick={handleCloseVideos}
               />
               
               {/* Return to Desk button - top left */}
               <button
-                onClick={() => setShowVideos(false)}
+                onClick={handleCloseVideos}
                 className="absolute top-6 left-6 z-20 bg-white bg-opacity-80 backdrop-blur-sm text-gray-800 px-4 py-2 rounded-lg font-medium hover:bg-opacity-100 transition-all shadow-lg cursor-pointer return-desk-glow"
               >
                 Return to Desk
@@ -1942,17 +2043,80 @@ const Page = () => {
                   {/* Left side - Content */}
                   <div className="flex-1 max-w-2xl relative">
                     {/* Title */}
-                    <h1 className="text-7xl font-serif text-white mb-8 leading-tight" style={{ fontFamily: 'Amita, serif' }}>
+                    <h1 
+                      className="text-7xl font-serif text-white mb-8 leading-tight opacity-0 video-title" 
+                      style={{ fontFamily: 'Amita, serif' }}
+                      ref={(el) => {
+                        if (el) {
+                          gsap.fromTo(el, 
+                            { 
+                              opacity: 0, 
+                              y: 50,
+                              scale: 0.9
+                            },
+                            { 
+                              opacity: 1, 
+                              y: 0, 
+                              scale: 1,
+                              duration: 1.2,
+                              ease: "power2.out",
+                              delay: 0.3
+                            }
+                          );
+                        }
+                      }}
+                    >
                       Deep Dive<br />& Exclusive<br />Teachings
                     </h1>
                     
                     {/* Description */}
-                    <p className="text-xl text-white mb-10 leading-relaxed opacity-90" style={{ fontFamily: 'Roboto, sans-serif' }}>
+                    <p 
+                      className="text-xl text-white mb-10 leading-relaxed opacity-0 video-description" 
+                      style={{ fontFamily: 'Roboto, sans-serif' }}
+                      ref={(el) => {
+                        if (el) {
+                          gsap.fromTo(el, 
+                            { 
+                              opacity: 0, 
+                              y: 40
+                            },
+                            { 
+                              opacity: 0.9, 
+                              y: 0,
+                              duration: 1.4,
+                              ease: "power2.out",
+                              delay: 0.8
+                            }
+                          );
+                        }
+                      }}
+                    >
                       Are you longing for an in-depth exploration of God&apos;s Word and its application to the complexities of life? Our videos, delivered through an exclusive paid WhatsApp channel, provide detailed teaching and deeper insights. Join our community to journey further into understanding how His grace abounds even in the most profound changing scenes of life and cultivate an intimate relationship with the Lord.
                     </p>
                     
                     {/* Join Channel Button */}
-                    <div className="flex justify-start">
+                    <div 
+                      className="flex justify-start opacity-0 video-button"
+                      ref={(el) => {
+                        if (el) {
+                          gsap.fromTo(el, 
+                            { 
+                              opacity: 0, 
+                              y: 30,
+                              scale: 0.95
+                            },
+                            { 
+                              opacity: 1, 
+                              y: 0, 
+                              scale: 1,
+                              duration: 1.0,
+                              ease: "power2.out",
+                              delay: 1.4
+                            }
+                          );
+                        }
+                      }}
+                    >
                       <Image
                         src="/join-channel-new.svg"
                         alt="Join Channel"
@@ -1967,7 +2131,28 @@ const Page = () => {
 
                   
                   {/* Right side - Image */}
-                  <div className="flex-1 flex justify-end items-end relative">
+                  <div 
+                    className="flex-1 flex justify-end items-end relative opacity-0 video-image"
+                    ref={(el) => {
+                      if (el) {
+                        gsap.fromTo(el, 
+                          { 
+                            opacity: 0, 
+                            y: 80,
+                            scale: 0.9
+                          },
+                          { 
+                            opacity: 1, 
+                            y: 0, 
+                            scale: 1,
+                            duration: 1.6,
+                            ease: "power2.out",
+                            delay: 0.5
+                          }
+                        );
+                      }
+                    }}
+                  >
                     <Image
                       src="/join-channel.png"
                       alt="Join Channel"
@@ -1996,18 +2181,18 @@ const Page = () => {
                   backdropFilter: 'blur(16px)',
                   WebkitBackdropFilter: 'blur(16px)'
                 }}
-                onClick={() => setShowPostModal(false)}
+                onClick={handleClosePostModal}
               />
               
               {/* Return to Desk button - top left */}
               <button
-                onClick={() => setShowPostModal(false)}
+                onClick={handleClosePostModal}
                 className="absolute top-6 left-6 z-20 bg-white bg-opacity-80 backdrop-blur-sm text-gray-800 px-4 py-2 rounded-lg font-medium hover:bg-opacity-100 transition-all shadow-lg cursor-pointer return-desk-glow"
               >
                 Return to Desk
               </button>
               
-                            {/* Post Template Content */}
+              {/* Post Template Content */}
               <div className="absolute inset-0 flex items-center justify-center p-16">
                 {/* Left Navigation Button */}
                 {currentPostIndex > 0 && (
@@ -2056,7 +2241,28 @@ const Page = () => {
                 )}
 
                 <div className="relative z-10 max-w-2xl w-full">
-                  <div className="bg-white rounded-lg shadow-2xl overflow-hidden">
+                  <div 
+                    className="bg-white rounded-lg shadow-2xl overflow-hidden post-modal-content opacity-0"
+                    ref={(el) => {
+                      if (el) {
+                        gsap.fromTo(el, 
+                          { 
+                            opacity: 0, 
+                            y: 50,
+                            scale: 0.9
+                          },
+                          { 
+                            opacity: 1, 
+                            y: 0, 
+                            scale: 1,
+                            duration: 1.0,
+                            ease: "power2.out",
+                            delay: 0.2
+                          }
+                        );
+                      }
+                    }}
+                  >
                     <div ref={postTemplateRef}>
                       <PostTemplate
                         title={posts[currentPostIndex].title}
@@ -2070,7 +2276,26 @@ const Page = () => {
                   </div>
                   
                   {/* Share button - outside template */}
-                  <div className="flex justify-center mt-6">
+                  <div 
+                    className="flex justify-center mt-6 post-share-button opacity-0"
+                    ref={(el) => {
+                      if (el) {
+                        gsap.fromTo(el, 
+                          { 
+                            opacity: 0, 
+                            y: 30
+                          },
+                          { 
+                            opacity: 1, 
+                            y: 0,
+                            duration: 0.8,
+                            ease: "power2.out",
+                            delay: 0.6
+                          }
+                        );
+                      }
+                    }}
+                  >
                     <div className="relative">
                       <button
                         onClick={() => setShowShareOptions(!showShareOptions)}
@@ -2219,39 +2444,180 @@ const Page = () => {
                   backdropFilter: 'blur(16px)',
                   WebkitBackdropFilter: 'blur(16px)'
                 }}
-                onClick={() => setShowFumaaModal(false)}
+                onClick={handleCloseFumaaModal}
               />
               {/* Return to Desk button - top left */}
               <button
-                onClick={() => setShowFumaaModal(false)}
+                onClick={handleCloseFumaaModal}
                 className="absolute top-6 left-6 z-20 bg-white bg-opacity-80 backdrop-blur-sm text-gray-800 px-4 py-2 rounded-lg font-medium hover:bg-opacity-100 transition-all shadow-lg cursor-pointer return-desk-glow"
               >
                 Return to Desk
               </button>
-              {/* Modal content - centered */}
-              <div className="absolute inset-0 flex items-center justify-center p-8">
-                <div 
-                  className="relative z-10 max-w-2xl w-full p-10 border-2 border-black shadow-2xl drop-shadow-2xl bg-white"
-                  style={{ borderRadius: '0px' }}
-                >
-                  {/* Post Title */}
-                  <div className="mb-8">
-                    <h1 className="text-4xl font-extrabold text-gray-900 text-center tracking-wide uppercase mb-8">
-                      &quot;A Cheerful Gift, a Full Cup&quot;
+              {/* Modal content - split layout like join channel */}
+              <div className="absolute inset-0 flex items-center justify-center p-16">
+                <div className="relative z-10 flex items-center justify-between w-full max-w-6xl">
+                  {/* Left side - Content */}
+                  <div className="flex-1 max-w-2xl relative">
+                    {/* Title */}
+                    <h1 
+                      className="text-7xl font-serif text-white mb-8 leading-tight opacity-0 cup-title"
+                      ref={(el) => {
+                        if (el) {
+                          gsap.fromTo(el, 
+                            { 
+                              opacity: 0, 
+                              y: 50,
+                              scale: 0.9
+                            },
+                            { 
+                              opacity: 1, 
+                              y: 0, 
+                              scale: 1,
+                              duration: 1.2,
+                              ease: "power2.out",
+                              delay: 0.3
+                            }
+                          );
+                        }
+                      }}
+                    >
+                      A Cheerful Gift,<br />a Full Cup
                     </h1>
-                  </div>
-                  {/* Post Content */}
-                  <div className="text-center">
-                    <p className="text-gray-800 text-xl leading-relaxed mb-8">
+                    
+                    {/* Description */}
+                    <p 
+                      className="text-xl text-white mb-10 leading-relaxed opacity-0 cup-description"
+                      ref={(el) => {
+                        if (el) {
+                          gsap.fromTo(el, 
+                            { 
+                              opacity: 0, 
+                              y: 40
+                            },
+                            { 
+                              opacity: 0.9, 
+                              y: 0,
+                              duration: 1.4,
+                              ease: "power2.out",
+                              delay: 0.8
+                            }
+                          );
+                        }
+                      }}
+                    >
                       Having my cuppa on my table is one sure comfort as I get work done. Your support would be a lovely way to keep it full every time I sit at my desk, and it genuinely helps me sustainably run this platform. Thank you for your kindness!
                     </p>
-
-                    <button
-                      className="mt-4 w-full py-5 bg-[#633366] text-white text-2xl font-medium rounded-full focus:outline-none focus:ring-2 focus:ring-[#633366] focus:ring-opacity-50 transition-all duration-200 shadow-md hover:scale-[1.02] cursor-pointer"
-                      style={{ letterSpacing: '0.01em' }}
+                    
+                    {/* Pour Into My Cup Button */}
+                    <div 
+                      className="flex justify-start opacity-0 cup-button"
+                      ref={(el) => {
+                        if (el) {
+                          gsap.fromTo(el, 
+                            { 
+                              opacity: 0, 
+                              y: 30,
+                              scale: 0.95
+                            },
+                            { 
+                              opacity: 1, 
+                              y: 0, 
+                              scale: 1,
+                              duration: 1.0,
+                              ease: "power2.out",
+                              delay: 1.4
+                            }
+                          );
+                        }
+                      }}
                     >
-                      Pour Into My Cup 
-                    </button>
+                      <Image
+                        src="/pour-into-my-cup.svg"
+                        alt="Pour Into My Cup"
+                        width={200}
+                        height={60}
+                        className="cursor-pointer hover:opacity-80 transition-opacity"
+                        onClick={() => console.log('Pour Into My Cup clicked!')}
+                      />
+                    </div>
+
+                  </div>
+
+                  
+                  {/* Right side - Cup Image */}
+                  <div 
+                    className="flex-1 flex justify-end items-end relative opacity-0 cup-image"
+                    ref={(el) => {
+                      if (el) {
+                        gsap.fromTo(el, 
+                          { 
+                            opacity: 0, 
+                            y: 80,
+                            scale: 0.9
+                          },
+                          { 
+                            opacity: 1, 
+                            y: 0, 
+                            scale: 1,
+                            duration: 1.6,
+                            ease: "power2.out",
+                            delay: 0.5
+                          }
+                        );
+                      }
+                    }}
+                  >
+                    <Image
+                      src="/cup-1.png"
+                      alt="Coffee Cup"
+                      width={4500}
+                      height={6750}
+                      className="object-contain"
+                      style={{
+                        transform: 'translateX(20%) translateY(15%)'
+                      }}
+                    />
+                    
+                    {/* Animated Smoke Effects */}
+                    <div
+                      className="absolute inset-0 pointer-events-none flex items-center justify-center"
+                      style={{ zIndex: 1, top: '-90%', left: '5%' }}
+                    >
+                      <Image
+                        src="/smoke.png"
+                        alt="Smoke"
+                        width={220}
+                        height={220}
+                        className="object-contain smoke-animation"
+                        style={{ width: '220px', height: '220px' }}
+                      />
+                    </div>
+                    <div
+                      className="absolute inset-0 pointer-events-none flex items-center justify-center"
+                      style={{ zIndex: 1, top: '-90%', left: '5%' }}
+                    >
+                      <Image
+                        src="/smoke.png"
+                        alt="Smoke"
+                        width={220}
+                        height={220}
+                        className="object-contain smoke-animation2"
+                        style={{ width: '220px', height: '220px' }}
+                      />
+                    </div>
+                    <div
+                      className="absolute inset-0 pointer-events-none flex items-center justify-center"
+                      style={{ zIndex: 1, top: '-90%', left: '5%' }}
+                    >
+                      <Image
+                        src="/smoke.png"
+                        alt="Smoke"
+                        width={220}
+                        height={220}
+                        className="object-contain smoke-animation3"
+                        style={{ width: '220px', height: '220px' }}
+                      />
+                    </div>
                   </div>
                 </div>
               </div>

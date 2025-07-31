@@ -93,28 +93,27 @@ export const generatePDFFromPostData = async (
   totalPages: number
 ) => {
   try {
-    // Create a temporary div to render the post content with all visual elements
+    // Create a temporary div to render the post content using the same PostTemplate structure
     const tempDiv = document.createElement('div');
     tempDiv.style.position = 'absolute';
     tempDiv.style.left = '-9999px';
     tempDiv.style.top = '0';
     tempDiv.style.width = '800px';
     tempDiv.style.backgroundColor = '#ffffff';
-    tempDiv.style.padding = '40px';
     tempDiv.style.fontFamily = 'Arial, sans-serif';
     tempDiv.style.fontSize = '14px';
     tempDiv.style.lineHeight = '1.6';
     tempDiv.style.color = '#000000';
     
-    // Create the post content HTML with all visual elements
+    // Create the post content HTML that matches PostTemplate exactly
     tempDiv.innerHTML = `
-      <div style="max-width: 720px; margin: 0 auto; position: relative;">
+      <div style="background-color: white; position: relative; width: 100%;">
         <!-- Watermark in the center -->
         <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; opacity: 0.1; pointer-events: none; z-index: 0;">
           <img src="/watermark.svg" alt="Watermark" style="width: 288px; height: 288px; display: block;" />
         </div>
-
-        <div style="position: relative; z-index: 10;">
+        
+        <div style="max-width: 720px; margin: 0 auto; padding: 8px 24px; position: relative; z-index: 10;">
           <!-- Header with page number and decorative elements -->
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
             <div style="display: flex; align-items: center; gap: 12px;">
@@ -138,35 +137,35 @@ export const generatePDFFromPostData = async (
             <!-- Main heading -->
             <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
               <div style="flex: 1; padding-top: 48px; margin-left: 0;">
-                <h1 style="font-size: 32px; font-weight: bold; line-height: 1.2; color: #000; margin: 0;">${title}</h1>
+                <h1 style="font-size: 32px; font-weight: bold; line-height: 1.2; color: #000; margin: 0; font-family: 'Amita, serif';">${title}</h1>
               </div>
             </div>
 
             <!-- Two-column text content -->
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 8px;">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 8px; font-family: 'Roboto, sans-serif';">
               <div style="font-size: 16px; line-height: 1.6; color: #000;">
-                ${leftContent}
+                <p style="margin: 0 0 12px 0;">${leftContent}</p>
               </div>
               <div style="font-size: 16px; line-height: 1.6; color: #000;">
-                ${rightContent}
+                <p style="margin: 0 0 12px 0;">${rightContent}</p>
               </div>
             </div>
 
             <!-- Bottom section with image and text -->
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
               <div style="display: flex; justify-content: center;">
-                <div style="width: 288px; height: 288px; border-radius: 50%; overflow: hidden; background-color: #f0f0f0;">
+                <div style="width: 192px; height: 192px; border-radius: 50%; overflow: hidden; background-color: #f0f0f0;">
                   <img src="/post-hero.png" alt="Open book with pen" style="width: 100%; height: 100%; object-fit: cover; display: block;" />
                 </div>
               </div>
-              <div style="padding-top: 8px; position: relative;">
+              <div style="padding-top: 8px; position: relative; font-family: 'Roboto, sans-serif';">
                 <!-- Watermark background -->
                 <div style="position: absolute; inset: 0; display: flex; align-items: flex-end; justify-content: flex-end; opacity: 0.2; pointer-events: none;">
                   <img src="/watermark.svg" alt="Watermark" style="width: 96px; height: 96px; opacity: 0.3; display: block;" />
                 </div>
                 <!-- Content on top -->
                 <div style="position: relative; z-index: 10; font-size: 16px; line-height: 1.6; color: #000;">
-                  ${bottomRightContent}
+                  <p style="margin: 0;">${bottomRightContent}</p>
                 </div>
               </div>
             </div>
