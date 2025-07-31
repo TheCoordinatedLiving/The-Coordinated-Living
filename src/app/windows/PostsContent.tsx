@@ -144,8 +144,8 @@ const PostsContent = () => {
       {/* Header Section */}
       <div className="flex justify-between items-start mb-8">
         <div className="max-w-xl">
-          <h1 className="text-3xl font-bold text-gray-800 mb-2">Posts</h1>
-          <p className="text-sm text-gray-500 leading-relaxed">
+          <h1 className="text-3xl font-bold text-gray-800 mb-2" style={{ fontFamily: 'Amita, serif' }}>Posts</h1>
+          <p className="text-sm text-gray-500 leading-relaxed" style={{ fontFamily: 'Roboto, sans-serif' }}>
             Navigate the changing scenes of life with faith through our brief, insightful
             reflections and biblical insights. We aim to help you recognize God&apos;s abundant grace
             in your everyday moments, offering encouragement and a new perspective through

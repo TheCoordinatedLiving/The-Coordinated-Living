@@ -367,6 +367,26 @@ const Page = () => {
     }
   }, []);
 
+  // Animate PostTemplate when modal opens
+  useEffect(() => {
+    if (showPostModal && postTemplateRef.current) {
+      gsap.fromTo(postTemplateRef.current, 
+        { 
+          opacity: 0,
+          scale: 0.95,
+          y: 20
+        },
+        { 
+          opacity: 1, 
+          scale: 1,
+          y: 0,
+          duration: 0.6,
+          ease: "power2.out"
+        }
+      );
+    }
+  }, [showPostModal]);
+
   useEffect(() => {
     // Don't start the loader timer if coming from Windows
     if (fromWindows) return;
@@ -535,24 +555,23 @@ const Page = () => {
   };
 
   const handleClosePostModal = () => {
-    // Animate post modal out
-    const postContent = document.querySelector('.post-modal-content');
-    const shareButton = document.querySelector('.post-share-button');
+    // Animate post modal out with ease
+    const modalContainer = document.querySelector('.post-modal-container');
     
-    const tl = gsap.timeline();
-    
-    tl.to([postContent, shareButton], {
-      opacity: 0,
-      y: -30,
-      scale: 0.95,
-      duration: 0.6,
-      ease: "power2.in",
-      stagger: 0.1
-    });
-    
-    tl.call(() => {
+    if (modalContainer) {
+      gsap.to(modalContainer, {
+        opacity: 0,
+        scale: 0.95,
+        y: -20,
+        duration: 0.6,
+        ease: "power2.inOut",
+        onComplete: () => {
+          setShowPostModal(false);
+        }
+      });
+    } else {
       setShowPostModal(false);
-    });
+    }
   };
 
   const handleCloseFumaaModal = () => {
@@ -2242,59 +2261,22 @@ const Page = () => {
 
                 <div className="relative z-10 max-w-2xl w-full">
                   <div 
-                    className="bg-white rounded-lg shadow-2xl overflow-hidden post-modal-content opacity-0"
-                    ref={(el) => {
-                      if (el) {
-                        gsap.fromTo(el, 
-                          { 
-                            opacity: 0, 
-                            y: 50,
-                            scale: 0.9
-                          },
-                          { 
-                            opacity: 1, 
-                            y: 0, 
-                            scale: 1,
-                            duration: 1.0,
-                            ease: "power2.out",
-                            delay: 0.2
-                          }
-                        );
-                      }
-                    }}
+                    className="bg-white rounded-lg shadow-2xl overflow-hidden post-modal-content post-modal-container"
+                    ref={postTemplateRef}
                   >
-                    <div ref={postTemplateRef}>
-                      <PostTemplate
-                        title={posts[currentPostIndex].title}
-                        currentPage={currentPostIndex + 1}
-                        totalPages={posts.length}
-                        leftContent={posts[currentPostIndex].leftContent}
-                        rightContent={posts[currentPostIndex].rightContent}
-                        bottomRightContent={posts[currentPostIndex].bottomRightContent}
-                      />
-                    </div>
+                    <PostTemplate
+                      title={posts[currentPostIndex].title}
+                      currentPage={currentPostIndex + 1}
+                      totalPages={posts.length}
+                      leftContent={posts[currentPostIndex].leftContent}
+                      rightContent={posts[currentPostIndex].rightContent}
+                      bottomRightContent={posts[currentPostIndex].bottomRightContent}
+                    />
                   </div>
                   
                   {/* Share button - outside template */}
                   <div 
-                    className="flex justify-center mt-6 post-share-button opacity-0"
-                    ref={(el) => {
-                      if (el) {
-                        gsap.fromTo(el, 
-                          { 
-                            opacity: 0, 
-                            y: 30
-                          },
-                          { 
-                            opacity: 1, 
-                            y: 0,
-                            duration: 0.8,
-                            ease: "power2.out",
-                            delay: 0.6
-                          }
-                        );
-                      }
-                    }}
+                    className="flex justify-center mt-6 post-share-button"
                   >
                     <div className="relative">
                       <button
@@ -2304,39 +2286,50 @@ const Page = () => {
                       >
                         Share This Post
                       </button>
-                      
-                      {/* Share options dropdown */}
-                      {showShareOptions && (
-                        <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-48 bg-white rounded-md shadow-lg border border-gray-200 z-30">
-                          <div className="py-1">
-                            <button
-                              onClick={() => {
-                                handleShare('link');
-                                setShowShareOptions(false);
-                              }}
-                              className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                            >
-                              <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
-                              </svg>
-                              Share as Link
-                            </button>
-                            <button
-                              onClick={() => {
-                                handleShare('pdf');
-                                setShowShareOptions(false);
-                              }}
-                              className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                            >
-                              <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                              </svg>
-                              View as PDF
-                            </button>
-                          </div>
-                        </div>
-                      )}
                     </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Share options dropdown - positioned outside modal to prevent blinking */}
+          {showShareOptions && showPostModal && (
+            <div className="fixed inset-0 z-[60] pointer-events-none">
+              <div 
+                className="absolute inset-0 pointer-events-auto"
+                onClick={() => setShowShareOptions(false)}
+              />
+              <div className="absolute bottom-0 left-0 right-0 flex justify-center pb-8 pointer-events-auto">
+                <div 
+                  className="w-48 bg-white rounded-md shadow-lg border border-gray-200"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <div className="py-1">
+                    <button
+                      onClick={() => {
+                        handleShare('link');
+                        setShowShareOptions(false);
+                      }}
+                      className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    >
+                      <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                      </svg>
+                      Share as Link
+                    </button>
+                    <button
+                      onClick={() => {
+                        handleShare('pdf');
+                        setShowShareOptions(false);
+                      }}
+                      className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    >
+                      <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                      </svg>
+                      View as PDF
+                    </button>
                   </div>
                 </div>
               </div>
@@ -2641,7 +2634,27 @@ const Page = () => {
       {/* Toast Notification */}
       {showToast && (
         <div className="fixed inset-0 flex items-start justify-center pt-8 z-[99999] pointer-events-none">
-          <div className="bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg flex items-center space-x-2 animate-in slide-in-from-top-2 pointer-events-auto">
+          <div 
+            className="bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg flex items-center space-x-2 pointer-events-auto"
+            ref={(el) => {
+              if (el) {
+                gsap.fromTo(el, 
+                  { 
+                    opacity: 0,
+                    y: -50,
+                    scale: 0.9
+                  },
+                  { 
+                    opacity: 1, 
+                    y: 0,
+                    scale: 1,
+                    duration: 0.6,
+                    ease: "power2.out"
+                  }
+                );
+              }
+            }}
+          >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
             </svg>

@@ -55,8 +55,8 @@ const BooksContent = () => {
       {/* Header Section */}
       <div className="flex justify-between items-start mb-12">
         <div className="max-w-xl">
-          <h1 className="text-2xl font-semibold text-black mb-2">Practical Guides for Your Journey</h1>
-          <p className="text-sm text-gray-500 leading-relaxed">
+          <h1 className="text-2xl font-semibold text-black mb-2" style={{ fontFamily: 'Amita, serif' }}>Practical Guides for Your Journey</h1>
+          <p className="text-sm text-gray-500 leading-relaxed" style={{ fontFamily: 'Roboto, sans-serif' }}>
             Seeking guidance on specific areas or situations in life? Our downloadable resources are helpful guides designed to equip you with practical steps and biblical principles. Explore these resources to experience His abounding grace as you navigate specific scenes of life and grow in faith.
           </p>
         </div>
