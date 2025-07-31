@@ -76,7 +76,7 @@ const WelcomeScreen = ({ onEnterClick }: { onEnterClick: () => void }) => {
           <Image src="/loading-screen/logo.svg" width={96} height={36} alt="Logo" />
         </div>
         <div className="max-w-3xl mx-auto welcome-text" style={{ marginTop: '137px' }}>
-          <h1 className="text-4xl sm:text-6xl font-bold leading-tight">
+          <h1 className="text-4xl sm:text-6xl font-bold leading-tight" style={{ fontFamily: 'Amita, serif' }}>
             Where His grace abounds through the changing scenes of life.
           </h1>
         </div>
@@ -511,7 +511,9 @@ const Page = () => {
             backgroundImage: `url('/coordinated-3.webp')`,
             backgroundRepeat: 'no-repeat',
             backgroundPosition: 'center top',
-            backgroundSize: 'cover'
+            backgroundSize: 'cover',
+            width: '100vw',
+            height: '100vh',
           }}
         >
          
@@ -542,8 +544,6 @@ const Page = () => {
           <div
             ref={laptopRef}
             className="absolute cursor-pointer laptop-iframe inset-0"
-            onMouseEnter={() => setShowLaptopTooltip(true)}
-            onMouseLeave={() => setShowLaptopTooltip(false)}
             onClick={(e) => {
               // Don't zoom if clicking on the iframe content
               if (e.target !== e.currentTarget) {
@@ -620,16 +620,7 @@ const Page = () => {
             />
           </div>
 
-          {/* Laptop Tooltip - positioned outside the laptop container */}
-          <div className={`absolute text-white px-3 py-2 rounded-lg text-sm font-medium transition-all duration-500 pointer-events-none z-50 whitespace-nowrap laptop-tooltip-glow ${showLaptopTooltip ? 'opacity-90 scale-100' : 'opacity-0 scale-95'}`} style={{ 
-            top: '50%', 
-            right: '42%',
-            transform: 'translateY(-100%)',
-            backgroundColor: '#2481C2'
-          }}>
-            Explore Experience
-            <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent" style={{ borderTopColor: '#2481C2', opacity: 0.9 }}></div>
-          </div>
+
 
           {/* Letter Tooltip - positioned outside the letter container */}
           <div className={`absolute text-white px-3 py-2 rounded-lg text-sm font-medium transition-all duration-500 pointer-events-none z-50 whitespace-nowrap letter-tooltip-glow ${showLetterTooltip ? 'opacity-90 scale-100' : 'opacity-0 scale-95'}`} style={{ 
@@ -1952,13 +1943,13 @@ const Page = () => {
                   {/* Left side - Content */}
                   <div className="flex-1 max-w-2xl relative">
                     {/* Title */}
-                    <h1 className="text-7xl font-serif text-white mb-8 leading-tight">
+                    <h1 className="text-7xl font-serif text-white mb-8 leading-tight" style={{ fontFamily: 'Amita, serif' }}>
                       Deep Dive<br />& Exclusive<br />Teachings
                     </h1>
                     
                     {/* Description */}
-                    <p className="text-xl text-white mb-10 leading-relaxed opacity-90">
-                      Explore profound biblical insights and exclusive teachings that will deepen your understanding of God&apos;s Word. Join us for in-depth discussions, spiritual guidance, and transformative lessons that will enrich your faith journey and strengthen your relationship with Christ.
+                    <p className="text-xl text-white mb-10 leading-relaxed opacity-90" style={{ fontFamily: 'Roboto, sans-serif' }}>
+                      Are you longing for an in-depth exploration of God's Word and its application to the complexities of life? Our videos, delivered through an exclusive paid WhatsApp channel, provide detailed teaching and deeper insights. Join our community to journey further into understanding how His grace abounds even in the most profound changing scenes of life and cultivate an intimate relationship with the Lord.
                     </p>
                     
                     {/* Join Channel Button */}
@@ -2174,17 +2165,17 @@ const Page = () => {
                       marginBottom: '24px',
                     }}
                   >
-                    <h2 className="text-white font-medium text-sm" style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                    <h2 className="text-white font-medium text-sm" style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', fontFamily: 'Amita, serif' }}>
                       Welcome to The Interactive Workspace
                     </h2>
                   </div>
 
                   {/* Instructional Text */}
                   <div className="text-center" style={{ marginBottom: '24px' }}>
-                    <p className="text-white font-bold text-lg mb-2" style={{ fontSize: '1.2rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', marginBottom: '12px' }}>
+                    <p className="text-white font-bold text-lg mb-2" style={{ fontSize: '1.2rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', marginBottom: '12px', fontFamily: 'Amita, serif' }}>
                       Things aren&apos;t always what they seem.
                     </p>
-                    <p className="text-gray-300 text-base" style={{ margin: 0 }}>
+                    <p className="text-gray-300 text-base" style={{ margin: 0, fontFamily: 'Roboto, sans-serif' }}>
                       Explore the workspace — you might be surprised by what you find.
                     </p>
                   </div>
@@ -2260,7 +2251,7 @@ const Page = () => {
                       className="mt-4 w-full py-5 bg-[#633366] text-white text-2xl font-medium rounded-full focus:outline-none focus:ring-2 focus:ring-[#633366] focus:ring-opacity-50 transition-all duration-200 shadow-md hover:scale-[1.02] cursor-pointer"
                       style={{ letterSpacing: '0.01em' }}
                     >
-                      Poor Into My Cup 
+                      Pour Into My Cup 
                     </button>
                   </div>
                 </div>

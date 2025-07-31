@@ -65,14 +65,14 @@ export default function PostTemplate({
           {/* Main heading and circular image */}
           <div className="flex justify-between items-start mb-2">
             <div className="flex-1 pt-12 ml-0">
-              <h1 className="text-4xl font-bold leading-tight" style={{ color: "#000000" }}>
+              <h1 className="text-4xl font-bold leading-tight" style={{ color: "#000000", fontFamily: 'Amita, serif' }}>
                 {displayTitle}
               </h1>
             </div>
           </div>
 
           {/* Two-column text content */}
-          <div className="grid grid-cols-2 gap-6 mb-2">
+          <div className="grid grid-cols-2 gap-6 mb-2" style={{ fontFamily: 'Roboto, sans-serif' }}>
             <div className="space-y-3">
               {leftContent}
             </div>
@@ -94,7 +94,7 @@ export default function PostTemplate({
                 />
               </div>
             </div>
-            <div className="pt-2 relative">
+            <div className="pt-2 relative" style={{ fontFamily: 'Roboto, sans-serif' }}>
               {/* Watermark background */}
               <div className="absolute inset-0 flex items-end justify-end opacity-20 pointer-events-none">
                 <Image

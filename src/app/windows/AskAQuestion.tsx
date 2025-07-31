@@ -180,13 +180,13 @@ const AskAQuestion = ({ onClose }: AskAQuestionProps) => {
                         <p className="text-sm font-medium text-black">New Message</p>
                         <div className="flex items-center space-x-3">
                             <button>
-                                <Image src="/broswer/minimize-message.svg" width={10} height={10} alt="Minimize" />
+                                <Image src="/broswer/Minimize-message.svg" width={10} height={10} alt="Minimize" />
                             </button>
                             <button>
-                                <Image src="/broswer/pop-out.svg" width={10} height={10} alt="Pop-out" />
+                                <Image src="/broswer/Pop-out.svg" width={10} height={10} alt="Pop-out" />
                             </button>
                             <button>
-                                <Image src="/broswer/close-message.svg" width={10} height={10} alt="Close" />
+                                <Image src="/broswer/Close-message.svg" width={10} height={10} alt="Close" />
                             </button>
                         </div>
                     </div>

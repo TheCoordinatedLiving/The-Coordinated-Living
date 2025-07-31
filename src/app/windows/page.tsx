@@ -95,7 +95,6 @@ const WindowsLockScreen = ({ onUnlock }: { onUnlock: () => void }) => {
 const WindowsHomeScreen = () => {
   const [isQuestionWindowOpen, setIsQuestionWindowOpen] = useState(false);
   const [isKeepOpen, setIsKeepOpen] = useState(false);
-  const [isAboutMeSelected, setIsAboutMeSelected] = useState(false);
   const [isAboutMeOpen, setIsAboutMeOpen] = useState(false);
   const [isTermsOpen, setIsTermsOpen] = useState(false);
 
@@ -104,23 +103,11 @@ const WindowsHomeScreen = () => {
   const toggleKeep = () => setIsKeepOpen(!isKeepOpen);
   
   const handleAboutMeClick = () => {
-    setIsAboutMeSelected(true);
-  };
-  
-  const handleAboutMeDoubleClick = () => {
     setIsAboutMeOpen(true);
   };
 
   const handleCloseAboutMe = () => {
     setIsAboutMeOpen(false);
-    setIsAboutMeSelected(false);
-  };
-  
-  const handleDesktopClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    // Deselect if clicking on the desktop itself and not an icon
-    if (e.target === e.currentTarget) {
-      setIsAboutMeSelected(false);
-    }
   };
 
   return (
@@ -128,7 +115,6 @@ const WindowsHomeScreen = () => {
         {/* Clickable desktop area for deselection */}
         <div 
             className="absolute inset-0 z-0"
-            onClick={handleDesktopClick}
         />
         
         <Image
@@ -142,9 +128,8 @@ const WindowsHomeScreen = () => {
         <div className="absolute top-5 left-5 z-10 flex flex-col space-y-4">
             {/* About Me Icon */}
             <div 
-                className={`flex flex-col items-center space-y-2 w-24 text-center cursor-pointer p-2 rounded-md ${isAboutMeSelected ? 'bg-blue-500/30' : 'bg-transparent'}`}
+                className="flex flex-col items-center space-y-2 w-24 text-center cursor-pointer p-2 rounded-md"
                 onClick={(e) => { e.stopPropagation(); handleAboutMeClick(); }}
-                onDoubleClick={(e) => { e.stopPropagation(); handleAboutMeDoubleClick(); }}
             >
                 <Image
                     src="/windows/about-me.svg"

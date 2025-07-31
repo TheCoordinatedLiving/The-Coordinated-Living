@@ -27,7 +27,7 @@ const PostCard = ({ post, onClick }: { post: Post; onClick: () => void }) => {
     >
       <div>
         <h3 className="font-semibold text-lg mb-1 text-black">{truncatedTitle}</h3>
-        <p className="text-sm text-gray-600">{truncatedDescription}</p>
+        <p className="text-sm text-black">{truncatedDescription}</p>
       </div>
     </div>
   );
@@ -92,6 +92,7 @@ const PostModal = ({ post, onClose }: { post: Post | null; onClose: () => void }
 
 const PostsContent = () => {
   const [selectedPost, setSelectedPost] = useState<Post | null>(null);
+  const [searchQuery, setSearchQuery] = useState('');
 
   const posts: Post[] = [
     { 
@@ -124,6 +125,12 @@ const PostsContent = () => {
     },
   ];
 
+  // Filter posts based on search query
+  const filteredPosts = posts.filter(post => 
+    post.header.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    post.description.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   const handleCardClick = (post: Post) => {
     setSelectedPost(post);
   };
@@ -149,7 +156,9 @@ const PostsContent = () => {
           <input 
             type="text" 
             placeholder="Search For Post" 
-            className="border border-gray-300 rounded-md py-2 pl-4 pr-10 w-72 text-sm placeholder-black focus:outline-none focus:ring-1 focus:ring-gray-400"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="border border-gray-300 rounded-md py-2 pl-4 pr-10 w-72 text-sm text-black placeholder-black focus:outline-none focus:ring-1 focus:ring-gray-400"
           />
           <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
             <svg className="w-5 h-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
@@ -161,7 +170,7 @@ const PostsContent = () => {
       
       {/* Static Cards Area */}
       <div className="relative h-[500px] w-full">
-        {posts.map((post) => (
+        {filteredPosts.map((post) => (
           <PostCard key={post.id} post={post} onClick={() => handleCardClick(post)} />
         ))}
       </div>
