@@ -2245,7 +2245,7 @@ const Page = () => {
                   </div>
 
                   
-                  {/* Right side - Image */}
+                  {/* Right side - Video */}
                   <div 
                     className="flex-1 flex justify-end items-end relative opacity-0 video-image"
                     ref={(el) => {
@@ -2268,16 +2268,22 @@ const Page = () => {
                       }
                     }}
                   >
-                    <Image
-                      src="/join-channel.png"
-                      alt="Join Channel"
-                      width={4500}
-                      height={6750}
+                    <video
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
                       className="object-contain"
                       style={{
-                        transform: 'translateX(20%) translateY(15%)'
+                        transform: 'translateX(20%) translateY(25%) scale(2.2)',
+                        width: '100%',
+                        height: '100%',
+                        objectPosition: 'bottom'
                       }}
-                    />
+                    >
+                      <source src="/join-channel.webm" type="video/webm" />
+                      Your browser does not support the video tag.
+                    </video>
 
                   </div>
                 </div>
