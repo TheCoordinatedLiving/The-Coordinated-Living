@@ -1,8 +1,13 @@
 import type { Metadata } from "next";
-import { Manrope } from "next/font/google";
+import { Manrope, Amita } from "next/font/google";
 import "./globals.css";
 
 const manrope = Manrope({ subsets: ["latin"] });
+const amita = Amita({ 
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  variable: "--font-amita"
+});
 
 export const metadata: Metadata = {
   title: "The Coordinated Living",
@@ -21,7 +26,7 @@ export default function RootLayout({
         <link rel="preload" href="/coordinated.webp" as="image" type="image/webp" />
         <link rel="icon" href="/coordinated.ico" />
       </head>
-      <body className={manrope.className}>{children}</body>
+      <body className={`${manrope.className} ${amita.variable}`}>{children}</body>
     </html>
   );
 }

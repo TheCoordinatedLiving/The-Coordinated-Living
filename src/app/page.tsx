@@ -76,7 +76,7 @@ const WelcomeScreen = ({ onEnterClick }: { onEnterClick: () => void }) => {
           <Image src="/loading-screen/logo.svg" width={96} height={36} alt="Logo" />
         </div>
         <div className="max-w-3xl mx-auto welcome-text" style={{ marginTop: '137px' }}>
-          <h1 className="text-4xl sm:text-6xl font-bold leading-tight" style={{ fontFamily: 'Amita, serif' }}>
+          <h1 className="text-4xl sm:text-6xl font-bold leading-tight" style={{ fontFamily: 'Amita' }}>
             Where His grace abounds through the changing scenes of life.
           </h1>
         </div>
@@ -2160,7 +2160,7 @@ const Page = () => {
                     {/* Title */}
                     <h1 
                       className="text-7xl font-serif text-white mb-8 leading-tight opacity-0 video-title" 
-                      style={{ fontFamily: 'Amita, serif' }}
+                      style={{ fontFamily: 'Amita' }}
                       ref={(el) => {
                         if (el) {
                           gsap.fromTo(el, 
