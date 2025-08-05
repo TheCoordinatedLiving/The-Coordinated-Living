@@ -602,18 +602,8 @@ const Page = () => {
       {experienceVisible && ( 
         <div
           ref={experienceRef}
-          className="bg-black relative overflow-hidden"
-          style={{ 
-            zIndex: 1,
-            backgroundImage: `url('/coordinated-3.webp')`,
-            backgroundRepeat: 'no-repeat',
-            backgroundPosition: 'center top',
-            WebkitBackgroundSize: 'cover',
-            MozBackgroundSize: 'cover',
-            OBackgroundSize: 'cover',
-            width: '100vw',
-            height: '100dvh',
-          }}
+          className="bg-black relative overflow-hidden workspace-bg"
+         
         >
          
 
