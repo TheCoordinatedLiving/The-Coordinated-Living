@@ -599,20 +599,20 @@ const Page = () => {
   return (
     <div ref={pageRef} className="relative ">
       {/* Experience page hidden behind */}
-      {experienceVisible && (
+      {experienceVisible && ( 
         <div
           ref={experienceRef}
-          className=" bg-black relative overflow-hidden"
+          className="bg-black relative overflow-hidden"
           style={{ 
             zIndex: 1,
             backgroundImage: `url('/coordinated-3.webp')`,
             backgroundRepeat: 'no-repeat',
             backgroundPosition: 'center top',
-            backgroundSize: 'cover',
+            WebkitBackgroundSize: 'cover',
+            MozBackgroundSize: 'cover',
+            OBackgroundSize: 'cover',
             width: '100vw',
             height: '100dvh',
-           
-           
           }}
         >
          
