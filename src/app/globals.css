@@ -40,29 +40,7 @@ body {
 }
 
 /* Responsive background adjustments for different screen sizes */
-@media (max-width: 768px) {
-  .workspace-bg {
-    background-position: center center;
-    background-attachment: scroll;
-    background-size: cover;
-  }
-}
 
-@media (max-width: 480px) {
-  .workspace-bg {
-    background-size: cover;
-    background-position: center center;
-    background-attachment: scroll;
-  }
-}
-
-/* Tablet landscape */
-@media (min-width: 768px) and (max-width: 1024px) {
-  .workspace-bg {
-    background-size: cover;
-    background-position: center center;
-  }
-}
 
 /* Desktop and larger screens */
 @media (min-width: 1024px) {
@@ -80,14 +58,7 @@ body {
   }
 }
 
-/* For very small mobile devices */
-@media (max-width: 320px) {
-  .workspace-bg {
-    background-size: cover;
-    background-position: center center;
-    background-attachment: scroll;
-  }
-}
+
 
 /* Get Started button glow effect */
 .get-started-glow:hover {
