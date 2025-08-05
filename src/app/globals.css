@@ -76,7 +76,7 @@ body {
 @media (min-width: 1920px) {
   .workspace-bg {
     background-size: cover;
-    background-position: center center;
+    background-position: center top;
   }
 }
 
