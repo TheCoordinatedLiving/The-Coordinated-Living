@@ -38,10 +38,10 @@ const BooksContent = () => {
   const [searchQuery, setSearchQuery] = useState('');
 
   const books = [
-    { image: '/keep/book1.svg', title: 'Heart Of Counseling', description: 'A faith-centred guide to compassionate and purposeful counseling.' },
-    { image: '/keep/book2.svg', title: 'Counselling & Therapy', description: 'A guide to healing through faith-based counselling and therapy.' },
-    { image: '/keep/book3.svg', title: 'Preparing For Marriage', description: 'A faith-centred guide to compassionate and purposeful counseling.' },
-    { image: '/keep/book4.svg', title: 'Heart Of Counselling', description: 'A faith-centred guide to compassionate and purposeful counseling.' },
+    { image: '/keep/book1.svg', title: 'Coming Soon', description: 'Coming Soon' },
+    { image: '/keep/book2.svg', title: 'Coming Soon', description: 'Coming Soon' },
+    { image: '/keep/book3.svg', title: 'Coming Soon', description: 'Coming Soon' },
+    { image: '/keep/book4.svg', title: 'Coming Soon', description: 'Coming Soon' },
   ];
 
   // Filter books based on search query

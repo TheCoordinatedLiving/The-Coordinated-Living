@@ -905,8 +905,8 @@ const Page = () => {
           <div
             className="absolute white-notice-glow"
             style={{ 
-              left: '55%', 
-              top: '30%', 
+              left: '55vw', 
+              top: '30vh', 
               transform: 'translate(-50%, -50%)',
               width: '10vw', 
               height: '14vw', // A4 ratio (1:1.414)
@@ -1031,8 +1031,8 @@ const Page = () => {
           <div
             className="absolute"
             style={{ 
-              left: '50%', 
-              top: '45%', 
+              left: '50vw', 
+              top: '45vh', 
               width: '10vw', 
               height: '7.5vh', 
               zIndex: 2,
@@ -1071,8 +1071,8 @@ const Page = () => {
           <div
             className="absolute"
             style={{ 
-              left: '58%', 
-              top: '28%', 
+              left: '58vw', 
+              top: '28vh', 
               width: '16vw', 
               height: '19vh', 
               zIndex: 2,
@@ -1111,8 +1111,8 @@ const Page = () => {
           <div
             className="absolute"
             style={{ 
-              left: '60%', 
-              top: '15%', 
+              left: '60vw', 
+              top: '15vh', 
               width: '8vw', 
               height: '10vh', 
               zIndex: 2,
@@ -1151,8 +1151,8 @@ const Page = () => {
           <div
             className="absolute"
             style={{ 
-              left: '37%', 
-              top: '15%', 
+              left: '37vw', 
+              top: '15vh', 
               width: '18vw', 
               height: '16vh', 
               zIndex: 2,
@@ -1191,8 +1191,8 @@ const Page = () => {
           <div
             className="absolute"
             style={{ 
-              left: '38%', 
-              top: '35%', 
+              left: '38vw', 
+              top: '35vh', 
               width: '12vw', 
               height: '10vh', 
               zIndex: 2,
@@ -1231,8 +1231,8 @@ const Page = () => {
           <div
             className="absolute"
             style={{ 
-              left: '33%', 
-              top: '18%', 
+              left: '33vw', 
+              top: '18vh', 
               width: '14vw', 
               height: '12vh', 
               zIndex: 2,
