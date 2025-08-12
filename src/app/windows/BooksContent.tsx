@@ -16,12 +16,12 @@ const BookCard = ({ image, title, description }: { image: string, title: string,
     <p className="text-xs text-black max-w-xs mb-3">{description}</p>
     <button 
       className="text-white px-6 py-2 rounded-full text-sm font-medium transition-colors duration-200 cursor-pointer"
-      style={{ backgroundColor: '#5C3C6E' }}
+      style={{ backgroundColor: '#50A0D8' }}
       onMouseEnter={(e) => {
-        e.currentTarget.style.backgroundColor = '#4A2F5A';
+        e.currentTarget.style.backgroundColor = '#3B7BB3';
       }}
       onMouseLeave={(e) => {
-        e.currentTarget.style.backgroundColor = '#5C3C6E';
+        e.currentTarget.style.backgroundColor = '#50A0D8';
       }}
       onClick={(e) => {
         e.stopPropagation();

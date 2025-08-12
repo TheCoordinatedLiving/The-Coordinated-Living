@@ -48,44 +48,6 @@ const WindowsLockScreen = ({ onUnlock }: { onUnlock: () => void }) => {
             {formattedTime}
           </h1>
           <p className="text-xl mt-4">{formattedDate}</p>
-          <div onClick={onUnlock}>
-            <Image
-              src="/windows/unlock-button.svg"
-              width={200}
-              height={40}
-              alt="Click here to enter space"
-              className="cursor-pointer mx-auto mt-16"
-            />
-          </div>
-          <div 
-            onClick={() => {
-              // Create smooth zoom-out transition back to experience page
-              const container = document.querySelector('.windows-lock-screen');
-              if (container) {
-                gsap.to(container, {
-                  scale: 0.8,
-                  opacity: 0,
-                  duration: 1.2,
-                  ease: 'power2.inOut',
-                  onComplete: () => {
-                    // Navigate back to the experience page
-                    window.location.href = '/?fromWindows=true';
-                  }
-                });
-              } else {
-                // Fallback if container not found
-                window.location.href = '/?fromWindows=true';
-              }
-            }}
-          >
-            <Image
-              src="/windows/experience-back.svg"
-              width={80}
-              height={16}
-              alt="Go Back"
-              className="cursor-pointer mx-auto mt-4"
-            />
-          </div>
         </div>
       </div>
     </div>
@@ -206,11 +168,21 @@ const WindowsHomeScreen = () => {
 const WindowsExperiencePage = () => {
   const [isUnlocked, setIsUnlocked] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  const [isLockscreenOnly, setIsLockscreenOnly] = useState(false);
 
   const handleUnlock = () => {
     gsap.timeline({ onComplete: () => setIsUnlocked(true) })
       .to('.windows-lock-screen', { opacity: 0, duration: 1, ease: 'power2.inOut' });
   };
+
+  // Check if this is lockscreen-only mode
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const lockscreenParam = urlParams.get('lockscreen');
+    if (lockscreenParam === 'true') {
+      setIsLockscreenOnly(true);
+    }
+  }, []);
 
   // Fade-in effect for the whole page
   useEffect(() => {
@@ -226,6 +198,17 @@ const WindowsExperiencePage = () => {
     }
   }, []);
 
+  // Auto-unlock after a brief delay to show the lockscreen (only if not lockscreen-only mode)
+  useEffect(() => {
+    if (!isLockscreenOnly) {
+      const timer = setTimeout(() => {
+        handleUnlock();
+      }, 2000); // Show lockscreen for 2 seconds then auto-unlock
+
+      return () => clearTimeout(timer);
+    }
+  }, [isLockscreenOnly]);
+
   // Effect to fade in the home screen once unlocked
   useEffect(() => {
     if (isUnlocked) {
@@ -235,8 +218,14 @@ const WindowsExperiencePage = () => {
 
   return (
     <div ref={containerRef} className="relative w-screen h-screen opacity-0">
-      {!isUnlocked && <WindowsLockScreen onUnlock={handleUnlock} />}
-      {isUnlocked && <WindowsHomeScreen />}
+      {isLockscreenOnly ? (
+        <WindowsLockScreen onUnlock={handleUnlock} />
+      ) : (
+        <>
+          {!isUnlocked && <WindowsLockScreen onUnlock={handleUnlock} />}
+          {isUnlocked && <WindowsHomeScreen />}
+        </>
+      )}
     </div>
   );
 };

@@ -387,6 +387,30 @@ const Page = () => {
     }
   }, [showPostModal]);
 
+  // Auto-hide welcome modal after 3 seconds
+  useEffect(() => {
+    if (showWelcomeModal) {
+      const timer = setTimeout(() => {
+        const modal = document.querySelector('.welcome-modal-card');
+        if (modal) {
+          gsap.to(modal, {
+            opacity: 0,
+            scale: 0.95,
+            duration: 0.6,
+            ease: 'power2.inOut',
+            onComplete: () => {
+              setShowWelcomeModal(false);
+            }
+          });
+        } else {
+          setShowWelcomeModal(false);
+        }
+      }, 3000); // 3 seconds
+
+      return () => clearTimeout(timer);
+    }
+  }, [showWelcomeModal]);
+
   useEffect(() => {
     // Don't start the loader timer if coming from Windows
     if (fromWindows) return;
@@ -675,7 +699,7 @@ const Page = () => {
                   zIndex: 20,
                   onComplete: () => {
                     setLaptopZoomed(true);
-                    // Navigate immediately when zoom completes
+                    // Navigate to full Windows page when zoom completes
                     window.location.href = '/windows';
                   }
                 });
@@ -694,7 +718,7 @@ const Page = () => {
             }}
           >
             <iframe
-              src="/windows"
+              src="/windows?lockscreen=true"
               style={{
                 width: '77vw',
                 height: '40vw',
@@ -938,663 +962,7 @@ const Page = () => {
             </div>
           </div>
 
-          {/* Yellow Card with "430" (beneath white notice) */}
-          <div
-            className="absolute"
-            style={{ 
-              left: '35.3vw', 
-              top: '15vw', 
-              width: '5vw', 
-              height: '5vh', 
-              zIndex: 2,
-            }}
-          >
-            <div
-              className="w-full h-full"
-              style={{
-                background: '#FD8D37',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                position: 'relative',
-                overflow: 'hidden',
-                borderRadius: '2px',
-              }}
-              onClick={() => {
-                console.log('Yellow card with 430 clicked!');
-                // TODO: Add interaction logic
-              }}
-            >
-              {/* Time text only */}
-              <div style={{ 
-                fontSize: '16px', 
-                fontWeight: 'bold', 
-                color: '#845399',
-                textAlign: 'center',
-                lineHeight: '1.1'
-              }}>
-                4:30
-              </div>
-              
-              {/* Black overlay at 50% opacity */}
-              <div
-                style={{
-                  position: 'absolute',
-                  top: 0,
-                  left: 0,
-                  width: '100%',
-                  height: '100%',
-                  background: 'rgba(0,0,0,0.5)',
-                  pointerEvents: 'none',
-                }}
-              />
-            </div>
-          </div>
 
-          {/* White Notice with Lines (bottom left) */}
-          <div
-            className="absolute"
-            style={{ 
-              left: '31vw', 
-              top: '20vw', 
-              width: '6.5vw', 
-              height: '11.5vh', 
-              zIndex: 2,
-            }}
-          >
-                          <div
-                className="w-full h-full"
-                style={{
-                  background: '#fff',
-                  position: 'relative',
-                  overflow: 'hidden',
-                  padding: '8px',
-                }}
-              >
-                {/* Psalm content */}
-                <div
-                  style={{
-                    fontSize: '9px',
-                    lineHeight: '1.2',
-                    color: '#000',
-                    opacity: 0.8,
-                    filter: 'blur(0.3px)',
-                    textAlign: 'justify',
-                    fontFamily: 'serif',
-                    pointerEvents: 'none',
-                    userSelect: 'none',
-                    WebkitUserSelect: 'none',
-                    MozUserSelect: 'none',
-                    msUserSelect: 'none',
-                  }}
-                >
-                  <div style={{ fontWeight: 'bold', marginBottom: '2px' }}>
-                    Psalm 94:18–19
-                  </div>
-                  <div>
-                    When I thought, &quot;My foot slips,&quot; Your steadfast love, O LORD, helped me up. When the cares of my heart are many, Your consolations cheer my soul.
-                  </div>
-                </div>
-
-              
-              {/* Black overlay at 60% opacity */}
-              <div
-                style={{
-                  position: 'absolute',
-                  top: 0,
-                  left: 0,
-                  width: '100%',
-                  height: '100%',
-                  background: 'rgba(0,0,0,0.6)',
-                  pointerEvents: 'none',
-                }}
-              />
-            </div>
-          </div>
-
-
-
-          {/* Noticeboard Letter Image (left side) */}
-          <div
-            className="absolute"
-            style={{ 
-              left: '35.5vw', 
-              top: '22vw', 
-              width: '10.5vw', 
-              height: '12.5vh', 
-              zIndex: 1,
-              transform: 'rotate(-3deg)',
-            }}
-          >
-            <Image
-              src="/letter.png"
-              alt="Letter"
-              width={230}
-              height={270}
-              className="w-full h-full object-contain"
-            />
-          </div>
-
-          {/* Noticeboard Profile Image clip path */}
-          <div
-            className="absolute"
-            style={{ 
-              left: '67vw', 
-              top: '8vw', 
-              width: '8vw', 
-              height: '8vw', 
-              zIndex: 2,
-            }}
-          >
-            <div className="relative w-full h-full">
-              <Image
-                src="/lesley-img1.jpeg"
-                alt="Lesley Profile"
-                width={200}
-                height={200}
-                className="w-full h-full object-cover"
-              />
-              <div 
-                className="absolute inset-0 bg-black opacity-40"
-              />
-            </div>
-          </div>
-
-          {/* Noticeboard Long Paper Document clip path */}
-          <div
-            className="absolute"
-            style={{ 
-              left: '54.5vw', 
-              top: '7vw', 
-              width: '8.5vw', 
-              height: '160px', 
-              zIndex: 2,
-              backgroundColor: 'white',
-            }}
-          >
-            <div 
-              className="absolute inset-0 bg-black opacity-50"
-            />
-            <div
-              className="cursor-pointer w-full "
-              style={{
-                clipPath: 'polygon(5% 5%, 95% 5%, 95% 95%, 5% 95%)',
-              }}
-              onClick={() => {
-                console.log('Long paper document clicked!');
-                // TODO: Add document content display logic
-              }}
-            />
-            {/* Red pin at top middle */}
-            <div
-              className="absolute"
-              style={{
-                top: '-8px',
-                left: '50%',
-                transform: 'translateX(-50%)',
-                zIndex: 3,
-              }}
-            >
-              <Image
-                src="/red-pin.svg"
-                alt="Red Pin"
-                width={16}
-                height={16}
-                className="w-4 h-4"
-              />
-            </div>
-            
-            {/* To-Do List Content */}
-            <div
-              className="absolute inset-0 p-2 text-black font-mono text-xs leading-tight"
-              style={{ zIndex: 4, opacity: 0.4 }}
-            >
-              <div className="font-bold text-center mb-2" style={{ fontSize: '10px' }}>
-                TO DO LIST
-              </div>
-              <div className="space-y-1">
-                <div className="flex items-start">
-                  <div className="w-2 h-2 border border-black mr-1 mt-0.5 flex-shrink-0 flex items-center justify-center">
-                    <span style={{ fontSize: '6px', lineHeight: '1' }}>✓</span>
-                  </div>
-                  <span style={{ fontSize: '8px', textDecoration: 'line-through', filter: 'blur(1px)' }}>Chapter study</span>
-                </div>
-                <div className="flex items-start">
-                  <div className="w-2 h-2 border border-black mr-1 mt-0.5 flex-shrink-0"></div>
-                  <span style={{ fontSize: '8px', filter: 'blur(1px)' }}>Meditation</span>
-                </div>
-                <div className="flex items-start">
-                  <div className="w-2 h-2 border border-black mr-1 mt-0.5 flex-shrink-0 flex items-center justify-center">
-                    <span style={{ fontSize: '6px', lineHeight: '1' }}>✓</span>
-                  </div>
-                  <span style={{ fontSize: '8px', textDecoration: 'line-through', filter: 'blur(1px)' }}>Water plants</span>
-                </div>
-                <div className="flex items-start">
-                  <div className="w-2 h-2 border border-black mr-1 mt-0.5 flex-shrink-0"></div>
-                  <span style={{ fontSize: '8px', filter: 'blur(1px)' }}>Draw up a guide</span>
-                </div>
-                <div className="flex items-start">
-                  <div className="w-2 h-2 border border-black mr-1 mt-0.5 flex-shrink-0 flex items-center justify-center">
-                    <span style={{ fontSize: '6px', lineHeight: '1' }}>✓</span>
-                  </div>
-                  <span style={{ fontSize: '8px', textDecoration: 'line-through', filter: 'blur(1px)' }}>One on one call</span>
-                </div>
-                <div className="flex items-start">
-                  <div className="w-2 h-2 border border-black mr-1 mt-0.5 flex-shrink-0"></div>
-                  <span style={{ fontSize: '8px', filter: 'blur(1px)' }}>Post edits</span>
-                </div>
-                <div className="flex items-start">
-                  <div className="w-2 h-2 border border-black mr-1 mt-0.5 flex-shrink-0"></div>
-                  <span style={{ fontSize: '8px', filter: 'blur(1px)' }}>Check and respond to emails</span>
-                </div>
-                <div className="flex items-start">
-                  <div className="w-2 h-2 border border-black mr-1 mt-0.5 flex-shrink-0 flex items-center justify-center">
-                    <span style={{ fontSize: '6px', lineHeight: '1' }}>✓</span>
-                  </div>
-                  <span style={{ fontSize: '8px', textDecoration: 'line-through', filter: 'blur(1px)' }}>Update playlist</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Noticeboard Abstract Image clip path */}
-          <div
-            className="absolute"
-            style={{ 
-              left: '45vw', 
-              top: '7vw', 
-              width: '8vw', 
-              height: '6vw', 
-              zIndex: 2,
-            }}
-          >
-            <div className="relative w-full h-full">
-              <Image
-                src="/lesley-img2.jpeg"
-                alt="Lesley Image 2"
-                width={200}
-                height={150}
-                className="w-full h-full object-cover"
-              />
-              <div 
-                className="absolute inset-0 bg-black opacity-40"
-              />
-            </div>
-            {/* Purple-black pin at top middle */}
-            <div
-              className="absolute"
-              style={{
-                top: '-8px',
-                left: '50%',
-                transform: 'translateX(-50%)',
-                zIndex: 3,
-              }}
-            >
-              <Image
-                src="/purple-black.svg"
-                alt="Purple-Black Pin"
-                width={16}
-                height={16}
-                className="w-4 h-4"
-              />
-            </div>
-          </div>
-
-          {/* Noticeboard Three Lines Image clip path */}
-          <div
-            className="absolute"
-            style={{ 
-              left: '46.5vw', 
-              top: '15vw', 
-              width: '6vw', 
-              height: '6vw', 
-              zIndex: 2,
-            }}
-          >
-            <div className="relative w-full h-full">
-              <Image
-                src="/lesley-img3.jpeg"
-                alt="Lesley Image 3"
-                width={150}
-                height={150}
-                className="w-full h-full object-cover"
-              />
-              <div 
-                className="absolute inset-0 bg-black opacity-40"
-              />
-            </div>
-            {/* Purple pin at top middle */}
-            <div
-              className="absolute"
-              style={{
-                top: '-8px',
-                left: '50%',
-                transform: 'translateX(-50%)',
-                zIndex: 3,
-              }}
-            >
-              <Image
-                src="/purple-pin.svg"
-                alt="Purple Pin"
-                width={16}
-                height={16}
-                className="w-4 h-4"
-              />
-            </div>
-          </div>
-
-          {/* Cloud Card Clip Path (for future image) */}
-          <div
-            className="absolute"
-            style={{
-              left: '54.5vw', // moved a tiny bit to the left
-              top: '18vw',  // moved down just a little bit
-              width: '8.5vw', // increased width slightly
-              height: '5.5vw', // increased height slightly
-              zIndex: 2,
-            }}
-          >
-            <div
-              className="w-full h-full"
-              style={{
-                background: '#fff', // fully opaque background
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                position: 'relative',
-                overflow: 'hidden',
-              }}
-              onClick={() => {
-                // Placeholder for future interaction
-                console.log('Cloud card clip path clicked!');
-              }}
-            >
-              {/* Image placed here */}
-              <Image
-                src="/scene1.jpg"
-                alt="Scene 1"
-                fill
-                style={{
-                  objectFit: 'cover',
-                }}
-              />
-              {/* Black overlay at 50% opacity */}
-              <div
-                style={{
-                  position: 'absolute',
-                  top: 0,
-                  left: 0,
-                  width: '100%',
-                  height: '100%',
-                  background: 'rgba(0,0,0,0.5)',
-                  pointerEvents: 'none',
-                }}
-              />
-            </div>
-          </div>
-
-          {/* Polaroid Collage on Notice Board */}
-          <div
-            className="absolute"
-            style={{
-              left: '55vw',
-              top: '24vw',
-              width: '9vw',
-              height: '11vh',
-              zIndex: 2,
-              transform: 'rotate(5deg)',
-            }}
-          >
-            <Image
-              src="/polaroid-3.png"
-              alt="Polaroid Collage"
-              width={200}
-              height={250}
-              className="w-full h-full object-contain"
-            />
-          </div>
-
-          {/* White Notice/Paper Clip Path (far right, beneath images) */}
-          <div
-            className="absolute"
-            style={{
-              left: '69.5vw', // moved slightly more to the right
-              top: '26vw',  // moved down a bit more
-              width: '6vw', // further reduced width
-              height: '6vh', // further reduced height
-              zIndex: 3, // higher z-index to appear on top
-              transform: 'rotate(3deg)',
-            }}
-          >
-            <div
-              className="w-full h-full"
-              style={{
-                background: '#fff', // white background to match the paper
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
-                position: 'relative',
-                overflow: 'hidden',
-                padding: '8px',
-                textAlign: 'center',
-              }}
-              onClick={() => {
-                // Placeholder for future interaction
-                console.log('White notice clip path clicked!');
-              }}
-            >
-              {/* Bible Verse Content */}
-              <div style={{ 
-                fontSize: '9px', 
-                fontWeight: '900', 
-                marginBottom: '3px', 
-                color: '#000',
-                userSelect: 'none',
-                WebkitUserSelect: 'none',
-                MozUserSelect: 'none',
-                msUserSelect: 'none',
-              }}>
-                John 16:33
-              </div>
-              <div style={{ 
-                fontSize: '6px', 
-                lineHeight: '1.2', 
-                color: '#333', 
-                fontStyle: 'italic',
-                userSelect: 'none',
-                WebkitUserSelect: 'none',
-                MozUserSelect: 'none',
-                msUserSelect: 'none',
-              }}>
-                &quot;In the world you will have tribulation. But take heart; I have overcome the world.&quot;
-              </div>
-              
-              {/* Black overlay at 50% opacity */}
-              <div
-                style={{
-                  position: 'absolute',
-                  top: 0,
-                  left: 0,
-                  width: '100%',
-                  height: '100%',
-                  background: 'rgba(0,0,0,0.5)',
-                  pointerEvents: 'none',
-                }}
-              />
-            </div>
-          </div>
-
-          {/* Small White Notice Clip Path (middle section, right of landscape photo) */}
-          <div
-            className="absolute"
-            style={{
-              left: '46vw', // moved even more to the left
-              top: '23.5vw',  // moved down even more
-              width: '6.5vw', // increased width slightly
-              height: '10vh', // increased height
-              zIndex: 2,
-            }}
-          >
-            <div
-              className="w-full h-full"
-              style={{
-                background: '#fff', // white background to match the paper
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
-                position: 'relative',
-                overflow: 'hidden',
-                padding: '6px',
-                textAlign: 'center',
-              }}
-              onClick={() => {
-                // Placeholder for future interaction
-                console.log('Small white notice clip path clicked!');
-              }}
-            >
-              {/* Bible Verse Content */}
-              <div style={{ 
-                fontSize: '9px', 
-                fontWeight: '900', 
-                marginBottom: '3px', 
-                color: '#000',
-                userSelect: 'none',
-                WebkitUserSelect: 'none',
-                MozUserSelect: 'none',
-                msUserSelect: 'none',
-              }}>
-                Romans 8:28
-              </div>
-              <div style={{ 
-                fontSize: '7px', 
-                lineHeight: '1.2', 
-                color: '#333', 
-                fontStyle: 'italic',
-                userSelect: 'none',
-                WebkitUserSelect: 'none',
-                MozUserSelect: 'none',
-                msUserSelect: 'none',
-              }}>
-                &quot;And we know that for those who love God all things work together for good, for those who are called according to His purpose.&quot;
-              </div>
-              
-              {/* Black overlay at 60% opacity */}
-              <div
-                style={{
-                  position: 'absolute',
-                  top: 0,
-                  left: 0,
-                  width: '100%',
-                  height: '100%',
-                  background: 'rgba(0,0,0,0.6)',
-                  pointerEvents: 'none',
-                }}
-              />
-            </div>
-          </div>
-
-          {/* Green Card Clip Path (beneath envelope) */}
-          <div
-            className="absolute"
-            style={{
-              left: '32.5vw', // moved slightly to the left
-              top: '25.5vw',  // moved up a bit
-              width: '6vw', // increased width a bit
-              height: '7vh', // increased height a bit
-              zIndex: 2,
-            }}
-          >
-            <div
-              className="w-full h-full"
-              style={{
-                background: '#fff', // white background
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                position: 'relative',
-                overflow: 'hidden',
-              }}
-              onClick={() => {
-                // Placeholder for future interaction
-                console.log('Green card clip path clicked!');
-              }}
-            >
-              {/* Image placed here */}
-              <Image
-                src="/landscape.jpg"
-                alt="Landscape"
-                fill
-                style={{
-                  objectFit: 'cover',
-                }}
-              />
-              {/* Black overlay at 50% opacity */}
-              <div
-                style={{
-                  position: 'absolute',
-                  top: 0,
-                  left: 0,
-                  width: '100%',
-                  height: '100%',
-                  background: 'rgba(0,0,0,0.5)',
-                  pointerEvents: 'none',
-                }}
-              />
-            </div>
-          </div>
-
-          {/* White Notice Clip Path (beneath to-do list) */}
-          <div
-            className="absolute"
-            style={{
-              left: '66.5vw', // moved a tiny bit to the right
-              top: '18vw',  // moved up a little more
-              width: '8vw', // increased width
-              height: '18vh', // increased height a little bit more
-              zIndex: 2,
-            }}
-          >
-            <div
-              className="w-full h-full"
-              style={{
-                background: '#fff', // white background to match the paper
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                position: 'relative',
-                overflow: 'hidden',
-              }}
-              onClick={() => {
-                // Placeholder for future interaction
-                console.log('White notice beneath to-do list clip path clicked!');
-              }}
-            >
-              {/* James Town Image */}
-              <Image
-                src="/james-town.jpeg"
-                alt="James Town"
-                fill
-                style={{
-                  objectFit: 'cover',
-                }}
-              />
-              
-              {/* Black overlay at 60% opacity */}
-              <div
-                style={{
-                  position: 'absolute',
-                  top: 0,
-                  left: 0,
-                  width: '100%',
-                  height: '100%',
-                  background: 'rgba(0,0,0,0.6)',
-                  pointerEvents: 'none',
-                }}
-              />
-            </div>
-          </div>
 
           {/* Envelope clip path */}
           <div
@@ -2267,7 +1635,7 @@ const Page = () => {
                       playsInline
                       className="object-contain"
                       style={{
-                        transform: 'translateX(20%) translateY(25%) scale(2.2)',
+                        transform: 'translateX(20%) translateY(25%) scale(1.6)',
                         width: '100%',
                         height: '100%',
                         objectPosition: 'bottom'
@@ -2491,30 +1859,7 @@ const Page = () => {
                     </p>
                   </div>
 
-                  {/* Get Started Button */}
-                  <button
-                    onClick={() => {
-                      // Smoothly fade out the welcome modal
-                      const modal = document.querySelector('.welcome-modal-card');
-                      if (modal) {
-                        gsap.to(modal, {
-                          opacity: 0,
-                          scale: 0.95,
-                          duration: 0.6,
-                          ease: 'power2.inOut',
-                          onComplete: () => {
-                            setShowWelcomeModal(false);
-                          }
-                        });
-                      } else {
-                        setShowWelcomeModal(false);
-                      }
-                    }}
-                    className="w-full text-white font-medium py-3 px-6 transition-colors duration-200 cursor-pointer get-started-glow"
-                    style={{ backgroundColor: '#5C3262', borderRadius: '35px' }}
-                  >
-                    Get Started
-                  </button>
+
                 </div>
               </div>
             </div>
@@ -2659,8 +2004,8 @@ const Page = () => {
                     <Image
                       src="/cup-1.png"
                       alt="Coffee Cup"
-                      width={4500}
-                      height={6750}
+                      width={2500}
+                      height={3750}
                       className="object-contain"
                       style={{
                         transform: 'translateX(20%) translateY(15%)'
@@ -2675,10 +2020,10 @@ const Page = () => {
                       <Image
                         src="/smoke.png"
                         alt="Smoke"
-                        width={220}
+                        width={320}
                         height={220}
                         className="object-contain smoke-animation"
-                        style={{ width: '220px', height: '220px' }}
+                        style={{ width: '320px', height: '220px' }}
                       />
                     </div>
                     <div
@@ -2688,10 +2033,10 @@ const Page = () => {
                       <Image
                         src="/smoke.png"
                         alt="Smoke"
-                        width={220}
+                        width={320}
                         height={220}
                         className="object-contain smoke-animation2"
-                        style={{ width: '220px', height: '220px' }}
+                        style={{ width: '320px', height: '220px' }}
                       />
                     </div>
                     <div
@@ -2701,10 +2046,10 @@ const Page = () => {
                       <Image
                         src="/smoke.png"
                         alt="Smoke"
-                        width={220}
+                        width={320}
                         height={220}
                         className="object-contain smoke-animation3"
-                        style={{ width: '220px', height: '220px' }}
+                        style={{ width: '320px', height: '220px' }}
                       />
                     </div>
                   </div>
