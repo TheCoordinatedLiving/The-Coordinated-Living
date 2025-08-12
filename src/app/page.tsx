@@ -1003,7 +1003,9 @@ const Page = () => {
                   fontSize: '0.25vw',
                   fontFamily: 'Arial, sans-serif',
                   fontWeight: 'bold',
-                  gap: '20px',
+                  gap: '8px',
+                  paddingLeft: '12px',
+                  paddingRight: '12px',
                 }}
               >
                 <span>letstalk@thecoordinatedliving.com</span>
