@@ -901,53 +901,116 @@ const Page = () => {
             />
           </div>
 
-          {/* White Notice Paper (top left) */}
+          {/* New Post Design - Center of Noticeboard */}
           <div
             className="absolute white-notice-glow"
             style={{ 
-              left: '31.5vw', 
-              top: '6vw', 
-              width: '11.8vw', 
-              height: '19vh', 
+              left: '55%', 
+              top: '30%', 
+              transform: 'translate(-50%, -50%)',
+              width: '10vw', 
+              height: '14vw', // A4 ratio (1:1.414)
               zIndex: 2,
             }}
           >
+            {/* Pin at the top */}
+            <div
+              style={{
+                position: 'absolute',
+                top: '-12px',
+                left: '50%',
+                transform: 'translateX(-50%)',
+                zIndex: 3,
+              }}
+            >
+              <Image
+                src="/notice-pin-new.svg"
+                alt="Notice Pin"
+                width={20}
+                height={20}
+                className="w-5 h-5"
+              />
+            </div>
             <div
               className="w-full h-full cursor-pointer"
               style={{
-                background: '#fff',
+                background: '#5C3262', // Dark purple background
                 position: 'relative',
                 overflow: 'hidden',
-                padding: '8px',
+                border: '8px solid white',
+                padding: '16px',
+                boxShadow: '0 4px 8px rgba(0,0,0,0.3)',
               }}
               onClick={() => {
-                console.log('White notice paper clicked!');
+                console.log('New post design clicked!');
                 setShowPostModal(true);
               }}
             >
-              {/* Content text - subtly visible */}
+              {/* Circular Logo */}
               <div
                 style={{
-                  fontSize: '7px',
-                  lineHeight: '1.2',
-                  color: '#000',
-                  opacity: 0.12,
-                  filter: 'blur(0.3px)',
-                  textAlign: 'justify',
-                  fontFamily: 'serif',
-                  pointerEvents: 'none',
+                  position: 'absolute',
+                  top: '8%',
+                  left: '50%',
+                  transform: 'translateX(-50%)',
+                  width: '15%',
+                  height: '15%',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
                 }}
               >
-                &quot;A thousand times I failed, still your mercy remains, should I stumble out here still I&apos;m caught in your grace.&quot; This Hillsong lyric has always echoed in my heart, and its truth resonates even stronger today. I&apos;m here today, sharing the very nature and gifts the Father blessed me with.
-                <br /><br />
-                For years, I pursued other paths, pouring tireless effort into fields he hadn&apos;t called me to, only to find no lasting fruit. That rollercoaster of emotions, the unpleasant experiences, the endless accusations and judgments thrown around – they&apos;re hallmarks of a mind out of alignment. We defy the very nature of the One who modeled us in His image, yet we stand confident, feeling fully justified.
-                <br /><br />
-                Want to know the root cause? It&apos;s simply a lack of trust in the Father. No matter how you rationalize it, we constantly try to force a fit where there isn&apos;t one.
-                <br /><br />
-                But in Christ, we step into the true identity the Father created for us. This identity comes with specific tasks, assignments, and responsibilities, all of which we are perfectly equipped for. It&apos;s there we discover an unexplainable peace, joy, and confidence. This is the rest of God.
+                <Image
+                  src="/new-post-logo.svg"
+                  alt="Coordinated Living Logo"
+                  width={80}
+                  height={80}
+                  className="w-full h-full object-contain"
+                />
               </div>
-              
-              {/* Black overlay at 30% opacity */}
+
+              {/* Main Text */}
+              <div
+                style={{
+                  position: 'absolute',
+                  top: '35%',
+                  left: '50%',
+                  transform: 'translateX(-50%)',
+                  textAlign: 'center',
+                  color: 'white',
+                  fontFamily: 'Arial, sans-serif',
+                  fontWeight: 'bold',
+                  fontSize: '0.9vw',
+                  lineHeight: '1.3',
+                  width: '90%',
+                }}
+              >
+                Explore More<br />
+                From Coordinated<br />
+                Living
+              </div>
+
+              {/* Contact Information */}
+              <div
+                style={{
+                  position: 'absolute',
+                  bottom: '8%',
+                  left: '50%',
+                  transform: 'translateX(-50%)',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  color: 'white',
+                  fontSize: '0.25vw',
+                  fontFamily: 'Arial, sans-serif',
+                  fontWeight: 'bold',
+                  gap: '20px',
+                }}
+              >
+                <span>letstalk@thecoordinatedliving.com</span>
+                <span>www.thecoordinatedliving.com</span>
+              </div>
+
+              {/* Black overlay at 20% opacity for subtle effect */}
               <div
                 style={{
                   position: 'absolute',
@@ -955,14 +1018,252 @@ const Page = () => {
                   left: 0,
                   width: '100%',
                   height: '100%',
-                  background: 'rgba(0,0,0,0.3)',
+                  background: 'rgba(0,0,0,0.2)',
                   pointerEvents: 'none',
                 }}
               />
             </div>
           </div>
 
+          {/* Torn Paper Below Post */}
+          <div
+            className="absolute"
+            style={{ 
+              left: '50%', 
+              top: '45%', 
+              width: '10vw', 
+              height: '7.5vh', 
+              zIndex: 2,
+            }}
+          >
+            {/* Pin at the top */}
+            <div
+              style={{
+                position: 'absolute',
+                top: '-8px',
+                left: '50%',
+                transform: 'translateX(-50%)',
+                zIndex: 3,
+              }}
+            >
+              <Image
+                src="/notice-pin-new.svg"
+                alt="Notice Pin"
+                width={16}
+                height={16}
+                className="w-4 h-4"
+              />
+            </div>
+            
+            {/* Torn Paper */}
+            <Image
+              src="/paper-below.svg"
+              alt="Torn Paper"
+              width={200}
+              height={150}
+              className="w-full h-full object-contain"
+            />
+          </div>
 
+          {/* Large Frame with Image on Right */}
+          <div
+            className="absolute"
+            style={{ 
+              left: '58%', 
+              top: '28%', 
+              width: '16vw', 
+              height: '19vh', 
+              zIndex: 2,
+            }}
+          >
+            {/* Pin at the top */}
+            <div
+              style={{
+                position: 'absolute',
+                top: '-8px',
+                left: '50%',
+                transform: 'translateX(-50%)',
+                zIndex: 3,
+              }}
+            >
+              <Image
+                src="/notice-pin-new.svg"
+                alt="Notice Pin"
+                width={18}
+                height={18}
+                className="w-4 h-4"
+              />
+            </div>
+            
+            {/* Main Image */}
+            <Image
+              src="/main-pic-right.svg"
+              alt="Studio Photo"
+              width={300}
+              height={400}
+              className="w-full h-full object-contain"
+            />
+          </div>
+
+          {/* Polaroid Card on Top Right */}
+          <div
+            className="absolute"
+            style={{ 
+              left: '60%', 
+              top: '15%', 
+              width: '8vw', 
+              height: '10vh', 
+              zIndex: 2,
+            }}
+          >
+            {/* Pin at the top */}
+            <div
+              style={{
+                position: 'absolute',
+                top: '-8px',
+                left: '50%',
+                transform: 'translateX(-50%)',
+                zIndex: 3,
+              }}
+            >
+              <Image
+                src="/notice-pin-new.svg"
+                alt="Notice Pin"
+                width={16}
+                height={16}
+                className="w-4 h-4"
+              />
+            </div>
+            
+            {/* Polaroid Image */}
+            <Image
+              src="/polaroid-right.svg"
+              alt="Polaroid Card"
+              width={200}
+              height={250}
+              className="w-full h-full object-contain"
+            />
+          </div>
+
+          {/* Polaroid Card on Left */}
+          <div
+            className="absolute"
+            style={{ 
+              left: '37%', 
+              top: '15%', 
+              width: '18vw', 
+              height: '16vh', 
+              zIndex: 2,
+            }}
+          >
+            {/* Pin at the top */}
+            <div
+              style={{
+                position: 'absolute',
+                top: '-8px',
+                left: '50%',
+                transform: 'translateX(-50%)',
+                zIndex: 3,
+              }}
+            >
+              <Image
+                src="/notice-pin-new.svg"
+                alt="Notice Pin"
+                width={16}
+                height={16}
+                className="w-4 h-4"
+              />
+            </div>
+            
+            {/* Polaroid Image */}
+            <Image
+              src="/polaroid-left.svg"
+              alt="Polaroid Card"
+              width={250}
+              height={200}
+              className="w-full h-full object-contain"
+            />
+          </div>
+
+          {/* Single Polaroid Below Left Polaroid */}
+          <div
+            className="absolute"
+            style={{ 
+              left: '38%', 
+              top: '35%', 
+              width: '12vw', 
+              height: '10vh', 
+              zIndex: 2,
+            }}
+          >
+            {/* Pin at the top */}
+            <div
+              style={{
+                position: 'absolute',
+                top: '-8px',
+                left: '50%',
+                transform: 'translateX(-50%)',
+                zIndex: 3,
+              }}
+            >
+              <Image
+                src="/notice-pin-new.svg"
+                alt="Notice Pin"
+                width={16}
+                height={16}
+                className="w-4 h-4"
+              />
+            </div>
+            
+            {/* Single Polaroid Image */}
+            <Image
+              src="/one-polaroid.svg"
+              alt="Single Polaroid"
+              width={300}
+              height={250}
+              className="w-full h-full object-contain"
+            />
+          </div>
+
+          {/* Single Polaroid Far Left */}
+          <div
+            className="absolute"
+            style={{ 
+              left: '33%', 
+              top: '18%', 
+              width: '14vw', 
+              height: '12vh', 
+              zIndex: 2,
+            }}
+          >
+            {/* Pin at the top */}
+            <div
+              style={{
+                position: 'absolute',
+                top: '-8px',
+                left: '50%',
+                transform: 'translateX(-50%)',
+                zIndex: 3,
+              }}
+            >
+              <Image
+                src="/notice-pin-new.svg"
+                alt="Notice Pin"
+                width={16}
+                height={16}
+                className="w-4 h-4"
+              />
+            </div>
+            
+            {/* Single Polaroid Image */}
+            <Image
+              src="/polaroid-far-left.svg"
+              alt="Single Polaroid Far Left"
+              width={300}
+              height={250}
+              className="w-full h-full object-contain"
+            />
+          </div>
 
           {/* Envelope clip path */}
           <div
