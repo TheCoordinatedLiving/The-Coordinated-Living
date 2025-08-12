@@ -10,7 +10,7 @@ import AboutMeWindow from './AboutMeWindow';
 import TermsWindow from './TermsWindow';
 
 
-const WindowsLockScreen = ({ onUnlock }: { onUnlock: () => void }) => {
+const WindowsLockScreen = () => {
   const [time, setTime] = useState(new Date());
 
   useEffect(() => {
@@ -219,10 +219,10 @@ const WindowsExperiencePage = () => {
   return (
     <div ref={containerRef} className="relative w-screen h-screen opacity-0">
       {isLockscreenOnly ? (
-        <WindowsLockScreen onUnlock={handleUnlock} />
+        <WindowsLockScreen />
       ) : (
         <>
-          {!isUnlocked && <WindowsLockScreen onUnlock={handleUnlock} />}
+          {!isUnlocked && <WindowsLockScreen />}
           {isUnlocked && <WindowsHomeScreen />}
         </>
       )}
