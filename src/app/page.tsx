@@ -2004,52 +2004,52 @@ const Page = () => {
                     <Image
                       src="/cup-1.png"
                       alt="Coffee Cup"
-                      width={2500}
-                      height={3750}
+                      width={1800}
+                      height={2700}
                       className="object-contain"
                       style={{
-                        transform: 'translateX(20%) translateY(15%)'
+                        transform: 'translateX(20%) translateY(15%) scale(0.7)'
                       }}
                     />
                     
                     {/* Animated Smoke Effects */}
                     <div
                       className="absolute inset-0 pointer-events-none flex items-center justify-center"
-                      style={{ zIndex: 1, top: '-90%', left: '5%' }}
+                      style={{ zIndex: 1, top: '-60%', left: '15%' }}
                     >
                       <Image
                         src="/smoke.png"
                         alt="Smoke"
-                        width={320}
+                        width={800}
                         height={220}
                         className="object-contain smoke-animation"
-                        style={{ width: '320px', height: '220px' }}
+                        style={{ width: '800px', height: '220px', maxWidth: 'none' }}
                       />
                     </div>
                     <div
                       className="absolute inset-0 pointer-events-none flex items-center justify-center"
-                      style={{ zIndex: 1, top: '-90%', left: '5%' }}
+                      style={{ zIndex: 1, top: '-60%', left: '15%' }}
                     >
                       <Image
                         src="/smoke.png"
                         alt="Smoke"
-                        width={320}
+                        width={800}
                         height={220}
                         className="object-contain smoke-animation2"
-                        style={{ width: '320px', height: '220px' }}
+                        style={{ width: '800px', height: '220px', maxWidth: 'none' }}
                       />
                     </div>
                     <div
                       className="absolute inset-0 pointer-events-none flex items-center justify-center"
-                      style={{ zIndex: 1, top: '-90%', left: '5%' }}
+                      style={{ zIndex: 1, top: '-60%', left: '15%' }}
                     >
                       <Image
                         src="/smoke.png"
                         alt="Smoke"
-                        width={320}
+                        width={800}
                         height={220}
                         className="object-contain smoke-animation3"
-                        style={{ width: '320px', height: '220px' }}
+                        style={{ width: '800px', height: '220px', maxWidth: 'none' }}
                       />
                     </div>
                   </div>
