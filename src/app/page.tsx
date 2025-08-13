@@ -1072,7 +1072,7 @@ const Page = () => {
           <div
             className="absolute notice-large-frame"
             style={{ 
-              left: '56.5vw', 
+              left: '58.5vw', 
               top: isUltraWide ? '18vh' : '28vh', 
               width: '16vw', 
               height: '19vh', 
@@ -1083,7 +1083,7 @@ const Page = () => {
             <div
               style={{
                 position: 'absolute',
-                top: '-8px',
+                top: '-2px',
                 left: '50%',
                 transform: 'translateX(-50%)',
                 zIndex: 3,
@@ -1112,8 +1112,8 @@ const Page = () => {
           <div
             className="absolute notice-polaroid-right"
             style={{ 
-              left: '58.5vw', 
-              top: isUltraWide ? '5vh' : '15vh', 
+              left: '59vw', 
+              top: isUltraWide ? '6vh' : '16vh', 
               width: '8vw', 
               height: '10vh', 
               zIndex: 2,
@@ -1188,45 +1188,7 @@ const Page = () => {
             />
           </div>
 
-          {/* Single Polaroid Below Left Polaroid */}
-          <div
-            className="absolute notice-polaroid-below"
-            style={{ 
-              left: '36.5vw', 
-              top: isUltraWide ? '25vh' : '35vh', 
-              width: '14vw', 
-              height: '12vh', 
-              zIndex: 2,
-            }}
-          >
-            {/* Pin at the top */}
-            <div
-              style={{
-                position: 'absolute',
-                top: '-8px',
-                left: '50%',
-                transform: 'translateX(-50%)',
-                zIndex: 3,
-              }}
-            >
-              <Image
-                src="/notice-pin-new.svg"
-                alt="Notice Pin"
-                width={16}
-                height={16}
-                className="w-4 h-4"
-              />
-            </div>
-            
-            {/* Single Polaroid Image */}
-            <Image
-              src="/one-polaroid.svg"
-              alt="Single Polaroid"
-              width={300}
-              height={250}
-              className="w-full h-full object-contain"
-            />
-          </div>
+
 
           {/* Single Polaroid Far Left */}
           <div
@@ -1272,7 +1234,7 @@ const Page = () => {
           <div
             className="absolute notice-one-polaroid-right"
             style={{ 
-              left: '67.5vw', 
+              left: '64.5vw', 
               top: isUltraWide ? '4vh' : '14vh', 
               width: '10vw', 
               height: '12vh', 
@@ -1308,11 +1270,11 @@ const Page = () => {
             />
           </div>
 
-          {/* Long Verse Post on Right Side */}
+          {/* Long Verse Post on Left Side */}
           <div
             className="absolute notice-long-verse-post"
             style={{ 
-              left: '70.5vw', 
+              left: '37.5vw', 
               top: isUltraWide ? '23vh' : '33vh', 
               width: '8vw', 
               height: '16vh', 
@@ -1348,45 +1310,7 @@ const Page = () => {
             />
           </div>
 
-          {/* Shorter Verse on Left Side */}
-          <div
-            className="absolute notice-shorter-verse"
-            style={{ 
-              left: '29.5vw', 
-              top: isUltraWide ? '30vh' : '40vh', 
-              width: '10vw', 
-              height: '12vh', 
-              zIndex: 2,
-            }}
-          >
-            {/* Pin at the top */}
-            <div
-              style={{
-                position: 'absolute',
-                top: '-8px',
-                left: '50%',
-                transform: 'translateX(-50%)',
-                zIndex: 3,
-              }}
-            >
-              <Image
-                src="/notice-pin-new.svg"
-                alt="Notice Pin"
-                width={16}
-                height={16}
-                className="w-4 h-4"
-              />
-            </div>
-            
-            {/* Shorter Verse Image */}
-            <Image
-              src="/Shorter-verse.svg"
-              alt="Shorter Verse"
-              width={300}
-              height={250}
-              className="w-full h-full object-contain"
-            />
-          </div>
+
 
           {/* Envelope clip path */}
           <div
