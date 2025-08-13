@@ -980,21 +980,21 @@ const Page = () => {
               <div
                 style={{
                   position: 'absolute',
-                  top: '8%',
+                  top: '-12%',
                   left: '50%',
                   transform: 'translateX(-50%)',
-                  width: '15%',
-                  height: '15%',
+                  width: '45%',
+                  height: '45%',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                 }}
               >
                 <Image
-                  src="/new-post-logo.svg"
+                  src="/post-logo-new.svg"
                   alt="Coordinated Living Logo"
-                  width={80}
-                  height={80}
+                  width={225}
+                  height={225}
                   className="w-full h-full object-contain"
                 />
               </div>
@@ -1003,44 +1003,26 @@ const Page = () => {
               <div
                 style={{
                   position: 'absolute',
-                  top: '35%',
+                  top: '25%',
                   left: '50%',
                   transform: 'translateX(-50%)',
                   textAlign: 'center',
                   color: 'white',
                   fontFamily: 'Arial, sans-serif',
-                  fontWeight: 'bold',
-                  fontSize: '0.9vw',
-                  lineHeight: '1.3',
-                  width: '90%',
+                  fontWeight: 'normal',
+                  fontSize: '0.4vw',
+                  lineHeight: '1.6',
+                  width: '85%',
+                  maxHeight: '65%',
+                  overflow: 'visible',
                 }}
               >
-                Explore More<br />
-                From Coordinated<br />
-                Living
+                A thousand times I failed, still your mercy remains, should I stumble out here still I'm caught in your grace." This Hillsong lyric has always echoed in my heart, and its truth resonates even stronger today
+                <br /><br />
+                For years, I pursued other paths, pouring tireless effort into fields he hadn't called me to, only to find no lasting fruit. That rollercoaster of emotions, the unpleasant experiences, the endless accusations and judgments thrown around – they're hallmarks of a mind out of alignment.........
               </div>
 
-              {/* Contact Information */}
-              <div
-                style={{
-                  position: 'absolute',
-                  bottom: '8%',
-                  left: '50%',
-                  transform: 'translateX(-50%)',
-                  display: 'flex',
-                  justifyContent: 'center',
-                  color: 'white',
-                  fontSize: '0.25vw',
-                  fontFamily: 'Arial, sans-serif',
-                  fontWeight: 'bold',
-                  gap: '8px',
-                  paddingLeft: '12px',
-                  paddingRight: '12px',
-                }}
-              >
-                <span>letstalk@thecoordinatedliving.com</span>
-                <span>www.thecoordinatedliving.com</span>
-              </div>
+
 
               {/* Black overlay at 20% opacity for subtle effect */}
               <div
@@ -1223,8 +1205,8 @@ const Page = () => {
             style={{ 
               left: '36.5vw', 
               top: isUltraWide ? '25vh' : '35vh', 
-              width: '12vw', 
-              height: '10vh', 
+              width: '14vw', 
+              height: '12vh', 
               zIndex: 2,
             }}
           >
@@ -1297,14 +1279,134 @@ const Page = () => {
             />
           </div>
 
+          {/* One Polaroid on Right Side */}
+          <div
+            className="absolute notice-one-polaroid-right"
+            style={{ 
+              left: '67.5vw', 
+              top: isUltraWide ? '4vh' : '14vh', 
+              width: '10vw', 
+              height: '12vh', 
+              zIndex: 2,
+            }}
+          >
+            {/* Pin at the top */}
+            <div
+              style={{
+                position: 'absolute',
+                top: '-8px',
+                left: '50%',
+                transform: 'translateX(-50%)',
+                zIndex: 3,
+              }}
+            >
+              <Image
+                src="/notice-pin-new.svg"
+                alt="Notice Pin"
+                width={16}
+                height={16}
+                className="w-4 h-4"
+              />
+            </div>
+            
+            {/* One Polaroid Image */}
+            <Image
+              src="/polaroid-slim.svg"
+              alt="One Polaroid Right"
+              width={300}
+              height={250}
+              className="w-full h-full object-contain"
+            />
+          </div>
+
+          {/* Long Verse Post on Right Side */}
+          <div
+            className="absolute notice-long-verse-post"
+            style={{ 
+              left: '70.5vw', 
+              top: isUltraWide ? '23vh' : '33vh', 
+              width: '8vw', 
+              height: '16vh', 
+              zIndex: 2,
+            }}
+          >
+            {/* Pin at the top */}
+            <div
+              style={{
+                position: 'absolute',
+                top: '-8px',
+                left: '50%',
+                transform: 'translateX(-50%)',
+                zIndex: 3,
+              }}
+            >
+              <Image
+                src="/notice-pin-new.svg"
+                alt="Notice Pin"
+                width={16}
+                height={16}
+                className="w-4 h-4"
+              />
+            </div>
+            
+            {/* Long Verse Post Image */}
+            <Image
+              src="/long-verse-post.svg"
+              alt="Long Verse Post"
+              width={200}
+              height={400}
+              className="w-full h-full object-contain"
+            />
+          </div>
+
+          {/* Shorter Verse on Left Side */}
+          <div
+            className="absolute notice-shorter-verse"
+            style={{ 
+              left: '29.5vw', 
+              top: isUltraWide ? '30vh' : '40vh', 
+              width: '10vw', 
+              height: '12vh', 
+              zIndex: 2,
+            }}
+          >
+            {/* Pin at the top */}
+            <div
+              style={{
+                position: 'absolute',
+                top: '-8px',
+                left: '50%',
+                transform: 'translateX(-50%)',
+                zIndex: 3,
+              }}
+            >
+              <Image
+                src="/notice-pin-new.svg"
+                alt="Notice Pin"
+                width={16}
+                height={16}
+                className="w-4 h-4"
+              />
+            </div>
+            
+            {/* Shorter Verse Image */}
+            <Image
+              src="/Shorter-verse.svg"
+              alt="Shorter Verse"
+              width={300}
+              height={250}
+              className="w-full h-full object-contain"
+            />
+          </div>
+
           {/* Envelope clip path */}
           <div
             className="absolute notice-envelope"
-            style={{ 
-              left: '33vw', 
-              top: isUltraWide ? '26vh' : '36vw', 
-              width: '15vw', 
-              height: '10vh', 
+                          style={{ 
+                left: '33vw', 
+                top: isUltraWide ? '27vh' : '37vw', 
+                width: '15vw', 
+                height: '10vh', 
               zIndex: 2,
               transform: 'rotate(-5deg)',
             }}
