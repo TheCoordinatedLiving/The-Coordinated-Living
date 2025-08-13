@@ -86,10 +86,10 @@ export default function PostTemplate({
             <div className="flex justify-center">
               <div className="w-48 h-48 rounded-full overflow-hidden">
                 <Image
-                  src="/post-hero.png"
-                  alt="Open book with pen"
+                  src="/new-post-template-image.jpg"
+                  alt="Post template image"
                   width={256}
-                  height={112}
+                  height={256}
                   className="w-full h-full object-cover"
                 />
               </div>
