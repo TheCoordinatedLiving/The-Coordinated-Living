@@ -964,7 +964,7 @@ const Page = () => {
             <div
               className="w-full h-full cursor-pointer"
               style={{
-                background: '#5C3262', // Dark purple background
+                background: 'white', // Same white as background
                 position: 'relative',
                 overflow: 'hidden',
                 border: '8px solid white',
@@ -1007,7 +1007,7 @@ const Page = () => {
                   left: '50%',
                   transform: 'translateX(-50%)',
                   textAlign: 'center',
-                  color: 'white',
+                  color: 'black',
                   fontFamily: 'Arial, sans-serif',
                   fontWeight: 'normal',
                   fontSize: '0.4vw',
@@ -1024,18 +1024,7 @@ const Page = () => {
 
 
 
-              {/* Black overlay at 20% opacity for subtle effect */}
-              <div
-                style={{
-                  position: 'absolute',
-                  top: 0,
-                  left: 0,
-                  width: '100%',
-                  height: '100%',
-                  background: 'rgba(0,0,0,0.2)',
-                  pointerEvents: 'none',
-                }}
-              />
+
             </div>
           </div>
 
