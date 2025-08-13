@@ -129,6 +129,20 @@ const Page = () => {
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
   const postTemplateRef = useRef<HTMLDivElement>(null);
+  
+  // Ultra-wide screen detection
+  const [isUltraWide, setIsUltraWide] = useState(false);
+  
+  useEffect(() => {
+    const checkScreenSize = () => {
+      setIsUltraWide(window.innerWidth >= 1920);
+    };
+    
+    checkScreenSize();
+    window.addEventListener('resize', checkScreenSize);
+    
+    return () => window.removeEventListener('resize', checkScreenSize);
+  }, []);
 
   // Sample posts data
   const posts = [
@@ -658,7 +672,7 @@ const Page = () => {
             className="absolute pointer-events-none laptop-glow-animation laptop-pulse-glow"
             style={{ 
               left: '47.2vw',
-              top: '38.4vw',
+              top: isUltraWide ? '60vh' : '38.4vw',
               transform: 'translate(-50%, -50%)',
               zIndex: 1,
               width: '25vw',
@@ -682,6 +696,12 @@ const Page = () => {
           <div
             ref={laptopRef}
             className="absolute cursor-pointer laptop-iframe inset-0"
+            style={isUltraWide ? {
+              top: '60vh',
+              right: '0',
+              bottom: '0',
+              left: '47.2vw'
+            } : {}}
             onClick={(e) => {
               // Don't zoom if clicking on the iframe content
               if (e.target !== e.currentTarget) {
@@ -721,14 +741,14 @@ const Page = () => {
               src="/windows?lockscreen=true"
               style={{
                 width: '77vw',
-                height: '40vw',
+                height: isUltraWide ? '48vw' : '40vw',
                 border: 'none',
                 borderRadius: '0',
                 backgroundColor: 'transparent',
                 transform: 'scale(0.3)',
                 transformOrigin: 'center center',
                 position: 'absolute',
-                top: '-13.5vw',
+                top: isUltraWide ? '-18vw' : '-13.5vw',
                 left: '-25.8vw',
                 pointerEvents: laptopZoomed ? 'auto' : 'none',
                 cursor: 'pointer',
@@ -768,8 +788,8 @@ const Page = () => {
           <div
             className="absolute pointer-events-none letter-glow-animation"
             style={{ 
-              left: '73vw',
-              top: '50vw',
+              left: isUltraWide ? '72vw' : '73vw',
+              top: isUltraWide ? '82vh' : '50vw',
               transform: 'translate(-50%, -50%) rotate(-95deg) skewY(-57deg)',
               zIndex: 1,
               width: '8vw',
@@ -800,8 +820,14 @@ const Page = () => {
           />
           {/* cup- clippath */}
           <div
-            className="absolute group"
-            style={{ right: '14vw', top: '34vw', width: '7vw', height: '11vh', zIndex: 10 }}
+            className="absolute group cup-element"
+            style={{ 
+              right: '14vw', 
+              top: isUltraWide ? '25vh' : '34vw', 
+              width: '7vw', 
+              height: '11vh', 
+              zIndex: 10 
+            }}
           >
             <div
               className="cursor-pointer cup-glow heartbeat cup-float cup-hover-glow w-full h-full "
@@ -812,7 +838,7 @@ const Page = () => {
             />
             {/* Smoke Images */}
             <div
-              className="absolute inset-0 pointer-events-none flex items-center justify-center"
+              className="absolute inset-0 pointer-events-none flex items-center justify-center smoke-container"
               style={{ zIndex: 1, top: '-110%', left: '-15%' }}
             >
               <Image
@@ -824,7 +850,7 @@ const Page = () => {
               />
             </div>
             <div
-              className="absolute inset-0 pointer-events-none flex items-center justify-center"
+              className="absolute inset-0 pointer-events-none flex items-center justify-center smoke-container"
               style={{ zIndex: 1, top: '-110%', left: '-15%' }}
             >
               <Image
@@ -836,7 +862,7 @@ const Page = () => {
               />
             </div>
             <div
-              className="absolute inset-0 pointer-events-none flex items-center justify-center"
+              className="absolute inset-0 pointer-events-none flex items-center justify-center smoke-container"
               style={{ zIndex: 1, top: '-110%', left: '-15%' }}
             >
               <Image
@@ -850,10 +876,10 @@ const Page = () => {
           </div>
           {/* phone- clippath */}
           <div
-            className="absolute inset-0  phone-pulse-glow phone-yellow-glow group cursor-pointer"
+            className="absolute phone-pulse-glow phone-yellow-glow group cursor-pointer phone-element"
             style={{ 
               left: '18vw', 
-              top: '45vw', 
+              top: isUltraWide ? '75vh' : '45vw', 
               width: '8vw', 
               height: '8vw', 
               zIndex: 2,
@@ -903,10 +929,10 @@ const Page = () => {
 
           {/* New Post Design - Center of Noticeboard */}
           <div
-            className="absolute white-notice-glow"
+            className="absolute white-notice-glow notice-post"
             style={{ 
               left: '53.5vw', 
-              top: '30vh', 
+              top: isUltraWide ? '20vh' : '30vh', 
               transform: 'translate(-50%, -50%)',
               width: '10vw', 
               height: '14vw', // A4 ratio (1:1.414)
@@ -1029,10 +1055,10 @@ const Page = () => {
 
           {/* Torn Paper Below Post */}
           <div
-            className="absolute"
+            className="absolute notice-torn-paper"
             style={{ 
               left: '48.5vw', 
-              top: '45vh', 
+              top: isUltraWide ? '35vh' : '45vh', 
               width: '10vw', 
               height: '7.5vh', 
               zIndex: 2,
@@ -1069,10 +1095,10 @@ const Page = () => {
 
           {/* Large Frame with Image on Right */}
           <div
-            className="absolute"
+            className="absolute notice-large-frame"
             style={{ 
               left: '56.5vw', 
-              top: '28vh', 
+              top: isUltraWide ? '18vh' : '28vh', 
               width: '16vw', 
               height: '19vh', 
               zIndex: 2,
@@ -1109,10 +1135,10 @@ const Page = () => {
 
           {/* Polaroid Card on Top Right */}
           <div
-            className="absolute"
+            className="absolute notice-polaroid-right"
             style={{ 
               left: '58.5vw', 
-              top: '15vh', 
+              top: isUltraWide ? '5vh' : '15vh', 
               width: '8vw', 
               height: '10vh', 
               zIndex: 2,
@@ -1149,10 +1175,10 @@ const Page = () => {
 
           {/* Polaroid Card on Left */}
           <div
-            className="absolute"
+            className="absolute notice-polaroid-left"
             style={{ 
               left: '35.5vw', 
-              top: '15vh', 
+              top: isUltraWide ? '5vh' : '15vh', 
               width: '18vw', 
               height: '16vh', 
               zIndex: 2,
@@ -1189,10 +1215,10 @@ const Page = () => {
 
           {/* Single Polaroid Below Left Polaroid */}
           <div
-            className="absolute"
+            className="absolute notice-polaroid-below"
             style={{ 
               left: '36.5vw', 
-              top: '35vh', 
+              top: isUltraWide ? '25vh' : '35vh', 
               width: '12vw', 
               height: '10vh', 
               zIndex: 2,
@@ -1229,10 +1255,10 @@ const Page = () => {
 
           {/* Single Polaroid Far Left */}
           <div
-            className="absolute"
+            className="absolute notice-polaroid-far-left"
             style={{ 
               left: '31.5vw', 
-              top: '18vh', 
+              top: isUltraWide ? '8vh' : '18vh', 
               width: '14vw', 
               height: '12vh', 
               zIndex: 2,
@@ -1269,10 +1295,10 @@ const Page = () => {
 
           {/* Envelope clip path */}
           <div
-            className="absolute"
+            className="absolute notice-envelope"
             style={{ 
               left: '33vw', 
-              top: '36vw', 
+              top: isUltraWide ? '26vh' : '36vw', 
               width: '15vw', 
               height: '10vh', 
               zIndex: 2,
@@ -2317,7 +2343,7 @@ const Page = () => {
                     
                     {/* Animated Smoke Effects */}
                     <div
-                      className="absolute inset-0 pointer-events-none flex items-center justify-center"
+                      className="absolute inset-0 pointer-events-none flex items-center justify-center smoke-container"
                       style={{ zIndex: 1, top: '-60%', left: '20%' }}
                     >
                       <Image
@@ -2330,7 +2356,7 @@ const Page = () => {
                       />
                     </div>
                     <div
-                      className="absolute inset-0 pointer-events-none flex items-center justify-center"
+                      className="absolute inset-0 pointer-events-none flex items-center justify-center smoke-container"
                       style={{ zIndex: 1, top: '-60%', left: '20%' }}
                     >
                       <Image
@@ -2343,8 +2369,8 @@ const Page = () => {
                       />
                     </div>
                     <div
-                      className="absolute inset-0 pointer-events-none flex items-center justify-center"
-                      style={{ zIndex: 1, top: '-60%', left: '20%' }}
+                      className="absolute inset-0 pointer-events-none flex items-center justify-center smoke-container"
+                      style={{ zIndex: 1, top: '-60%', left: '60%' }}
                     >
                       <Image
                         src="/smoke.png"

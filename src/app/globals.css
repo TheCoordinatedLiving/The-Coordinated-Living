@@ -54,11 +54,64 @@ body {
 @media (min-width: 1920px) {
   .workspace-bg {
     background-size: cover;
-    background-position: center top;
+    background-position: center center;
+  }
+  
+  .laptop-iframe {
+    left: 50vw;
+    top: 15vh;
+    width: 22vw;
+    height: 12vw;
+  }
+  
+  .letter-clip-path {
+    left: 75vw;
+    top: 45vh;
+    width: 8vw;
+    height: 16vw;
+  }
+  
+  /* Override all positioned elements for ultra-wide screens */
+  .cup-element[style*="top"] {
+    top: 52vh !important;
+  }
+  
+  .phone-element[style*="top"] {
+    top: 75vh !important;
+  }
+  
+  .notice-post[style*="top"] {
+    top: 20vh !important;
+  }
+  
+  .notice-torn-paper[style*="top"] {
+    top: 35vh !important;
+  }
+  
+  .notice-large-frame[style*="top"] {
+    top: 18vh !important;
+  }
+  
+  .notice-polaroid-right[style*="top"] {
+    top: 5vh !important;
+  }
+  
+  .notice-polaroid-left[style*="top"] {
+    top: 5vh !important;
+  }
+  
+  .notice-polaroid-below[style*="top"] {
+    top: 25vh !important;
+  }
+  
+  .notice-polaroid-far-left[style*="top"] {
+    top: 8vh !important;
+  }
+  
+  .notice-envelope[style*="top"] {
+    top: 26vh !important;
   }
 }
-
-
 
 /* Get Started button glow effect */
 .get-started-glow:hover {
