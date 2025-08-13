@@ -387,7 +387,7 @@ const Page = () => {
     }
   }, [showPostModal]);
 
-  // Auto-hide welcome modal after 3 seconds
+  // Auto-hide welcome modal after 5 seconds
   useEffect(() => {
     if (showWelcomeModal) {
       const timer = setTimeout(() => {
@@ -405,7 +405,7 @@ const Page = () => {
         } else {
           setShowWelcomeModal(false);
         }
-      }, 3000); // 3 seconds
+      }, 5000); // 5 seconds
 
       return () => clearTimeout(timer);
     }
@@ -905,7 +905,7 @@ const Page = () => {
           <div
             className="absolute white-notice-glow"
             style={{ 
-              left: '55vw', 
+              left: '53.5vw', 
               top: '30vh', 
               transform: 'translate(-50%, -50%)',
               width: '10vw', 
@@ -1031,7 +1031,7 @@ const Page = () => {
           <div
             className="absolute"
             style={{ 
-              left: '50vw', 
+              left: '48.5vw', 
               top: '45vh', 
               width: '10vw', 
               height: '7.5vh', 
@@ -1071,7 +1071,7 @@ const Page = () => {
           <div
             className="absolute"
             style={{ 
-              left: '58vw', 
+              left: '56.5vw', 
               top: '28vh', 
               width: '16vw', 
               height: '19vh', 
@@ -1111,7 +1111,7 @@ const Page = () => {
           <div
             className="absolute"
             style={{ 
-              left: '60vw', 
+              left: '58.5vw', 
               top: '15vh', 
               width: '8vw', 
               height: '10vh', 
@@ -1151,7 +1151,7 @@ const Page = () => {
           <div
             className="absolute"
             style={{ 
-              left: '37vw', 
+              left: '35.5vw', 
               top: '15vh', 
               width: '18vw', 
               height: '16vh', 
@@ -1191,7 +1191,7 @@ const Page = () => {
           <div
             className="absolute"
             style={{ 
-              left: '38vw', 
+              left: '36.5vw', 
               top: '35vh', 
               width: '12vw', 
               height: '10vh', 
@@ -1231,7 +1231,7 @@ const Page = () => {
           <div
             className="absolute"
             style={{ 
-              left: '33vw', 
+              left: '31.5vw', 
               top: '18vh', 
               width: '14vw', 
               height: '12vh', 
@@ -2311,14 +2311,14 @@ const Page = () => {
                       height={2700}
                       className="object-contain"
                       style={{
-                        transform: 'translateX(20%) translateY(15%) scale(0.7)'
+                        transform: 'translateX(20%) translateY(15%) scale(0.6)'
                       }}
                     />
                     
                     {/* Animated Smoke Effects */}
                     <div
                       className="absolute inset-0 pointer-events-none flex items-center justify-center"
-                      style={{ zIndex: 1, top: '-60%', left: '15%' }}
+                      style={{ zIndex: 1, top: '-60%', left: '20%' }}
                     >
                       <Image
                         src="/smoke.png"
@@ -2331,7 +2331,7 @@ const Page = () => {
                     </div>
                     <div
                       className="absolute inset-0 pointer-events-none flex items-center justify-center"
-                      style={{ zIndex: 1, top: '-60%', left: '15%' }}
+                      style={{ zIndex: 1, top: '-60%', left: '20%' }}
                     >
                       <Image
                         src="/smoke.png"
@@ -2344,7 +2344,7 @@ const Page = () => {
                     </div>
                     <div
                       className="absolute inset-0 pointer-events-none flex items-center justify-center"
-                      style={{ zIndex: 1, top: '-60%', left: '15%' }}
+                      style={{ zIndex: 1, top: '-60%', left: '20%' }}
                     >
                       <Image
                         src="/smoke.png"
