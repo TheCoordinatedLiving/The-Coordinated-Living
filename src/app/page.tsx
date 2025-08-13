@@ -931,6 +931,50 @@ const Page = () => {
             />
           </div>
 
+          {/* New Post Design - Left of Noticeboard */}
+          <div
+            className="absolute notice-post-left"
+            style={{ 
+              left: '38.5vw', 
+              top: isUltraWide ? '20vh' : '30vh', 
+              transform: 'translate(-50%, -50%)',
+              width: '10vw', 
+              height: '14vw', // A4 ratio (1:1.414)
+              zIndex: 2,
+            }}
+          >
+            {/* Pin at the top */}
+            <div
+              style={{
+                position: 'absolute',
+                top: '-12px',
+                left: '50%',
+                transform: 'translateX(-50%)',
+                zIndex: 3,
+              }}
+            >
+              <Image
+                src="/notice-pin-new.svg"
+                alt="Notice Pin"
+                width={20}
+                height={20}
+                className="w-5 h-5"
+              />
+            </div>
+            <div
+              className="w-full h-full"
+              style={{
+                background: '#35B2C2',
+                position: 'relative',
+                overflow: 'hidden',
+                border: '8px solid white',
+                borderBottom: '20px solid white',
+                boxShadow: '0 4px 8px rgba(0,0,0,0.3)',
+              }}
+            >
+            </div>
+          </div>
+
           {/* New Post Design - Center of Noticeboard */}
           <div
             className="absolute white-notice-glow notice-post"
@@ -1028,14 +1072,15 @@ const Page = () => {
             </div>
           </div>
 
-          {/* Torn Paper Below Post */}
+          {/* New Post Design - Right of Noticeboard */}
           <div
-            className="absolute notice-torn-paper"
+            className="absolute notice-post-right"
             style={{ 
-              left: '48.5vw', 
-              top: isUltraWide ? '35vh' : '45vh', 
+              left: '68.5vw', 
+              top: isUltraWide ? '20vh' : '30vh', 
+              transform: 'translate(-50%, -50%)',
               width: '10vw', 
-              height: '7.5vh', 
+              height: '14vw', // A4 ratio (1:1.414)
               zIndex: 2,
             }}
           >
@@ -1043,7 +1088,7 @@ const Page = () => {
             <div
               style={{
                 position: 'absolute',
-                top: '-8px',
+                top: '-12px',
                 left: '50%',
                 transform: 'translateX(-50%)',
                 zIndex: 3,
@@ -1052,288 +1097,43 @@ const Page = () => {
               <Image
                 src="/notice-pin-new.svg"
                 alt="Notice Pin"
-                width={16}
-                height={16}
-                className="w-4 h-4"
+                width={20}
+                height={20}
+                className="w-5 h-5"
               />
             </div>
-            
-            {/* Torn Paper */}
-            <Image
-              src="/paper-below.svg"
-              alt="Torn Paper"
-              width={200}
-              height={150}
-              className="w-full h-full object-contain"
-            />
-          </div>
-
-          {/* Large Frame with Image on Right */}
-          <div
-            className="absolute notice-large-frame"
-            style={{ 
-              left: '58.5vw', 
-              top: isUltraWide ? '18vh' : '28vh', 
-              width: '16vw', 
-              height: '19vh', 
-              zIndex: 2,
-            }}
-          >
-            {/* Pin at the top */}
             <div
+              className="w-full h-full"
               style={{
-                position: 'absolute',
-                top: '-2px',
-                left: '50%',
-                transform: 'translateX(-50%)',
-                zIndex: 3,
+                background: 'white',
+                position: 'relative',
+                overflow: 'hidden',
+                border: '12px solid #2481C2',
+                boxShadow: '0 4px 8px rgba(0,0,0,0.3)',
               }}
             >
-              <Image
-                src="/notice-pin-new.svg"
-                alt="Notice Pin"
-                width={18}
-                height={18}
-                className="w-4 h-4"
-              />
             </div>
-            
-            {/* Main Image */}
-            <Image
-              src="/main-pic-right.svg"
-              alt="Studio Photo"
-              width={300}
-              height={400}
-              className="w-full h-full object-contain"
-            />
-          </div>
-
-          {/* Polaroid Card on Top Right */}
-          <div
-            className="absolute notice-polaroid-right"
-            style={{ 
-              left: '59vw', 
-              top: isUltraWide ? '6vh' : '16vh', 
-              width: '8vw', 
-              height: '10vh', 
-              zIndex: 2,
-            }}
-          >
-            {/* Pin at the top */}
-            <div
-              style={{
-                position: 'absolute',
-                top: '-8px',
-                left: '50%',
-                transform: 'translateX(-50%)',
-                zIndex: 3,
-              }}
-            >
-              <Image
-                src="/notice-pin-new.svg"
-                alt="Notice Pin"
-                width={16}
-                height={16}
-                className="w-4 h-4"
-              />
-            </div>
-            
-            {/* Polaroid Image */}
-            <Image
-              src="/polaroid-right.svg"
-              alt="Polaroid Card"
-              width={200}
-              height={250}
-              className="w-full h-full object-contain"
-            />
-          </div>
-
-          {/* Polaroid Card on Left */}
-          <div
-            className="absolute notice-polaroid-left"
-            style={{ 
-              left: '35.5vw', 
-              top: isUltraWide ? '5vh' : '15vh', 
-              width: '18vw', 
-              height: '16vh', 
-              zIndex: 2,
-            }}
-          >
-            {/* Pin at the top */}
-            <div
-              style={{
-                position: 'absolute',
-                top: '-8px',
-                left: '50%',
-                transform: 'translateX(-50%)',
-                zIndex: 3,
-              }}
-            >
-              <Image
-                src="/notice-pin-new.svg"
-                alt="Notice Pin"
-                width={16}
-                height={16}
-                className="w-4 h-4"
-              />
-            </div>
-            
-            {/* Polaroid Image */}
-            <Image
-              src="/polaroid-left.svg"
-              alt="Polaroid Card"
-              width={250}
-              height={200}
-              className="w-full h-full object-contain"
-            />
           </div>
 
 
 
-          {/* Single Polaroid Far Left */}
-          <div
-            className="absolute notice-polaroid-far-left"
-            style={{ 
-              left: '31.5vw', 
-              top: isUltraWide ? '8vh' : '18vh', 
-              width: '14vw', 
-              height: '12vh', 
-              zIndex: 2,
-            }}
-          >
-            {/* Pin at the top */}
-            <div
-              style={{
-                position: 'absolute',
-                top: '-8px',
-                left: '50%',
-                transform: 'translateX(-50%)',
-                zIndex: 3,
-              }}
-            >
-              <Image
-                src="/notice-pin-new.svg"
-                alt="Notice Pin"
-                width={16}
-                height={16}
-                className="w-4 h-4"
-              />
-            </div>
-            
-            {/* Single Polaroid Image */}
-            <Image
-              src="/polaroid-far-left.svg"
-              alt="Single Polaroid Far Left"
-              width={300}
-              height={250}
-              className="w-full h-full object-contain"
-            />
-          </div>
-
-          {/* One Polaroid on Right Side */}
-          <div
-            className="absolute notice-one-polaroid-right"
-            style={{ 
-              left: '64.5vw', 
-              top: isUltraWide ? '4vh' : '14vh', 
-              width: '10vw', 
-              height: '12vh', 
-              zIndex: 2,
-            }}
-          >
-            {/* Pin at the top */}
-            <div
-              style={{
-                position: 'absolute',
-                top: '-8px',
-                left: '50%',
-                transform: 'translateX(-50%)',
-                zIndex: 3,
-              }}
-            >
-              <Image
-                src="/notice-pin-new.svg"
-                alt="Notice Pin"
-                width={16}
-                height={16}
-                className="w-4 h-4"
-              />
-            </div>
-            
-            {/* One Polaroid Image */}
-            <Image
-              src="/polaroid-slim.svg"
-              alt="One Polaroid Right"
-              width={300}
-              height={250}
-              className="w-full h-full object-contain"
-            />
-          </div>
-
-          {/* Long Verse Post on Left Side */}
-          <div
-            className="absolute notice-long-verse-post"
-            style={{ 
-              left: '37.5vw', 
-              top: isUltraWide ? '23vh' : '33vh', 
-              width: '8vw', 
-              height: '16vh', 
-              zIndex: 2,
-            }}
-          >
-            {/* Pin at the top */}
-            <div
-              style={{
-                position: 'absolute',
-                top: '-8px',
-                left: '50%',
-                transform: 'translateX(-50%)',
-                zIndex: 3,
-              }}
-            >
-              <Image
-                src="/notice-pin-new.svg"
-                alt="Notice Pin"
-                width={16}
-                height={16}
-                className="w-4 h-4"
-              />
-            </div>
-            
-            {/* Long Verse Post Image */}
-            <Image
-              src="/long-verse-post.svg"
-              alt="Long Verse Post"
-              width={200}
-              height={400}
-              className="w-full h-full object-contain"
-            />
-          </div>
 
 
 
-          {/* Envelope clip path */}
-          <div
-            className="absolute notice-envelope"
-                          style={{ 
-                left: '33vw', 
-                top: isUltraWide ? '27vh' : '37vw', 
-                width: '15vw', 
-                height: '10vh', 
-              zIndex: 2,
-              transform: 'rotate(-5deg)',
-            }}
-          >
-            {/* <div className="relative w-full h-full">
-              <Image
-                src="/envelope.svg"
-                alt="Envelope"
-                width={100}
-                height={75}
-                className="w-full h-full object-contain"
-              />
-            </div> */}
-          </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
           {/* Polaroid Collage Clip Path - Hidden for now */}
           {/*
