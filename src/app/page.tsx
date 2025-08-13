@@ -837,42 +837,46 @@ const Page = () => {
               onClick={() => setShowFumaaModal(true)}
             />
             {/* Smoke Images */}
-            <div
-              className="absolute inset-0 pointer-events-none flex items-center justify-center smoke-container"
-              style={{ zIndex: 1, top: '-110%', left: '-15%' }}
-            >
-              <Image
-                src="/smoke.png"
-                alt="Smoke"
-                width={200}
-                height={200}
-                className="w-full h-full object-contain smoke-animation"
-              />
-            </div>
-            <div
-              className="absolute inset-0 pointer-events-none flex items-center justify-center smoke-container"
-              style={{ zIndex: 1, top: '-110%', left: '-15%' }}
-            >
-              <Image
-                src="/smoke.png"
-                alt="Smoke"
-                width={200}
-                height={200}
-                className="w-full h-full object-contain smoke-animation2"
-              />
-            </div>
-            <div
-              className="absolute inset-0 pointer-events-none flex items-center justify-center smoke-container"
-              style={{ zIndex: 1, top: '-110%', left: '-15%' }}
-            >
-              <Image
-                src="/smoke.png"
-                alt="Smoke"
-                width={200}
-                height={200}
-                className="w-full h-full object-contain smoke-animation3"
-              />
-            </div>
+            {!showFumaaModal && (
+              <>
+                <div
+                  className="absolute inset-0 pointer-events-none flex items-center justify-center smoke-container"
+                  style={{ zIndex: 1, top: '-110%', left: '-15%' }}
+                >
+                  <Image
+                    src="/smoke.png"
+                    alt="Smoke"
+                    width={200}
+                    height={200}
+                    className="w-full h-full object-contain smoke-animation"
+                  />
+                </div>
+                <div
+                  className="absolute inset-0 pointer-events-none flex items-center justify-center smoke-container"
+                  style={{ zIndex: 1, top: '-110%', left: '-15%' }}
+                >
+                  <Image
+                    src="/smoke.png"
+                    alt="Smoke"
+                    width={200}
+                    height={200}
+                    className="w-full h-full object-contain smoke-animation2"
+                  />
+                </div>
+                <div
+                  className="absolute inset-0 pointer-events-none flex items-center justify-center smoke-container"
+                  style={{ zIndex: 1, top: '-110%', left: '-15%' }}
+                >
+                  <Image
+                    src="/smoke.png"
+                    alt="Smoke"
+                    width={200}
+                    height={200}
+                    className="w-full h-full object-contain smoke-animation3"
+                  />
+                </div>
+              </>
+            )}
           </div>
           {/* phone- clippath */}
           <div
@@ -2368,19 +2372,7 @@ const Page = () => {
                         style={{ width: '800px', height: '220px', maxWidth: 'none' }}
                       />
                     </div>
-                    <div
-                      className="absolute inset-0 pointer-events-none flex items-center justify-center smoke-container"
-                      style={{ zIndex: 1, top: '-60%', left: '60%' }}
-                    >
-                      <Image
-                        src="/smoke.png"
-                        alt="Smoke"
-                        width={800}
-                        height={220}
-                        className="object-contain smoke-animation3"
-                        style={{ width: '800px', height: '220px', maxWidth: 'none' }}
-                      />
-                    </div>
+
                   </div>
                 </div>
               </div>
