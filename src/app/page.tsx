@@ -1017,9 +1017,9 @@ const Page = () => {
                   overflow: 'visible',
                 }}
               >
-                A thousand times I failed, still your mercy remains, should I stumble out here still I'm caught in your grace." This Hillsong lyric has always echoed in my heart, and its truth resonates even stronger today
+                A thousand times I failed, still your mercy remains, should I stumble out here still I&apos;m caught in your grace.&quot; This Hillsong lyric has always echoed in my heart, and its truth resonates even stronger today
                 <br /><br />
-                For years, I pursued other paths, pouring tireless effort into fields he hadn't called me to, only to find no lasting fruit. That rollercoaster of emotions, the unpleasant experiences, the endless accusations and judgments thrown around – they're hallmarks of a mind out of alignment.........
+                For years, I pursued other paths, pouring tireless effort into fields he hadn&apos;t called me to, only to find no lasting fruit. That rollercoaster of emotions, the unpleasant experiences, the endless accusations and judgments thrown around – they&apos;re hallmarks of a mind out of alignment.........
               </div>
 
 
