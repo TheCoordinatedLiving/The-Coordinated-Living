@@ -64,17 +64,23 @@ body {
   }
   
   .laptop-iframe {
-    left: 50vw;
-    top: 12vh;
-    width: 22vw;
-    height: 12vw;
+    left: 46.8vw !important;
+    top: 58.2vh !important;
+    width: 25vw !important;
+    height: 12vw !important;
   }
   
   .letter-clip-path {
     left: 75vw;
-    top: 43.5vh;
+    top: 28vh;
     width: 8vw;
     height: 16vw;
+  }
+  
+  /* Move clickable letter element up to align with glow */
+  .letter-clip-path.cursor-pointer {
+    top: 82vh !important;
+    z-index: 10 !important;
   }
   
   /* Override all positioned elements for ultra-wide screens */
@@ -83,7 +89,7 @@ body {
   }
   
   .phone-element[style*="top"] {
-    top: 75vh !important;
+    top: 73vh !important;
   }
   
   .notice-post[style*="top"] {
