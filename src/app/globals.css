@@ -27,7 +27,7 @@ body {
 
 .workspace-bg{
   z-index: 1;
-  background-image: url('/coordinated-3.webp');
+  background-image: url('/coordinated-sample-new.webp');
   background-repeat: no-repeat;
   background-position: center top;
   background-size: cover;
@@ -59,14 +59,14 @@ body {
   
   .laptop-iframe {
     left: 50vw;
-    top: 15vh;
+    top: 12vh;
     width: 22vw;
     height: 12vw;
   }
   
   .letter-clip-path {
     left: 75vw;
-    top: 45vh;
+    top: 43.5vh;
     width: 8vw;
     height: 16vw;
   }
@@ -120,7 +120,7 @@ body {
 
 .laptop-iframe {
   left: 47.2vw;
-  top: 38.4vw;
+  top: 37.5vw;
   width: 25.5vw;
   height: 13vw;
   transform: translate(-50%, -50%);
@@ -130,7 +130,7 @@ body {
 
 .letter-clip-path {
   left: 73vw;
-  top: 50vw;
+  top: 48.5vw;
   transform: translate(-50%, -50%) rotate(-95deg) skewY(-57deg);
   z-index: 2;
   width: 10vw;

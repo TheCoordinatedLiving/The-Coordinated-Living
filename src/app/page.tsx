@@ -975,69 +975,69 @@ const Page = () => {
                 justifyContent: 'center',
               }}
             >
-              <Image
-                src="/main-pic-right.svg"
-                alt="Main Picture"
-                width={200}
-                height={200}
-                className="w-1/2 h-1/2 object-contain"
-              />
-              <Image
-                src="/post-1-left.png"
-                alt="Post 1 Left"
-                width={100}
-                height={100}
-                style={{
-                  position: 'absolute',
-                  top: '0',
-                  left: '0',
-                  width: '25%',
-                  height: '20%',
-                  objectFit: 'cover',
-                }}
-              />
-              <Image
-                src="/post-left-2.png"
-                alt="Post Left 2"
-                width={100}
-                height={100}
-                style={{
-                  position: 'absolute',
-                  bottom: '0',
-                  right: '0',
-                  width: '30%',
-                  height: '20%',
-                  objectFit: 'cover',
-                }}
-              />
-              <Image
-                src="/smaller-left.svg"
-                alt="Smaller Left"
-                width={100}
-                height={100}
-                style={{
-                  position: 'absolute',
-                  top: '1%',
-                  right: '3%',
-                  width: '40%',
-                  height: '35%',
-                  objectFit: 'contain',
-                }}
-              />
-              <Image
-                src="/Shorter-verse.svg"
-                alt="Shorter Verse"
-                width={100}
-                height={100}
-                style={{
-                  position: 'absolute',
-                  bottom: '0%',
-                  left: '3%',
-                  width: '35%',
-                  height: '30%',
-                  objectFit: 'contain',
-                }}
-              />
+                             <Image
+                 src="/main-pic-right.svg"
+                 alt="Main Picture"
+                 width={200}
+                 height={200}
+                 className="w-1/2 h-1/2 object-contain"
+               />
+               <Image
+                 src="/post-1-left.png"
+                 alt="Post 1 Left"
+                 width={100}
+                 height={100}
+                 style={{
+                   position: 'absolute',
+                   top: '0',
+                   left: '0',
+                   width: '25%',
+                   height: '20%',
+                   objectFit: 'cover',
+                 }}
+               />
+               <Image
+                 src="/post-left-2.png"
+                 alt="Post Left 2"
+                 width={100}
+                 height={100}
+                 style={{
+                   position: 'absolute',
+                   bottom: '0',
+                   right: '0',
+                   width: '30%',
+                   height: '20%',
+                   objectFit: 'cover',
+                 }}
+               />
+               <Image
+                 src="/smaller-left.svg"
+                 alt="Smaller Left"
+                 width={100}
+                 height={100}
+                 style={{
+                   position: 'absolute',
+                   top: '1%',
+                   right: '3%',
+                   width: '40%',
+                   height: '35%',
+                   objectFit: 'contain',
+                 }}
+               />
+               <Image
+                 src="/Shorter-verse.svg"
+                 alt="Shorter Verse"
+                 width={100}
+                 height={100}
+                 style={{
+                   position: 'absolute',
+                   bottom: '0%',
+                   left: '3%',
+                   width: '35%',
+                   height: '30%',
+                   objectFit: 'contain',
+                 }}
+               />
             </div>
           </div>
 
@@ -1181,69 +1181,69 @@ const Page = () => {
                 justifyContent: 'center',
               }}
             >
-              <Image
-                src="/right-middle-post.png"
-                alt="Right Middle Post"
-                width={200}
-                height={200}
-                className="w-1/2 h-1/2 object-contain"
-              />
-              <Image
-                src="/his-grace.png"
-                alt="His Grace"
-                width={100}
-                height={100}
-                style={{
-                  position: 'absolute',
-                  bottom: '0',
-                  left: '0',
-                  width: '30%',
-                  height: '20%',
-                  objectFit: 'cover',
-                }}
-              />
-              <Image
-                src="/do-everything.png"
-                alt="Do Everything"
-                width={100}
-                height={100}
-                style={{
-                  position: 'absolute',
-                  top: '0',
-                  right: '0',
-                  width: '25%',
-                  height: '20%',
-                  objectFit: 'cover',
-                }}
-              />
-              <Image
-                src="/smaller-left.svg"
-                alt="Smaller Left"
-                width={100}
-                height={100}
-                style={{
-                  position: 'absolute',
-                  top: '1%',
-                  left: '3%',
-                  width: '40%',
-                  height: '35%',
-                  objectFit: 'contain',
-                }}
-              />
-              <Image
-                src="/Shorter-verse.svg"
-                alt="Shorter Verse"
-                width={100}
-                height={100}
-                style={{
-                  position: 'absolute',
-                  bottom: '0%',
-                  right: '3%',
-                  width: '35%',
-                  height: '30%',
-                  objectFit: 'contain',
-                }}
-              />
+                             <Image
+                 src="/right-middle-post.png"
+                 alt="Right Middle Post"
+                 width={200}
+                 height={200}
+                 className="w-1/2 h-1/2 object-contain"
+               />
+               <Image
+                 src="/his-grace.png"
+                 alt="His Grace"
+                 width={100}
+                 height={100}
+                 style={{
+                   position: 'absolute',
+                   bottom: '0',
+                   left: '0',
+                   width: '30%',
+                   height: '20%',
+                   objectFit: 'cover',
+                 }}
+               />
+               <Image
+                 src="/do-everything.png"
+                 alt="Do Everything"
+                 width={100}
+                 height={100}
+                 style={{
+                   position: 'absolute',
+                   top: '0',
+                   right: '0',
+                   width: '25%',
+                   height: '20%',
+                   objectFit: 'cover',
+                 }}
+               />
+               <Image
+                 src="/smaller-left.svg"
+                 alt="Smaller Left"
+                 width={100}
+                 height={100}
+                 style={{
+                   position: 'absolute',
+                   top: '1%',
+                   left: '3%',
+                   width: '40%',
+                   height: '35%',
+                   objectFit: 'contain',
+                 }}
+               />
+               <Image
+                 src="/Shorter-verse.svg"
+                 alt="Shorter Verse"
+                 width={100}
+                 height={100}
+                 style={{
+                   position: 'absolute',
+                   bottom: '0%',
+                   right: '3%',
+                   width: '35%',
+                   height: '30%',
+                   objectFit: 'contain',
+                 }}
+               />
             </div>
           </div>
 
