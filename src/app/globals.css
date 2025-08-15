@@ -23,8 +23,11 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+  /* Prevent layout shifts */
+  overflow-x: hidden;
 }
 
+/* Optimize background for better performance */
 .workspace-bg{
   z-index: 1;
   background-image: url('/coordinated-sample-new.webp');
@@ -37,10 +40,13 @@ body {
   min-height: 100vh;
   position: relative;
   overflow: hidden;
+  /* Prevent layout shifts */
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
 }
 
 /* Responsive background adjustments for different screen sizes */
-
 
 /* Desktop and larger screens */
 @media (min-width: 1024px) {
@@ -126,6 +132,9 @@ body {
   transform: translate(-50%, -50%);
   clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
   z-index: 2;
+  /* Optimize for performance */
+  transform: translate(-50%, -50%) translateZ(0);
+  backface-visibility: hidden;
 }
 
 .letter-clip-path {
@@ -137,9 +146,10 @@ body {
   height: 20vw;
   clip-path: polygon(12% 30%, 85% 22%, 95% 82%, 22% 90%);
   position: absolute;
-
+  /* Optimize for performance */
+  transform: translate(-50%, -50%) rotate(-95deg) skewY(-57deg) translateZ(0);
+  backface-visibility: hidden;
 }
-
 
 /* Large devices (laptops/desktops, 992px and up) */
 @media only screen and (min-width: 992px) { .letter-clip-path {
@@ -154,6 +164,8 @@ body {
 
 .phone-glow {
   animation: phoneGlow 3s ease-in-out infinite;
+  /* Optimize animation performance */
+  will-change: box-shadow;
 }
 
 @keyframes phoneGlow {
@@ -168,6 +180,8 @@ body {
 /* Yellow pulse glow effect for phone */
 .phone-yellow-glow {
   animation: phoneYellowGlow 2s ease-in-out infinite !important;
+  /* Optimize animation performance */
+  will-change: box-shadow;
 }
 
 @keyframes phoneYellowGlow {
@@ -182,6 +196,8 @@ body {
 /* Laptop pulse glow effect */
 .laptop-pulse-glow {
   animation: laptopPulseGlow 3s ease-in-out infinite !important;
+  /* Optimize animation performance */
+  will-change: opacity, filter;
 }
 
 @keyframes laptopPulseGlow {
@@ -195,13 +211,16 @@ body {
   }
 }
 
-/* Smoke Animations */
+/* Smoke Animations - Optimized for performance */
 .smoke-animation {
   filter: blur(5px);
   transform-origin: 50% 50%;
   animation: smoke1 3s linear infinite;
   animation-delay: 0.5s;
   will-change: transform, opacity, filter;
+  /* Optimize for performance */
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 .smoke-animation2 {
@@ -210,6 +229,9 @@ body {
   animation: smoke2 3s linear infinite;
   animation-delay: 1.5s;
   will-change: transform, opacity, filter;
+  /* Optimize for performance */
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 .smoke-animation3 {
@@ -218,36 +240,39 @@ body {
   animation: smoke3 4s linear infinite;
   animation-delay: 2.5s;
   will-change: transform, opacity, filter;
+  /* Optimize for performance */
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 @keyframes smoke1 {
   0% {
     filter: blur(0px);
-    transform: translateY(0px) scale(-1, 1);
+    transform: translateY(0px) scale(-1, 1) translateZ(0);
     opacity: 0;
   }
 
   25% {
     filter: blur(3px);
-    transform: translateY(-10px) scale(-1, 1.05);
+    transform: translateY(-10px) scale(-1, 1.05) translateZ(0);
     opacity: 0.5;
   }
 
   50% {
     filter: blur(5px);
-    transform: translateY(-20px) scale(-1, 1.1);
+    transform: translateY(-20px) scale(-1, 1.1) translateZ(0);
     opacity: 1;
   }
 
   75% {
     filter: blur(5px);
-    transform: translateY(-30px) scale(-1, 1.15);
+    transform: translateY(-30px) scale(-1, 1.15) translateZ(0);
     opacity: 0.5;
   }
 
   100% {
     filter: blur(7px);
-    transform: translateY(-40px) scale(-1, 1.2);
+    transform: translateY(-40px) scale(-1, 1.2) translateZ(0);
     opacity: 0;
   }
 }
@@ -255,31 +280,31 @@ body {
 @keyframes smoke2 {
   0% {
     filter: blur(0px);
-    transform: translateY(0px) scale(1);
+    transform: translateY(0px) scale(1) translateZ(0);
     opacity: 0;
   }
 
   25% {
     filter: blur(3px);
-    transform: translateY(-10px) scale(1.05);
+    transform: translateY(-10px) scale(1.05) translateZ(0);
     opacity: 0.5;
   }
 
   50% {
     filter: blur(5px);
-    transform: translateY(-20px) scale(1.1);
+    transform: translateY(-20px) scale(1.1) translateZ(0);
     opacity: 1;
   }
 
   75% {
     filter: blur(5px);
-    transform: translateY(-30px) scale(1.15);
+    transform: translateY(-30px) scale(1.15) translateZ(0);
     opacity: 0.5;
   }
 
   100% {
     filter: blur(7px);
-    transform: translateY(-40px) scale(1.2);
+    transform: translateY(-40px) scale(1.2) translateZ(0);
     opacity: 0;
   }
 }
@@ -287,32 +312,47 @@ body {
 @keyframes smoke3 {
   0% {
     filter: blur(0px);
-    transform: translateY(0px) scale(1);
+    transform: translateY(0px) scale(1) translateZ(0);
     opacity: 0;
   }
 
   25% {
     filter: blur(3px);
-    transform: translateY(-20px) scale(1.05);
+    transform: translateY(-20px) scale(1.05) translateZ(0);
     opacity: 0.5;
   }
 
   50% {
     filter: blur(5px);
-    transform: translateY(-40px) scale(1.1);
+    transform: translateY(-40px) scale(1.1) translateZ(0);
     opacity: 1;
   }
 
   75% {
     filter: blur(5px);
-    transform: translateY(-60px) scale(1.15);
+    transform: translateY(-60px) scale(1.15) translateZ(0);
     opacity: 0.5;
   }
 
   100% {
     filter: blur(7px);
-    transform: translateY(-80px) scale(1.2);
+    transform: translateY(-80px) scale(1.2) translateZ(0);
     opacity: 0;
   }
+}
+
+/* Prevent layout shifts for positioned elements */
+.notice-post-left,
+.notice-post,
+.notice-post-right {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  will-change: transform;
+}
+
+/* Optimize image loading */
+img {
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
 }
 

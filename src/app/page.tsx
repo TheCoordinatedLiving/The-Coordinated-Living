@@ -130,19 +130,34 @@ const Page = () => {
   const [toastMessage, setToastMessage] = useState('');
   const postTemplateRef = useRef<HTMLDivElement>(null);
   
-  // Ultra-wide screen detection
+  // Ultra-wide screen detection - Optimized to reduce flickering
   const [isUltraWide, setIsUltraWide] = useState(false);
   
   useEffect(() => {
     const checkScreenSize = () => {
-      setIsUltraWide(window.innerWidth >= 1920);
+      const newIsUltraWide = window.innerWidth >= 1920;
+      // Only update state if it actually changed
+      if (newIsUltraWide !== isUltraWide) {
+        setIsUltraWide(newIsUltraWide);
+      }
     };
     
     checkScreenSize();
-    window.addEventListener('resize', checkScreenSize);
     
-    return () => window.removeEventListener('resize', checkScreenSize);
-  }, []);
+    // Debounce resize events to reduce frequency
+    let timeoutId: NodeJS.Timeout;
+    const debouncedCheckScreenSize = () => {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(checkScreenSize, 100);
+    };
+    
+    window.addEventListener('resize', debouncedCheckScreenSize);
+    
+    return () => {
+      window.removeEventListener('resize', debouncedCheckScreenSize);
+      clearTimeout(timeoutId);
+    };
+  }, [isUltraWide]);
 
   // Sample posts data
   const posts = [
@@ -954,6 +969,22 @@ const Page = () => {
               }}
             >
 
+                             {/* Pin for left middle image */}
+               <div style={{
+                 position: 'absolute',
+                 top: 'calc(50% - 75px)',
+                 left: '50%',
+                 transform: 'translateX(-50%)',
+                 zIndex: 3,
+               }}>
+                 <Image
+                   src="/notice-pin-new.svg"
+                   alt="Notice Pin"
+                   width={20}
+                   height={20}
+                   className="w-5 h-5"
+                 />
+               </div>
                <Image
                  src="/main-pic-right.svg"
                  alt="Main Picture"
@@ -1145,7 +1176,23 @@ const Page = () => {
                 justifyContent: 'center',
               }}
             >
-                             {/* Middle Image */}
+                             {/* Pin for right middle image */}
+               <div style={{
+                 position: 'absolute',
+                 top: 'calc(50% - 75px)',
+                 left: '50%',
+                 transform: 'translateX(-50%)',
+                 zIndex: 3,
+               }}>
+                 <Image
+                   src="/notice-pin-new.svg"
+                   alt="Notice Pin"
+                   width={20}
+                   height={20}
+                   className="w-5 h-5"
+                 />
+               </div>
+               {/* Middle Image */}
                <Image
                  src="/right-middle-post.png"
                  alt="Right Middle Post"
