@@ -938,49 +938,34 @@ const Page = () => {
               left: '38.5vw', 
               top: isUltraWide ? '20vh' : '30vh', 
               transform: 'translate(-50%, -50%)',
-              width: '10vw', 
-              height: '14vw', // A4 ratio (1:1.414)
+              width: '15vw', 
+              height: '21vw', // Scaled up A4 ratio (1:1.414)
               zIndex: 2,
             }}
           >
-            {/* Pin at the top */}
-            <div
-              style={{
-                position: 'absolute',
-                top: '-12px',
-                left: '50%',
-                transform: 'translateX(-50%)',
-                zIndex: 3,
-              }}
-            >
-              <Image
-                src="/notice-pin-new.svg"
-                alt="Notice Pin"
-                width={20}
-                height={20}
-                className="w-5 h-5"
-              />
-            </div>
             <div
               className="w-full h-full"
               style={{
-                background: '#4A9BA8',
                 position: 'relative',
-                overflow: 'hidden',
-                border: '8px solid white',
-                borderBottom: '20px solid white',
-                boxShadow: '0 4px 8px rgba(0,0,0,0.3)',
+                overflow: 'visible',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
               }}
             >
-                             <Image
+
+               <Image
                  src="/main-pic-right.svg"
                  alt="Main Picture"
                  width={200}
                  height={200}
                  className="w-1/2 h-1/2 object-contain"
+                 style={{
+                   position: 'absolute',
+                   top: '50%',
+                   left: '50%',
+                   transform: 'translate(-50%, -50%)',
+                 }}
                />
                <Image
                  src="/post-1-left.png"
@@ -989,8 +974,8 @@ const Page = () => {
                  height={100}
                  style={{
                    position: 'absolute',
-                   top: '0',
-                   left: '0',
+                   top: '0%',
+                   left: '-1%',
                    width: '25%',
                    height: '20%',
                    objectFit: 'cover',
@@ -1003,8 +988,8 @@ const Page = () => {
                  height={100}
                  style={{
                    position: 'absolute',
-                   bottom: '0',
-                   right: '0',
+                   bottom: '0%',
+                   right: '-1%',
                    width: '30%',
                    height: '20%',
                    objectFit: 'cover',
@@ -1017,8 +1002,8 @@ const Page = () => {
                  height={100}
                  style={{
                    position: 'absolute',
-                   top: '1%',
-                   right: '3%',
+                   top: '-3%',
+                   right: '-7%',
                    width: '40%',
                    height: '35%',
                    objectFit: 'contain',
@@ -1031,8 +1016,8 @@ const Page = () => {
                  height={100}
                  style={{
                    position: 'absolute',
-                   bottom: '0%',
-                   left: '3%',
+                   bottom: '-3%',
+                   left: '-7%',
                    width: '35%',
                    height: '30%',
                    objectFit: 'contain',
@@ -1145,49 +1130,36 @@ const Page = () => {
               left: '68.5vw', 
               top: isUltraWide ? '20vh' : '30vh', 
               transform: 'translate(-50%, -50%)',
-              width: '10vw', 
-              height: '14vw', // A4 ratio (1:1.414)
+              width: '15vw', 
+              height: '21vw', // Scaled up A4 ratio (1:1.414)
               zIndex: 2,
             }}
           >
-            {/* Pin at the top */}
-            <div
-              style={{
-                position: 'absolute',
-                top: '-12px',
-                left: '50%',
-                transform: 'translateX(-50%)',
-                zIndex: 3,
-              }}
-            >
-              <Image
-                src="/notice-pin-new.svg"
-                alt="Notice Pin"
-                width={20}
-                height={20}
-                className="w-5 h-5"
-              />
-            </div>
             <div
               className="w-full h-full"
               style={{
-                background: '#F5F5F5',
                 position: 'relative',
-                overflow: 'hidden',
-                border: '12px solid #4A7A9B',
-                boxShadow: '0 4px 8px rgba(0,0,0,0.3)',
+                overflow: 'visible',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
               }}
             >
-                             <Image
+                             {/* Middle Image */}
+               <Image
                  src="/right-middle-post.png"
                  alt="Right Middle Post"
                  width={200}
                  height={200}
                  className="w-1/2 h-1/2 object-contain"
+                 style={{
+                   position: 'absolute',
+                   top: '50%',
+                   left: '50%',
+                   transform: 'translate(-50%, -50%)',
+                 }}
                />
+               {/* Bottom-left Quote Card (opposite of left A4's top-left) */}
                <Image
                  src="/his-grace.png"
                  alt="His Grace"
@@ -1195,13 +1167,14 @@ const Page = () => {
                  height={100}
                  style={{
                    position: 'absolute',
-                   bottom: '0',
-                   left: '0',
-                   width: '30%',
+                   bottom: '0%',
+                   left: '-1%',
+                   width: '25%',
                    height: '20%',
                    objectFit: 'cover',
                  }}
                />
+               {/* Top-right Quote Card (opposite of left A4's bottom-right) */}
                <Image
                  src="/do-everything.png"
                  alt="Do Everything"
@@ -1209,13 +1182,14 @@ const Page = () => {
                  height={100}
                  style={{
                    position: 'absolute',
-                   top: '0',
-                   right: '0',
-                   width: '25%',
+                   top: '0%',
+                   right: '-1%',
+                   width: '30%',
                    height: '20%',
                    objectFit: 'cover',
                  }}
                />
+               {/* Bottom-right Round Sticker (opposite of left A4's top-right) */}
                <Image
                  src="/smaller-left.svg"
                  alt="Smaller Left"
@@ -1223,13 +1197,14 @@ const Page = () => {
                  height={100}
                  style={{
                    position: 'absolute',
-                   top: '1%',
-                   left: '3%',
+                   bottom: '-3%',
+                   right: '-7%',
                    width: '40%',
                    height: '35%',
                    objectFit: 'contain',
                  }}
                />
+               {/* Top-left Letter (opposite of left A4's bottom-left) */}
                <Image
                  src="/Shorter-verse.svg"
                  alt="Shorter Verse"
@@ -1237,8 +1212,8 @@ const Page = () => {
                  height={100}
                  style={{
                    position: 'absolute',
-                   bottom: '0%',
-                   right: '3%',
+                   top: '-3%',
+                   left: '-7%',
                    width: '35%',
                    height: '30%',
                    objectFit: 'contain',
