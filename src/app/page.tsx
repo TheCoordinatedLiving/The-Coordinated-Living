@@ -2304,20 +2304,20 @@ const Page = () => {
                     }}
                   >
                     <Image
-                      src="/cup-1.png"
+                      src="/coffee-cup.png"
                       alt="Coffee Cup"
                       width={1800}
                       height={2700}
                       className="object-contain"
                       style={{
-                        transform: 'translateX(20%) translateY(15%) scale(0.6)'
+                        transform: 'translateX(20%) translateY(15%) scale(0.65)'
                       }}
                     />
                     
                     {/* Animated Smoke Effects */}
                     <div
                       className="absolute inset-0 pointer-events-none flex items-center justify-center smoke-container"
-                      style={{ zIndex: 1, top: '-60%', left: '20%' }}
+                      style={{ zIndex: 1, top: '-45%', left: '25%' }}
                     >
                       <Image
                         src="/smoke.png"
@@ -2330,7 +2330,7 @@ const Page = () => {
                     </div>
                     <div
                       className="absolute inset-0 pointer-events-none flex items-center justify-center smoke-container"
-                      style={{ zIndex: 1, top: '-60%', left: '20%' }}
+                      style={{ zIndex: 1, top: '-45%', left: '25%' }}
                     >
                       <Image
                         src="/smoke.png"
