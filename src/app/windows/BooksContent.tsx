@@ -63,7 +63,7 @@ const BooksContent = () => {
         <div className="relative">
           <input 
             type="text" 
-            placeholder="Search For Books" 
+            placeholder="Search For Guides" 
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="border border-gray-300 rounded-md py-2 pl-4 pr-10 w-72 text-sm text-black placeholder-black focus:outline-none focus:ring-1 focus:ring-gray-400"

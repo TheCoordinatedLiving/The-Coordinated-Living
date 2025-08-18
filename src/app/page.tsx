@@ -1843,7 +1843,7 @@ const Page = () => {
                         }
                       }}
                     >
-                      Deep Dive<br />& Exclusive<br />Teachings
+                      Deep Dive<br />& Teachings <br />
                     </h1>
                     
                     {/* Description */}
