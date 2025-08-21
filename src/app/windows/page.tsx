@@ -12,10 +12,8 @@ import TermsWindow from './TermsWindow';
 
 const WindowsLockScreen = () => {
   const [time, setTime] = useState<Date | null>(null);
-  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
     setTime(new Date());
     const timer = setInterval(() => {
       setTime(new Date());
