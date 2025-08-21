@@ -1027,7 +1027,7 @@ const Page = () => {
                  }}
                />
                <Image
-                 src="/smaller-left.svg"
+                 src="/smaller-left-2.svg"
                  alt="Smaller Left"
                  width={100}
                  height={100}
@@ -1041,7 +1041,7 @@ const Page = () => {
                  }}
                />
                <Image
-                 src="/Shorter-verse.svg"
+                 src="/Shorter-verse-left-2.svg"
                  alt="Shorter Verse"
                  width={100}
                  height={100}
