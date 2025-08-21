@@ -12,11 +12,16 @@ interface GlassTaskbarProps {
 
 const GlassTaskbar = ({ onAskQuestionClick, onResourcesClick }: GlassTaskbarProps) => {
   const [time, setTime] = useState('');
+  const [date, setDate] = useState('');
+  const [mounted, setMounted] = useState(false);
   const taskbarRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    setMounted(true);
     const updateClock = () => {
-      setTime(format(new Date(), 'h:mm a'));
+      const now = new Date();
+      setTime(format(now, 'h:mm a'));
+      setDate(format(now, 'M/d/yyyy'));
     };
     updateClock();
     const intervalId = setInterval(updateClock, 1000 * 60); 
@@ -107,8 +112,8 @@ const GlassTaskbar = ({ onAskQuestionClick, onResourcesClick }: GlassTaskbarProp
                 className="cursor-pointer"
               />
               <div className="text-right">
-                <p>{time}</p>
-                <p>{format(new Date(), 'M/d/yyyy')}</p>
+                <p>{mounted ? time : '--:--'}</p>
+                <p>{mounted ? date : '--/--/----'}</p>
               </div>
             </div>
           </div>

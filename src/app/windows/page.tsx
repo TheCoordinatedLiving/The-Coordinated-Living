@@ -11,17 +11,21 @@ import TermsWindow from './TermsWindow';
 
 
 const WindowsLockScreen = () => {
-  const [time, setTime] = useState(new Date());
+  const [time, setTime] = useState<Date | null>(null);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
+    setTime(new Date());
     const timer = setInterval(() => {
       setTime(new Date());
     }, 1000);
     return () => clearInterval(timer);
   }, []);
 
-  const formattedTime = format(time, 'HH:mm');
-  const formattedDate = format(time, 'EEEE, d MMMM');
+  // Don't render time until component is mounted to prevent hydration mismatch
+  const formattedTime = time ? format(time, 'HH:mm') : '--:--';
+  const formattedDate = time ? format(time, 'EEEE, d MMMM') : 'Loading...';
 
   return (
     <div className="windows-lock-screen absolute inset-0">

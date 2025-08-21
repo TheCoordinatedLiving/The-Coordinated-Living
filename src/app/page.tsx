@@ -1937,7 +1937,7 @@ const Page = () => {
                       playsInline
                       className="object-contain"
                       style={{
-                        transform: 'translateX(20%) translateY(25%) scale(1.6)',
+                        transform: 'translateX(20%) translateY(25%) scale(1.4)',
                         width: '100%',
                         height: '100%',
                         objectPosition: 'bottom'
