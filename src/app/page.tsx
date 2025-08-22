@@ -1937,10 +1937,10 @@ const Page = () => {
                       playsInline
                       className="object-contain"
                       style={{
-                        transform: 'translateX(20%) translateY(25%) scale(1.4)',
+                        transform: 'scale(1.1)',
                         width: '100%',
                         height: '100%',
-                        objectPosition: 'bottom'
+                        objectPosition: 'center'
                       }}
                     >
                       <source src="/join-channel.webm" type="video/webm" />
