@@ -160,6 +160,8 @@ const Page = () => {
   const [messageText, setMessageText] = useState('');
   const [showExpandedEmailModal, setShowExpandedEmailModal] = useState(false);
   const [showJoinChannelModal, setShowJoinChannelModal] = useState(false);
+  const [showGuidesModal, setShowGuidesModal] = useState(false);
+  const [currentGuideIndex, setCurrentGuideIndex] = useState(0);
   
   const handleCloseJoinChannelModal = () => {
     // Animate join channel modal out with ease
@@ -198,6 +200,28 @@ const Page = () => {
       });
     } else {
       setShowExpandedEmailModal(false);
+    }
+  };
+
+  const handleCloseGuidesModal = () => {
+    // Animate guides modal out with ease
+    const modalContainer = document.querySelector('.guides-modal-card');
+    
+    if (modalContainer) {
+      gsap.to(modalContainer, {
+        opacity: 0,
+        scale: 0.95,
+        y: -20,
+        duration: 0.6,
+        ease: "power2.inOut",
+        onComplete: () => {
+          setShowGuidesModal(false);
+          setCurrentGuideIndex(0); // Reset to first guide
+        }
+      });
+    } else {
+      setShowGuidesModal(false);
+      setCurrentGuideIndex(0);
     }
   };
 
@@ -349,6 +373,52 @@ const Page = () => {
 
   const handleNextPost = () => {
     setCurrentPostIndex(prev => Math.min(posts.length - 1, prev + 1));
+  };
+
+  const handlePreviousGuide = () => {
+    const guideImage = document.querySelector('.guide-image');
+    if (guideImage) {
+      gsap.to(guideImage, {
+        opacity: 0,
+        x: 50,
+        duration: 0.3,
+        ease: "power2.in",
+        onComplete: () => {
+          setCurrentGuideIndex(prev => Math.max(0, prev - 1));
+          gsap.to(guideImage, {
+            opacity: 1,
+            x: 0,
+            duration: 0.3,
+            ease: "power2.out"
+          });
+        }
+      });
+    } else {
+      setCurrentGuideIndex(prev => Math.max(0, prev - 1));
+    }
+  };
+
+  const handleNextGuide = () => {
+    const guideImage = document.querySelector('.guide-image');
+    if (guideImage) {
+      gsap.to(guideImage, {
+        opacity: 0,
+        x: -50,
+        duration: 0.3,
+        ease: "power2.in",
+        onComplete: () => {
+          setCurrentGuideIndex(prev => Math.min(3, prev + 1));
+          gsap.to(guideImage, {
+            opacity: 1,
+            x: 0,
+            duration: 0.3,
+            ease: "power2.out"
+          });
+        }
+      });
+    } else {
+      setCurrentGuideIndex(prev => Math.min(3, prev + 1));
+    }
   };
 
 
@@ -875,6 +945,8 @@ const Page = () => {
                         setShowPostModal(true);
                       } else if (activeMobileItem === 'JOIN OUR CHANNEL') {
                         setShowJoinChannelModal(true);
+                      } else if (activeMobileItem === 'GUIDES') {
+                        setShowGuidesModal(true);
                       }
                     }}
                   >
@@ -2794,6 +2866,107 @@ const Page = () => {
                   }}
                 />
               </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Guides Modal - Mobile Only */}
+      {showGuidesModal && (
+        <div className="fixed inset-0 z-[9999]">
+          {/* Black overlay */}
+          <div 
+            className="absolute inset-0"
+            style={{ 
+              backgroundColor: 'rgba(0, 0, 0, 0.8)',
+              backdropFilter: 'blur(8px)',
+              WebkitBackdropFilter: 'blur(8px)'
+            }}
+            onClick={handleCloseGuidesModal}
+          />
+          
+          {/* Close button - top left */}
+          <button
+            onClick={handleCloseGuidesModal}
+            className="absolute top-6 left-6 z-20 bg-white bg-opacity-80 backdrop-blur-sm text-gray-800 px-4 py-2 rounded-lg font-medium hover:bg-opacity-100 transition-all shadow-lg cursor-pointer"
+          >
+            Close
+          </button>
+          
+          {/* Modal content */}
+          <div className="absolute inset-0 flex items-center justify-center p-4 pt-20">
+            <div 
+              className="relative z-10 w-full max-w-md guides-modal-card"
+              ref={(el) => {
+                if (el) {
+                  gsap.fromTo(el, 
+                    { 
+                      opacity: 0, 
+                      y: 60,
+                      scale: 0.9
+                    },
+                    { 
+                      opacity: 1, 
+                      y: 0, 
+                      scale: 1,
+                      duration: 0.8,
+                      ease: "power2.out",
+                      delay: 0.2
+                    }
+                  );
+                }
+              }}
+            >
+              {/* Guide Image */}
+              <div className="w-full flex items-center justify-center">
+                <Image
+                  src={`/guide-${currentGuideIndex + 1}-mobile.svg`}
+                  alt={`Guide ${currentGuideIndex + 1}`}
+                  width={400}
+                  height={600}
+                  className="w-full h-auto object-contain guide-image"
+                />
+              </div>
+              
+              {/* Navigation and Download Buttons */}
+              <div className="p-4 flex items-center justify-between">
+                {/* Previous Button */}
+                {currentGuideIndex > 0 && (
+                  <button
+                    onClick={handlePreviousGuide}
+                    className="bg-white bg-opacity-80 backdrop-blur-sm text-gray-800 p-2 rounded-full font-medium shadow-lg hover:bg-opacity-100 transition-all cursor-pointer"
+                  >
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <polyline points="15,18 9,12 15,6"></polyline>
+                    </svg>
+                  </button>
+                )}
+                
+                {/* Download Button */}
+                <button
+                  className="bg-white bg-opacity-80 backdrop-blur-sm text-gray-800 px-4 py-2 rounded-lg font-medium shadow-lg hover:bg-opacity-100 transition-all cursor-pointer"
+                  onClick={() => {
+                    // Handle download functionality
+                    console.log('Download guide clicked');
+                  }}
+                >
+                  Download
+                </button>
+                
+                {/* Next Button */}
+                {currentGuideIndex < 3 && (
+                  <button
+                    onClick={handleNextGuide}
+                    className="bg-white bg-opacity-80 backdrop-blur-sm text-gray-800 p-2 rounded-full font-medium shadow-lg hover:bg-opacity-100 transition-all cursor-pointer"
+                  >
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <polyline points="9,18 15,12 9,6"></polyline>
+                    </svg>
+                  </button>
+                )}
+              </div>
+              
+
             </div>
           </div>
         </div>
