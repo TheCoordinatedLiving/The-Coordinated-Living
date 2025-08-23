@@ -3393,7 +3393,7 @@ const Page = () => {
                   <li>Definitions</li>
                   <li>Scope of Service</li>
                   <li>Privacy Policy</li>
-                  <li>Children's Privacy</li>
+                  <li>Children&apos;s Privacy</li>
                   <li>Cookies</li>
                   <li>License</li>
                   <li>Hyperlinking to our Content</li>
