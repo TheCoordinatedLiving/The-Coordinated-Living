@@ -2721,7 +2721,7 @@ const Page = () => {
               {/* Content */}
               <div className="p-4 xs:p-5 sm:p-6 space-y-4 overflow-y-auto text-center" style={{ maxHeight: 'calc(90vh - 120px)' }}>
                 <p className="text-gray-800 text-sm xs:text-base leading-relaxed">
-                  Are you longing for an in-depth exploration of God's Word and its application to the complexities of life? Our videos, delivered through an exclusive paid WhatsApp channel, provide detailed teaching and deeper insights. Join our community to journey further into understanding how His grace abounds even in the most profound changing scenes of life and cultivate an intimate relationship with the Lord.
+                  Are you longing for an in-depth exploration of God&apos;s Word and its application to the complexities of life? Our videos, delivered through an exclusive paid WhatsApp channel, provide detailed teaching and deeper insights. Join our community to journey further into understanding how His grace abounds even in the most profound changing scenes of life and cultivate an intimate relationship with the Lord.
                 </p>
               </div>
               
