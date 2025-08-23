@@ -181,6 +181,26 @@ const Page = () => {
     }
   };
 
+  const handleCloseExpandedEmailModal = () => {
+    // Animate expanded email modal out with ease
+    const modalContainer = document.querySelector('.expanded-email-modal-card');
+    
+    if (modalContainer) {
+      gsap.to(modalContainer, {
+        opacity: 0,
+        scale: 0.95,
+        y: -20,
+        duration: 0.6,
+        ease: "power2.inOut",
+        onComplete: () => {
+          setShowExpandedEmailModal(false);
+        }
+      });
+    } else {
+      setShowExpandedEmailModal(false);
+    }
+  };
+
 
   const [showShareOptions, setShowShareOptions] = useState(false);
   const [showToast, setShowToast] = useState(false);
@@ -2579,24 +2599,47 @@ const Page = () => {
               backdropFilter: 'blur(8px)',
               WebkitBackdropFilter: 'blur(8px)'
             }}
-            onClick={() => setShowExpandedEmailModal(false)}
+            onClick={handleCloseExpandedEmailModal}
           />
           
-          {/* Close button - top right */}
-          <button
-            onClick={() => setShowExpandedEmailModal(false)}
-            className="absolute top-6 right-6 z-20 bg-white bg-opacity-80 backdrop-blur-sm text-gray-800 px-4 py-2 rounded-lg font-medium hover:bg-opacity-100 transition-all shadow-lg cursor-pointer"
-          >
-            Close
-          </button>
-          
-          {/* Expanded Modal content */}
+                    {/* Expanded Modal content */}
           <div className="absolute inset-0 flex items-center justify-center p-2 xs:p-3 sm:p-4">
-            <div className="relative z-10 w-full max-w-4xl bg-white rounded-lg shadow-2xl overflow-hidden" style={{ maxHeight: '90vh' }}>
-                                {/* Modal Header */}
-                  <div className="flex justify-center items-center p-4 border-b border-gray-200 bg-gray-100">
-                    <span className="text-gray-800 font-medium">New Message</span>
-                  </div>
+            <div 
+              className="relative z-10 w-full max-w-4xl bg-white rounded-lg shadow-2xl overflow-hidden expanded-email-modal-card" 
+              style={{ maxHeight: '90vh' }}
+              ref={(el) => {
+                if (el) {
+                  gsap.fromTo(el, 
+                    { 
+                      opacity: 0, 
+                      y: 60,
+                      scale: 0.9
+                    },
+                    { 
+                      opacity: 1, 
+                      y: 0, 
+                      scale: 1,
+                      duration: 0.8,
+                      ease: "power2.out",
+                      delay: 0.2
+                    }
+                  );
+                }
+              }}
+            >
+              {/* Modal Header */}
+              <div className="flex justify-between items-center p-4 border-b border-gray-200 bg-gray-100">
+                <span className="text-gray-800 font-medium">New Message</span>
+                <button
+                  onClick={handleCloseExpandedEmailModal}
+                  className="text-gray-500 hover:text-gray-700"
+                >
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <line x1="18" y1="6" x2="6" y2="18"/>
+                    <line x1="6" y1="6" x2="18" y2="18"/>
+                  </svg>
+                </button>
+              </div>
               
               {/* Email Form */}
               <div className="p-4 xs:p-5 sm:p-6 space-y-4 xs:space-y-5 sm:space-y-6 overflow-y-auto" style={{ maxHeight: 'calc(90vh - 120px)' }}>
