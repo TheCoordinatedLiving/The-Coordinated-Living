@@ -740,6 +740,68 @@ const Page = () => {
               </div>
             </div>
             
+            {/* Mobile Welcome Card */}
+            {showWelcomeModal && (
+              <div className="absolute inset-0 flex items-center justify-center p-4 xs:p-6 sm:p-8 z-20">
+                {/* Darker blur background overlay */}
+                <div 
+                  className="absolute inset-0"
+                  style={{ 
+                    backgroundColor: 'rgba(0, 0, 0, 0.6)',
+                    backdropFilter: 'blur(20px)',
+                    WebkitBackdropFilter: 'blur(20px)'
+                  }}
+                />
+                
+                <div 
+                  className="relative max-w-sm w-full p-6 xs:p-8 text-center welcome-modal-card"
+                  style={{
+                    backgroundColor: '#0F0F0F',
+                    borderRadius: '26.22px',
+                    boxShadow: '0 20px 40px rgba(0, 0, 0, 0.3)'
+                  }}
+                >
+                  {/* Coordinated Living Logo */}
+                  <div className="flex justify-center" style={{ marginBottom: '20px' }}>
+                    <Image
+                      src="/modal-logo.svg"
+                      alt="Coordinated Living Logo"
+                      width={80}
+                      height={80}
+                      className="w-16 xs:w-20 sm:w-24 h-auto"
+                    />
+                  </div>
+
+                  {/* Welcome Banner */}
+                  <div
+                    className="px-3 xs:px-4 py-2"
+                    style={{
+                      backgroundColor: '#1D1C1E',
+                      color: 'white',
+                      borderRadius: '33.86px',
+                      maxWidth: '280px',
+                      margin: '0 auto',
+                      marginBottom: '20px',
+                    }}
+                  >
+                    <h2 className="text-white font-medium text-xs xs:text-sm" style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', fontFamily: 'Amita, serif' }}>
+                      Welcome to The Interactive Workspace
+                    </h2>
+                  </div>
+
+                  {/* Instructional Text */}
+                  <div className="text-center" style={{ marginBottom: '20px' }}>
+                    <p className="text-white font-bold text-base xs:text-lg mb-2" style={{ fontSize: '1rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', marginBottom: '8px', fontFamily: 'Amita, serif' }}>
+                      Things aren&apos;t always what they seem.
+                    </p>
+                    <p className="text-gray-300 text-sm xs:text-base" style={{ margin: 0, fontFamily: 'Roboto, sans-serif' }}>
+                      Tap on each item around you to explore further, every object holds a surprise waiting to be discovered.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
+            
             {/* Mobile Noticeboard Post */}
             <div className="absolute top-1/2 transform -translate-y-1/2 left-2 xs:left-3 sm:left-4 right-2 xs:right-3 sm:right-4 z-10">
               <div className="relative flex items-center justify-center">
