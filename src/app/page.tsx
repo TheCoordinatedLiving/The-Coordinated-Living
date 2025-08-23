@@ -121,6 +121,11 @@ const Page = () => {
   const [showVideos, setShowVideos] = useState(false);
   const [showWelcomeModal, setShowWelcomeModal] = useState(false);
   const [showPostModal, setShowPostModal] = useState(false);
+  
+  // Debug: Log when showPostModal changes
+  useEffect(() => {
+    console.log('showPostModal changed to:', showPostModal);
+  }, [showPostModal]);
   const [currentPostIndex, setCurrentPostIndex] = useState(0);
   const [fromWindows, setFromWindows] = useState(false);
   const [showFumaaModal, setShowFumaaModal] = useState(false);
@@ -132,6 +137,24 @@ const Page = () => {
   
   // Ultra-wide screen detection - Optimized to reduce flickering
   const [isUltraWide, setIsUltraWide] = useState(false);
+  
+  const mobileItems = ['JOIN OUR CHANNEL', 'ABOUT ME', 'POST', 'POUR INTO MY CUP', 'EXPERIENCE'];
+  
+  // Mobile navigation state
+  const [currentMobileIndex, setCurrentMobileIndex] = useState(2);
+  const [activeMobileItem, setActiveMobileItem] = useState(mobileItems[2]);
+
+  
+  const handleMobileNav = (direction: 'prev' | 'next') => {
+    let newIndex;
+    if (direction === 'prev') {
+      newIndex = currentMobileIndex === 0 ? mobileItems.length - 1 : currentMobileIndex - 1;
+    } else {
+      newIndex = currentMobileIndex === mobileItems.length - 1 ? 0 : currentMobileIndex + 1;
+    }
+    setCurrentMobileIndex(newIndex);
+    setActiveMobileItem(mobileItems[newIndex]);
+  };
   
   useEffect(() => {
     const checkScreenSize = () => {
@@ -656,8 +679,141 @@ const Page = () => {
         <div
           ref={experienceRef}
           className="bg-black relative overflow-hidden workspace-bg"
-         
         >
+          {/* Mobile Background */}
+          <div className="md:hidden absolute inset-0">
+            <Image
+              src="/mobile-background.png"
+              alt="Mobile Background"
+              fill
+              className="object-cover"
+              priority
+            />
+            {/* Glass Blur Overlay */}
+            <div 
+              className="absolute inset-0"
+              style={{ 
+                backgroundColor: 'rgba(0, 0, 0, 0.3)',
+                backdropFilter: 'blur(20px)',
+                WebkitBackdropFilter: 'blur(20px)'
+              }}
+            />
+            
+            {/* Mobile Navigation */}
+            <div className="absolute top-8 left-4 right-4 z-10">
+              <div className="relative flex items-center justify-center px-4 py-3">
+                {/* Active Item Only */}
+                <span 
+                  className="text-2xl font-medium text-[#35B2C2] opacity-100 transition-all duration-500"
+                  style={{ fontFamily: 'Amita' }}
+                >
+                  {activeMobileItem}
+                </span>
+              </div>
+            </div>
+            
+            {/* Mobile Noticeboard Post */}
+            <div className="absolute top-48 left-4 right-4 z-10">
+              <div className="relative flex items-center justify-center">
+                {/* Left Chevron */}
+                <button 
+                  className="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-lg absolute left-0 cursor-pointer hover:bg-gray-100 transition-colors duration-200"
+                  onClick={() => handleMobileNav('prev')}
+                >
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="black" strokeWidth="2">
+                    <polyline points="15,18 9,12 15,6"></polyline>
+                  </svg>
+                </button>
+                
+                {/* Content Card */}
+                <div className="relative" style={{ minHeight: '350px' }}>
+                  <Image
+                    src={
+                      activeMobileItem === 'EXPERIENCE' ? '/experience-mobile.svg' :
+                      activeMobileItem === 'JOIN OUR CHANNEL' ? '/join-channel-mobile.svg' :
+                      activeMobileItem === 'ABOUT ME' ? '/about-me-mobile.svg' :
+                      activeMobileItem === 'POUR INTO MY CUP' ? '/coffee-cup-mobile.svg' :
+                      '/new-post-mobile.svg'
+                    }
+                    alt={
+                      activeMobileItem === 'EXPERIENCE' ? 'Experience' :
+                      activeMobileItem === 'JOIN OUR CHANNEL' ? 'Join Channel' :
+                      activeMobileItem === 'ABOUT ME' ? 'About Me' :
+                      activeMobileItem === 'POUR INTO MY CUP' ? 'Pour Into My Cup' :
+                      'New Post'
+                    }
+                    width={300}
+                    height={200}
+                    className="w-full h-auto object-contain"
+                    style={{
+                      marginTop: activeMobileItem === 'POUR INTO MY CUP' ? '150px' : '0px',
+                      marginLeft: activeMobileItem === 'POUR INTO MY CUP' ? '10px' : '0px'
+                    }}
+                  />
+                  
+                  {/* Smoke Effects for Coffee Cup */}
+                  {activeMobileItem === 'POUR INTO MY CUP' && (
+                    <>
+                      <div
+                        className="absolute pointer-events-none smoke-container"
+                        style={{ 
+                          zIndex: 1, 
+                          top: '-40px', 
+                          left: '40%',
+                          transform: 'translateX(-50%)',
+                          width: '200px',
+                          height: '200px'
+                        }}
+                      >
+                        <Image
+                          src="/smoke.png"
+                          alt="Smoke"
+                          width={200}
+                          height={200}
+                          className="w-full h-full object-contain smoke-animation"
+                        />
+                      </div>
+                      <div
+                        className="absolute pointer-events-none smoke-container"
+                        style={{ 
+                          zIndex: 1, 
+                          top: '-40px', 
+                          left: '40%',
+                          transform: 'translateX(-50%)',
+                          width: '200px',
+                          height: '200px'
+                        }}
+                      >
+                        <Image
+                          src="/smoke.png"
+                          alt="Smoke"
+                          width={200}
+                          height={200}
+                          className="w-full h-full object-contain smoke-animation2"
+                        />
+                      </div>
+                    </>
+                  )}
+                </div>
+                
+                {/* Right Chevron */}
+                <button 
+                  className="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-lg absolute right-0 cursor-pointer hover:bg-gray-100 transition-colors duration-200"
+                  onClick={() => handleMobileNav('next')}
+                >
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="black" strokeWidth="2">
+                    <polyline points="9,18 15,12 9,6"></polyline>
+                  </svg>
+                </button>
+              </div>
+              
+
+            </div>
+
+          </div>
+          
+          {/* Desktop Content - Hidden on Mobile */}
+          <div className="hidden md:block">
          
 
           {/* <div style={{
@@ -1955,7 +2111,7 @@ const Page = () => {
 
           {/* Post Modal */}
           {showPostModal && (
-            <div className="fixed inset-0 z-50">
+            <div className="fixed inset-0 z-[9999]">
               {/* Glass background blur */}
               <div 
                 className="absolute inset-0"
@@ -2347,6 +2503,7 @@ const Page = () => {
               </div>
             </div>
           )}
+          </div>
         </div>
       )}
 
