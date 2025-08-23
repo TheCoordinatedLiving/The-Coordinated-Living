@@ -162,6 +162,7 @@ const Page = () => {
   const [showJoinChannelModal, setShowJoinChannelModal] = useState(false);
   const [showGuidesModal, setShowGuidesModal] = useState(false);
   const [currentGuideIndex, setCurrentGuideIndex] = useState(0);
+  const [showPourIntoMyCupModal, setShowPourIntoMyCupModal] = useState(false);
   
   const handleCloseJoinChannelModal = () => {
     // Animate join channel modal out with ease
@@ -225,6 +226,26 @@ const Page = () => {
     }
   };
 
+  const handleClosePourIntoMyCupModal = () => {
+    // Animate pour into my cup modal out with ease
+    const modalContainer = document.querySelector('.pour-into-my-cup-modal-card');
+    
+    if (modalContainer) {
+      gsap.to(modalContainer, {
+        opacity: 0,
+        scale: 0.95,
+        y: -20,
+        duration: 0.6,
+        ease: "power2.inOut",
+        onComplete: () => {
+          setShowPourIntoMyCupModal(false);
+        }
+      });
+    } else {
+      setShowPourIntoMyCupModal(false);
+    }
+  };
+
 
   const [showShareOptions, setShowShareOptions] = useState(false);
   const [showToast, setShowToast] = useState(false);
@@ -234,7 +255,7 @@ const Page = () => {
   // Ultra-wide screen detection - Optimized to reduce flickering
   const [isUltraWide, setIsUltraWide] = useState(false);
   
-  const mobileItems = ['ABOUT ME', 'POST', 'ASK ME A QUESTION', 'JOIN OUR CHANNEL', 'GUIDES', 'POUR INTO MY CUP', 'EXPERIENCE'];
+  const mobileItems = ['ABOUT ME', 'POST', 'ASK ME A QUESTION', 'JOIN OUR CHANNEL', 'GUIDES', 'POUR INTO MY CUP', 'TERMS AND CONDITIONS', 'EXPERIENCE'];
   
   // Mobile navigation state
   const [currentMobileIndex, setCurrentMobileIndex] = useState(0);
@@ -850,8 +871,8 @@ const Page = () => {
               <div className="relative flex items-center justify-center px-1 xs:px-2 sm:px-3 md:px-4 py-1 xs:py-2 sm:py-3 md:py-4">
                 {/* Active Item Only */}
                 <span 
-                  className="text-4xl xs:text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-medium text-[#35B2C2] opacity-100 transition-all duration-500 leading-tight"
-                  style={{ fontFamily: 'Amita' }}
+                  className="text-4xl xs:text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-medium text-[#35B2C2] opacity-100 transition-all duration-500 leading-tight text-center"
+                  style={{ fontFamily: 'Amita', textAlign: 'center', width: '100%' }}
                 >
                   {activeMobileItem}
                 </span>
@@ -947,6 +968,8 @@ const Page = () => {
                         setShowJoinChannelModal(true);
                       } else if (activeMobileItem === 'GUIDES') {
                         setShowGuidesModal(true);
+                      } else if (activeMobileItem === 'POUR INTO MY CUP') {
+                        setShowPourIntoMyCupModal(true);
                       }
                     }}
                   >
@@ -1012,7 +1035,7 @@ const Page = () => {
                           
                           {/* Message Field */}
                           <div className="mt-4">
-                            <div className={`text-gray-800 font-medium mb-2 transition-all duration-200 ${messageText ? 'text-xs' : 'text-base'}`}>
+                            <div className="text-gray-800 font-medium mb-2 text-base">
                               Enter message
                             </div>
                             <textarea 
@@ -1052,27 +1075,33 @@ const Page = () => {
                         }}
                       />
                     ) : (
-                      <Image
-                        src={
-                          activeMobileItem === 'EXPERIENCE' ? '/experience-mobile.svg' :
-                          activeMobileItem === 'JOIN OUR CHANNEL' ? '/join-channel-mobile.svg' :
-                          activeMobileItem === 'ABOUT ME' ? '/about-me-mobile.svg' :
-                          '/new-post-mobile.svg'
-                        }
-                        alt={
-                          activeMobileItem === 'EXPERIENCE' ? 'Experience' :
-                          activeMobileItem === 'JOIN OUR CHANNEL' ? 'Join Channel' :
-                          activeMobileItem === 'ABOUT ME' ? 'About Me' :
-                          'New Post'
-                        }
-                        width={300}
-                        height={200}
-                        className="w-full h-auto object-contain max-w-full"
-                        style={{
-                          maxHeight: '60vh',
-                          minHeight: '250px'
-                        }}
-                      />
+                                                                      <Image
+                          src={
+                            activeMobileItem === 'EXPERIENCE' ? '/experience-mobile.svg' :
+                            activeMobileItem === 'JOIN OUR CHANNEL' ? '/join-channel-mobile.svg' :
+                            activeMobileItem === 'ABOUT ME' ? '/about-me-mobile.svg' :
+                            activeMobileItem === 'POUR INTO MY CUP' ? '/coffee-cup-mobile.svg' :
+                            activeMobileItem === 'TERMS AND CONDITIONS' ? '/new-post-mobile.svg' :
+                            '/new-post-mobile.svg'
+                          }
+                          alt={
+                            activeMobileItem === 'EXPERIENCE' ? 'Experience' :
+                            activeMobileItem === 'JOIN OUR CHANNEL' ? 'Join Channel' :
+                            activeMobileItem === 'ABOUT ME' ? 'About Me' :
+                            activeMobileItem === 'POUR INTO MY CUP' ? 'Pour Into My Cup' :
+                            activeMobileItem === 'TERMS AND CONDITIONS' ? 'Terms and Conditions' :
+                            'New Post'
+                          }
+                          width={300}
+                          height={200}
+                          className="w-full h-auto object-contain max-w-full"
+                          style={{
+                            maxHeight: '60vh',
+                            minHeight: '250px',
+                            transform: activeMobileItem === 'POUR INTO MY CUP' ? 'translateX(20px)' : 'translateX(0)',
+                            transition: 'none'
+                          }}
+                        />
                     )}
                   </div>
                   
@@ -2689,30 +2718,11 @@ const Page = () => {
                     {/* Expanded Modal content */}
           <div className="absolute inset-0 flex items-center justify-center p-2 xs:p-3 sm:p-4">
             <div 
-              className="relative z-10 w-full max-w-4xl bg-white rounded-lg shadow-2xl overflow-hidden expanded-email-modal-card" 
+              className="relative z-10 w-full max-w-4xl bg-white rounded-lg shadow-2xl overflow-hidden expanded-email-modal-card flex flex-col" 
               style={{ maxHeight: '90vh' }}
-              ref={(el) => {
-                if (el) {
-                  gsap.fromTo(el, 
-                    { 
-                      opacity: 0, 
-                      y: 60,
-                      scale: 0.9
-                    },
-                    { 
-                      opacity: 1, 
-                      y: 0, 
-                      scale: 1,
-                      duration: 0.8,
-                      ease: "power2.out",
-                      delay: 0.2
-                    }
-                  );
-                }
-              }}
             >
               {/* Modal Header */}
-              <div className="flex justify-between items-center p-4 border-b border-gray-200 bg-gray-100">
+              <div className="flex justify-between items-center p-4 border-b border-gray-200 bg-gray-100 flex-shrink-0">
                 <span className="text-gray-800 font-medium">New Message</span>
                 <button
                   onClick={handleCloseExpandedEmailModal}
@@ -2726,7 +2736,7 @@ const Page = () => {
               </div>
               
               {/* Email Form */}
-              <div className="p-4 xs:p-5 sm:p-6 space-y-4 xs:space-y-5 sm:space-y-6 overflow-y-auto" style={{ maxHeight: 'calc(90vh - 120px)' }}>
+              <div className="p-6 space-y-6 overflow-y-auto flex-1">
                 {/* To Field */}
                 <div className="flex items-center space-x-2">
                   <span className="text-gray-800 font-medium w-8">To:</span>
@@ -2761,7 +2771,7 @@ const Page = () => {
                 
                 {/* Message Field */}
                 <div className="mt-4">
-                  <div className={`text-gray-800 font-medium mb-3 transition-all duration-200 ${messageText ? 'text-sm' : 'text-lg'}`}>
+                  <div className="text-gray-800 font-medium mb-3 text-base">
                     Enter message
                   </div>
                                         <textarea 
@@ -2769,16 +2779,16 @@ const Page = () => {
                         rows={8}
                         value={messageText}
                         onChange={(e) => setMessageText(e.target.value)}
-                        className="w-full border-none outline-none resize-none text-gray-600 placeholder-gray-400 text-sm xs:text-base"
+                        className="w-full border-none outline-none resize-none text-gray-600 placeholder-gray-400 text-base"
                         style={{ minHeight: '120px' }}
                       />
                 </div>
               </div>
               
               {/* Send Button */}
-              <div className="p-4 xs:p-5 sm:p-6 border-t border-gray-200">
+              <div className="p-6 border-t border-gray-200 flex-shrink-0">
                 <button 
-                  className="w-full text-white font-medium py-2 xs:py-3 px-4 xs:px-6 rounded-lg transition-colors duration-200 text-sm xs:text-base"
+                  className="w-full text-white font-medium py-3 px-6 rounded-lg transition-colors duration-200 text-base"
                   style={{ backgroundColor: '#845399' }}
                   onClick={() => {
                     // Handle send email functionality
@@ -2967,6 +2977,83 @@ const Page = () => {
               </div>
               
 
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Pour Into My Cup Modal - Mobile Only */}
+      {showPourIntoMyCupModal && (
+        <div className="fixed inset-0 z-[9999]">
+          {/* Black overlay */}
+          <div 
+            className="absolute inset-0"
+            style={{ 
+              backgroundColor: 'rgba(0, 0, 0, 0.8)',
+              backdropFilter: 'blur(8px)',
+              WebkitBackdropFilter: 'blur(8px)'
+            }}
+            onClick={handleClosePourIntoMyCupModal}
+          />
+          
+          {/* Close button - top left */}
+          <button
+            onClick={handleClosePourIntoMyCupModal}
+            className="absolute top-6 left-6 z-20 bg-white bg-opacity-80 backdrop-blur-sm text-gray-800 px-4 py-2 rounded-lg font-medium hover:bg-opacity-100 transition-all shadow-lg cursor-pointer"
+          >
+            Close
+          </button>
+          
+          {/* Modal content */}
+          <div className="absolute inset-0 flex items-center justify-center p-2 xs:p-3 sm:p-4">
+            <div 
+              className="relative z-10 w-full max-w-md bg-white overflow-hidden pour-into-my-cup-modal-card"
+              ref={(el) => {
+                if (el) {
+                  gsap.fromTo(el, 
+                    { 
+                      opacity: 0, 
+                      y: 60,
+                      scale: 0.9
+                    },
+                    { 
+                      opacity: 1, 
+                      y: 0, 
+                      scale: 1,
+                      duration: 0.8,
+                      ease: "power2.out",
+                      delay: 0.2
+                    }
+                  );
+                }
+              }}
+            >
+              {/* Modal Header */}
+              <div className="flex justify-center items-center p-4">
+                <span className="text-gray-800 font-bold text-2xl xs:text-3xl" style={{ fontFamily: 'Amita, serif' }}>A Cheerful Gift, A Full Cup</span>
+              </div>
+              
+              {/* Content */}
+              <div className="p-4 xs:p-5 sm:p-6 space-y-4 overflow-y-auto text-center" style={{ maxHeight: 'calc(90vh - 120px)' }}>
+                <p className="text-gray-800 text-sm xs:text-base leading-relaxed">
+                  Having my cuppa on my table is one sure comfort as I get work done. Your support would be a lovely way to keep it full every time I sit at my desk, and it genuinely helps me sustainably run this platform. Thank you for your kindness!
+                </p>
+              </div>
+              
+              {/* Pour Into My Cup Button */}
+              <div className="p-4 xs:p-5 sm:p-6">
+                <Image
+                  src="/pour-into-cup-mobile.svg"
+                  alt="Pour Into My Cup"
+                  width={200}
+                  height={60}
+                  className="w-1/2 h-auto cursor-pointer hover:opacity-80 transition-opacity mx-auto"
+                  onClick={() => {
+                    // Handle pour into my cup functionality
+                    console.log('Pour into my cup clicked');
+                  }}
+                />
+              </div>
             </div>
           </div>
         </div>
