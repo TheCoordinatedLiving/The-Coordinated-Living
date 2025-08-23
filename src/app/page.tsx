@@ -818,30 +818,38 @@ const Page = () => {
                 
                 {/* Content Card */}
                 <div className="relative flex-1 mx-8 xs:mx-10 sm:mx-12 md:mx-16" style={{ minHeight: '280px', maxWidth: 'calc(100vw - 120px)' }}>
-                  <Image
-                    src={
-                      activeMobileItem === 'EXPERIENCE' ? '/experience-mobile.svg' :
-                      activeMobileItem === 'JOIN OUR CHANNEL' ? '/join-channel-mobile.svg' :
-                      activeMobileItem === 'ABOUT ME' ? '/about-me-mobile.svg' :
-                      '/new-post-mobile.svg'
-                    }
-                    alt={
-                      activeMobileItem === 'EXPERIENCE' ? 'Experience' :
-                      activeMobileItem === 'JOIN OUR CHANNEL' ? 'Join Channel' :
-                      activeMobileItem === 'ABOUT ME' ? 'About Me' :
-                      'New Post'
-                    }
-                    width={300}
-                    height={200}
-                    className="w-full h-auto object-contain max-w-full"
-                    style={{
-                      maxHeight: '60vh',
-                      minHeight: '250px'
+                  <div 
+                    className="cursor-pointer"
+                    onClick={() => {
+                      if (activeMobileItem === 'ABOUT ME') {
+                        setShowLesleyLetter(true);
+                      }
                     }}
-                  />
+                  >
+                    <Image
+                      src={
+                        activeMobileItem === 'EXPERIENCE' ? '/experience-mobile.svg' :
+                        activeMobileItem === 'JOIN OUR CHANNEL' ? '/join-channel-mobile.svg' :
+                        activeMobileItem === 'ABOUT ME' ? '/about-me-mobile.svg' :
+                        '/new-post-mobile.svg'
+                      }
+                      alt={
+                        activeMobileItem === 'EXPERIENCE' ? 'Experience' :
+                        activeMobileItem === 'JOIN OUR CHANNEL' ? 'Join Channel' :
+                        activeMobileItem === 'ABOUT ME' ? 'About Me' :
+                        'New Post'
+                      }
+                      width={300}
+                      height={200}
+                      className="w-full h-auto object-contain max-w-full"
+                      style={{
+                        maxHeight: '60vh',
+                        minHeight: '250px'
+                      }}
+                    />
+                  </div>
                   
                   {/* Smoke Effects for Coffee Cup */}
-
                 </div>
                 
                 {/* Right Chevron */}
@@ -883,6 +891,69 @@ const Page = () => {
             </div>
 
           </div>
+          
+          {/* Lesley Letter Overlay - Visible on all devices */}
+          {showLesleyLetter && (
+            <div className="fixed inset-0 z-[9999]">
+              {/* Glass background blur - more transparent */}
+              <div 
+                className="absolute inset-0"
+                style={{ 
+                  backgroundColor: 'rgba(0, 0, 0, 0.15)',
+                  backdropFilter: 'blur(16px)',
+                  WebkitBackdropFilter: 'blur(16px)'
+                }}
+                onClick={handleCloseLesleyLetter}
+              />
+              
+              {/* Return to Desk button - top left */}
+              <button
+                onClick={handleCloseLesleyLetter}
+                className="absolute top-6 left-6 z-20 bg-white bg-opacity-80 backdrop-blur-sm text-gray-800 px-4 py-2 rounded-lg font-medium hover:bg-opacity-100 transition-all shadow-lg cursor-pointer return-desk-glow"
+              >
+                Go Back
+              </button>
+              
+              {/* Letter content - centered */}
+              <div className="absolute inset-0 flex items-center justify-center p-8">
+                <div className="relative z-10 max-w-xl w-full">
+                  {/* SVG Letter */}
+                  <div 
+                    className="w-full flex justify-center opacity-0"
+                    data-lesley-letter
+                    ref={(el) => {
+                      if (el) {
+                        gsap.fromTo(el, 
+                          { 
+                            opacity: 0, 
+                            y: 60,
+                            scale: 0.9
+                          },
+                          { 
+                            opacity: 1, 
+                            y: 0, 
+                            scale: 1,
+                            duration: 1.4,
+                            ease: "power2.out",
+                            delay: 0.3
+                          }
+                        );
+                      }
+                    }}
+                  >
+                    <Image
+                      src="/lesley.svg"
+                      alt="Lesley's Letter"
+                      width={400}
+                      height={300}
+                      className="w-full h-auto object-contain"
+                      priority
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
           
           {/* Desktop Content - Hidden on Mobile and Tablets */}
           <div className="hidden xl:block">
@@ -1957,68 +2028,7 @@ const Page = () => {
               }
             `}</style>
 
-          {/* Lesley Letter Overlay */}
-          {showLesleyLetter && (
-            <div className="fixed inset-0 z-50">
-              {/* Glass background blur - more transparent */}
-              <div 
-                className="absolute inset-0"
-                style={{ 
-                  backgroundColor: 'rgba(0, 0, 0, 0.15)',
-                  backdropFilter: 'blur(16px)',
-                  WebkitBackdropFilter: 'blur(16px)'
-                }}
-                onClick={handleCloseLesleyLetter}
-              />
-              
-              {/* Return to Desk button - top left */}
-              <button
-                onClick={handleCloseLesleyLetter}
-                className="absolute top-6 left-6 z-20 bg-white bg-opacity-80 backdrop-blur-sm text-gray-800 px-4 py-2 rounded-lg font-medium hover:bg-opacity-100 transition-all shadow-lg cursor-pointer return-desk-glow"
-              >
-                Return to Desk
-              </button>
-              
-              {/* Letter content - centered */}
-              <div className="absolute inset-0 flex items-center justify-center p-8">
-                <div className="relative z-10 max-w-xl w-full">
-                  {/* SVG Letter */}
-                  <div 
-                    className="w-full flex justify-center opacity-0"
-                    data-lesley-letter
-                    ref={(el) => {
-                      if (el) {
-                        gsap.fromTo(el, 
-                          { 
-                            opacity: 0, 
-                            y: 60,
-                            scale: 0.9
-                          },
-                          { 
-                            opacity: 1, 
-                            y: 0, 
-                            scale: 1,
-                            duration: 1.4,
-                            ease: "power2.out",
-                            delay: 0.3
-                          }
-                        );
-                      }
-                    }}
-                  >
-                    <Image
-                      src="/lesley.svg"
-                      alt="Lesley's Letter"
-                      width={400}
-                      height={300}
-                      className="w-full h-auto object-contain"
-                      priority
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
+
 
           {/* Videos Overlay */}
           {showVideos && (
