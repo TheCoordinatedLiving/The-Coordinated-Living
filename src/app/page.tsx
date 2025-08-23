@@ -1140,7 +1140,7 @@ const Page = () => {
                                 The Terms and Conditions on this webpage, as may without notice, be amended from time to time, shall apply to all our services directly or indirectly (through our authorized agents and sub-agents) made available online, any mobile device, by email or by telephone, as well as any other electronic media.
                               </p>
                               <p>
-                                By accessing, browsing and using our website or any of our platform (hereafter collectively referred to as the "website") and/or by completing a booking, you recognize and agree to have read, understood and agreed to the terms and conditions, including the privacy statement as set out below. You must NOT use this website if you disagree with any of the Terms and Conditions as stated below.
+                                By accessing, browsing and using our website or any of our platform (hereafter collectively referred to as the &quot;website&quot;) and/or by completing a booking, you recognize and agree to have read, understood and agreed to the terms and conditions, including the privacy statement as set out below. You must NOT use this website if you disagree with any of the Terms and Conditions as stated below.
                               </p>
                             </div>
                           </div>
@@ -3376,13 +3376,13 @@ const Page = () => {
                   The Terms and Conditions on this webpage, as may without notice, be amended from time to time, shall apply to all our services directly or indirectly (through our authorized agents and sub-agents) made available online, any mobile device, by email or by telephone, as well as any other electronic media.
                 </p>
                 <p>
-                  By accessing, browsing and using our website or any of our platform (hereafter collectively referred to as the "website") and/or by completing a booking, you recognize and agree to have read, understood and agreed to the terms and conditions, including the privacy statement as set out below. You must NOT use this website if you disagree with any of the Terms and Conditions as stated below.
+                  By accessing, browsing and using our website or any of our platform (hereafter collectively referred to as the &quot;website&quot;) and/or by completing a booking, you recognize and agree to have read, understood and agreed to the terms and conditions, including the privacy statement as set out below. You must NOT use this website if you disagree with any of the Terms and Conditions as stated below.
                 </p>
                 <p>
                   The pages, content and set-up of these pages, and the services provided on these pages and through the website are owned, operated and provide by THE COORDINATE LIVING (hereinafter referred to as IKOORDINATE) and are provided for your personal, non-commercial use only, subject to the terms and conditions set out below.
                 </p>
                 <p>
-                  The following terminology applies to these Terms and Conditions, Privacy Statement and Disclaimer Notice and all Agreements: "Client", "You" and "Your" refers to you, the person log on this website and compliant to the Company's terms and conditions. "The Company", "Ourselves", "We", "Our" and "Us", refers to our Company. "Party", "Parties", or "Us", refers to both the Client and ourselves. All terms refer to the offer, acceptance and consideration of payment necessary to undertake the process of our assistance to the Client in the most appropriate manner for the express purpose of meeting the Client's needs in respect of provision of the Company's stated services, in accordance with and subject to, prevailing law of Ghana. Any use of the above terminology or other words in the singular, plural, capitalization and/or he/she or they, are taken as interchangeable and therefore as referring to same.
+                  The following terminology applies to these Terms and Conditions, Privacy Statement and Disclaimer Notice and all Agreements: &quot;Client&quot;, &quot;You&quot; and &quot;Your&quot; refers to you, the person log on this website and compliant to the Company&apos;s terms and conditions. &quot;The Company&quot;, &quot;Ourselves&quot;, &quot;We&quot;, &quot;Our&quot; and &quot;Us&quot;, refers to our Company. &quot;Party&quot;, &quot;Parties&quot;, or &quot;Us&quot;, refers to both the Client and ourselves. All terms refer to the offer, acceptance and consideration of payment necessary to undertake the process of our assistance to the Client in the most appropriate manner for the express purpose of meeting the Client&apos;s needs in respect of provision of the Company&apos;s stated services, in accordance with and subject to, prevailing law of Ghana. Any use of the above terminology or other words in the singular, plural, capitalization and/or he/she or they, are taken as interchangeable and therefore as referring to same.
                 </p>
                 <p>
                   IKOORDINATE reserves the right to modify all information, including Terms and Conditions, as well as all other features at any time without giving you prior notice. Your use of this website following any modifications constitutes your agreement to follow and be bound by the Terms and Conditions as modified.
@@ -3410,10 +3410,10 @@ const Page = () => {
                 
                 <h3 className="text-lg font-semibold text-gray-800 mt-6 mb-3">1. DEFINITIONS</h3>
                 <p>
-                  "IKOORDINATE", "we", "us", "our", "the company" means THE COORDINATE LIVING.
+                  &quot;IKOORDINATE&quot;, &quot;we&quot;, &quot;us&quot;, &quot;our&quot;, &quot;the company&quot; means THE COORDINATE LIVING.
                 </p>
                 <p>
-                  "IKOORDINATE", is the trade name for THE COORDINATE LIVING, a Sole Proprietorship registered under the laws of Ghana, and having its registered address at Number 26 Ntreh Street, Adenta- Greater Accra Region.
+                  &quot;IKOORDINATE&quot;, is the trade name for THE COORDINATE LIVING, a Sole Proprietorship registered under the laws of Ghana, and having its registered address at Number 26 Ntreh Street, Adenta- Greater Accra Region.
                 </p>
                 <p>
                   The words of which the initial letter is capitalized have meanings defined under the following conditions. The following definitions shall have the same meaning regardless of whether they appear in singular or in plural.
@@ -3422,19 +3422,19 @@ const Page = () => {
                   For the purposes of this Privacy Policy:
                 </p>
                 <ul className="list-disc list-inside space-y-2 ml-4">
-                  <li><strong>"Account"</strong> means a unique account created for You to access our Service or parts of our Service.</li>
-                  <li><strong>"Affiliate"</strong> means an entity that controls, is controlled by or is under common control with a party, where "control" means ownership of 50% or more of the shares, equity interest or other securities entitled to vote for election of directors or other managing authority.</li>
-                  <li><strong>"Company"</strong> (referred to as either "the Company", "We", "Us" or "Our" in this Agreement) refers to Ikoordinate, Accra, Ghana.</li>
-                  <li><strong>"Cookies"</strong> are small files that are placed on Your computer, mobile device or any other device by a website, containing the details of Your browsing history on that website among its many uses.</li>
-                  <li><strong>"Country"</strong> refers to: Ghana</li>
-                  <li><strong>"Device"</strong> means any device that can access the Service such as a computer, a cellphone or a digital tablet.</li>
-                  <li><strong>"Personal Data"</strong> is any information that relates to an identified or identifiable individual.</li>
-                  <li><strong>"Platform"</strong> means the (mobile) website and apps on which the Service is made available, owned, controlled, managed, maintained and/or hosted by IKOORDINATE</li>
-                  <li><strong>"Service"</strong> means the online facility booking avenue (including the facilitation of payments) of various products and services made available by IKOORDINATE.</li>
-                  <li><strong>"Service Provider"</strong> means any natural or legal person who processes the data on behalf of the Company. It refers to third-party companies or individuals employed by the Company to facilitate the Service, to provide the Service on behalf of the Company, to perform services related to the Service or to assist the Company in analyzing how the Service is used.</li>
-                  <li><strong>"Usage Data"</strong> refers to data collected automatically, either generated by the use of the Service or from the Service infrastructure itself (for example, the duration of a page visit).</li>
-                  <li><strong>"Website"</strong> refers to The Coordinated Living, accessible from https://thecoordinatedliving.com/</li>
-                  <li><strong>"You"</strong> means the individual accessing or using the Service, or the company, or other legal entity on behalf of which such individual is accessing or using the Service, as applicable.</li>
+                  <li><strong>&quot;Account&quot;</strong> means a unique account created for You to access our Service or parts of our Service.</li>
+                  <li><strong>&quot;Affiliate&quot;</strong> means an entity that controls, is controlled by or is under common control with a party, where &quot;control&quot; means ownership of 50% or more of the shares, equity interest or other securities entitled to vote for election of directors or other managing authority.</li>
+                  <li><strong>&quot;Company&quot;</strong> (referred to as either &quot;the Company&quot;, &quot;We&quot;, &quot;Us&quot; or &quot;Our&quot; in this Agreement) refers to Ikoordinate, Accra, Ghana.</li>
+                  <li><strong>&quot;Cookies&quot;</strong> are small files that are placed on Your computer, mobile device or any other device by a website, containing the details of Your browsing history on that website among its many uses.</li>
+                  <li><strong>&quot;Country&quot;</strong> refers to: Ghana</li>
+                  <li><strong>&quot;Device&quot;</strong> means any device that can access the Service such as a computer, a cellphone or a digital tablet.</li>
+                  <li><strong>&quot;Personal Data&quot;</strong> is any information that relates to an identified or identifiable individual.</li>
+                  <li><strong>&quot;Platform&quot;</strong> means the (mobile) website and apps on which the Service is made available, owned, controlled, managed, maintained and/or hosted by IKOORDINATE</li>
+                  <li><strong>&quot;Service&quot;</strong> means the online facility booking avenue (including the facilitation of payments) of various products and services made available by IKOORDINATE.</li>
+                  <li><strong>&quot;Service Provider&quot;</strong> means any natural or legal person who processes the data on behalf of the Company. It refers to third-party companies or individuals employed by the Company to facilitate the Service, to provide the Service on behalf of the Company, to perform services related to the Service or to assist the Company in analyzing how the Service is used.</li>
+                  <li><strong>&quot;Usage Data&quot;</strong> refers to data collected automatically, either generated by the use of the Service or from the Service infrastructure itself (for example, the duration of a page visit).</li>
+                  <li><strong>&quot;Website&quot;</strong> refers to The Coordinated Living, accessible from https://thecoordinatedliving.com/</li>
+                  <li><strong>&quot;You&quot;</strong> means the individual accessing or using the Service, or the company, or other legal entity on behalf of which such individual is accessing or using the Service, as applicable.</li>
                 </ul>
                 
                 <h3 className="text-lg font-semibold text-gray-800 mt-6 mb-3">2. SCOPE OF SERVICE</h3>
@@ -3470,7 +3470,7 @@ const Page = () => {
                   <li><strong>To provide and maintain our Service:</strong> including to monitor the usage of our Service.</li>
                   <li><strong>To manage Your Account:</strong> to manage Your registration as a user of the Service. The Personal Data You provide can give You access to different functionalities of the Service that are available to You as a registered user.</li>
                   <li><strong>For the performance of a contract:</strong> the development, compliance and undertaking of the purchase contract for the products, items or services You have purchased or of any other contract with Us through the Service.</li>
-                  <li><strong>To contact You:</strong> To contact You by email, telephone calls, SMS, or other equivalent forms of electronic communication, such as a mobile application's push notifications regarding updates or informative communications related to the functionalities, products or contracted services, including the security updates, when necessary or reasonable for their implementation.</li>
+                  <li><strong>To contact You:</strong> To contact You by email, telephone calls, SMS, or other equivalent forms of electronic communication, such as a mobile application&apos;s push notifications regarding updates or informative communications related to the functionalities, products or contracted services, including the security updates, when necessary or reasonable for their implementation.</li>
                   <li><strong>To provide you with news, special offers and general information:</strong> about other goods, services and events which we offer that are similar to those that you have already purchased or enquired about unless You have opted not to receive such information.</li>
                   <li><strong>To manage Your requests:</strong> To attend and manage Your requests to Us.</li>
                   <li><strong>For business transfers:</strong> We may use Your information to evaluate or conduct a merger, divestiture, restructuring, reorganization, dissolution, or other sale or transfer of some or all of Our assets, whether as a going concern or as part of bankruptcy, liquidation, or similar proceeding, in which Personal Data held by Us about our Service users is among the assets transferred.</li>
@@ -3489,18 +3489,18 @@ const Page = () => {
                   <li><strong>With Your consent:</strong> We may disclose Your personal information for any other purpose with Your consent.</li>
                 </ul>
                 
-                <h3 className="text-lg font-semibold text-gray-800 mt-6 mb-3">4. CHILDREN'S PRIVACY</h3>
+                <h3 className="text-lg font-semibold text-gray-800 mt-6 mb-3">4. CHILDREN&apos;S PRIVACY</h3>
                 <p>
                   Our Service does not address anyone under the age of 13. We do not knowingly collect personally identifiable information from anyone under the age of 13. If You are a parent or guardian and You are aware that Your child has provided Us with Personal Data, please contact Us. If We become aware that We have collected Personal Data from anyone under the age of 13 without verification of parental consent, we take steps to remove that information from Our servers.
                 </p>
                 <p>
-                  If we need to rely on consent as a legal basis for processing Your information and Your country requires consent from a parent, we may require Your parent's consent before We collect and use that information.
+                  If we need to rely on consent as a legal basis for processing Your information and Your country requires consent from a parent, we may require Your parent&apos;s consent before We collect and use that information.
                 </p>
                 <p>
                   We may update Our Privacy Policy from time to time. We will notify You of any changes by posting the new Privacy Policy on this page.
                 </p>
                 <p>
-                  We will let You know via email and/or a prominent notice on Our Service, prior to the change becoming effective and update the "Last updated" date at the top of this Privacy Policy.
+                  We will let You know via email and/or a prominent notice on Our Service, prior to the change becoming effective and update the &quot;Last updated&quot; date at the top of this Privacy Policy.
                 </p>
                 <p>
                   You are advised to review this Privacy Policy periodically for any changes. Changes to this Privacy Policy are effective when they are posted on this page. If you have any questions about this Privacy Policy, you can contact us:
@@ -3514,10 +3514,10 @@ const Page = () => {
                   Cookies are used for different purposes. They allow you to be recognized as the same user across the pages of a website, between websites or in your usage of an app. The types of information that we collect through cookies include IP address; device ID; viewed pages; browser type; browsing information; operating system; internet service provider; timestamp; responses to advertisements; the referring URL; and features used or activities engaged in within the website/apps.
                 </p>
                 <p>
-                  We employ the use of cookies. By accessing website, you agree to use cookies in agreement with the ikoordinate's Privacy Policy.
+                  We employ the use of cookies. By accessing website, you agree to use cookies in agreement with the ikoordinate&apos;s Privacy Policy.
                 </p>
                 <p>
-                  Most interactive websites use cookies to let us retrieve the user's details for each visit. Cookies are used by our website to enable the functionality of certain areas to make it easier for people visiting our website. Some of our affiliate/advertising partners may also use cookies.
+                  Most interactive websites use cookies to let us retrieve the user&apos;s details for each visit. Cookies are used by our website to enable the functionality of certain areas to make it easier for people visiting our website. Some of our affiliate/advertising partners may also use cookies.
                 </p>
                 <p>
                   Our website and apps use cookies for different purposes, these include;
@@ -3541,7 +3541,7 @@ const Page = () => {
                   Certain sections of our Service and our emails may contain small electronic files known as web beacons (also referred to as clear gifs, pixel tags, and single-pixel gifs) that permit the Company, for example, to count users who have visited those pages or opened an email and for other related website statistics (for example, recording the popularity of a certain section and verifying system and server integrity).
                 </p>
                 <p>
-                  Cookies can be "Persistent" or "Session" Cookies. Persistent Cookies remain on Your personal computer or mobile device when You go offline, while Session Cookies are deleted as soon as You close Your web browser.
+                  Cookies can be &quot;Persistent&quot; or &quot;Session&quot; Cookies. Persistent Cookies remain on Your personal computer or mobile device when You go offline, while Session Cookies are deleted as soon as You close Your web browser.
                 </p>
                 <p>
                   We use both Session and Persistent Cookies for the purposes set out below:
@@ -3570,7 +3570,7 @@ const Page = () => {
                 
                 <h4 className="text-md font-semibold text-gray-800 mt-4 mb-2">Commercial cookies</h4>
                 <p>
-                  We use third-party cookies as well as our own to display personalized advertisements on our websites and on other websites. This is called "retargeting," and it is based on browsing activities, such as the destinations you have been searching for, the product you have viewed and the prices you have been shown.
+                  We use third-party cookies as well as our own to display personalized advertisements on our websites and on other websites. This is called &quot;retargeting,&quot; and it is based on browsing activities, such as the destinations you have been searching for, the product you have viewed and the prices you have been shown.
                 </p>
                 
                 <h3 className="text-lg font-semibold text-gray-800 mt-6 mb-3">6. LICENSE</h3>
@@ -3617,7 +3617,7 @@ const Page = () => {
                   <li>System wide Accredited Businesses except soliciting non-profit organizations, charity shopping malls, and charity fundraising groups which may not hyperlink to our Web site.</li>
                 </ul>
                 <p>
-                  These organizations may link to our home page, to publications or to other Website information so long as the link: (a) is not in any way deceptive; (b) does not falsely imply sponsorship, endorsement or approval of the linking party and its products and/or services; and (c) fits within the context of the linking party's site.
+                  These organizations may link to our home page, to publications or to other Website information so long as the link: (a) is not in any way deceptive; (b) does not falsely imply sponsorship, endorsement or approval of the linking party and its products and/or services; and (c) fits within the context of the linking party&apos;s site.
                 </p>
                 <p>
                   We may consider and approve other link requests from the following types of organizations:
@@ -3635,7 +3635,7 @@ const Page = () => {
                   We will approve link requests from these organizations if we decide that: (a) the link would not make us look unfavorably to ourselves or to our accredited businesses; (b) the organization does not have any negative records with us; (c) the benefit to us from the visibility of the hyperlink compensates the absence of ikoordinate; and (d) the link is in the context of general resource information.
                 </p>
                 <p>
-                  These organizations may link to our home page so long as the link: (a) is not in any way deceptive; (b) does not falsely imply sponsorship, endorsement or approval of the linking party and its products or services; and (c) fits within the context of the linking party's site.
+                  These organizations may link to our home page so long as the link: (a) is not in any way deceptive; (b) does not falsely imply sponsorship, endorsement or approval of the linking party and its products or services; and (c) fits within the context of the linking party&apos;s site.
                 </p>
                 <p>
                   If you are one of the organizations listed in paragraph 2 above and are interested in linking to our website, you must inform us by sending an e-mail to ikoordinate. Please include your name, your organization name, contact information as well as the URL of your site, a list of any URLs from which you intend to link to our website, and a list of the URLs on our site to which you would like to link. Wait 2-3 weeks for a response.
@@ -3646,10 +3646,10 @@ const Page = () => {
                 <ul className="list-disc list-inside space-y-1 ml-4">
                   <li>By use of our corporate name; or</li>
                   <li>By use of the uniform resource locator being linked to; or</li>
-                  <li>By use of any other description of our website being linked to that makes sense within the context and format of content on the linking party's site.</li>
+                  <li>By use of any other description of our website being linked to that makes sense within the context and format of content on the linking party&apos;s site.</li>
                 </ul>
                 <p>
-                  No use of ikoordinate's logo or other artwork will be allowed for linking absent a trademark license agreement.
+                  No use of ikoordinate&apos;s logo or other artwork will be allowed for linking absent a trademark license agreement.
                 </p>
                 
                 <h3 className="text-lg font-semibold text-gray-800 mt-6 mb-3">8. CONTENT LIABILITY</h3>
@@ -3659,7 +3659,7 @@ const Page = () => {
                 
                 <h3 className="text-lg font-semibold text-gray-800 mt-6 mb-3">9. RESERVATION OF RIGHTS</h3>
                 <p>
-                  We reserve the right to request that you remove all links or any particular link to our website. You approve to immediately remove all links to our Website upon request. We also reserve the right to these terms and conditions and it's linking policy at any time. By continuously linking to our website, you agree to be bound to and follow these linking terms and conditions.
+                  We reserve the right to request that you remove all links or any particular link to our website. You approve to immediately remove all links to our Website upon request. We also reserve the right to these terms and conditions and it&apos;s linking policy at any time. By continuously linking to our website, you agree to be bound to and follow these linking terms and conditions.
                 </p>
                 
                 <h3 className="text-lg font-semibold text-gray-800 mt-6 mb-3">10. PRICES</h3>
