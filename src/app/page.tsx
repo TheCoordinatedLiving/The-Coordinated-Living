@@ -709,7 +709,7 @@ const Page = () => {
           className="bg-black relative overflow-hidden workspace-bg"
         >
           {/* Mobile Background */}
-          <div className="md:hidden absolute inset-0">
+          <div className="xl:hidden absolute inset-0">
             <Image
               src="/mobile-background.webp"
               alt="Mobile Background"
@@ -728,11 +728,11 @@ const Page = () => {
             />
             
             {/* Mobile Navigation */}
-            <div className="absolute top-2 xs:top-3 sm:top-4 md:top-6 left-2 xs:left-3 sm:left-4 right-2 xs:right-3 sm:right-4 z-10">
+            <div className="absolute top-12 xs:top-16 sm:top-20 md:top-24 left-2 xs:left-3 sm:left-4 right-2 xs:right-3 sm:right-4 z-10">
               <div className="relative flex items-center justify-center px-1 xs:px-2 sm:px-3 md:px-4 py-1 xs:py-2 sm:py-3 md:py-4">
                 {/* Active Item Only */}
                 <span 
-                  className="text-2xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-medium text-[#35B2C2] opacity-100 transition-all duration-500 leading-tight"
+                  className="text-4xl xs:text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-medium text-[#35B2C2] opacity-100 transition-all duration-500 leading-tight"
                   style={{ fontFamily: 'Amita' }}
                 >
                   {activeMobileItem}
@@ -801,8 +801,8 @@ const Page = () => {
 
           </div>
           
-          {/* Desktop Content - Hidden on Mobile */}
-          <div className="hidden md:block">
+          {/* Desktop Content - Hidden on Mobile and Tablets */}
+          <div className="hidden xl:block">
          
 
           {/* <div style={{
