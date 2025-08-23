@@ -210,7 +210,7 @@ const Page = () => {
   // Ultra-wide screen detection - Optimized to reduce flickering
   const [isUltraWide, setIsUltraWide] = useState(false);
   
-  const mobileItems = ['ABOUT ME', 'POST', 'ASK ME A QUESTION', 'JOIN OUR CHANNEL', 'POUR INTO MY CUP', 'EXPERIENCE'];
+  const mobileItems = ['ABOUT ME', 'POST', 'ASK ME A QUESTION', 'JOIN OUR CHANNEL', 'GUIDES', 'POUR INTO MY CUP', 'EXPERIENCE'];
   
   // Mobile navigation state
   const [currentMobileIndex, setCurrentMobileIndex] = useState(0);
@@ -967,6 +967,18 @@ const Page = () => {
                           </button>
                         </div>
                       </div>
+                    ) : activeMobileItem === 'GUIDES' ? (
+                      <Image
+                        src="/guides-mobile.svg"
+                        alt="Guides"
+                        width={300}
+                        height={200}
+                        className="w-full h-auto object-contain max-w-full"
+                        style={{
+                          maxHeight: '60vh',
+                          minHeight: '250px'
+                        }}
+                      />
                     ) : (
                       <Image
                         src={
