@@ -49,6 +49,30 @@ body {
 
 /* Responsive background adjustments for different screen sizes */
 
+/* Extra small devices (phones, 320px and up) */
+@media (min-width: 320px) {
+  .workspace-bg {
+    background-size: cover;
+    background-position: center top;
+  }
+}
+
+/* Small devices (landscape phones, 475px and up) */
+@media (min-width: 475px) {
+  .workspace-bg {
+    background-size: cover;
+    background-position: center top;
+  }
+}
+
+/* Medium devices (tablets, 640px and up) */
+@media (min-width: 640px) {
+  .workspace-bg {
+    background-size: cover;
+    background-position: center top;
+  }
+}
+
 /* Desktop and larger screens */
 @media (min-width: 1024px) {
   .workspace-bg {
@@ -123,6 +147,103 @@ body {
   
   .notice-envelope[style*="top"] {
     top: 26vh !important;
+  }
+}
+
+/* Mobile-specific responsive adjustments */
+@media (max-width: 767px) {
+  /* Ensure mobile content fits properly */
+  .md\:hidden {
+    display: block !important;
+  }
+  
+  /* Scale down elements for smaller screens */
+  .welcome-container {
+    padding: 1rem;
+  }
+  
+  /* Ensure text doesn't overflow on small screens */
+  .welcome-text h1 {
+    word-wrap: break-word;
+    hyphens: auto;
+  }
+  
+  /* Adjust button sizing for touch targets */
+  .welcome-button button {
+    min-height: 44px;
+    min-width: 120px;
+  }
+  
+  /* Ensure proper touch targets for mobile navigation */
+  button {
+    touch-action: manipulation;
+  }
+  
+  /* Prevent horizontal scrolling on mobile */
+  body {
+    overflow-x: hidden;
+    width: 100%;
+  }
+  
+  /* Ensure images scale properly */
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+/* Extra small devices (320px - 474px) */
+@media (min-width: 320px) and (max-width: 474px) {
+  /* Optimize for very small screens */
+  .welcome-container {
+    padding: 0.5rem;
+  }
+  
+  .welcome-text h1 {
+    font-size: 1.5rem;
+    line-height: 1.3;
+  }
+  
+  .welcome-button button {
+    font-size: 0.875rem;
+    padding: 0.5rem 1rem;
+  }
+}
+
+/* Small devices (475px - 639px) */
+@media (min-width: 475px) and (max-width: 639px) {
+  /* Optimize for small screens */
+  .welcome-text h1 {
+    font-size: 1.75rem;
+    line-height: 1.4;
+  }
+  
+  .welcome-button button {
+    font-size: 1rem;
+    padding: 0.75rem 1.5rem;
+  }
+}
+
+/* Tablet-specific adjustments */
+@media (min-width: 768px) and (max-width: 1023px) {
+  /* Ensure proper scaling for tablets */
+  .welcome-container {
+    padding: 2rem;
+  }
+  
+  /* Adjust spacing for tablet screens */
+  .welcome-text {
+    margin-top: 2rem;
+  }
+  
+  .welcome-button {
+    margin-top: 2rem;
+  }
+  
+  /* Optimize touch targets for tablets */
+  button {
+    min-height: 48px;
+    min-width: 48px;
   }
 }
 
@@ -361,5 +482,294 @@ body {
 img {
   image-rendering: -webkit-optimize-contrast;
   image-rendering: crisp-edges;
+}
+
+/* Responsive scaling utilities */
+.scale-responsive {
+  transform: scale(1);
+  transition: transform 0.3s ease-in-out;
+}
+
+@media (max-width: 320px) {
+  .scale-responsive {
+    transform: scale(0.8);
+  }
+}
+
+@media (min-width: 321px) and (max-width: 474px) {
+  .scale-responsive {
+    transform: scale(0.9);
+  }
+}
+
+@media (min-width: 475px) and (max-width: 639px) {
+  .scale-responsive {
+    transform: scale(0.95);
+  }
+}
+
+@media (min-width: 640px) and (max-width: 767px) {
+  .scale-responsive {
+    transform: scale(1);
+  }
+}
+
+/* Landscape orientation adjustments for mobile */
+@media (max-width: 767px) and (orientation: landscape) {
+  .welcome-container {
+    padding: 0.5rem;
+  }
+  
+  .welcome-text h1 {
+    font-size: 1.25rem;
+    line-height: 1.2;
+  }
+  
+  .welcome-button button {
+    font-size: 0.875rem;
+    padding: 0.5rem 1rem;
+  }
+  
+  /* Adjust mobile navigation for landscape */
+  .md\:hidden .absolute.top-1\/2 {
+    top: 40%;
+  }
+  
+  .md\:hidden .absolute.top-2 {
+    top: 1rem;
+  }
+}
+
+/* High DPI display optimizations */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  img {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+  }
+}
+
+/* Ensure smooth animations across all devices */
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Prevent zoom on input focus for iOS */
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  select,
+  textarea,
+  input {
+    font-size: 16px;
+  }
+}
+
+/* Welcome Screen Responsive Enhancements */
+.welcome-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  width: 100vw;
+}
+
+/* Very small devices (320px - 374px) */
+@media (min-width: 320px) and (max-width: 374px) {
+  .welcome-container {
+    padding: 0.5rem;
+  }
+  
+  .welcome-logo {
+    margin-bottom: 1rem;
+  }
+  
+  .welcome-text h1 {
+    font-size: 1.125rem;
+    line-height: 1.3;
+    margin-bottom: 1rem;
+  }
+  
+  .welcome-button button {
+    font-size: 0.75rem;
+    padding: 0.5rem 0.75rem;
+    min-height: 40px;
+    min-width: 100px;
+  }
+}
+
+/* Small devices (375px - 474px) */
+@media (min-width: 375px) and (max-width: 474px) {
+  .welcome-container {
+    padding: 1rem;
+  }
+  
+  .welcome-logo {
+    margin-bottom: 1.5rem;
+  }
+  
+  .welcome-text h1 {
+    font-size: 1.25rem;
+    line-height: 1.4;
+    margin-bottom: 1.5rem;
+  }
+  
+  .welcome-button button {
+    font-size: 0.875rem;
+    padding: 0.75rem 1rem;
+    min-height: 44px;
+    min-width: 120px;
+  }
+}
+
+/* Medium small devices (475px - 639px) */
+@media (min-width: 475px) and (max-width: 639px) {
+  .welcome-container {
+    padding: 1.5rem;
+  }
+  
+  .welcome-logo {
+    margin-bottom: 2rem;
+  }
+  
+  .welcome-text h1 {
+    font-size: 1.5rem;
+    line-height: 1.4;
+    margin-bottom: 2rem;
+  }
+  
+  .welcome-button button {
+    font-size: 1rem;
+    padding: 1rem 1.5rem;
+    min-height: 48px;
+    min-width: 140px;
+  }
+}
+
+/* Medium devices (640px - 767px) */
+@media (min-width: 640px) and (max-width: 767px) {
+  .welcome-container {
+    padding: 2rem;
+  }
+  
+  .welcome-logo {
+    margin-bottom: 2.5rem;
+  }
+  
+  .welcome-text h1 {
+    font-size: 1.75rem;
+    line-height: 1.4;
+    margin-bottom: 2.5rem;
+  }
+  
+  .welcome-button button {
+    font-size: 1.125rem;
+    padding: 1.25rem 2rem;
+    min-height: 52px;
+    min-width: 160px;
+  }
+}
+
+/* Large devices (768px - 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .welcome-container {
+    padding: 3rem;
+  }
+  
+  .welcome-logo {
+    margin-bottom: 3rem;
+  }
+  
+  .welcome-text h1 {
+    font-size: 2.25rem;
+    line-height: 1.3;
+    margin-bottom: 3rem;
+  }
+  
+  .welcome-button button {
+    font-size: 1.25rem;
+    padding: 1.5rem 2.5rem;
+    min-height: 56px;
+    min-width: 180px;
+  }
+}
+
+/* Extra large devices (1024px and up) */
+@media (min-width: 1024px) {
+  .welcome-container {
+    padding: 4rem;
+  }
+  
+  .welcome-logo {
+    margin-bottom: 4rem;
+  }
+  
+  .welcome-text h1 {
+    font-size: 3rem;
+    line-height: 1.2;
+    margin-bottom: 4rem;
+  }
+  
+  .welcome-button button {
+    font-size: 1.5rem;
+    padding: 2rem 3rem;
+    min-height: 64px;
+    min-width: 200px;
+  }
+}
+
+/* Landscape orientation adjustments for mobile */
+@media (max-width: 767px) and (orientation: landscape) {
+  .welcome-container {
+    padding: 0.5rem;
+  }
+  
+  .welcome-logo {
+    margin-bottom: 0.5rem;
+  }
+  
+  .welcome-text h1 {
+    font-size: 1rem;
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+  }
+  
+  .welcome-button button {
+    font-size: 0.75rem;
+    padding: 0.5rem 1rem;
+    min-height: 40px;
+    min-width: 100px;
+  }
+}
+
+/* Ensure text doesn't overflow on any screen size */
+.welcome-text h1 {
+  word-wrap: break-word;
+  hyphens: auto;
+  overflow-wrap: break-word;
+  max-width: 100%;
+}
+
+/* Smooth transitions for all welcome screen elements */
+.welcome-logo,
+.welcome-text,
+.welcome-button {
+  transition: all 0.3s ease-in-out;
+}
+
+/* Touch-friendly button improvements */
+.welcome-button button {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+/* Ensure proper centering on all devices */
+.welcome-container > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
 }
 

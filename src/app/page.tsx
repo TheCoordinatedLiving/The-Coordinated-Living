@@ -36,7 +36,13 @@ const Loader = () => {
       </div>
       <div className="relative z-10 flex items-center justify-center w-full h-full">
         <div ref={logoRef}>
-          <Image src="/loading-screen/logo.svg" width={280} height={105} alt="Coordinated Living Logo" />
+          <Image 
+            src="/loading-screen/logo.svg" 
+            width={280} 
+            height={105} 
+            alt="Coordinated Living Logo" 
+            className="w-32 xs:w-40 sm:w-48 md:w-56 lg:w-64 xl:w-72 2xl:w-80 h-auto"
+          />
         </div>
       </div>
     </div>
@@ -56,7 +62,7 @@ const WelcomeScreen = ({ onEnterClick }: { onEnterClick: () => void }) => {
   }, []);
 
   return (
-    <div className="welcome-container opacity-0 relative w-screen h-screen overflow-hidden bg-black text-white flex justify-center items-center text-center p-8 sm:p-20">
+    <div className="welcome-container opacity-0 relative w-screen h-screen overflow-hidden bg-black text-white flex justify-center items-center text-center p-2 xs:p-4 sm:p-6 md:p-8 lg:p-12 xl:p-20">
       <div className="absolute inset-0 z-0 opacity-70 filter blur-[100px] gradient-background">
         <div className="absolute w-[200%] h-[200%] top-[-100%] left-[-100%] animate-float-1">
           <Image src="/loading-screen/Ellipse 1.svg" layout="fill" objectFit="cover" alt="Ellipse 1" />
@@ -71,19 +77,41 @@ const WelcomeScreen = ({ onEnterClick }: { onEnterClick: () => void }) => {
           <Image src="/loading-screen/Ellipse 4.svg" layout="fill" objectFit="cover" alt="Ellipse 4" />
         </div>
       </div>
-      <div className="relative z-10 flex flex-col items-center">
-        <div ref={logoRef} className="w-24 h-auto welcome-logo">
-          <Image src="/loading-screen/logo.svg" width={96} height={36} alt="Logo" />
+      <div className="relative z-10 flex flex-col items-center justify-center w-full h-full">
+        {/* Logo */}
+        <div ref={logoRef} className="w-12 xs:w-16 sm:w-20 md:w-24 lg:w-28 xl:w-32 h-auto welcome-logo mb-4 xs:mb-6 sm:mb-8 md:mb-10 lg:mb-12">
+          <Image 
+            src="/loading-screen/logo.svg" 
+            width={96} 
+            height={36} 
+            alt="Logo" 
+            className="w-full h-auto" 
+          />
         </div>
-        <div className="max-w-3xl mx-auto welcome-text" style={{ marginTop: '137px' }}>
-          <h1 className="text-4xl sm:text-6xl font-bold leading-tight" style={{ fontFamily: 'Amita' }}>
+        
+        {/* Main Text */}
+        <div className="welcome-text px-2 xs:px-4 sm:px-6 md:px-8 lg:px-12 max-w-xs xs:max-w-sm sm:max-w-md md:max-w-lg lg:max-w-2xl xl:max-w-3xl mx-auto mb-6 xs:mb-8 sm:mb-10 md:mb-12 lg:mb-16">
+          <h1 
+            className="text-lg xs:text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-bold leading-tight xs:leading-tight sm:leading-tight md:leading-tight lg:leading-tight xl:leading-tight" 
+            style={{ 
+              fontFamily: 'Amita',
+              wordWrap: 'break-word',
+              hyphens: 'auto'
+            }}
+          >
             Where His grace abounds through the changing scenes of life.
           </h1>
         </div>
-        <div className="welcome-button" style={{ marginTop: '137px' }}>
+        
+        {/* Button */}
+        <div className="welcome-button">
           <button
             onClick={onEnterClick}
-            className="bg-white text-black px-8 py-4 rounded-full font-bold text-base tracking-wider transition-shadow duration-300 ease-in-out hover:shadow-[0_0_60px_rgba(255,255,255,0.4)] cursor-pointer"
+            className="bg-white text-black px-3 xs:px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12 py-2 xs:py-2.5 sm:py-3 md:py-4 lg:py-5 xl:py-6 rounded-full font-bold text-xs xs:text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl tracking-wider transition-all duration-300 ease-in-out hover:shadow-[0_0_60px_rgba(255,255,255,0.4)] cursor-pointer touch-manipulation"
+            style={{
+              minHeight: '44px',
+              minWidth: '120px'
+            }}
           >
             ENTER EXPERIENCE
           </button>
@@ -681,14 +709,13 @@ const Page = () => {
           className="bg-black relative overflow-hidden workspace-bg"
         >
           {/* Mobile Background */}
-          <div className="lg:hidden absolute inset-0">
+          <div className="md:hidden absolute inset-0">
             <Image
-              src="/mobile-background.png"
+              src="/mobile-background.webp"
               alt="Mobile Background"
               fill
-              className="object-cover object-center"
+              className="object-cover"
               priority
-              sizes="(max-width: 475px) 100vw, (max-width: 640px) 100vw, (max-width: 768px) 100vw"
             />
             {/* Glass Blur Overlay */}
             <div 
@@ -701,11 +728,11 @@ const Page = () => {
             />
             
             {/* Mobile Navigation */}
-            <div className="absolute top-2 xs:top-3 sm:top-4 md:top-6 lg:top-8 left-1 xs:left-2 sm:left-3 md:left-4 right-1 xs:right-2 sm:right-3 md:right-4 z-10">
+            <div className="absolute top-2 xs:top-3 sm:top-4 md:top-6 left-2 xs:left-3 sm:left-4 right-2 xs:right-3 sm:right-4 z-10">
               <div className="relative flex items-center justify-center px-1 xs:px-2 sm:px-3 md:px-4 py-1 xs:py-2 sm:py-3 md:py-4">
                 {/* Active Item Only */}
                 <span 
-                  className="text-sm xs:text-base sm:text-lg md:text-xl lg:text-2xl font-medium text-[#35B2C2] opacity-100 transition-all duration-500"
+                  className="text-2xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-medium text-[#35B2C2] opacity-100 transition-all duration-500 leading-tight"
                   style={{ fontFamily: 'Amita' }}
                 >
                   {activeMobileItem}
@@ -714,20 +741,21 @@ const Page = () => {
             </div>
             
             {/* Mobile Noticeboard Post */}
-            <div className="absolute top-16 xs:top-20 sm:top-24 md:top-28 lg:top-32 left-1 xs:left-2 sm:left-3 md:left-4 right-1 xs:right-2 sm:right-3 md:right-4 z-10">
+            <div className="absolute top-1/2 transform -translate-y-1/2 left-2 xs:left-3 sm:left-4 right-2 xs:right-3 sm:right-4 z-10">
               <div className="relative flex items-center justify-center">
                 {/* Left Chevron */}
                 <button 
-                  className="w-6 h-6 xs:w-7 xs:h-7 sm:w-8 sm:h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 bg-white rounded-full flex items-center justify-center shadow-lg absolute left-0 cursor-pointer hover:bg-gray-100 transition-colors duration-200"
+                  className="w-6 h-6 xs:w-7 xs:h-7 sm:w-8 sm:h-8 md:w-10 md:h-10 bg-white rounded-full flex items-center justify-center shadow-lg absolute left-0 cursor-pointer hover:bg-gray-100 transition-colors duration-200 touch-manipulation"
                   onClick={() => handleMobileNav('prev')}
+                  style={{ minWidth: '44px', minHeight: '44px' }}
                 >
-                  <svg width="12" height="12" className="xs:w-3 xs:h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 lg:w-6 lg:h-6" viewBox="0 0 24 24" fill="none" stroke="black" strokeWidth="2">
+                  <svg width="12" height="12" className="xs:w-3 xs:h-3 sm:w-4 sm:h-4 md:w-5 md:h-5" viewBox="0 0 24 24" fill="none" stroke="black" strokeWidth="2">
                     <polyline points="15,18 9,12 15,6"></polyline>
                   </svg>
                 </button>
                 
                 {/* Content Card */}
-                <div className="relative px-8 xs:px-10 sm:px-12 md:px-16 lg:px-20 min-h-[280px] xs:min-h-[320px] sm:min-h-[350px] md:min-h-[400px] lg:min-h-[450px]">
+                <div className="relative flex-1 mx-8 xs:mx-10 sm:mx-12 md:mx-16" style={{ minHeight: '280px', maxWidth: 'calc(100vw - 120px)' }}>
                   <Image
                     src={
                       activeMobileItem === 'EXPERIENCE' ? '/experience-mobile.svg' :
@@ -744,7 +772,10 @@ const Page = () => {
                     width={300}
                     height={200}
                     className="w-full h-auto object-contain max-w-full"
-                    sizes="(max-width: 475px) 90vw, (max-width: 640px) 85vw, (max-width: 768px) 80vw, (max-width: 1024px) 75vw"
+                    style={{
+                      maxHeight: '60vh',
+                      minHeight: '250px'
+                    }}
                   />
                   
                   {/* Smoke Effects for Coffee Cup */}
@@ -753,10 +784,11 @@ const Page = () => {
                 
                 {/* Right Chevron */}
                 <button 
-                  className="w-6 h-6 xs:w-7 xs:h-7 sm:w-8 sm:h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 bg-white rounded-full flex items-center justify-center shadow-lg absolute right-0 cursor-pointer hover:bg-gray-100 transition-colors duration-200"
+                  className="w-6 h-6 xs:w-7 xs:h-7 sm:w-8 sm:h-8 md:w-10 md:h-10 bg-white rounded-full flex items-center justify-center shadow-lg absolute right-0 cursor-pointer hover:bg-gray-100 transition-colors duration-200 touch-manipulation"
                   onClick={() => handleMobileNav('next')}
+                  style={{ minWidth: '44px', minHeight: '44px' }}
                 >
-                  <svg width="12" height="12" className="xs:w-3 xs:h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 lg:w-6 lg:h-6" viewBox="0 0 24 24" fill="none" stroke="black" strokeWidth="2">
+                  <svg width="12" height="12" className="xs:w-3 xs:h-3 sm:w-4 sm:h-4 md:w-5 md:h-5" viewBox="0 0 24 24" fill="none" stroke="black" strokeWidth="2">
                     <polyline points="9,18 15,12 9,6"></polyline>
                   </svg>
                 </button>
@@ -765,10 +797,12 @@ const Page = () => {
 
             </div>
 
+
+
           </div>
           
           {/* Desktop Content - Hidden on Mobile */}
-          <div className="hidden lg:block">
+          <div className="hidden md:block">
          
 
           {/* <div style={{
