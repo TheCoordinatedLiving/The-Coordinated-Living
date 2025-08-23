@@ -157,6 +157,8 @@ const Page = () => {
   const [currentPostIndex, setCurrentPostIndex] = useState(0);
   const [fromWindows, setFromWindows] = useState(false);
   const [showFumaaModal, setShowFumaaModal] = useState(false);
+  const [messageText, setMessageText] = useState('');
+  const [showExpandedEmailModal, setShowExpandedEmailModal] = useState(false);
   
 
 
@@ -846,19 +848,18 @@ const Page = () => {
                         {/* Modal Header */}
                         <div className="flex justify-between items-center p-2 border-b border-gray-200 flex-shrink-0 bg-gray-100">
                           <span className="text-gray-800 font-medium text-sm">New Message</span>
-                          <div className="flex space-x-2">
-                            <button className="text-gray-500 hover:text-gray-700">
-                              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>
-                              </svg>
-                            </button>
-                            <button className="text-gray-500 hover:text-gray-700">
-                              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                <line x1="18" y1="6" x2="6" y2="18"/>
-                                <line x1="6" y1="6" x2="18" y2="18"/>
-                              </svg>
-                            </button>
-                          </div>
+                          <button 
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              console.log('Expand button clicked!');
+                              setShowExpandedEmailModal(true);
+                              console.log('showExpandedEmailModal set to true');
+                            }}
+                            className="text-white px-3 py-1 rounded-full text-xs font-medium transition-colors duration-200"
+                            style={{ backgroundColor: '#2481C2' }}
+                          >
+                            Expand
+                          </button>
                         </div>
                         
                         {/* Email Form */}
@@ -897,10 +898,14 @@ const Page = () => {
                           
                           {/* Message Field */}
                           <div className="mt-4">
-                            <div className="text-gray-800 font-medium mb-2">Enter message</div>
+                            <div className={`text-gray-800 font-medium mb-2 transition-all duration-200 ${messageText ? 'text-xs' : 'text-base'}`}>
+                              Enter message
+                            </div>
                             <textarea 
                               placeholder=""
                               rows={6}
+                              value={messageText}
+                              onChange={(e) => setMessageText(e.target.value)}
                               className="w-full border-none outline-none resize-none text-gray-600 placeholder-gray-400"
                             />
                           </div>
@@ -2537,7 +2542,104 @@ const Page = () => {
             </div>
           )}
 
+          </div>
+        </div>
+      )}
 
+      {/* Expanded Email Modal - Accessible from both mobile and desktop */}
+      {showExpandedEmailModal && (
+        <div className="fixed inset-0 z-[9999]">
+          {/* Black overlay */}
+          <div 
+            className="absolute inset-0"
+            style={{ 
+              backgroundColor: 'rgba(0, 0, 0, 0.8)',
+              backdropFilter: 'blur(8px)',
+              WebkitBackdropFilter: 'blur(8px)'
+            }}
+            onClick={() => setShowExpandedEmailModal(false)}
+          />
+          
+          {/* Close button - top right */}
+          <button
+            onClick={() => setShowExpandedEmailModal(false)}
+            className="absolute top-6 right-6 z-20 bg-white bg-opacity-80 backdrop-blur-sm text-gray-800 px-4 py-2 rounded-lg font-medium hover:bg-opacity-100 transition-all shadow-lg cursor-pointer"
+          >
+            Close
+          </button>
+          
+          {/* Expanded Modal content */}
+          <div className="absolute inset-0 flex items-center justify-center p-2 xs:p-3 sm:p-4">
+            <div className="relative z-10 w-full max-w-4xl bg-white rounded-lg shadow-2xl overflow-hidden" style={{ maxHeight: '90vh' }}>
+                                {/* Modal Header */}
+                  <div className="flex justify-center items-center p-4 border-b border-gray-200 bg-gray-100">
+                    <span className="text-gray-800 font-medium">New Message</span>
+                  </div>
+              
+              {/* Email Form */}
+              <div className="p-4 xs:p-5 sm:p-6 space-y-4 xs:space-y-5 sm:space-y-6 overflow-y-auto" style={{ maxHeight: 'calc(90vh - 120px)' }}>
+                {/* To Field */}
+                <div className="flex items-center space-x-2">
+                  <span className="text-gray-800 font-medium w-8">To:</span>
+                  <div className="px-3 py-2 rounded-full text-sm font-bold" style={{ backgroundColor: 'rgba(53, 178, 194, 0.1)', color: '#35B2C2' }}>
+                    letstalk@coordinatedliving.com
+                  </div>
+                </div>
+                
+                <div className="border-b border-gray-200"></div>
+                
+                {/* From Field */}
+                <div className="flex items-center space-x-2">
+                  <input 
+                    type="email" 
+                    placeholder="Your email address"
+                    className="flex-1 border-none outline-none text-gray-600 placeholder-gray-400 text-base"
+                  />
+                </div>
+                
+                <div className="border-b border-gray-200"></div>
+                
+                {/* Subject Field */}
+                <div className="flex items-center space-x-2">
+                  <input 
+                    type="text" 
+                    placeholder="Subject"
+                    className="flex-1 border-none outline-none text-gray-600 placeholder-gray-400 text-base"
+                  />
+                </div>
+                
+                <div className="border-b border-gray-200"></div>
+                
+                {/* Message Field */}
+                <div className="mt-4">
+                  <div className={`text-gray-800 font-medium mb-3 transition-all duration-200 ${messageText ? 'text-sm' : 'text-lg'}`}>
+                    Enter message
+                  </div>
+                                        <textarea 
+                        placeholder=""
+                        rows={8}
+                        value={messageText}
+                        onChange={(e) => setMessageText(e.target.value)}
+                        className="w-full border-none outline-none resize-none text-gray-600 placeholder-gray-400 text-sm xs:text-base"
+                        style={{ minHeight: '120px' }}
+                      />
+                </div>
+              </div>
+              
+              {/* Send Button */}
+              <div className="p-4 xs:p-5 sm:p-6 border-t border-gray-200">
+                <button 
+                  className="w-full text-white font-medium py-2 xs:py-3 px-4 xs:px-6 rounded-lg transition-colors duration-200 text-sm xs:text-base"
+                  style={{ backgroundColor: '#845399' }}
+                  onClick={() => {
+                    // Handle send email functionality
+                    console.log('Send email clicked');
+                  }}
+                >
+                  Send
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       )}
