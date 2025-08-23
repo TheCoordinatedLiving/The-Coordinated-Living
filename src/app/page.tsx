@@ -681,13 +681,14 @@ const Page = () => {
           className="bg-black relative overflow-hidden workspace-bg"
         >
           {/* Mobile Background */}
-          <div className="md:hidden absolute inset-0">
+          <div className="lg:hidden absolute inset-0">
             <Image
               src="/mobile-background.png"
               alt="Mobile Background"
               fill
-              className="object-cover"
+              className="object-cover object-center"
               priority
+              sizes="(max-width: 475px) 100vw, (max-width: 640px) 100vw, (max-width: 768px) 100vw"
             />
             {/* Glass Blur Overlay */}
             <div 
@@ -700,11 +701,11 @@ const Page = () => {
             />
             
             {/* Mobile Navigation */}
-            <div className="absolute top-8 left-4 right-4 z-10">
-              <div className="relative flex items-center justify-center px-4 py-3">
+            <div className="absolute top-2 xs:top-3 sm:top-4 md:top-6 lg:top-8 left-1 xs:left-2 sm:left-3 md:left-4 right-1 xs:right-2 sm:right-3 md:right-4 z-10">
+              <div className="relative flex items-center justify-center px-1 xs:px-2 sm:px-3 md:px-4 py-1 xs:py-2 sm:py-3 md:py-4">
                 {/* Active Item Only */}
                 <span 
-                  className="text-2xl font-medium text-[#35B2C2] opacity-100 transition-all duration-500"
+                  className="text-sm xs:text-base sm:text-lg md:text-xl lg:text-2xl font-medium text-[#35B2C2] opacity-100 transition-all duration-500"
                   style={{ fontFamily: 'Amita' }}
                 >
                   {activeMobileItem}
@@ -713,95 +714,49 @@ const Page = () => {
             </div>
             
             {/* Mobile Noticeboard Post */}
-            <div className="absolute top-48 left-4 right-4 z-10">
+            <div className="absolute top-16 xs:top-20 sm:top-24 md:top-28 lg:top-32 left-1 xs:left-2 sm:left-3 md:left-4 right-1 xs:right-2 sm:right-3 md:right-4 z-10">
               <div className="relative flex items-center justify-center">
                 {/* Left Chevron */}
                 <button 
-                  className="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-lg absolute left-0 cursor-pointer hover:bg-gray-100 transition-colors duration-200"
+                  className="w-6 h-6 xs:w-7 xs:h-7 sm:w-8 sm:h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 bg-white rounded-full flex items-center justify-center shadow-lg absolute left-0 cursor-pointer hover:bg-gray-100 transition-colors duration-200"
                   onClick={() => handleMobileNav('prev')}
                 >
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="black" strokeWidth="2">
+                  <svg width="12" height="12" className="xs:w-3 xs:h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 lg:w-6 lg:h-6" viewBox="0 0 24 24" fill="none" stroke="black" strokeWidth="2">
                     <polyline points="15,18 9,12 15,6"></polyline>
                   </svg>
                 </button>
                 
                 {/* Content Card */}
-                <div className="relative" style={{ minHeight: '350px' }}>
+                <div className="relative px-8 xs:px-10 sm:px-12 md:px-16 lg:px-20 min-h-[280px] xs:min-h-[320px] sm:min-h-[350px] md:min-h-[400px] lg:min-h-[450px]">
                   <Image
                     src={
                       activeMobileItem === 'EXPERIENCE' ? '/experience-mobile.svg' :
                       activeMobileItem === 'JOIN OUR CHANNEL' ? '/join-channel-mobile.svg' :
                       activeMobileItem === 'ABOUT ME' ? '/about-me-mobile.svg' :
-                      activeMobileItem === 'POUR INTO MY CUP' ? '/coffee-cup-mobile.svg' :
                       '/new-post-mobile.svg'
                     }
                     alt={
                       activeMobileItem === 'EXPERIENCE' ? 'Experience' :
                       activeMobileItem === 'JOIN OUR CHANNEL' ? 'Join Channel' :
                       activeMobileItem === 'ABOUT ME' ? 'About Me' :
-                      activeMobileItem === 'POUR INTO MY CUP' ? 'Pour Into My Cup' :
                       'New Post'
                     }
                     width={300}
                     height={200}
-                    className="w-full h-auto object-contain"
-                    style={{
-                      marginTop: activeMobileItem === 'POUR INTO MY CUP' ? '150px' : '0px',
-                      marginLeft: activeMobileItem === 'POUR INTO MY CUP' ? '10px' : '0px'
-                    }}
+                    className="w-full h-auto object-contain max-w-full"
+                    sizes="(max-width: 475px) 90vw, (max-width: 640px) 85vw, (max-width: 768px) 80vw, (max-width: 1024px) 75vw"
                   />
                   
                   {/* Smoke Effects for Coffee Cup */}
-                  {activeMobileItem === 'POUR INTO MY CUP' && (
-                    <>
-                      <div
-                        className="absolute pointer-events-none smoke-container"
-                        style={{ 
-                          zIndex: 1, 
-                          top: '-40px', 
-                          left: '40%',
-                          transform: 'translateX(-50%)',
-                          width: '200px',
-                          height: '200px'
-                        }}
-                      >
-                        <Image
-                          src="/smoke.png"
-                          alt="Smoke"
-                          width={200}
-                          height={200}
-                          className="w-full h-full object-contain smoke-animation"
-                        />
-                      </div>
-                      <div
-                        className="absolute pointer-events-none smoke-container"
-                        style={{ 
-                          zIndex: 1, 
-                          top: '-40px', 
-                          left: '40%',
-                          transform: 'translateX(-50%)',
-                          width: '200px',
-                          height: '200px'
-                        }}
-                      >
-                        <Image
-                          src="/smoke.png"
-                          alt="Smoke"
-                          width={200}
-                          height={200}
-                          className="w-full h-full object-contain smoke-animation2"
-                        />
-                      </div>
-                    </>
-                  )}
+
                 </div>
                 
                 {/* Right Chevron */}
                 <button 
-                  className="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-lg absolute right-0 cursor-pointer hover:bg-gray-100 transition-colors duration-200"
+                  className="w-6 h-6 xs:w-7 xs:h-7 sm:w-8 sm:h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 bg-white rounded-full flex items-center justify-center shadow-lg absolute right-0 cursor-pointer hover:bg-gray-100 transition-colors duration-200"
                   onClick={() => handleMobileNav('next')}
                 >
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="black" strokeWidth="2">
+                  <svg width="12" height="12" className="xs:w-3 xs:h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 lg:w-6 lg:h-6" viewBox="0 0 24 24" fill="none" stroke="black" strokeWidth="2">
                     <polyline points="9,18 15,12 9,6"></polyline>
                   </svg>
                 </button>
@@ -813,7 +768,7 @@ const Page = () => {
           </div>
           
           {/* Desktop Content - Hidden on Mobile */}
-          <div className="hidden md:block">
+          <div className="hidden lg:block">
          
 
           {/* <div style={{
