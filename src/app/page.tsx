@@ -859,7 +859,28 @@ const Page = () => {
 
             </div>
 
-
+            {/* Mobile Bottom Logo and Message */}
+            <div className="absolute bottom-8 left-2 xs:left-3 sm:left-4 right-2 xs:right-3 sm:right-4 z-10">
+              <div className="flex flex-col items-center justify-center">
+                {/* Logo */}
+                <div className="mb-4">
+                  <Image
+                    src="/logo-white-mobile.svg"
+                    alt="Coordinated Living Logo"
+                    width={120}
+                    height={40}
+                    className="w-12 xs:w-16 sm:w-20 h-auto"
+                  />
+                </div>
+                
+                {/* Message */}
+                <div className="text-center">
+                  <p className="text-white text-sm xs:text-base font-medium" style={{ fontFamily: 'Roboto, sans-serif' }}>
+                    View This On A Laptop Or Desktop To Have Full Experience
+                  </p>
+                </div>
+              </div>
+            </div>
 
           </div>
           
