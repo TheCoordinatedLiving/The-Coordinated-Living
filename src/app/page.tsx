@@ -1077,21 +1077,21 @@ const Page = () => {
                       />
                     ) : activeMobileItem === 'TERMS AND CONDITIONS' ? (
                       <div className="w-full h-full flex items-center justify-center p-2 pt-16">
-                        <div className="bg-white rounded-2xl shadow-xl w-full max-w-lg max-h-[60vh] overflow-hidden">
+                        <div className="rounded-2xl shadow-xl w-full max-w-lg max-h-[60vh] overflow-hidden" style={{ backgroundColor: '#845399' }}>
                           {/* Header */}
-                          <div className="bg-gray-50 px-6 py-4 border-b border-gray-200">
-                            <h2 className="text-lg font-bold text-gray-800">TERMS AND CONDITIONS</h2>
+                          <div className="px-6 py-4 border-b border-white border-opacity-20">
+                            <h2 className="text-lg font-bold text-white">TERMS AND CONDITIONS</h2>
                           </div>
                           
                           {/* Content */}
                           <div className="px-6 py-4 overflow-y-auto max-h-[35vh]">
-                            <div className="text-sm text-gray-700 leading-relaxed space-y-3">
+                            <div className="text-sm text-white leading-relaxed space-y-3">
                               <p>
                                 <strong>Welcome to The Coordinated Living!</strong>
                               </p>
                               <p>
                                 These terms and conditions outline the rules and regulations for the use of the Website, located at{' '}
-                                <a href="https://thecoordinatedliving.com/" className="text-blue-600 underline" target="_blank" rel="noopener noreferrer">
+                                <a href="https://thecoordinatedliving.com/" className="underline font-bold" target="_blank" rel="noopener noreferrer" style={{ color: 'white' }}>
                                   https://thecoordinatedliving.com/
                                 </a>
                               </p>
@@ -1105,10 +1105,10 @@ const Page = () => {
                           </div>
                           
                           {/* Footer with View Full Terms button */}
-                          <div className="px-6 py-4 border-t border-gray-200 bg-gray-50">
+                          <div className="px-6 py-4 border-t border-white border-opacity-20">
                             <button
                               onClick={() => setShowTermsModal(true)}
-                              className="w-full bg-white border border-gray-300 text-gray-800 py-2 px-4 rounded-full font-medium hover:bg-gray-50 transition-colors duration-200"
+                              className="w-full bg-white text-gray-800 py-2 px-4 rounded-full font-medium hover:bg-gray-50 transition-colors duration-200"
                             >
                               View Full Terms
                             </button>
@@ -3222,15 +3222,15 @@ const Page = () => {
           {/* Modal Content */}
           <div 
             ref={termsModalContentRef}
-            className="relative bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden"
-            style={{ opacity: 0, transform: 'scale(0.9) translateY(20px)' }}
+            className="relative rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden"
+            style={{ backgroundColor: '#845399', opacity: 0, transform: 'scale(0.9) translateY(20px)' }}
           >
             {/* Header */}
-            <div className="bg-gray-50 px-6 py-4 border-b border-gray-200 flex justify-between items-center">
-              <h2 className="text-xl font-bold text-gray-800">TERMS AND CONDITIONS</h2>
+            <div className="px-6 py-4 border-b border-white border-opacity-20 flex justify-between items-center">
+              <h2 className="text-xl font-bold text-white">TERMS AND CONDITIONS</h2>
               <button
                 onClick={handleCloseTermsModal}
-                className="text-gray-500 hover:text-gray-700 transition-colors duration-200"
+                className="text-white hover:text-gray-200 transition-colors duration-200"
               >
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -3241,13 +3241,13 @@ const Page = () => {
             
             {/* Content */}
             <div className="px-6 py-4 overflow-y-auto max-h-[70vh]">
-              <div className="text-sm text-gray-700 leading-relaxed space-y-4">
+              <div className="text-sm text-white leading-relaxed space-y-4">
                 <p>
                   <strong>Welcome to The Coordinated Living!</strong>
                 </p>
                 <p>
                   These terms and conditions outline the rules and regulations for the use of the Website, located at{' '}
-                  <a href="https://thecoordinatedliving.com/" className="text-blue-600 underline" target="_blank" rel="noopener noreferrer">
+                  <a href="https://thecoordinatedliving.com/" className="underline font-bold" target="_blank" rel="noopener noreferrer" style={{ color: 'white' }}>
                     https://thecoordinatedliving.com/
                   </a>
                 </p>
@@ -3267,7 +3267,7 @@ const Page = () => {
                   IKOORDINATE reserves the right to modify all information, including Terms and Conditions, as well as all other features at any time without giving you prior notice. Your use of this website following any modifications constitutes your agreement to follow and be bound by the Terms and Conditions as modified.
                 </p>
                 
-                <h3 className="text-lg font-semibold text-gray-800 mt-6 mb-3">Table of Contents</h3>
+                <h3 className="text-lg font-semibold text-white mt-6 mb-3">Table of Contents</h3>
                 <ul className="list-disc list-inside space-y-1 ml-4">
                   <li>Definitions</li>
                   <li>Scope of Service</li>
@@ -3287,7 +3287,7 @@ const Page = () => {
                   <li>Removal of links</li>
                 </ul>
                 
-                <h3 className="text-lg font-semibold text-gray-800 mt-6 mb-3">1. DEFINITIONS</h3>
+                <h3 className="text-lg font-semibold text-white mt-6 mb-3">1. DEFINITIONS</h3>
                 <p>
                   &quot;IKOORDINATE&quot;, &quot;we&quot;, &quot;us&quot;, &quot;our&quot;, &quot;the company&quot; means THE COORDINATE LIVING.
                 </p>
@@ -3316,7 +3316,7 @@ const Page = () => {
                   <li><strong>&quot;You&quot;</strong> means the individual accessing or using the Service, or the company, or other legal entity on behalf of which such individual is accessing or using the Service, as applicable.</li>
                 </ul>
                 
-                <h3 className="text-lg font-semibold text-gray-800 mt-6 mb-3">2. SCOPE OF SERVICE</h3>
+                <h3 className="text-lg font-semibold text-white mt-6 mb-3">2. SCOPE OF SERVICE</h3>
                 <p>
                   IKOORDINATE and its agents and partners shall provide an online service through the Platform, on which visitors/individuals of the Platform and by subscribing to the website, you enter into a direct (legally binding) contractual relationship with IKOORDINATE.
                 </p>
@@ -3327,7 +3327,7 @@ const Page = () => {
                   Our service is made available for personal and non-commercial use only. Therefore, you are not allowed to re-sell, deep-link, use, copy, monitor, display, download or reproduce any content or information, software, bookings, tickets, products or services available on our Platform for any commercial or competitive activity or purpose without our prior knowledge.
                 </p>
                 
-                <h3 className="text-lg font-semibold text-gray-800 mt-6 mb-3">3. PRIVACY POLICY</h3>
+                <h3 className="text-lg font-semibold text-white mt-6 mb-3">3. PRIVACY POLICY</h3>
                 <p>
                   IKOORDINATE respects your privacy and are committed to ensuring the safety of the information you provide us. In order to constantly improve upon the services that we provide you with, we may collect and use information which you provide to us.
                 </p>
@@ -3368,7 +3368,7 @@ const Page = () => {
                   <li><strong>With Your consent:</strong> We may disclose Your personal information for any other purpose with Your consent.</li>
                 </ul>
                 
-                <h3 className="text-lg font-semibold text-gray-800 mt-6 mb-3">4. CHILDREN&apos;S PRIVACY</h3>
+                <h3 className="text-lg font-semibold text-white mt-6 mb-3">4. CHILDREN&apos;S PRIVACY</h3>
                 <p>
                   Our Service does not address anyone under the age of 13. We do not knowingly collect personally identifiable information from anyone under the age of 13. If You are a parent or guardian and You are aware that Your child has provided Us with Personal Data, please contact Us. If We become aware that We have collected Personal Data from anyone under the age of 13 without verification of parental consent, we take steps to remove that information from Our servers.
                 </p>
@@ -3385,10 +3385,10 @@ const Page = () => {
                   You are advised to review this Privacy Policy periodically for any changes. Changes to this Privacy Policy are effective when they are posted on this page. If you have any questions about this Privacy Policy, you can contact us:
                 </p>
                 <p>
-                  By email: <a href="mailto:letstalk@thecoordinatedliving.com" className="text-blue-600 underline">letstalk@thecoordinatedliving.com</a>
+                  By email: <a href="mailto:letstalk@thecoordinatedliving.com" className="underline font-bold" style={{ color: 'white' }}>letstalk@thecoordinatedliving.com</a>
                 </p>
                 
-                <h3 className="text-lg font-semibold text-gray-800 mt-6 mb-3">5. COOKIES</h3>
+                <h3 className="text-lg font-semibold text-white mt-6 mb-3">5. COOKIES</h3>
                 <p>
                   Cookies are used for different purposes. They allow you to be recognized as the same user across the pages of a website, between websites or in your usage of an app. The types of information that we collect through cookies include IP address; device ID; viewed pages; browser type; browsing information; operating system; internet service provider; timestamp; responses to advertisements; the referring URL; and features used or activities engaged in within the website/apps.
                 </p>
@@ -3402,7 +3402,7 @@ const Page = () => {
                   Our website and apps use cookies for different purposes, these include;
                 </p>
                 
-                <h4 className="text-md font-semibold text-gray-800 mt-4 mb-2">Tracking Technologies and Cookies</h4>
+                <h4 className="text-md font-semibold text-white mt-4 mb-2">Tracking Technologies and Cookies</h4>
                 <p>
                   We endeavor to offer our visitors an advanced, user-friendly website and apps that adapt automatically to their needs and wishes. To achieve this, we use technical cookies to show you our website, to track the activity on our Service and store certain information. Tracking technologies used are beacons, tags, and scripts to collect and track information and to improve and analyze Our Service.
                 </p>
@@ -3410,12 +3410,12 @@ const Page = () => {
                   These technical cookies are absolutely necessary for our website to function properly. The technologies We use may include:
                 </p>
                 
-                <h4 className="text-md font-semibold text-gray-800 mt-4 mb-2">Cookies or Browser Cookies</h4>
+                <h4 className="text-md font-semibold text-white mt-4 mb-2">Cookies or Browser Cookies</h4>
                 <p>
                   A cookie is a small file placed on Your Device. You can instruct Your browser to refuse all Cookies or to indicate when a Cookie is being sent. However, if You do not accept Cookies, you may not be able to use some parts of our Service. Unless you have adjusted Your browser setting so that it will refuse Cookies, our Service may use Cookies.
                 </p>
                 
-                <h4 className="text-md font-semibold text-gray-800 mt-4 mb-2">Web Beacons</h4>
+                <h4 className="text-md font-semibold text-white mt-4 mb-2">Web Beacons</h4>
                 <p>
                   Certain sections of our Service and our emails may contain small electronic files known as web beacons (also referred to as clear gifs, pixel tags, and single-pixel gifs) that permit the Company, for example, to count users who have visited those pages or opened an email and for other related website statistics (for example, recording the popularity of a certain section and verifying system and server integrity).
                 </p>
@@ -3426,17 +3426,17 @@ const Page = () => {
                   We use both Session and Persistent Cookies for the purposes set out below:
                 </p>
                 
-                <h4 className="text-md font-semibold text-gray-800 mt-4 mb-2">Necessary / Essential Cookies</h4>
+                <h4 className="text-md font-semibold text-white mt-4 mb-2">Necessary / Essential Cookies</h4>
                 <p>
                   These are session Cookies administered by Ikoordinate and these Cookies are essential to provide You with services available through the Website and to enable You to use some of its features. They help to authenticate users and prevent fraudulent use of user accounts. Without these Cookies, the services that You have asked for cannot be provided, and We only use these Cookies to provide You with those services.
                 </p>
                 
-                <h4 className="text-md font-semibold text-gray-800 mt-4 mb-2">Cookies Policy / Notice Acceptance Cookies</h4>
+                <h4 className="text-md font-semibold text-white mt-4 mb-2">Cookies Policy / Notice Acceptance Cookies</h4>
                 <p>
                   These are Persistent Cookies that are administered by Us for the purposes of identifying if users have accepted the use of cookies on the Website.
                 </p>
                 
-                <h4 className="text-md font-semibold text-gray-800 mt-4 mb-2">Functionality Cookies</h4>
+                <h4 className="text-md font-semibold text-white mt-4 mb-2">Functionality Cookies</h4>
                 <p>
                   We also use functional cookies to remember your preferences and to help you to use our website and apps efficiently and effectively. These functional cookies are not strictly necessary for the functioning of our website or apps, but they add functionality and enhance the services we provide you with.
                 </p>
@@ -3447,12 +3447,12 @@ const Page = () => {
                   For more information about the cookies we use and your choices regarding cookies, please visit our Cookies Policy or the cookies section of our Privacy Policy
                 </p>
                 
-                <h4 className="text-md font-semibold text-gray-800 mt-4 mb-2">Commercial cookies</h4>
+                <h4 className="text-md font-semibold text-white mt-4 mb-2">Commercial cookies</h4>
                 <p>
                   We use third-party cookies as well as our own to display personalized advertisements on our websites and on other websites. This is called &quot;retargeting,&quot; and it is based on browsing activities, such as the destinations you have been searching for, the product you have viewed and the prices you have been shown.
                 </p>
                 
-                <h3 className="text-lg font-semibold text-gray-800 mt-6 mb-3">6. LICENSE</h3>
+                <h3 className="text-lg font-semibold text-white mt-6 mb-3">6. LICENSE</h3>
                 <p>
                   Unless otherwise stated ikoordinate and/or its licensors own the intellectual property rights for all material on the website. All intellectual property rights are reserved. You may access this from The Coordinated Living for your own personal use subjected to restrictions set in these terms and conditions.
                 </p>
@@ -3484,7 +3484,7 @@ const Page = () => {
                   You hereby grant ikoordinate a non-exclusive license to use, reproduce, edit and authorize others to use, reproduce and edit any of your Comments in any and all forms, formats or media.
                 </p>
                 
-                <h3 className="text-lg font-semibold text-gray-800 mt-6 mb-3">7. HYPERLINKING TO OUR CONTENT</h3>
+                <h3 className="text-lg font-semibold text-white mt-6 mb-3">7. HYPERLINKING TO OUR CONTENT</h3>
                 <p>
                   The following organizations may link to our website without prior written approval:
                 </p>
@@ -3531,22 +3531,22 @@ const Page = () => {
                   No use of ikoordinate&apos;s logo or other artwork will be allowed for linking absent a trademark license agreement.
                 </p>
                 
-                <h3 className="text-lg font-semibold text-gray-800 mt-6 mb-3">8. CONTENT LIABILITY</h3>
+                <h3 className="text-lg font-semibold text-white mt-6 mb-3">8. CONTENT LIABILITY</h3>
                 <p>
                   We shall not be held responsible for any content that appears on your Website. You agree to protect and defend us against all claims that is rising on your Website. No link(s) should appear on any Website that may be interpreted as libelous, obscene or criminal, or which infringes, otherwise violates, or advocates the infringement or other violation of, any third-party rights.
                 </p>
                 
-                <h3 className="text-lg font-semibold text-gray-800 mt-6 mb-3">9. RESERVATION OF RIGHTS</h3>
+                <h3 className="text-lg font-semibold text-white mt-6 mb-3">9. RESERVATION OF RIGHTS</h3>
                 <p>
                   We reserve the right to request that you remove all links or any particular link to our website. You approve to immediately remove all links to our Website upon request. We also reserve the right to these terms and conditions and it&apos;s linking policy at any time. By continuously linking to our website, you agree to be bound to and follow these linking terms and conditions.
                 </p>
                 
-                <h3 className="text-lg font-semibold text-gray-800 mt-6 mb-3">10. PRICES</h3>
+                <h3 className="text-lg font-semibold text-white mt-6 mb-3">10. PRICES</h3>
                 <p>
                   The prices on our Platform are highly competitive. All our services are at a subscription fee including VAT/sales tax and all other taxes (subject to change of such taxes), unless stated otherwise on our Platforms or the confirmation email.
                 </p>
                 
-                <h3 className="text-lg font-semibold text-gray-800 mt-6 mb-3">11. PAYMENT</h3>
+                <h3 className="text-lg font-semibold text-white mt-6 mb-3">11. PAYMENT</h3>
                 <p>
                   If applicable and available, you may be required to make full or part-payment of subscription fee as required under the payment policy of website in question by means of secure online payment (all to the extent offered and supported by your bank). In some cases, mobile money payment may be allowed.
                 </p>
@@ -3563,7 +3563,7 @@ const Page = () => {
                   If you have a late or delayed fees payment date, make sure to effectively communicate it to us to avoid cancellation of a subscription or renewal without prior notice.
                 </p>
                 
-                <h3 className="text-lg font-semibold text-gray-800 mt-6 mb-3">12. CORRESPONDENCE AND COMMUNICATION</h3>
+                <h3 className="text-lg font-semibold text-white mt-6 mb-3">12. CORRESPONDENCE AND COMMUNICATION</h3>
                 <p>
                   Ikoordinate shall communicate to prospective subscribers via one or more of the following means – SMS, Email, Phone Call, etc. Customers may also reach the company through our CONTACT US mediums during work hours.
                 </p>
@@ -3581,7 +3581,7 @@ const Page = () => {
                   Any claim or complaint against Ikoordinate or in respect of the service we provide must be promptly submitted via email, but in any event within thirty (30) days after the event giving rise to the complaint. Any claim or complaint that is submitted after the thirty (30) day period, may be rejected and the claimant shall forfeit its right to any damages, compensation or costs.
                 </p>
                 
-                <h3 className="text-lg font-semibold text-gray-800 mt-6 mb-3">13. DISCLAIMER</h3>
+                <h3 className="text-lg font-semibold text-white mt-6 mb-3">13. DISCLAIMER</h3>
                 <p>
                   To the maximum extent permitted by applicable law, we exclude all representations, warranties and conditions relating to our website and the use of this website. Nothing in this disclaimer will:
                 </p>
@@ -3598,7 +3598,7 @@ const Page = () => {
                   As long as the information and services on the website are provided we will not be liable for any loss or damage of any nature.
                 </p>
                 
-                <h3 className="text-lg font-semibold text-gray-800 mt-6 mb-3">14. INTELLECTUAL PROPERTY RIGHTS</h3>
+                <h3 className="text-lg font-semibold text-white mt-6 mb-3">14. INTELLECTUAL PROPERTY RIGHTS</h3>
                 <p>
                   Unless stated otherwise, the software required for our services or available at or used by our Website/Platform and the intellectual property rights (including the copyrights) of the contents and information of and material on our Platform are owned by Ikoordinate, its suppliers or providers.
                 </p>
@@ -3606,17 +3606,17 @@ const Page = () => {
                   Ikoordinate exclusively retains ownership of all rights, title and interest in and to all intellectual property rights of the Platform/website on which the service is made available. You are not entitled to copy, scrape, deep-link, etc. to publish, promote, market, integrate, use, combine or otherwise use the content or our brand without our express written permission. Any unlawful use or any of the aforementioned actions will constitute a material infringement of our intellectual property rights which will entitle us to sue.
                 </p>
                 
-                <h3 className="text-lg font-semibold text-gray-800 mt-6 mb-3">15. GOVERNING LAW</h3>
+                <h3 className="text-lg font-semibold text-white mt-6 mb-3">15. GOVERNING LAW</h3>
                 <p>
                   To the extent permitted by law, these Terms and Conditions and the provision of our services shall be governed by and construed in accordance with the laws of the Republic of Ghana.
                 </p>
                 
-                <h3 className="text-lg font-semibold text-gray-800 mt-6 mb-3">16. DISPUTE RESOLUTION</h3>
+                <h3 className="text-lg font-semibold text-white mt-6 mb-3">16. DISPUTE RESOLUTION</h3>
                 <p>
                   Any dispute arising out of these general terms and conditions and our services shall in the first instance be settled amicably through mediation, failing which such dispute shall be submitted to a Court of competent jurisdiction in Accra, Ghana.
                 </p>
                 
-                <h3 className="text-lg font-semibold text-gray-800 mt-6 mb-3">17. REMOVAL OF LINKS FROM OUR WEBSITE</h3>
+                <h3 className="text-lg font-semibold text-white mt-6 mb-3">17. REMOVAL OF LINKS FROM OUR WEBSITE</h3>
                 <p>
                   If you find any link on our website that is offensive for any reason, you are free to contact and inform us any moment. We will consider requests to remove links but we are not obligated to or so or to respond to you directly.
                 </p>
