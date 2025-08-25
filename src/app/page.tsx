@@ -159,30 +159,9 @@ const Page = () => {
   const [showFumaaModal, setShowFumaaModal] = useState(false);
   const [messageText, setMessageText] = useState('');
   const [showExpandedEmailModal, setShowExpandedEmailModal] = useState(false);
-  const [showJoinChannelModal, setShowJoinChannelModal] = useState(false);
   const [showGuidesModal, setShowGuidesModal] = useState(false);
   const [currentGuideIndex, setCurrentGuideIndex] = useState(0);
   const [showPourIntoMyCupModal, setShowPourIntoMyCupModal] = useState(false);
-  
-  const handleCloseJoinChannelModal = () => {
-    // Animate join channel modal out with ease
-    const modalContainer = document.querySelector('.join-channel-modal-card');
-    
-    if (modalContainer) {
-      gsap.to(modalContainer, {
-        opacity: 0,
-        scale: 0.95,
-        y: -20,
-        duration: 0.6,
-        ease: "power2.inOut",
-        onComplete: () => {
-          setShowJoinChannelModal(false);
-        }
-      });
-    } else {
-      setShowJoinChannelModal(false);
-    }
-  };
 
   const handleCloseExpandedEmailModal = () => {
     // Animate expanded email modal out with ease
@@ -1006,8 +985,6 @@ const Page = () => {
                         setShowLesleyLetter(true);
                       } else if (activeMobileItem === 'POST') {
                         setShowPostModal(true);
-                      } else if (activeMobileItem === 'JOIN OUR CHANNEL') {
-                        setShowJoinChannelModal(true);
                       } else if (activeMobileItem === 'GUIDES') {
                         setShowGuidesModal(true);
                       } else if (activeMobileItem === 'POUR INTO MY CUP') {
@@ -1160,18 +1137,53 @@ const Page = () => {
                           </div>
                         </div>
                       </div>
+                    ) : activeMobileItem === 'JOIN OUR CHANNEL' ? (
+                      <div 
+                        className="w-full h-full flex items-center justify-center p-2 pt-16"
+                        style={{
+                          maxHeight: '60vh',
+                          minHeight: '250px'
+                        }}
+                      >
+                        <div className="rounded-2xl shadow-xl w-full max-w-lg max-h-[60vh] overflow-hidden" style={{ backgroundColor: '#2481C2' }}>
+                          {/* Modal Header */}
+                          <div className="flex justify-center items-center p-4">
+                            <span className="text-white font-bold text-2xl xs:text-3xl" style={{ fontFamily: 'Amita, serif' }}>Deep Dive Teachings</span>
+                          </div>
+                          
+                          {/* Content */}
+                          <div className="p-4 xs:p-5 sm:p-6 space-y-4 overflow-y-auto text-center" style={{ maxHeight: 'calc(60vh - 120px)' }}>
+                            <p className="text-white text-sm xs:text-base leading-relaxed">
+                              Are you longing for an in-depth exploration of God&apos;s Word and its application to the complexities of life? Our videos, delivered through an exclusive paid WhatsApp channel, provide detailed teaching and deeper insights. Join our community to journey further into understanding how His grace abounds even in the most profound changing scenes of life and cultivate an intimate relationship with the Lord.
+                            </p>
+                          </div>
+                          
+                          {/* Join Channel Button */}
+                          <div className="p-4 xs:p-5 sm:p-6">
+                            <Image
+                              src="/join-channel-button-mobile.svg"
+                              alt="Join Channel"
+                              width={200}
+                              height={60}
+                              className="w-1/2 h-auto cursor-pointer hover:opacity-80 transition-opacity mx-auto"
+                              onClick={() => {
+                                // Handle join channel functionality
+                                console.log('Join channel clicked');
+                              }}
+                            />
+                          </div>
+                        </div>
+                      </div>
                     ) : (
                       <Image
                         src={
                           activeMobileItem === 'EXPERIENCE' ? '/experience-mobile.svg' :
-                          activeMobileItem === 'JOIN OUR CHANNEL' ? '/join-channel-mobile.svg' :
                           activeMobileItem === 'ABOUT ME' ? '/about-me-mobile.svg' :
                           activeMobileItem === 'POUR INTO MY CUP' ? '/coffee-cup-mobile.svg' :
                           '/new-post-mobile.svg'
                         }
                         alt={
                           activeMobileItem === 'EXPERIENCE' ? 'Experience' :
-                          activeMobileItem === 'JOIN OUR CHANNEL' ? 'Join Channel' :
                           activeMobileItem === 'ABOUT ME' ? 'About Me' :
                           activeMobileItem === 'POUR INTO MY CUP' ? 'Pour Into My Cup' :
                           'New Post'
@@ -2892,83 +2904,7 @@ const Page = () => {
         </div>
       )}
 
-      {/* Join Channel Modal - Mobile Only */}
-      {showJoinChannelModal && (
-        <div className="fixed inset-0 z-[9999]">
-          {/* Black overlay */}
-          <div 
-            className="absolute inset-0"
-            style={{ 
-              backgroundColor: 'rgba(0, 0, 0, 0.8)',
-              backdropFilter: 'blur(8px)',
-              WebkitBackdropFilter: 'blur(8px)'
-            }}
-            onClick={handleCloseJoinChannelModal}
-          />
-          
-          {/* Close button - top right */}
-          <button
-            onClick={handleCloseJoinChannelModal}
-            className="absolute top-6 right-6 z-20 bg-white bg-opacity-80 backdrop-blur-sm text-gray-800 px-4 py-2 rounded-lg font-medium hover:bg-opacity-100 transition-all shadow-lg cursor-pointer"
-          >
-            Close
-          </button>
-          
-          {/* Modal content */}
-          <div className="absolute inset-0 flex items-center justify-center p-2 xs:p-3 sm:p-4">
-            <div 
-              className="relative z-10 w-full max-w-md bg-white overflow-hidden join-channel-modal-card" 
-              style={{ maxHeight: '90vh' }}
-              ref={(el) => {
-                if (el) {
-                  gsap.fromTo(el, 
-                    { 
-                      opacity: 0, 
-                      y: 60,
-                      scale: 0.9
-                    },
-                    { 
-                      opacity: 1, 
-                      y: 0, 
-                      scale: 1,
-                      duration: 0.8,
-                      ease: "power2.out",
-                      delay: 0.2
-                    }
-                  );
-                }
-              }}
-            >
-              {/* Modal Header */}
-              <div className="flex justify-center items-center p-4">
-                <span className="text-gray-800 font-bold text-2xl xs:text-3xl" style={{ fontFamily: 'Amita, serif' }}>Deep Dive Teachings</span>
-              </div>
-              
-              {/* Content */}
-              <div className="p-4 xs:p-5 sm:p-6 space-y-4 overflow-y-auto text-center" style={{ maxHeight: 'calc(90vh - 120px)' }}>
-                <p className="text-gray-800 text-sm xs:text-base leading-relaxed">
-                  Are you longing for an in-depth exploration of God&apos;s Word and its application to the complexities of life? Our videos, delivered through an exclusive paid WhatsApp channel, provide detailed teaching and deeper insights. Join our community to journey further into understanding how His grace abounds even in the most profound changing scenes of life and cultivate an intimate relationship with the Lord.
-                </p>
-              </div>
-              
-              {/* Join Channel Button */}
-              <div className="p-4 xs:p-5 sm:p-6">
-                <Image
-                  src="/join-channel-button-mobile.svg"
-                  alt="Join Channel"
-                  width={200}
-                  height={60}
-                  className="w-1/2 h-auto cursor-pointer hover:opacity-80 transition-opacity mx-auto"
-                  onClick={() => {
-                    // Handle join channel functionality
-                    console.log('Join channel clicked');
-                  }}
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+
 
       {/* Guides Modal - Mobile Only */}
       {showGuidesModal && (
