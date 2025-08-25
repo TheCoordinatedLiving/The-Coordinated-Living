@@ -1017,16 +1017,17 @@ const Page = () => {
                   >
                     {activeMobileItem === 'ASK ME A QUESTION' ? (
                       <div 
-                        className="w-full h-auto bg-white rounded-lg shadow-lg overflow-hidden flex flex-col"
+                        className="w-full h-auto rounded-lg shadow-lg overflow-hidden flex flex-col"
                         style={{
                           maxHeight: '60vh',
                           minHeight: '250px',
-                          maxWidth: '100%'
+                          maxWidth: '100%',
+                          backgroundColor: '#845399'
                         }}
                       >
                         {/* Modal Header */}
-                        <div className="flex justify-between items-center p-2 border-b border-gray-200 flex-shrink-0 bg-gray-100">
-                          <span className="text-gray-800 font-medium text-sm">New Message</span>
+                        <div className="flex justify-between items-center p-2 border-b border-gray-200 flex-shrink-0" style={{ backgroundColor: 'rgba(255, 255, 255, 0.1)' }}>
+                          <span className="text-white font-medium text-sm">New Message</span>
                           <button 
                             onClick={(e) => {
                               e.stopPropagation();
@@ -1045,8 +1046,8 @@ const Page = () => {
                         <div className="p-4 space-y-4 flex-1 overflow-y-auto">
                           {/* To Field */}
                           <div className="flex items-center space-x-2">
-                            <span className="text-gray-800 font-medium w-8">To:</span>
-                            <div className="px-2 py-1 rounded-full text-xs font-bold" style={{ backgroundColor: 'rgba(53, 178, 194, 0.1)', color: '#35B2C2' }}>
+                            <span className="text-white font-medium w-8">To:</span>
+                            <div className="px-2 py-1 rounded-full text-xs font-bold" style={{ backgroundColor: 'rgba(255, 255, 255, 0.2)', color: '#ffffff' }}>
                               letstalk@coordinatedliving.com
                             </div>
                           </div>
@@ -1058,7 +1059,8 @@ const Page = () => {
                             <input 
                               type="email" 
                               placeholder="Your email address"
-                              className="flex-1 border-none outline-none text-gray-600 placeholder-gray-400 text-sm"
+                              className="flex-1 border-none outline-none text-white placeholder-gray-300 text-sm"
+                              style={{ backgroundColor: 'transparent' }}
                             />
                           </div>
                           
@@ -1069,7 +1071,8 @@ const Page = () => {
                             <input 
                               type="text" 
                               placeholder="Subject"
-                              className="flex-1 border-none outline-none text-gray-600 placeholder-gray-400 text-sm"
+                              className="flex-1 border-none outline-none text-white placeholder-gray-300 text-sm"
+                              style={{ backgroundColor: 'transparent' }}
                             />
                           </div>
                           
@@ -1077,7 +1080,7 @@ const Page = () => {
                           
                           {/* Message Field */}
                           <div className="mt-4">
-                            <div className="text-gray-800 font-medium mb-2 text-base">
+                            <div className="text-white font-medium mb-2 text-base">
                               Enter message
                             </div>
                             <textarea 
@@ -1085,7 +1088,8 @@ const Page = () => {
                               rows={6}
                               value={messageText}
                               onChange={(e) => setMessageText(e.target.value)}
-                              className="w-full border-none outline-none resize-none text-gray-600 placeholder-gray-400"
+                              className="w-full border-none outline-none resize-none text-white placeholder-gray-300"
+                              style={{ backgroundColor: 'transparent' }}
                             />
                           </div>
                         </div>
@@ -1094,7 +1098,7 @@ const Page = () => {
                         <div className="p-4 border-t border-gray-200 flex-shrink-0">
                           <button 
                             className="w-full text-white font-medium py-2 px-6 rounded-lg transition-colors duration-200"
-                            style={{ backgroundColor: '#845399' }}
+                            style={{ backgroundColor: '#2481C2' }}
                             onClick={() => {
                               // Handle send email functionality
                               console.log('Send email clicked');
@@ -2798,15 +2802,18 @@ const Page = () => {
                     {/* Expanded Modal content */}
           <div className="absolute inset-0 flex items-center justify-center p-2 xs:p-3 sm:p-4">
             <div 
-              className="relative z-10 w-full max-w-4xl bg-white rounded-lg shadow-2xl overflow-hidden expanded-email-modal-card flex flex-col" 
-              style={{ maxHeight: '90vh' }}
+              className="relative z-10 w-full max-w-4xl rounded-lg shadow-2xl overflow-hidden expanded-email-modal-card flex flex-col" 
+              style={{ 
+                maxHeight: '90vh',
+                backgroundColor: '#845399'
+              }}
             >
               {/* Modal Header */}
-              <div className="flex justify-between items-center p-4 border-b border-gray-200 bg-gray-100 flex-shrink-0">
-                <span className="text-gray-800 font-medium">New Message</span>
+              <div className="flex justify-between items-center p-4 border-b border-gray-200 flex-shrink-0" style={{ backgroundColor: 'rgba(255, 255, 255, 0.1)' }}>
+                <span className="text-white font-medium">New Message</span>
                 <button
                   onClick={handleCloseExpandedEmailModal}
-                  className="text-gray-500 hover:text-gray-700"
+                  className="text-white hover:text-gray-200"
                 >
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                     <line x1="18" y1="6" x2="6" y2="18"/>
@@ -2819,8 +2826,8 @@ const Page = () => {
               <div className="p-6 space-y-6 overflow-y-auto flex-1">
                 {/* To Field */}
                 <div className="flex items-center space-x-2">
-                  <span className="text-gray-800 font-medium w-8">To:</span>
-                  <div className="px-3 py-2 rounded-full text-sm font-bold" style={{ backgroundColor: 'rgba(53, 178, 194, 0.1)', color: '#35B2C2' }}>
+                  <span className="text-white font-medium w-8">To:</span>
+                  <div className="px-3 py-2 rounded-full text-sm font-bold" style={{ backgroundColor: 'rgba(255, 255, 255, 0.2)', color: '#ffffff' }}>
                     letstalk@coordinatedliving.com
                   </div>
                 </div>
@@ -2832,7 +2839,8 @@ const Page = () => {
                   <input 
                     type="email" 
                     placeholder="Your email address"
-                    className="flex-1 border-none outline-none text-gray-600 placeholder-gray-400 text-base"
+                    className="flex-1 border-none outline-none text-white placeholder-gray-300 text-base"
+                    style={{ backgroundColor: 'transparent' }}
                   />
                 </div>
                 
@@ -2843,7 +2851,8 @@ const Page = () => {
                   <input 
                     type="text" 
                     placeholder="Subject"
-                    className="flex-1 border-none outline-none text-gray-600 placeholder-gray-400 text-base"
+                    className="flex-1 border-none outline-none text-white placeholder-gray-300 text-base"
+                    style={{ backgroundColor: 'transparent' }}
                   />
                 </div>
                 
@@ -2851,7 +2860,7 @@ const Page = () => {
                 
                 {/* Message Field */}
                 <div className="mt-4">
-                  <div className="text-gray-800 font-medium mb-3 text-base">
+                  <div className="text-white font-medium mb-3 text-base">
                     Enter message
                   </div>
                                         <textarea 
@@ -2859,8 +2868,8 @@ const Page = () => {
                         rows={8}
                         value={messageText}
                         onChange={(e) => setMessageText(e.target.value)}
-                        className="w-full border-none outline-none resize-none text-gray-600 placeholder-gray-400 text-base"
-                        style={{ minHeight: '120px' }}
+                        className="w-full border-none outline-none resize-none text-white placeholder-gray-300 text-base"
+                        style={{ minHeight: '120px', backgroundColor: 'transparent' }}
                       />
                 </div>
               </div>
@@ -2869,7 +2878,7 @@ const Page = () => {
               <div className="p-6 border-t border-gray-200 flex-shrink-0">
                 <button 
                   className="w-full text-white font-medium py-3 px-6 rounded-lg transition-colors duration-200 text-base"
-                  style={{ backgroundColor: '#845399' }}
+                  style={{ backgroundColor: '#2481C2' }}
                   onClick={() => {
                     // Handle send email functionality
                     console.log('Send email clicked');
