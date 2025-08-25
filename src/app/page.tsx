@@ -259,7 +259,7 @@ const Page = () => {
   // Ultra-wide screen detection - Optimized to reduce flickering
   const [isUltraWide, setIsUltraWide] = useState(false);
   
-  const mobileItems = ['ABOUT ME', 'POST', 'ASK ME A QUESTION', 'JOIN OUR CHANNEL', 'GUIDES', 'POUR INTO MY CUP', 'TERMS AND CONDITIONS'];
+  const mobileItems = ['ABOUT ME', 'POST', 'ASK ME A QUESTION', 'JOIN OUR CHANNEL', 'GUIDES', 'POUR INTO MY CUP', 'TERMS AND CONDITIONS', 'EXPERIENCE'];
   
   // Mobile navigation state
   const [currentMobileIndex, setCurrentMobileIndex] = useState(0);
@@ -1159,12 +1159,14 @@ const Page = () => {
                     ) : (
                       <Image
                         src={
+                          activeMobileItem === 'EXPERIENCE' ? '/experience-mobile.svg' :
                           activeMobileItem === 'JOIN OUR CHANNEL' ? '/join-channel-mobile.svg' :
                           activeMobileItem === 'ABOUT ME' ? '/about-me-mobile.svg' :
                           activeMobileItem === 'POUR INTO MY CUP' ? '/coffee-cup-mobile.svg' :
                           '/new-post-mobile.svg'
                         }
                         alt={
+                          activeMobileItem === 'EXPERIENCE' ? 'Experience' :
                           activeMobileItem === 'JOIN OUR CHANNEL' ? 'Join Channel' :
                           activeMobileItem === 'ABOUT ME' ? 'About Me' :
                           activeMobileItem === 'POUR INTO MY CUP' ? 'Pour Into My Cup' :
