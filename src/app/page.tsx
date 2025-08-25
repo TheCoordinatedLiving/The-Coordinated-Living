@@ -161,8 +161,6 @@ const Page = () => {
   const [showExpandedEmailModal, setShowExpandedEmailModal] = useState(false);
   const [showGuidesModal, setShowGuidesModal] = useState(false);
   const [currentGuideIndex, setCurrentGuideIndex] = useState(0);
-  const [showPourIntoMyCupModal, setShowPourIntoMyCupModal] = useState(false);
-
   const handleCloseExpandedEmailModal = () => {
     // Animate expanded email modal out with ease
     const modalContainer = document.querySelector('.expanded-email-modal-card');
@@ -205,25 +203,7 @@ const Page = () => {
     }
   };
 
-  const handleClosePourIntoMyCupModal = () => {
-    // Animate pour into my cup modal out with ease
-    const modalContainer = document.querySelector('.pour-into-my-cup-modal-card');
-    
-    if (modalContainer) {
-      gsap.to(modalContainer, {
-        opacity: 0,
-        scale: 0.95,
-        y: -20,
-        duration: 0.6,
-        ease: "power2.inOut",
-        onComplete: () => {
-          setShowPourIntoMyCupModal(false);
-        }
-      });
-    } else {
-      setShowPourIntoMyCupModal(false);
-    }
-  };
+
 
 
   const [showShareOptions, setShowShareOptions] = useState(false);
@@ -238,7 +218,7 @@ const Page = () => {
   // Ultra-wide screen detection - Optimized to reduce flickering
   const [isUltraWide, setIsUltraWide] = useState(false);
   
-  const mobileItems = ['ABOUT ME', 'POST', 'ASK ME A QUESTION', 'JOIN OUR CHANNEL', 'GUIDES', 'POUR INTO MY CUP', 'TERMS AND CONDITIONS', 'EXPERIENCE'];
+  const mobileItems = ['ABOUT ME', 'POST', 'ASK ME A QUESTION', 'JOIN OUR CHANNEL', 'GUIDES', 'POUR INTO MY CUP', 'TERMS AND CONDITIONS'];
   
   // Mobile navigation state
   const [currentMobileIndex, setCurrentMobileIndex] = useState(0);
@@ -985,10 +965,8 @@ const Page = () => {
                         setShowLesleyLetter(true);
                       } else if (activeMobileItem === 'POST') {
                         setShowPostModal(true);
-                      } else if (activeMobileItem === 'GUIDES') {
+                                            } else if (activeMobileItem === 'GUIDES') {
                         setShowGuidesModal(true);
-                      } else if (activeMobileItem === 'POUR INTO MY CUP') {
-                        setShowPourIntoMyCupModal(true);
                       }
                     }}
                   >
@@ -1148,12 +1126,12 @@ const Page = () => {
                         <div className="rounded-2xl shadow-xl w-full max-w-lg max-h-[60vh] overflow-hidden" style={{ backgroundColor: '#2481C2' }}>
                           {/* Modal Header */}
                           <div className="flex justify-center items-center p-4">
-                            <span className="text-white font-bold text-2xl xs:text-3xl" style={{ fontFamily: 'Amita, serif' }}>Deep Dive Teachings</span>
+                            <span className="text-white font-bold text-xl xs:text-2xl sm:text-3xl text-center" style={{ fontFamily: 'Amita, serif', whiteSpace: 'nowrap' }}>Deep Dive Teachings</span>
                           </div>
                           
                           {/* Content */}
                           <div className="p-4 xs:p-5 sm:p-6 space-y-4 overflow-y-auto text-center" style={{ maxHeight: 'calc(60vh - 120px)' }}>
-                            <p className="text-white text-sm xs:text-base leading-relaxed">
+                            <p className="text-white text-xs xs:text-sm leading-relaxed">
                               Are you longing for an in-depth exploration of God&apos;s Word and its application to the complexities of life? Our videos, delivered through an exclusive paid WhatsApp channel, provide detailed teaching and deeper insights. Join our community to journey further into understanding how His grace abounds even in the most profound changing scenes of life and cultivate an intimate relationship with the Lord.
                             </p>
                           </div>
@@ -1174,18 +1152,51 @@ const Page = () => {
                           </div>
                         </div>
                       </div>
+                    ) : activeMobileItem === 'POUR INTO MY CUP' ? (
+                      <div 
+                        className="w-full h-full flex items-center justify-center p-2 pt-16"
+                        style={{
+                          maxHeight: '60vh',
+                          minHeight: '250px'
+                        }}
+                      >
+                        <div className="rounded-2xl shadow-xl w-full max-w-lg max-h-[60vh] overflow-hidden" style={{ backgroundColor: '#2481C2' }}>
+                          {/* Modal Header */}
+                          <div className="flex justify-center items-center p-4">
+                            <span className="text-white font-bold text-xl xs:text-2xl sm:text-3xl text-center" style={{ fontFamily: 'Amita, serif', whiteSpace: 'nowrap' }}>A Cheerful Gift, A Full Cup</span>
+                          </div>
+                          
+                          {/* Content */}
+                          <div className="p-4 xs:p-5 sm:p-6 space-y-4 overflow-y-auto text-center" style={{ maxHeight: 'calc(60vh - 120px)' }}>
+                            <p className="text-white text-sm xs:text-base leading-relaxed">
+                              Having my cuppa on my table is one sure comfort as I get work done. Your support would be a lovely way to keep it full every time I sit at my desk, and it genuinely helps me sustainably run this platform. Thank you for your kindness!
+                            </p>
+                          </div>
+                          
+                          {/* Pour Into My Cup Button */}
+                          <div className="p-4 xs:p-5 sm:p-6">
+                            <Image
+                              src="/pour-into-cup-mobile.svg"
+                              alt="Pour Into My Cup"
+                              width={200}
+                              height={60}
+                              className="w-1/2 h-auto cursor-pointer hover:opacity-80 transition-opacity mx-auto"
+                              onClick={() => {
+                                // Handle pour into my cup functionality
+                                console.log('Pour into my cup clicked');
+                              }}
+                            />
+                          </div>
+                        </div>
+                      </div>
                     ) : (
                       <Image
                         src={
-                          activeMobileItem === 'EXPERIENCE' ? '/experience-mobile.svg' :
                           activeMobileItem === 'ABOUT ME' ? '/about-me-mobile.svg' :
-                          activeMobileItem === 'POUR INTO MY CUP' ? '/coffee-cup-mobile.svg' :
                           '/new-post-mobile.svg'
                         }
                         alt={
-                          activeMobileItem === 'EXPERIENCE' ? 'Experience' :
                           activeMobileItem === 'ABOUT ME' ? 'About Me' :
-                          activeMobileItem === 'POUR INTO MY CUP' ? 'Pour Into My Cup' :
                           'New Post'
                         }
                         width={300}
@@ -1193,9 +1204,7 @@ const Page = () => {
                         className="w-full h-auto object-contain max-w-full"
                         style={{
                           maxHeight: '60vh',
-                          minHeight: '250px',
-                          transform: activeMobileItem === 'POUR INTO MY CUP' ? 'translateX(20px)' : 'translateX(0)',
-                          transition: 'none'
+                          minHeight: '250px'
                         }}
                       />
                     )}
@@ -3007,82 +3016,7 @@ const Page = () => {
         </div>
       )}
 
-      {/* Pour Into My Cup Modal - Mobile Only */}
-      {showPourIntoMyCupModal && (
-        <div className="fixed inset-0 z-[9999]">
-          {/* Black overlay */}
-          <div 
-            className="absolute inset-0"
-            style={{ 
-              backgroundColor: 'rgba(0, 0, 0, 0.8)',
-              backdropFilter: 'blur(8px)',
-              WebkitBackdropFilter: 'blur(8px)'
-            }}
-            onClick={handleClosePourIntoMyCupModal}
-          />
-          
-          {/* Close button - top left */}
-          <button
-            onClick={handleClosePourIntoMyCupModal}
-            className="absolute top-6 left-6 z-20 bg-white bg-opacity-80 backdrop-blur-sm text-gray-800 px-4 py-2 rounded-lg font-medium hover:bg-opacity-100 transition-all shadow-lg cursor-pointer"
-          >
-            Close
-          </button>
-          
-          {/* Modal content */}
-          <div className="absolute inset-0 flex items-center justify-center p-2 xs:p-3 sm:p-4">
-            <div 
-              className="relative z-10 w-full max-w-md bg-white overflow-hidden pour-into-my-cup-modal-card"
-              ref={(el) => {
-                if (el) {
-                  gsap.fromTo(el, 
-                    { 
-                      opacity: 0, 
-                      y: 60,
-                      scale: 0.9
-                    },
-                    { 
-                      opacity: 1, 
-                      y: 0, 
-                      scale: 1,
-                      duration: 0.8,
-                      ease: "power2.out",
-                      delay: 0.2
-                    }
-                  );
-                }
-              }}
-            >
-              {/* Modal Header */}
-              <div className="flex justify-center items-center p-4">
-                <span className="text-gray-800 font-bold text-2xl xs:text-3xl" style={{ fontFamily: 'Amita, serif' }}>A Cheerful Gift, A Full Cup</span>
-              </div>
-              
-              {/* Content */}
-              <div className="p-4 xs:p-5 sm:p-6 space-y-4 overflow-y-auto text-center" style={{ maxHeight: 'calc(90vh - 120px)' }}>
-                <p className="text-gray-800 text-sm xs:text-base leading-relaxed">
-                  Having my cuppa on my table is one sure comfort as I get work done. Your support would be a lovely way to keep it full every time I sit at my desk, and it genuinely helps me sustainably run this platform. Thank you for your kindness!
-                </p>
-              </div>
-              
-              {/* Pour Into My Cup Button */}
-              <div className="p-4 xs:p-5 sm:p-6">
-                <Image
-                  src="/pour-into-cup-mobile.svg"
-                  alt="Pour Into My Cup"
-                  width={200}
-                  height={60}
-                  className="w-1/2 h-auto cursor-pointer hover:opacity-80 transition-opacity mx-auto"
-                  onClick={() => {
-                    // Handle pour into my cup functionality
-                    console.log('Pour into my cup clicked');
-                  }}
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+
 
       {/* Post Modal - Accessible from both mobile and desktop */}
       {showPostModal && (
