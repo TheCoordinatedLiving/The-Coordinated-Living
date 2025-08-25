@@ -3125,7 +3125,7 @@ const Page = () => {
                 {currentPostIndex > 0 && (
                   <button
                     onClick={handlePreviousPost}
-                    className="bg-white bg-opacity-80 backdrop-blur-sm text-gray-800 p-2 rounded-lg font-medium shadow-lg hover:bg-opacity-100 transition-all cursor-pointer"
+                    className="bg-white bg-opacity-80 backdrop-blur-sm text-gray-800 p-2 rounded-full font-medium shadow-lg hover:bg-opacity-100 transition-all cursor-pointer"
                   >
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                       <polyline points="15,18 9,12 15,6"></polyline>
@@ -3142,7 +3142,7 @@ const Page = () => {
                 {currentPostIndex < posts.length - 1 && (
                   <button
                     onClick={handleNextPost}
-                    className="bg-white bg-opacity-80 backdrop-blur-sm text-gray-800 p-2 rounded-lg font-medium shadow-lg hover:bg-opacity-100 transition-all cursor-pointer"
+                    className="bg-white bg-opacity-80 backdrop-blur-sm text-gray-800 p-2 rounded-full font-medium shadow-lg hover:bg-opacity-100 transition-all cursor-pointer"
                   >
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                       <polyline points="9,18 15,12 9,6"></polyline>
