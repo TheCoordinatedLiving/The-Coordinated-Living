@@ -1163,7 +1163,9 @@ const Page = () => {
                         <div className="rounded-2xl shadow-xl w-full max-w-lg max-h-[60vh] overflow-hidden" style={{ backgroundColor: '#2481C2' }}>
                           {/* Modal Header */}
                           <div className="flex justify-center items-center p-4">
-                            <span className="text-white font-bold text-xl xs:text-2xl sm:text-3xl text-center" style={{ fontFamily: 'Amita, serif', whiteSpace: 'nowrap' }}>A Cheerful Gift, A Full Cup</span>
+                            <span className="text-white font-bold text-xl xs:text-2xl sm:text-3xl text-center" style={{ fontFamily: 'Amita, serif' }}>
+                              A Cheerful Gift,<br />A Full Cup
+                            </span>
                           </div>
                           
                           {/* Content */}
