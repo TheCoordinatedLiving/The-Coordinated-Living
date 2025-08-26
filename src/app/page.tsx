@@ -977,7 +977,7 @@ const Page = () => {
                           maxHeight: '60vh',
                           minHeight: '250px',
                           maxWidth: '100%',
-                          backgroundColor: '#845399'
+                          backgroundColor: '#5D3D6E'
                         }}
                       >
                         {/* Modal Header */}
@@ -1077,14 +1077,14 @@ const Page = () => {
                       />
                     ) : activeMobileItem === 'TERMS AND CONDITIONS' ? (
                       <div className="w-full h-full flex items-center justify-center p-2 pt-16">
-                        <div className="rounded-2xl shadow-xl w-full max-w-lg max-h-[60vh] overflow-hidden" style={{ backgroundColor: '#845399' }}>
+                        <div className="rounded-2xl shadow-xl w-full max-w-lg max-h-[60vh] overflow-hidden" style={{ backgroundColor: '#5D3D6E' }}>
                           {/* Header */}
-                          <div className="px-6 py-4 border-b border-white border-opacity-20">
+                          <div className="px-6 py-4">
                             <h2 className="text-lg font-bold text-white">TERMS AND CONDITIONS</h2>
                           </div>
                           
                           {/* Content */}
-                          <div className="px-6 py-4 overflow-y-auto max-h-[35vh]">
+                          <div className="px-8 py-4 overflow-y-auto max-h-[35vh]">
                             <div className="text-sm text-white leading-relaxed space-y-3">
                               <p>
                                 <strong>Welcome to The Coordinated Living!</strong>
@@ -1092,7 +1092,7 @@ const Page = () => {
                               <p>
                                 These terms and conditions outline the rules and regulations for the use of the Website, located at{' '}
                                 <a href="https://thecoordinatedliving.com/" className="underline font-bold" target="_blank" rel="noopener noreferrer" style={{ color: 'white' }}>
-                                  https://thecoordinatedliving.com/
+                                  https://thecoordinatedliving.<br />com/
                                 </a>
                               </p>
                               <p>
@@ -1105,7 +1105,7 @@ const Page = () => {
                           </div>
                           
                           {/* Footer with View Full Terms button */}
-                          <div className="px-6 py-4 border-t border-white border-opacity-20">
+                          <div className="px-6 py-4">
                             <button
                               onClick={() => setShowTermsModal(true)}
                               className="w-full bg-white text-gray-800 py-2 px-4 rounded-full font-medium hover:bg-gray-50 transition-colors duration-200"
@@ -1309,7 +1309,15 @@ const Page = () => {
                       alt="Lesley's Letter"
                       width={400}
                       height={300}
-                      className="w-full h-auto object-contain"
+                      className="w-full h-auto object-contain hidden xl:block"
+                      priority
+                    />
+                    <Image
+                      src="/lesley-mobile.svg"
+                      alt="Lesley's Letter"
+                      width={400}
+                      height={300}
+                      className="w-full h-auto object-contain xl:hidden"
                       priority
                     />
                   </div>
