@@ -872,7 +872,7 @@ const Page = () => {
               <div className="relative flex items-center justify-center px-1 xs:px-2 sm:px-3 md:px-4 py-1 xs:py-2 sm:py-3 md:py-4">
                 {/* Active Item Only */}
                 <span 
-                  className="text-4xl xs:text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-medium text-[#35B2C2] opacity-100 transition-all duration-500 leading-tight text-center"
+                  className="text-4xl xs:text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-medium text-white opacity-100 transition-all duration-500 leading-tight text-center"
                   style={{ fontFamily: 'Amita', textAlign: 'center', width: '100%' }}
                 >
                   {activeMobileItem}
