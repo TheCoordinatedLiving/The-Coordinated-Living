@@ -947,7 +947,7 @@ const Page = () => {
               <div className="relative flex items-center justify-center">
                 {/* Left Chevron */}
                 <button 
-                  className="w-6 h-6 xs:w-7 xs:h-7 sm:w-8 sm:h-8 md:w-10 md:h-10 bg-white rounded-full flex items-center justify-center shadow-lg absolute left-0 cursor-pointer hover:bg-gray-100 transition-colors duration-200 touch-manipulation"
+                  className="w-6 h-6 xs:w-7 xs:h-7 sm:w-8 sm:h-8 md:w-10 md:h-10 bg-white rounded-full flex items-center justify-center shadow-lg absolute left-0 top-1/2 transform -translate-y-1/2 cursor-pointer hover:bg-gray-100 transition-colors duration-200 touch-manipulation"
                   onClick={() => handleMobileNav('prev')}
                   style={{ minWidth: '44px', minHeight: '44px' }}
                 >
@@ -1217,7 +1217,7 @@ const Page = () => {
                 
                 {/* Right Chevron */}
                 <button 
-                  className="w-6 h-6 xs:w-7 xs:h-7 sm:w-8 sm:h-8 md:w-10 md:h-10 bg-white rounded-full flex items-center justify-center shadow-lg absolute right-0 cursor-pointer hover:bg-gray-100 transition-colors duration-200 touch-manipulation"
+                  className="w-6 h-6 xs:w-7 xs:h-7 sm:w-8 sm:h-8 md:w-10 md:h-10 bg-white rounded-full flex items-center justify-center shadow-lg absolute right-0 top-1/2 transform -translate-y-1/2 cursor-pointer hover:bg-gray-100 transition-colors duration-200 touch-manipulation"
                   onClick={() => handleMobileNav('next')}
                   style={{ minWidth: '44px', minHeight: '44px' }}
                 >
