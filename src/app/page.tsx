@@ -2552,7 +2552,7 @@ const Page = () => {
                         objectPosition: 'center'
                       }}
                     >
-                      <source src="/join-channel.webm" type="video/webm" />
+                      <source src="/join-channel-v2.webm" type="video/webm" />
                       Your browser does not support the video tag.
                     </video>
 
