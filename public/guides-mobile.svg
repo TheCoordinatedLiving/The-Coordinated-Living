@@ -1,6 +1,6 @@
 <svg width="267" height="348" viewBox="0 0 267 348" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g clip-path="url(#clip0_1968_2908)">
-<rect width="267" height="348" rx="16" fill="#5D3D6E"/>
+<rect width="267" height="348" rx="16" fill="#2481C2"/>
 <g opacity="0.2">
 <line x1="245.521" y1="-63.8828" x2="245.521" y2="415.4" stroke="#A8B7D4" stroke-width="0.448739"/>
 <line x1="55.24" y1="-63.8828" x2="55.24" y2="415.4" stroke="#A8B7D4" stroke-width="0.448739"/>
@@ -230,8 +230,8 @@
 </g>
 <defs>
 <linearGradient id="paint0_linear_1968_2908" x1="279.596" y1="4.5856e-08" x2="280.589" y2="347.998" gradientUnits="userSpaceOnUse">
-<stop offset="0.12077" stop-color="#5D3D6E"/>
-<stop offset="1" stop-color="#5D3D6E" stop-opacity="0"/>
+<stop offset="0.12077" stop-color="#2481C2"/>
+<stop offset="1" stop-color="#2481C2" stop-opacity="0"/>
 </linearGradient>
 <clipPath id="clip0_1968_2908">
 <rect width="267" height="348" rx="16" fill="white"/>

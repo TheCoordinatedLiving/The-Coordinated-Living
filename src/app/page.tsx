@@ -977,7 +977,7 @@ const Page = () => {
                           maxHeight: '60vh',
                           minHeight: '250px',
                           maxWidth: '100%',
-                          backgroundColor: '#5D3D6E'
+                          backgroundColor: '#2481C2'
                         }}
                       >
                         {/* Modal Header */}
@@ -990,8 +990,8 @@ const Page = () => {
                               setShowExpandedEmailModal(true);
                               console.log('showExpandedEmailModal set to true');
                             }}
-                            className="text-white px-3 py-1 rounded-full text-xs font-medium transition-colors duration-200"
-                            style={{ backgroundColor: '#2481C2' }}
+                            className="text-white px-3 py-1 rounded-full text-xs font-medium transition-colors duration-200 shadow-md hover:shadow-lg"
+                            style={{ backgroundColor: '#ffffff', color: '#2481C2' }}
                           >
                             Expand
                           </button>
@@ -1052,8 +1052,8 @@ const Page = () => {
                         {/* Send Button */}
                         <div className="p-4 border-t border-gray-200 flex-shrink-0">
                           <button 
-                            className="w-full text-white font-medium py-2 px-6 rounded-lg transition-colors duration-200"
-                            style={{ backgroundColor: '#2481C2' }}
+                            className="w-full text-white font-medium py-2 px-6 rounded-lg transition-colors duration-200 shadow-md hover:shadow-lg"
+                            style={{ backgroundColor: '#ffffff', color: '#2481C2' }}
                             onClick={() => {
                               // Handle send email functionality
                               console.log('Send email clicked');
@@ -1077,7 +1077,7 @@ const Page = () => {
                       />
                     ) : activeMobileItem === 'TERMS AND CONDITIONS' ? (
                       <div className="w-full h-full flex items-center justify-center p-2 pt-16">
-                        <div className="rounded-2xl shadow-xl w-full max-w-lg max-h-[60vh] overflow-hidden" style={{ backgroundColor: '#5D3D6E' }}>
+                        <div className="rounded-2xl shadow-xl w-full max-w-lg max-h-[60vh] overflow-hidden" style={{ backgroundColor: '#2481C2' }}>
                           {/* Header */}
                           <div className="px-6 py-4">
                             <h2 className="text-lg font-bold text-white">TERMS AND CONDITIONS</h2>
