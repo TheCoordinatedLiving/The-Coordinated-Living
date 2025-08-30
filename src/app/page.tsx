@@ -868,11 +868,11 @@ const Page = () => {
             />
             
             {/* Mobile Navigation */}
-            <div className="absolute top-8 xs:top-10 sm:top-12 md:top-16 left-2 xs:left-3 sm:left-4 right-2 xs:right-3 sm:right-4 z-10">
+            <div className="absolute top-12 xs:top-16 sm:top-20 md:top-24 left-2 xs:left-3 sm:left-4 right-2 xs:right-3 sm:right-4 z-10">
               <div className="relative flex items-center justify-center px-1 xs:px-2 sm:px-3 md:px-4 py-1 xs:py-2 sm:py-3 md:py-4">
                 {/* Active Item Only */}
                 <span 
-                  className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-medium text-white opacity-100 transition-all duration-500 leading-tight text-center"
+                  className="text-4xl xs:text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-medium text-white opacity-100 transition-all duration-500 leading-tight text-center"
                   style={{ fontFamily: 'Amita', textAlign: 'center', width: '100%' }}
                 >
                   {activeMobileItem}
@@ -957,7 +957,7 @@ const Page = () => {
                 </button>
                 
                 {/* Content Card */}
-                <div className="relative flex-1 mx-8 xs:mx-10 sm:mx-12 md:mx-16" style={{ minHeight: '220px', maxWidth: 'calc(100vw - 120px)' }}>
+                <div className="relative flex-1 mx-8 xs:mx-10 sm:mx-12 md:mx-16" style={{ minHeight: '280px', maxWidth: 'calc(100vw - 120px)' }}>
                   <div 
                     className="cursor-pointer"
                     onClick={() => {
@@ -974,8 +974,8 @@ const Page = () => {
                       <div 
                         className="w-full h-auto rounded-lg shadow-lg overflow-hidden flex flex-col"
                         style={{
-                          maxHeight: '50vh',
-                          minHeight: '200px',
+                          maxHeight: '60vh',
+                          minHeight: '250px',
                           maxWidth: '100%',
                           backgroundColor: '#2481C2'
                         }}
@@ -1071,8 +1071,8 @@ const Page = () => {
                         height={200}
                         className="w-full h-auto object-contain max-w-full"
                         style={{
-                          maxHeight: '50vh',
-                          minHeight: '200px'
+                          maxHeight: '60vh',
+                          minHeight: '250px'
                         }}
                       />
                     ) : activeMobileItem === 'TERMS AND CONDITIONS' ? (
@@ -1119,8 +1119,8 @@ const Page = () => {
                       <div 
                         className="w-full h-full flex items-center justify-center p-2 pt-16"
                         style={{
-                          maxHeight: '50vh',
-                          minHeight: '200px'
+                          maxHeight: '60vh',
+                          minHeight: '250px'
                         }}
                       >
                         <div className="rounded-2xl shadow-xl w-full max-w-lg max-h-[60vh] overflow-hidden" style={{ backgroundColor: '#2481C2' }}>
@@ -1156,8 +1156,8 @@ const Page = () => {
                       <div 
                         className="w-full h-full flex items-center justify-center p-2 pt-16"
                         style={{
-                          maxHeight: '50vh',
-                          minHeight: '200px'
+                          maxHeight: '60vh',
+                          minHeight: '250px'
                         }}
                       >
                         <div className="rounded-2xl shadow-xl w-full max-w-lg max-h-[60vh] overflow-hidden" style={{ backgroundColor: '#2481C2' }}>
@@ -1205,8 +1205,8 @@ const Page = () => {
                         height={200}
                         className="w-full h-auto object-contain max-w-full"
                         style={{
-                          maxHeight: '50vh',
-                          minHeight: '200px'
+                          maxHeight: '60vh',
+                          minHeight: '250px'
                         }}
                       />
                     )}
@@ -1231,16 +1231,16 @@ const Page = () => {
             </div>
 
             {/* Mobile Bottom Logo and Message */}
-            <div className="absolute bottom-2 xs:bottom-3 sm:bottom-4 left-2 xs:left-3 sm:left-4 right-2 xs:right-3 sm:right-4 z-10">
+            <div className="absolute bottom-4 xs:bottom-6 sm:bottom-8 left-2 xs:left-3 sm:left-4 right-2 xs:right-3 sm:right-4 z-10">
               <div className="flex flex-col items-center justify-center">
                 {/* Logo */}
-                <div className="mb-1 xs:mb-2 sm:mb-3">
+                <div className="mb-2 xs:mb-3 sm:mb-4">
                   <Image
                     src="/logo-white-mobile.svg"
                     alt="Coordinated Living Logo"
                     width={120}
                     height={40}
-                    className="w-8 xs:w-10 sm:w-12 md:w-16 h-auto"
+                    className="w-10 xs:w-12 sm:w-16 md:w-20 h-auto"
                   />
                 </div>
                 
