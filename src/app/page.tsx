@@ -218,6 +218,9 @@ const Page = () => {
   // Ultra-wide screen detection - Optimized to reduce flickering
   const [isUltraWide, setIsUltraWide] = useState(false);
   
+  // Mobile detection
+  const [isMobile, setIsMobile] = useState(false);
+  
   const mobileItems = ['ABOUT ME', 'POST', 'ASK ME A QUESTION', 'JOIN OUR CHANNEL', 'GUIDES', 'POUR INTO MY CUP', 'TERMS AND CONDITIONS'];
   
   // Mobile navigation state
@@ -261,9 +264,14 @@ const Page = () => {
   useEffect(() => {
     const checkScreenSize = () => {
       const newIsUltraWide = window.innerWidth >= 1920;
+      const newIsMobile = window.innerWidth < 1280; // xl breakpoint
+      
       // Only update state if it actually changed
       if (newIsUltraWide !== isUltraWide) {
         setIsUltraWide(newIsUltraWide);
+      }
+      if (newIsMobile !== isMobile) {
+        setIsMobile(newIsMobile);
       }
     };
     
@@ -282,7 +290,32 @@ const Page = () => {
       window.removeEventListener('resize', debouncedCheckScreenSize);
       clearTimeout(timeoutId);
     };
-  }, [isUltraWide]);
+  }, [isUltraWide, isMobile]);
+
+  // Prevent scrolling on mobile devices
+  useEffect(() => {
+    if (isMobile && experienceVisible) {
+      // Disable scrolling
+      document.body.style.overflow = 'hidden';
+      document.body.style.position = 'fixed';
+      document.body.style.width = '100%';
+      document.body.style.height = '100%';
+    } else {
+      // Re-enable scrolling
+      document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.width = '';
+      document.body.style.height = '';
+    }
+
+    // Cleanup on unmount
+    return () => {
+      document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.width = '';
+      document.body.style.height = '';
+    };
+  }, [isMobile, experienceVisible]);
 
   // Animate terms modal entrance
   useEffect(() => {
@@ -841,7 +874,10 @@ const Page = () => {
 
 
   return (
-    <div ref={pageRef} className="relative ">
+    <div ref={pageRef} className="relative" style={{ 
+      overflow: isMobile && experienceVisible ? 'hidden' : 'auto',
+      height: isMobile && experienceVisible ? '100vh' : 'auto'
+    }}>
       {/* Experience page hidden behind */}
       {experienceVisible && ( 
         <div
@@ -849,7 +885,7 @@ const Page = () => {
           className="bg-black relative overflow-hidden workspace-bg"
         >
           {/* Mobile Background */}
-          <div className="xl:hidden absolute inset-0">
+          <div className="xl:hidden absolute inset-0" style={{ overflow: 'hidden' }}>
             <Image
               src="/mobile-background.webp"
               alt="Mobile Background"
