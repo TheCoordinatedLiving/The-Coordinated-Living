@@ -944,12 +944,17 @@ const Page = () => {
             
             {/* Mobile Noticeboard Post */}
             <div className="absolute top-1/2 transform -translate-y-1/2 left-2 xs:left-3 sm:left-4 right-2 xs:right-3 sm:right-4 z-10">
-              <div className="relative flex items-center justify-center">
+              <div className="relative flex items-center justify-center" style={{ minHeight: '280px' }}>
                 {/* Left Chevron */}
                 <button 
-                  className="w-6 h-6 xs:w-7 xs:h-7 sm:w-8 sm:h-8 md:w-10 md:h-10 bg-white rounded-full flex items-center justify-center shadow-lg absolute left-0 top-1/2 transform -translate-y-1/2 cursor-pointer hover:bg-gray-100 transition-colors duration-200 touch-manipulation"
+                  className="w-6 h-6 xs:w-7 xs:h-7 sm:w-8 sm:h-8 md:w-10 md:h-10 bg-white rounded-full flex items-center justify-center shadow-lg absolute left-0 cursor-pointer hover:bg-gray-100 transition-colors duration-200 touch-manipulation"
                   onClick={() => handleMobileNav('prev')}
-                  style={{ minWidth: '44px', minHeight: '44px' }}
+                  style={{ 
+                    minWidth: '44px', 
+                    minHeight: '44px',
+                    top: '50%',
+                    transform: 'translateY(-50%)'
+                  }}
                 >
                   <svg width="12" height="12" className="xs:w-3 xs:h-3 sm:w-4 sm:h-4 md:w-5 md:h-5" viewBox="0 0 24 24" fill="none" stroke="black" strokeWidth="2">
                     <polyline points="15,18 9,12 15,6"></polyline>
@@ -1217,9 +1222,14 @@ const Page = () => {
                 
                 {/* Right Chevron */}
                 <button 
-                  className="w-6 h-6 xs:w-7 xs:h-7 sm:w-8 sm:h-8 md:w-10 md:h-10 bg-white rounded-full flex items-center justify-center shadow-lg absolute right-0 top-1/2 transform -translate-y-1/2 cursor-pointer hover:bg-gray-100 transition-colors duration-200 touch-manipulation"
+                  className="w-6 h-6 xs:w-7 xs:h-7 sm:w-8 sm:h-8 md:w-10 md:h-10 bg-white rounded-full flex items-center justify-center shadow-lg absolute right-0 cursor-pointer hover:bg-gray-100 transition-colors duration-200 touch-manipulation"
                   onClick={() => handleMobileNav('next')}
-                  style={{ minWidth: '44px', minHeight: '44px' }}
+                  style={{ 
+                    minWidth: '44px', 
+                    minHeight: '44px',
+                    top: '50%',
+                    transform: 'translateY(-50%)'
+                  }}
                 >
                   <svg width="12" height="12" className="xs:w-3 xs:h-3 sm:w-4 sm:h-4 md:w-5 md:h-5" viewBox="0 0 24 24" fill="none" stroke="black" strokeWidth="2">
                     <polyline points="9,18 15,12 9,6"></polyline>
