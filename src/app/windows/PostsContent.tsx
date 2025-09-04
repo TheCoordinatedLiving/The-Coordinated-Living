@@ -41,7 +41,6 @@ const PostModal = ({
   onShare, 
   currentIndex, 
   totalPosts,
-  isSharing,
   showShareOptions,
   setShowShareOptions
 }: { 
@@ -327,7 +326,7 @@ const PostsContent = () => {
           setToastMessage('Post content copied to clipboard!');
           setShowToast(true);
           setTimeout(() => setShowToast(false), 3000);
-        } catch (clipboardError) {
+        } catch {
           setToastMessage('Unable to copy content. Please copy manually.');
           setShowToast(true);
           setTimeout(() => setShowToast(false), 3000);
