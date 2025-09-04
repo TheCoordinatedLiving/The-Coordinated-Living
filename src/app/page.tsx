@@ -1191,11 +1191,11 @@ const Page = () => {
                           className="fixed rounded-t-3xl"
                           style={{ 
                             backgroundColor: '#2481C2',
-                            top: '-50px',
+                            top: '-80px',
                             left: '50%',
                             transform: 'translateX(-50%)',
                             width: '100vw',
-                            height: 'calc(100vh + 50px)',
+                            height: 'calc(100vh + 80px)',
                             zIndex: 10
                           }}
                         >
