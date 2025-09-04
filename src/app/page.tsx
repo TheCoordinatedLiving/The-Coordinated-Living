@@ -846,39 +846,11 @@ const Page = () => {
       {experienceVisible && ( 
         <div
           ref={experienceRef}
-          className="bg-black relative overflow-hidden workspace-bg"
+          className="bg-white relative overflow-hidden workspace-bg"
         >
           {/* Mobile Background */}
-          <div className="xl:hidden absolute inset-0">
-            <Image
-              src="/mobile-background.webp"
-              alt="Mobile Background"
-              fill
-              className="object-cover"
-              priority
-            />
-            {/* Glass Blur Overlay */}
-            <div 
-              className="absolute inset-0"
-              style={{ 
-                backgroundColor: 'rgba(0, 0, 0, 0.3)',
-                backdropFilter: 'blur(20px)',
-                WebkitBackdropFilter: 'blur(20px)'
-              }}
-            />
+          <div className="xl:hidden absolute inset-0 bg-white">
             
-            {/* Mobile Navigation */}
-            <div className="absolute top-12 xs:top-16 sm:top-20 md:top-24 left-2 xs:left-3 sm:left-4 right-2 xs:right-3 sm:right-4 z-10">
-              <div className="relative flex items-center justify-center px-1 xs:px-2 sm:px-3 md:px-4 py-1 xs:py-2 sm:py-3 md:py-4">
-                {/* Active Item Only */}
-                <span 
-                  className="text-4xl xs:text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-medium text-white opacity-100 transition-all duration-500 leading-tight text-center"
-                  style={{ fontFamily: 'Amita', textAlign: 'center', width: '100%' }}
-                >
-                  {activeMobileItem}
-                </span>
-              </div>
-            </div>
             
             {/* Mobile Welcome Card */}
             {showWelcomeModal && (
@@ -1196,16 +1168,28 @@ const Page = () => {
                           </div>
                         </div>
                       </div>
+                    ) : activeMobileItem === 'ABOUT ME' ? (
+                      <div className="w-full h-full flex flex-col">
+                        {/* Banner Image with ABOUT ME text */}
+                        <div className="relative w-full" style={{ height: '200px', width: '100vw', marginLeft: 'calc(-50vw + 50%)', marginRight: 'calc(-50vw + 50%)', marginTop: 'calc(-50vh + 50%)', position: 'absolute', top: 0 }}>
+                          <Image
+                            src="/about-me-mobile-banner.png"
+                            alt="About Me Banner"
+                            fill
+                            className="object-cover"
+                          />
+                          {/* ABOUT ME text overlay */}
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <h1 className="text-white text-2xl font-bold" style={{ fontFamily: 'Amita, serif' }}>
+                              ABOUT ME
+                            </h1>
+                          </div>
+                        </div>
+                      </div>
                     ) : (
                       <Image
-                        src={
-                          activeMobileItem === 'ABOUT ME' ? '/about-me-mobile.svg' :
-                          '/new-post-mobile.svg'
-                        }
-                        alt={
-                          activeMobileItem === 'ABOUT ME' ? 'About Me' :
-                          'New Post'
-                        }
+                        src="/new-post-mobile.svg"
+                        alt="New Post"
                         width={300}
                         height={200}
                         className="w-full h-auto object-contain max-w-full"
@@ -1240,28 +1224,6 @@ const Page = () => {
 
             </div>
 
-            {/* Mobile Bottom Logo and Message */}
-            <div className="absolute bottom-4 xs:bottom-6 sm:bottom-8 left-2 xs:left-3 sm:left-4 right-2 xs:right-3 sm:right-4 z-10">
-              <div className="flex flex-col items-center justify-center">
-                {/* Logo */}
-                <div className="mb-2 xs:mb-3 sm:mb-4">
-                  <Image
-                    src="/logo-white-mobile.svg"
-                    alt="Coordinated Living Logo"
-                    width={120}
-                    height={40}
-                    className="w-10 xs:w-12 sm:w-16 md:w-20 h-auto"
-                  />
-                </div>
-                
-                {/* Message */}
-                <div className="text-center px-2">
-                  <p className="text-white text-xs xs:text-sm sm:text-base font-medium leading-tight" style={{ fontFamily: 'Roboto, sans-serif' }}>
-                    View This On A Laptop Or Desktop To Have Full Experience
-                  </p>
-                </div>
-              </div>
-            </div>
 
           </div>
           
