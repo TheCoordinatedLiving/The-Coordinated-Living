@@ -3170,14 +3170,14 @@ const Page = () => {
         </div>
       )}
 
-      {/* Share options dropdown - positioned outside modal to prevent blinking */}
+      {/* Share options dropdown - positioned in top right corner */}
       {showShareOptions && showPostModal && (
-        <div className="fixed inset-0 z-[60] pointer-events-none">
+        <div className="fixed inset-0 z-[10000] pointer-events-none">
           <div 
             className="absolute inset-0 pointer-events-auto"
             onClick={() => setShowShareOptions(false)}
           />
-          <div className="absolute bottom-0 left-0 right-0 flex justify-center pb-8 pointer-events-auto">
+          <div className="absolute top-20 right-6 pointer-events-auto">
             <div 
               className="w-48 bg-white rounded-md shadow-lg border border-gray-200"
               onClick={(e) => e.stopPropagation()}
