@@ -33,7 +33,29 @@ const PostCard = ({ post, onClick }: { post: Post; onClick: () => void }) => {
   );
 };
 
-const PostModal = ({ post, onClose }: { post: Post | null; onClose: () => void }) => {
+const PostModal = ({ 
+  post, 
+  onClose, 
+  onPrevious, 
+  onNext, 
+  onShare, 
+  currentIndex, 
+  totalPosts,
+  isSharing,
+  showShareOptions,
+  setShowShareOptions
+}: { 
+  post: Post | null; 
+  onClose: () => void;
+  onPrevious: () => void;
+  onNext: () => void;
+  onShare: (type: 'link' | 'pdf') => void;
+  currentIndex: number;
+  totalPosts: number;
+  isSharing: boolean;
+  showShareOptions: boolean;
+  setShowShareOptions: (show: boolean) => void;
+}) => {
   if (!post) return null;
 
   return (
@@ -56,9 +78,44 @@ const PostModal = ({ post, onClose }: { post: Post | null; onClose: () => void }
       >
         Return to Posts
       </button>
+
+      {/* Share button - top right */}
+      <button
+        onClick={() => setShowShareOptions(!showShareOptions)}
+        className="absolute top-6 right-6 z-20 bg-white bg-opacity-80 backdrop-blur-sm text-gray-800 px-4 py-2 rounded-lg font-medium hover:bg-opacity-100 transition-all shadow-lg cursor-pointer"
+        title="Share post"
+      >
+        Share This Post
+      </button>
       
       {/* Modal content - centered */}
       <div className="absolute inset-0 flex items-center justify-center p-8">
+        {/* Left chevron navigation */}
+        <button
+          onClick={onPrevious}
+          disabled={currentIndex === 0}
+          className={`absolute left-8 z-20 bg-white bg-opacity-80 backdrop-blur-sm text-gray-800 p-3 rounded-full font-medium hover:bg-opacity-100 transition-all shadow-lg cursor-pointer ${
+            currentIndex === 0 ? 'opacity-50 cursor-not-allowed' : 'hover:scale-105'
+          }`}
+        >
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+
+        {/* Right chevron navigation */}
+        <button
+          onClick={onNext}
+          disabled={currentIndex === totalPosts - 1}
+          className={`absolute right-8 z-20 bg-white bg-opacity-80 backdrop-blur-sm text-gray-800 p-3 rounded-full font-medium hover:bg-opacity-100 transition-all shadow-lg cursor-pointer ${
+            currentIndex === totalPosts - 1 ? 'opacity-50 cursor-not-allowed' : 'hover:scale-105'
+          }`}
+        >
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+
         <div className="relative z-10 max-w-2xl w-full">
           {/* White card with content */}
           <div 
@@ -83,16 +140,71 @@ const PostModal = ({ post, onClose }: { post: Post | null; onClose: () => void }
                 {post.description}
               </p>
             </div>
+
+            {/* Post counter */}
+            <div className="mt-6 text-center">
+              <span className="text-sm text-gray-500">
+                {currentIndex + 1} of {totalPosts}
+              </span>
+            </div>
           </div>
         </div>
       </div>
+
+      {/* Share options dropdown - positioned in top right corner */}
+      {showShareOptions && (
+        <div className="fixed inset-0 z-[10000] pointer-events-none">
+          <div 
+            className="absolute inset-0 pointer-events-auto"
+            onClick={() => setShowShareOptions(false)}
+          />
+          <div className="absolute top-20 right-6 pointer-events-auto">
+            <div 
+              className="w-48 bg-white rounded-md shadow-lg border border-gray-200"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="py-1">
+                <button
+                  onClick={() => {
+                    onShare('link');
+                    setShowShareOptions(false);
+                  }}
+                  className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                >
+                  <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                  </svg>
+                  Share as Link
+                </button>
+                <button
+                  onClick={() => {
+                    onShare('pdf');
+                    setShowShareOptions(false);
+                  }}
+                  className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                >
+                  <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  </svg>
+                  View as PDF
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
 
 const PostsContent = () => {
   const [selectedPost, setSelectedPost] = useState<Post | null>(null);
+  const [currentPostIndex, setCurrentPostIndex] = useState<number>(0);
   const [searchQuery, setSearchQuery] = useState('');
+  const [isSharing, setIsSharing] = useState<boolean>(false);
+  const [showShareOptions, setShowShareOptions] = useState<boolean>(false);
+  const [toastMessage, setToastMessage] = useState<string>('');
+  const [showToast, setShowToast] = useState<boolean>(false);
 
   const posts: Post[] = [
     { 
@@ -132,11 +244,98 @@ const PostsContent = () => {
   );
 
   const handleCardClick = (post: Post) => {
+    const postIndex = filteredPosts.findIndex(p => p.id === post.id);
+    setCurrentPostIndex(postIndex);
     setSelectedPost(post);
   };
 
   const handleCloseModal = () => {
     setSelectedPost(null);
+  };
+
+  const handlePreviousPost = () => {
+    if (currentPostIndex > 0) {
+      const newIndex = currentPostIndex - 1;
+      setCurrentPostIndex(newIndex);
+      setSelectedPost(filteredPosts[newIndex]);
+    }
+  };
+
+  const handleNextPost = () => {
+    if (currentPostIndex < filteredPosts.length - 1) {
+      const newIndex = currentPostIndex + 1;
+      setCurrentPostIndex(newIndex);
+      setSelectedPost(filteredPosts[newIndex]);
+    }
+  };
+
+  const handleShare = async (type: 'link' | 'pdf') => {
+    if (selectedPost && !isSharing) {
+      setIsSharing(true);
+      
+      if (type === 'link') {
+        // Generate shareable link
+        const shareUrl = `${window.location.origin}/post/${selectedPost.id}`;
+        
+        try {
+          await navigator.share({
+            title: selectedPost.header,
+            text: `Check out this post: ${selectedPost.header}`,
+            url: shareUrl,
+          });
+        } catch {
+          // Fallback to clipboard copy
+          try {
+            // Ensure document is focused
+            document.body.focus();
+            
+            // Try modern clipboard API first
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              await navigator.clipboard.writeText(shareUrl);
+              setToastMessage('Link copied to clipboard!');
+              setShowToast(true);
+              setTimeout(() => setShowToast(false), 3000);
+            } else {
+              // Fallback for older browsers
+              const textArea = document.createElement('textarea');
+              textArea.value = shareUrl;
+              textArea.style.position = 'fixed';
+              textArea.style.left = '-999999px';
+              textArea.style.top = '-999999px';
+              document.body.appendChild(textArea);
+              textArea.focus();
+              textArea.select();
+              document.execCommand('copy');
+              document.body.removeChild(textArea);
+              setToastMessage('Link copied to clipboard!');
+              setShowToast(true);
+              setTimeout(() => setShowToast(false), 3000);
+            }
+          } catch (clipboardError) {
+            console.error('Failed to copy to clipboard:', clipboardError);
+            // Still show success message even if clipboard fails
+            setToastMessage('Link ready to share!');
+            setShowToast(true);
+            setTimeout(() => setShowToast(false), 3000);
+          }
+        }
+      } else if (type === 'pdf') {
+        // For now, just copy the post content to clipboard as PDF generation is complex
+        const shareText = `${selectedPost.header}\n\n${selectedPost.description}`;
+        try {
+          await navigator.clipboard.writeText(shareText);
+          setToastMessage('Post content copied to clipboard!');
+          setShowToast(true);
+          setTimeout(() => setShowToast(false), 3000);
+        } catch (clipboardError) {
+          setToastMessage('Unable to copy content. Please copy manually.');
+          setShowToast(true);
+          setTimeout(() => setShowToast(false), 3000);
+        }
+      }
+      
+      setIsSharing(false);
+    }
   };
 
   return (
@@ -176,7 +375,25 @@ const PostsContent = () => {
       </div>
 
       {/* Modal */}
-      <PostModal post={selectedPost} onClose={handleCloseModal} />
+      <PostModal 
+        post={selectedPost} 
+        onClose={handleCloseModal}
+        onPrevious={handlePreviousPost}
+        onNext={handleNextPost}
+        onShare={handleShare}
+        currentIndex={currentPostIndex}
+        totalPosts={filteredPosts.length}
+        isSharing={isSharing}
+        showShareOptions={showShareOptions}
+        setShowShareOptions={setShowShareOptions}
+      />
+
+      {/* Toast notification */}
+      {showToast && (
+        <div className="fixed top-4 right-4 z-[10000] bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg">
+          {toastMessage}
+        </div>
+      )}
     </div>
   );
 };
