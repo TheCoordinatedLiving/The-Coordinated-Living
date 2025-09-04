@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
+import PostTemplate from '../../components/PostTemplate';
 
 interface Post {
   id: number;
-  header: string;
-  description: string;
+  title: string;
+  leftContent: React.ReactNode;
+  rightContent: React.ReactNode;
+  bottomRightContent: React.ReactNode;
   x: number;
   y: number;
 }
@@ -16,8 +19,21 @@ const truncateText = (text: string, wordCount: number): string => {
 };
 
 const PostCard = ({ post, onClick }: { post: Post; onClick: () => void }) => {
-  const truncatedTitle = truncateText(post.header, 3);
-  const truncatedDescription = truncateText(post.description, 6);
+  const truncatedTitle = truncateText(post.title, 3);
+  
+  // Extract text from React nodes for preview
+  const extractText = (node: React.ReactNode): string => {
+    if (typeof node === 'string') return node;
+    if (typeof node === 'number') return node.toString();
+    if (Array.isArray(node)) return node.map(extractText).join(' ');
+    if (node && typeof node === 'object' && 'props' in node) {
+      const props = node as { props: { children?: React.ReactNode } };
+      return extractText(props.props.children);
+    }
+    return '';
+  };
+  
+  const previewText = extractText(post.leftContent).substring(0, 100) + '...';
 
   return (
     <div 
@@ -27,7 +43,7 @@ const PostCard = ({ post, onClick }: { post: Post; onClick: () => void }) => {
     >
       <div>
         <h3 className="font-semibold text-lg mb-1 text-black">{truncatedTitle}</h3>
-        <p className="text-sm text-black">{truncatedDescription}</p>
+        <p className="text-sm text-black">{previewText}</p>
       </div>
     </div>
   );
@@ -42,7 +58,8 @@ const PostModal = ({
   currentIndex, 
   totalPosts,
   showShareOptions,
-  setShowShareOptions
+  setShowShareOptions,
+  postTemplateRef
 }: { 
   post: Post | null; 
   onClose: () => void;
@@ -54,6 +71,7 @@ const PostModal = ({
   isSharing: boolean;
   showShareOptions: boolean;
   setShowShareOptions: (show: boolean) => void;
+  postTemplateRef: React.RefObject<HTMLDivElement>;
 }) => {
   if (!post) return null;
 
@@ -115,37 +133,19 @@ const PostModal = ({
           </svg>
         </button>
 
-        <div className="relative z-10 max-w-2xl w-full">
-          {/* White card with content */}
+        <div className="relative z-10 w-full xl:max-w-2xl">
           <div 
-            className="p-8 text-center"
-            style={{
-              backgroundColor: '#FFFFFF',
-              borderRadius: '0px',
-              boxShadow: '10.23px 10.23px 0px rgba(0, 0, 0, 0.25)'
-            }}
+            className="bg-white rounded-lg shadow-2xl overflow-hidden post-modal-content post-modal-container"
+            ref={postTemplateRef}
           >
-            {/* Post Title */}
-            <div className="mb-6">
-              <h1 className="text-xl font-bold text-gray-900 mb-2 leading-tight">
-                {post.header}
-              </h1>
-              <div className="w-16 h-0.5 bg-gray-900 mx-auto"></div>
-            </div>
-            
-            {/* Post Content */}
-            <div className="text-left">
-              <p className="text-gray-700 leading-relaxed">
-                {post.description}
-              </p>
-            </div>
-
-            {/* Post counter */}
-            <div className="mt-6 text-center">
-              <span className="text-sm text-gray-500">
-                {currentIndex + 1} of {totalPosts}
-              </span>
-            </div>
+            <PostTemplate
+              title={post.title}
+              currentPage={currentIndex + 1}
+              totalPages={totalPosts}
+              leftContent={post.leftContent}
+              rightContent={post.rightContent}
+              bottomRightContent={post.bottomRightContent}
+            />
           </div>
         </div>
       </div>
@@ -204,43 +204,150 @@ const PostsContent = () => {
   const [showShareOptions, setShowShareOptions] = useState<boolean>(false);
   const [toastMessage, setToastMessage] = useState<string>('');
   const [showToast, setShowToast] = useState<boolean>(false);
+  const postTemplateRef = useRef<HTMLDivElement>(null);
 
   const posts: Post[] = [
     { 
       id: 1, 
-      header: 'A THOUSAND TIMES I FAILED', 
-      description: '"A thousand times I failed, still your mercy remains, should I stumble out here still I\'m caught in your grace." This Hillsong lyric has always echoed in my heart, and its truth resonates even stronger today. For years, I pursued other paths, pouring tireless effort into fields he hadn\'t called me to, only to find no lasting fruit. That rollercoaster of emotions, the unpleasant experiences, the endless accusations and judgments thrown around – they\'re hallmarks of a mind out of alignment. Want to know the root cause? It\'s simply a lack of trust in the Father. No matter how you rationalize it, we constantly try to force a fit where there isn\'t one. But in Christ, we step into the true identity the Father created for us. This identity comes with specific tasks, assignments, and responsibilities, all of which we are perfectly equipped for. It\'s there we discover an unexplainable peace, joy, and confidence. When we align ourselves with God\'s purpose for our lives, we find a peace that surpasses all understanding. This isn\'t about perfection – it\'s about walking in the identity He has given us, trusting that He has equipped us for every good work.', 
+      title: 'A THOUSAND TIMES I FAILED', 
+      leftContent: (
+        <>
+          <p className="text-base leading-relaxed" style={{ color: "#000000" }}>
+            "A thousand times I failed, still your mercy remains, should I stumble out here still I'm caught in your grace." This Hillsong lyric has always echoed in my heart, and its truth resonates even stronger today.
+          </p>
+          <p className="text-base leading-relaxed" style={{ color: "#000000" }}>
+            For years, I pursued other paths, pouring tireless effort into fields he hadn't called me to, only to find no lasting fruit. That rollercoaster of emotions, the unpleasant experiences, the endless accusations and judgments thrown around – they're hallmarks of a mind out of alignment.
+          </p>
+        </>
+      ),
+      rightContent: (
+        <>
+          <p className="text-base leading-relaxed" style={{ color: "#000000" }}>
+            Want to know the root cause? It's simply a lack of trust in the Father. No matter how you rationalize it, we constantly try to force a fit where there isn't one.
+          </p>
+          <p className="text-base leading-relaxed" style={{ color: "#000000" }}>
+            But in Christ, we step into the true identity the Father created for us. This identity comes with specific tasks, assignments, and responsibilities, all of which we are perfectly equipped for. It's there we discover an unexplainable peace, joy, and confidence.
+          </p>
+        </>
+      ),
+      bottomRightContent: (
+        <p className="text-base leading-relaxed" style={{ color: "#000000" }}>
+          When we align ourselves with God's purpose for our lives, we find a peace that surpasses all understanding. This isn't about perfection – it's about walking in the identity He has given us, trusting that He has equipped us for every good work.
+        </p>
+      ),
       x: 0, 
       y: 0 
     },
     { 
       id: 2, 
-      header: 'IN ALL THINGS GOD WORKS', 
-      description: '"In all things God works for the good of those who love him." This promise from Romans 8:28 has been my anchor through many storms. When life seems chaotic and uncertain, this truth reminds me that God is always at work. Too often we try to control every aspect of our lives, forgetting that we serve a God who sees the bigger picture. Our limited perspective can\'t comprehend the intricate ways He weaves our experiences together for His glory and our good. Trusting God doesn\'t mean we become passive or indifferent to our circumstances. Instead, it means we actively seek His will while resting in His sovereignty. We pray, we work, we serve, but we do so with open hands. The peace that comes from this kind of trust is unlike anything the world can offer. It\'s not dependent on circumstances, but on the unchanging character of our Heavenly Father who loves us beyond measure. As we learn to trust God more deeply, we begin to see His hand in every detail of our lives. What once seemed like random events become part of a beautiful tapestry He\'s weaving for our good and His glory.', 
+      title: 'IN ALL THINGS GOD WORKS', 
+      leftContent: (
+        <>
+          <p className="text-base leading-relaxed" style={{ color: "#000000" }}>
+            "In all things God works for the good of those who love him." This promise from Romans 8:28 has been my anchor through many storms. When life seems chaotic and uncertain, this truth reminds me that God is always at work.
+          </p>
+          <p className="text-base leading-relaxed" style={{ color: "#000000" }}>
+            Too often we try to control every aspect of our lives, forgetting that we serve a God who sees the bigger picture. Our limited perspective can't comprehend the intricate ways He weaves our experiences together for His glory and our good.
+          </p>
+        </>
+      ),
+      rightContent: (
+        <>
+          <p className="text-base leading-relaxed" style={{ color: "#000000" }}>
+            Trusting God doesn't mean we become passive or indifferent to our circumstances. Instead, it means we actively seek His will while resting in His sovereignty. We pray, we work, we serve, but we do so with open hands.
+          </p>
+          <p className="text-base leading-relaxed" style={{ color: "#000000" }}>
+            The peace that comes from this kind of trust is unlike anything the world can offer. It's not dependent on circumstances, but on the unchanging character of our Heavenly Father who loves us beyond measure.
+          </p>
+        </>
+      ),
+      bottomRightContent: (
+        <p className="text-base leading-relaxed" style={{ color: "#000000" }}>
+          As we learn to trust God more deeply, we begin to see His hand in every detail of our lives. What once seemed like random events become part of a beautiful tapestry He's weaving for our good and His glory.
+        </p>
+      ),
       x: 280, 
       y: 0 
     },
     { 
       id: 3, 
-      header: 'BE STILL AND KNOW', 
-      description: '"Be still and know that I am God." These words from Psalm 46:10 have become increasingly precious to me in our fast-paced world. In the midst of constant noise and endless demands, God calls us to stillness. Stillness isn\'t just about physical quiet, though that\'s important. It\'s about quieting our hearts and minds before the Lord, allowing His peace to wash over us and His voice to be heard above the chaos. In those moments of stillness, we remember who God is and who we are in Him. We\'re reminded that He is sovereign, He is good, and He is working all things together for our good. The world tells us to hustle, to strive, to never stop moving. But God invites us to rest in Him, to find our strength in quietness and trust. This is the counter-cultural way of the Kingdom. As we practice stillness, we discover that God\'s presence is our greatest treasure. In Him we find rest for our souls, peace for our minds, and strength for our journey.', 
+      title: 'BE STILL AND KNOW', 
+      leftContent: (
+        <>
+          <p className="text-base leading-relaxed" style={{ color: "#000000" }}>
+            "Be still and know that I am God." These words from Psalm 46:10 have become increasingly precious to me in our fast-paced world. In the midst of constant noise and endless demands, God calls us to stillness.
+          </p>
+          <p className="text-base leading-relaxed" style={{ color: "#000000" }}>
+            Stillness isn't just about physical quiet, though that's important. It's about quieting our hearts and minds before the Lord, allowing His peace to wash over us and His voice to be heard above the chaos.
+          </p>
+        </>
+      ),
+      rightContent: (
+        <>
+          <p className="text-base leading-relaxed" style={{ color: "#000000" }}>
+            In those moments of stillness, we remember who God is and who we are in Him. We're reminded that He is sovereign, He is good, and He is working all things together for our good.
+          </p>
+          <p className="text-base leading-relaxed" style={{ color: "#000000" }}>
+            The world tells us to hustle, to strive, to never stop moving. But God invites us to rest in Him, to find our strength in quietness and trust. This is the counter-cultural way of the Kingdom.
+          </p>
+        </>
+      ),
+      bottomRightContent: (
+        <p className="text-base leading-relaxed" style={{ color: "#000000" }}>
+          As we practice stillness, we discover that God's presence is our greatest treasure. In Him we find rest for our souls, peace for our minds, and strength for our journey.
+        </p>
+      ),
       x: 0, 
       y: 200 
     },
     { 
       id: 4, 
-      header: 'A CHEERFUL GIFT', 
-      description: 'Having my cuppa on my table is one sure comfort as I get work done. Your support would be a lovely way to keep it full every time I sit at my desk, and it genuinely helps me sustainably run this platform. Thank you for your kindness!', 
+      title: 'A CHEERFUL GIFT', 
+      leftContent: (
+        <p className="text-base leading-relaxed" style={{ color: "#000000" }}>
+          Having my cuppa on my table is one sure comfort as I get work done. Your support would be a lovely way to keep it full every time I sit at my desk, and it genuinely helps me sustainably run this platform.
+        </p>
+      ),
+      rightContent: (
+        <p className="text-base leading-relaxed" style={{ color: "#000000" }}>
+          Thank you for your kindness! Your generosity helps me continue creating content that encourages and uplifts others in their faith journey.
+        </p>
+      ),
+      bottomRightContent: (
+        <p className="text-base leading-relaxed" style={{ color: "#000000" }}>
+          Every contribution, no matter the size, makes a difference in keeping this platform running and accessible to all who need encouragement.
+        </p>
+      ),
       x: 280, 
       y: 200 
     },
   ];
 
   // Filter posts based on search query
-  const filteredPosts = posts.filter(post => 
-    post.header.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    post.description.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const filteredPosts = posts.filter(post => {
+    const titleMatch = post.title.toLowerCase().includes(searchQuery.toLowerCase());
+    
+    // Extract text from React nodes for search
+    const extractText = (node: React.ReactNode): string => {
+      if (typeof node === 'string') return node;
+      if (typeof node === 'number') return node.toString();
+      if (Array.isArray(node)) return node.map(extractText).join(' ');
+      if (node && typeof node === 'object' && 'props' in node) {
+        const props = node as { props: { children?: React.ReactNode } };
+        return extractText(props.props.children);
+      }
+      return '';
+    };
+    
+    const leftContentText = extractText(post.leftContent).toLowerCase();
+    const rightContentText = extractText(post.rightContent).toLowerCase();
+    const bottomContentText = extractText(post.bottomRightContent).toLowerCase();
+    
+    return titleMatch || 
+           leftContentText.includes(searchQuery.toLowerCase()) ||
+           rightContentText.includes(searchQuery.toLowerCase()) ||
+           bottomContentText.includes(searchQuery.toLowerCase());
+  });
 
   const handleCardClick = (post: Post) => {
     const postIndex = filteredPosts.findIndex(p => p.id === post.id);
@@ -278,8 +385,8 @@ const PostsContent = () => {
         
         try {
           await navigator.share({
-            title: selectedPost.header,
-            text: `Check out this post: ${selectedPost.header}`,
+            title: selectedPost.title,
+            text: `Check out this post: ${selectedPost.title}`,
             url: shareUrl,
           });
         } catch {
@@ -319,8 +426,23 @@ const PostsContent = () => {
           }
         }
       } else if (type === 'pdf') {
-        // For now, just copy the post content to clipboard as PDF generation is complex
-        const shareText = `${selectedPost.header}\n\n${selectedPost.description}`;
+        // Extract text from React nodes for PDF content
+        const extractText = (node: React.ReactNode): string => {
+          if (typeof node === 'string') return node;
+          if (typeof node === 'number') return node.toString();
+          if (Array.isArray(node)) return node.map(extractText).join(' ');
+          if (node && typeof node === 'object' && 'props' in node) {
+            const props = node as { props: { children?: React.ReactNode } };
+            return extractText(props.props.children);
+          }
+          return '';
+        };
+        
+        const leftText = extractText(selectedPost.leftContent);
+        const rightText = extractText(selectedPost.rightContent);
+        const bottomText = extractText(selectedPost.bottomRightContent);
+        
+        const shareText = `${selectedPost.title}\n\n${leftText}\n\n${rightText}\n\n${bottomText}`;
         try {
           await navigator.clipboard.writeText(shareText);
           setToastMessage('Post content copied to clipboard!');
@@ -385,6 +507,7 @@ const PostsContent = () => {
         isSharing={isSharing}
         showShareOptions={showShareOptions}
         setShowShareOptions={setShowShareOptions}
+        postTemplateRef={postTemplateRef}
       />
 
       {/* Toast notification */}
