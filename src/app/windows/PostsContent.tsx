@@ -71,7 +71,7 @@ const PostModal = ({
   isSharing: boolean;
   showShareOptions: boolean;
   setShowShareOptions: (show: boolean) => void;
-  postTemplateRef: React.RefObject<HTMLDivElement>;
+  postTemplateRef: React.RefObject<HTMLDivElement | null>;
 }) => {
   if (!post) return null;
 
