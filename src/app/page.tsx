@@ -3061,6 +3061,15 @@ const Page = () => {
             <span className="hidden xl:inline">Return to Desk</span>
           </button>
           
+          {/* Share button - top right */}
+          <button
+            onClick={() => setShowShareOptions(!showShareOptions)}
+            className="absolute top-6 right-6 z-20 bg-white bg-opacity-80 backdrop-blur-sm text-gray-800 px-4 py-2 rounded-lg font-medium hover:bg-opacity-100 transition-all shadow-lg cursor-pointer"
+            title="Share post"
+          >
+            Share This Post
+          </button>
+          
           {/* Post Template Content */}
           <div className="absolute inset-0 flex items-center justify-center p-4 xl:p-16 pt-24 xl:pt-16">
             {/* Left Navigation Button */}
@@ -3124,20 +3133,6 @@ const Page = () => {
                 />
               </div>
               
-              {/* Share button - outside template */}
-              <div 
-                className="flex justify-center mt-6 post-share-button"
-              >
-                <div className="relative">
-                  <button
-                    onClick={() => setShowShareOptions(!showShareOptions)}
-                    className="bg-white bg-opacity-80 backdrop-blur-sm text-gray-800 px-4 py-2 rounded-lg font-medium hover:bg-opacity-100 transition-all shadow-lg cursor-pointer"
-                    title="Share post"
-                  >
-                    Share This Post
-                  </button>
-                </div>
-              </div>
               
               {/* Mobile Pagination */}
               <div className="xl:hidden flex justify-center items-center mt-4 space-x-4">
