@@ -1684,6 +1684,111 @@ const Page = () => {
 
             </div>
 
+            {/* Floating Tab Bar - Mobile Only */}
+            <div className="md:hidden fixed bottom-6 left-1/2 transform -translate-x-1/2 z-50">
+              <div 
+                className="flex items-center space-x-2 px-4 py-3 rounded-full overflow-x-auto scrollbar-hide tab-bar-scroll"
+                style={{
+                  backgroundColor: '#2F4C6C',
+                  boxShadow: '0px 2.31px 13.88px rgba(0, 0, 0, 0.3)',
+                  width: '320px', // Increased width to show all 5 tabs fully
+                  maxWidth: '90vw'
+                }}
+              >
+                {mobileItems.map((item, index) => {
+                  const isActive = activeMobileItem === item;
+                  const iconMap = {
+                    'ABOUT ME': (
+                      <Image
+                        src="/about-tab.svg"
+                        alt="About Me"
+                        width={24}
+                        height={24}
+                        className={`w-6 h-6 tab-icon ${isActive ? 'active' : ''}`}
+                      />
+                    ),
+                    'POST': (
+                      <Image
+                        src="/post-tab.svg"
+                        alt="Post"
+                        width={24}
+                        height={24}
+                        className={`w-6 h-6 tab-icon ${isActive ? 'active' : ''}`}
+                      />
+                    ),
+                    'ASK ME A QUESTION': (
+                      <Image
+                        src="/ask-me-tab.svg"
+                        alt="Ask Me A Question"
+                        width={24}
+                        height={24}
+                        className={`w-6 h-6 tab-icon ${isActive ? 'active' : ''}`}
+                      />
+                    ),
+                    'JOIN OUR CHANNEL': (
+                      <Image
+                        src="/join-channel-tab.svg"
+                        alt="Join Our Channel"
+                        width={24}
+                        height={24}
+                        className={`w-6 h-6 tab-icon ${isActive ? 'active' : ''}`}
+                      />
+                    ),
+                    'GUIDES': (
+                      <Image
+                        src="/guides-tab.svg"
+                        alt="Guides"
+                        width={24}
+                        height={24}
+                        className={`w-6 h-6 tab-icon ${isActive ? 'active' : ''}`}
+                      />
+                    ),
+                    'POUR INTO MY CUP': (
+                      <Image
+                        src="/donation-tab.svg"
+                        alt="Pour Into My Cup"
+                        width={24}
+                        height={24}
+                        className={`w-6 h-6 tab-icon ${isActive ? 'active' : ''}`}
+                      />
+                    ),
+                    'TERMS AND CONDITIONS': (
+                      <Image
+                        src="/terms-tab.svg"
+                        alt="Terms And Conditions"
+                        width={24}
+                        height={24}
+                        className={`w-6 h-6 tab-icon ${isActive ? 'active' : ''}`}
+                      />
+                    )
+                  };
+
+                  return (
+                    <button
+                      key={item}
+                      onClick={() => {
+                        setActiveMobileItem(item);
+                        setCurrentMobileIndex(index);
+                      }}
+                      className={`flex items-center justify-center p-2 rounded-full transition-all duration-200 ${
+                        isActive 
+                          ? 'text-white' 
+                          : 'text-gray-400 hover:text-gray-300'
+                      }`}
+                      style={{
+                        backgroundColor: isActive ? 'rgba(255, 255, 255, 0.05)' : 'transparent',
+                        border: isActive ? '1px solid rgba(255, 255, 255, 0.05)' : 'none',
+                        width: '52px',
+                        height: '52px',
+                        flexShrink: 0 // Prevent tabs from shrinking
+                      }}
+                    >
+                      {iconMap[item as keyof typeof iconMap]}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
 
           </div>
           

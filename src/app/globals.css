@@ -782,6 +782,57 @@ img {
   display: none;  /* Safari and Chrome */
 }
 
+/* Floating Tab Bar Styles */
+.floating-tab-bar {
+  background-color: #2F4C6C;
+  border-radius: 9999px;
+  box-shadow: 0px 2.31px 13.88px rgba(0, 0, 0, 0.3);
+}
+
+.floating-tab-bar .active-tab {
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  color: white;
+}
+
+.floating-tab-bar .inactive-tab {
+  color: #9CA3AF;
+  transition: color 0.2s ease;
+}
+
+.floating-tab-bar .inactive-tab:hover {
+  color: #D1D5DB;
+}
+
+/* Tab Bar Scrolling Styles */
+.tab-bar-scroll {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+.tab-bar-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.tab-bar-scroll {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Tab Icon Styles */
+.tab-icon {
+  filter: brightness(0) saturate(100%) invert(62%) sepia(8%) saturate(464%) hue-rotate(202deg) brightness(95%) contrast(89%);
+  transition: filter 0.2s ease;
+}
+
+.tab-icon.active {
+  filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(0%) hue-rotate(93deg) brightness(103%) contrast(103%);
+}
+
+.tab-icon:hover {
+  filter: brightness(0) saturate(100%) invert(82%) sepia(8%) saturate(464%) hue-rotate(202deg) brightness(95%) contrast(89%);
+}
+
 /* Ensure tab bar is always visible on mobile devices */
 @media (max-width: 1279px) {
   .mobile-tab-bar {
