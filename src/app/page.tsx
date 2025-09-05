@@ -3306,49 +3306,165 @@ const Page = () => {
             </div>
             
             {/* Swipeable Guides Container */}
-            <div className="px-6 pb-6">
-              {/* Single Card */}
-              <div className="mb-6" style={{ minHeight: '400px' }}>
+            <div className="pb-6">
+              {/* Cards Container with Single Active Card */}
+              <div 
+                className="mb-6 relative overflow-hidden" 
+                style={{ minHeight: '400px' }}
+                onTouchStart={onTouchStart}
+                onTouchMove={onTouchMove}
+                onTouchEnd={onTouchEnd}
+              >
                 <div 
-                  className="relative overflow-hidden rounded-2xl bg-white flex items-center justify-center"
-                  style={{ height: '400px' }}
+                  className="flex transition-transform duration-300 ease-out" 
+                  style={{ 
+                    height: '400px',
+                    transform: `translateX(-${currentGuideIndex * (100 + 4)}%)`,
+                    gap: '16px'
+                  }}
                 >
-                  <Image
-                    src="/guide-cover-mobile.png"
-                    alt="Guide Cover"
-                    width={400}
-                    height={400}
-                    className="w-full h-full object-cover"
-                    style={{ 
-                      width: '100%', 
-                      height: '100%',
-                      objectFit: 'cover'
-                    }}
-                    onLoad={() => {
-                      console.log('Guide image loaded successfully');
-                    }}
-                    onError={(e) => {
-                      console.log('Guide image failed to load:', e);
-                    }}
-                  />
+                  {/* First Card */}
+                  <div className="flex-shrink-0 flex justify-center" style={{ width: '100vw' }}>
+                    <div 
+                      className="relative overflow-hidden rounded-2xl bg-white h-full"
+                      style={{ width: 'calc(100vw - 32px)' }}
+                    >
+                      <Image
+                        src="/guide-cover-mobile.png"
+                        alt="Guide Cover"
+                        width={400}
+                        height={400}
+                        className="w-full h-full object-cover"
+                        style={{ 
+                          width: '100%', 
+                          height: '100%',
+                          objectFit: 'cover'
+                        }}
+                        onLoad={() => {
+                          console.log('Guide image loaded successfully');
+                        }}
+                        onError={(e) => {
+                          console.log('Guide image failed to load:', e);
+                        }}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Second Card */}
+                  <div className="flex-shrink-0 flex justify-center" style={{ width: '100vw' }}>
+                    <div 
+                      className="relative overflow-hidden rounded-2xl bg-white h-full"
+                      style={{ width: 'calc(100vw - 32px)' }}
+                    >
+                      <Image
+                        src="/his-grace.png"
+                        alt="His Grace Guide"
+                        width={400}
+                        height={400}
+                        className="w-full h-full object-cover"
+                        style={{ 
+                          width: '100%', 
+                          height: '100%',
+                          objectFit: 'cover'
+                        }}
+                        onLoad={() => {
+                          console.log('Second guide image loaded successfully');
+                        }}
+                        onError={(e) => {
+                          console.log('Second guide image failed to load:', e);
+                        }}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Third Card */}
+                  <div className="flex-shrink-0 flex justify-center" style={{ width: '100vw' }}>
+                    <div 
+                      className="relative overflow-hidden rounded-2xl bg-white h-full"
+                      style={{ width: 'calc(100vw - 32px)' }}
+                    >
+                      <Image
+                        src="/Fhis-grace.png"
+                        alt="F His Grace Guide"
+                        width={400}
+                        height={400}
+                        className="w-full h-full object-cover"
+                        style={{ 
+                          width: '100%', 
+                          height: '100%',
+                          objectFit: 'cover'
+                        }}
+                        onLoad={() => {
+                          console.log('Third guide image loaded successfully');
+                        }}
+                        onError={(e) => {
+                          console.log('Third guide image failed to load:', e);
+                        }}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Fourth Card */}
+                  <div className="flex-shrink-0 flex justify-center" style={{ width: '100vw' }}>
+                    <div 
+                      className="relative overflow-hidden rounded-2xl bg-white h-full"
+                      style={{ width: 'calc(100vw - 32px)' }}
+                    >
+                      <Image
+                        src="/post-hero.png"
+                        alt="Post Hero Guide"
+                        width={400}
+                        height={400}
+                        className="w-full h-full object-cover"
+                        style={{ 
+                          width: '100%', 
+                          height: '100%',
+                          objectFit: 'cover'
+                        }}
+                        onLoad={() => {
+                          console.log('Fourth guide image loaded successfully');
+                        }}
+                        onError={(e) => {
+                          console.log('Fourth guide image failed to load:', e);
+                        }}
+                      />
+                    </div>
+                  </div>
                 </div>
               </div>
               
+              {/* Guide Indicators */}
+              <div className="flex justify-center space-x-3 mt-6">
+                {[0, 1, 2, 3].map((index) => (
+                  <button
+                    key={index}
+                    onClick={() => setCurrentGuideIndex(index)}
+                    className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                      index === currentGuideIndex 
+                        ? 'bg-white scale-125' 
+                        : 'bg-white opacity-30 hover:opacity-50'
+                    }`}
+                  />
+                ))}
+              </div>
               
               {/* Download Button */}
-              <button
-                className="w-full mt-6 py-4 rounded-full font-semibold text-lg transition-colors duration-200 shadow-lg"
-                style={{ 
-                  backgroundColor: '#FFFFFF',
-                  color: '#2481C2'
-                }}
-                onClick={() => {
-                  // Handle download functionality
-                  console.log('Download guide clicked');
-                }}
-              >
-                Download This Guide
-              </button>
+              <div className="flex justify-center mt-6">
+                <button
+                  className="px-8 py-4 rounded-full font-semibold text-lg transition-colors duration-200 shadow-lg"
+                  style={{ 
+                    backgroundColor: '#FFFFFF',
+                    color: '#2481C2',
+                    width: '80%'
+                  }}
+                  onClick={() => {
+                    // Handle download functionality
+                    console.log('Download guide clicked');
+                  }}
+                >
+                  Download This Guide
+                </button>
+              </div>
             </div>
           </div>
         </div>
