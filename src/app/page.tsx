@@ -1191,10 +1191,24 @@ const Page = () => {
           </div>
           
           {/* Bottom Tab Bar */}
-          <div className="xl:hidden fixed bottom-0 left-0 right-0 z-[9999] p-3" style={{ paddingBottom: 'max(12px, env(safe-area-inset-bottom))' }}>
+          <div 
+            className="mobile-tab-bar fixed bottom-0 left-0 right-0 z-[9999] p-3 xl:hidden" 
+            style={{ 
+              paddingBottom: 'max(12px, env(safe-area-inset-bottom))',
+              display: 'block',
+              visibility: 'visible',
+              opacity: 1
+            }}
+          >
             <div 
               className="flex items-center rounded-full px-4 py-3 mx-8 overflow-x-auto scrollbar-hide"
-              style={{ backgroundColor: '#2F4C6C' }}
+              style={{ 
+                backgroundColor: '#2F4C6C',
+                minHeight: '60px',
+                display: 'flex',
+                visibility: 'visible',
+                opacity: 1
+              }}
             >
               {/* About Me Icon */}
               <div 
