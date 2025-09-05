@@ -974,8 +974,8 @@ const Page = () => {
                           </div>
 
                           {/* Contact Form */}
-                          <div className="absolute top-12 left-4 right-4 bottom-16 z-20 text-white px-4">
-                            <form className="space-y-0">
+                          <div className="absolute top-12 left-4 right-4 bottom-16 z-20 text-white px-4 overflow-y-auto scrollbar-hide">
+                            <form className="space-y-0 pb-8">
                               {/* To Field */}
                               <div className="flex items-center space-x-4 pb-4 border-b border-white/20">
                                 <label className="text-base font-medium" style={{ fontFamily: 'Roboto, sans-serif' }}>
@@ -1091,6 +1091,38 @@ const Page = () => {
                               </svg>
                             </button>
                           </div>
+
+                          {/* Content - Scrollable Container */}
+                          <div 
+                            className="absolute top-16 left-4 right-4 bottom-16 z-20 text-white px-4 overflow-y-auto scrollbar-hide"
+                            style={{ 
+                              maxHeight: 'calc(100vh - 140px)'
+                            }}
+                          >
+                            {/* Title - Amita font */}
+                            <div className="mb-6">
+                              <h2 className="text-2xl font-bold leading-tight" style={{ fontFamily: 'Amita, serif' }}>
+                                Practical Guides For Your Journey
+                              </h2>
+                            </div>
+
+                            {/* Body content - Roboto font */}
+                            <div className="space-y-6 text-base leading-relaxed pb-32" style={{ fontFamily: 'Roboto, sans-serif' }}>
+                              <p>
+                                Explore these resources to experience His abounding grace as you navigate specific scenes of life and grow in faith.
+                              </p>
+                              
+                              {/* View Our Guides Button */}
+                              <div className="flex justify-center pt-8">
+                                <button
+                                  className="bg-white px-8 py-3 rounded-full font-medium hover:bg-white/90 transition-colors"
+                                  style={{ fontFamily: 'Roboto, sans-serif', color: '#2481C2' }}
+                                >
+                                  View Our Guides
+                                </button>
+                              </div>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     ) : activeMobileItem === 'TERMS AND CONDITIONS' ? (
@@ -1152,6 +1184,87 @@ const Page = () => {
                               </svg>
                             </button>
                           </div>
+
+                          {/* Content - Scrollable Container */}
+                          <div 
+                            className="absolute top-12 left-4 right-4 bottom-16 z-20 text-white px-4 overflow-y-auto scrollbar-hide"
+                            style={{ 
+                              maxHeight: 'calc(100vh - 140px)'
+                            }}
+                          >
+                            {/* Title - Amita font */}
+                            <div className="mb-6">
+                              <h2 className="text-2xl font-bold leading-tight" style={{ fontFamily: 'Amita, serif' }}>
+                                Welcome to The Coordinated Living!
+                              </h2>
+                            </div>
+
+                            {/* Body content - Roboto font */}
+                            <div className="space-y-4 text-sm leading-relaxed pb-32" style={{ fontFamily: 'Roboto, sans-serif' }}>
+                              <p>
+                                These terms and conditions outline the rules and regulations for the use of the Website, located at <strong>https://thecoordinatedliving.com/</strong>.
+                              </p>
+                              
+                              <p>
+                                The Terms and Conditions on this webpage, as may without notice, be amended from time to time, shall apply to all our services directly or indirectly (through our authorized agents and sub-agents) made available online, any mobile device, by email or by telephone, as well as any other electronic media.
+                              </p>
+
+                              <p>
+                                By accessing this website we assume you accept these terms and conditions. Do not continue to use The Coordinated Living if you do not agree to take all of the terms and conditions stated on this page.
+                              </p>
+
+                              <p>
+                                The following terminology applies to these Terms and Conditions, Privacy Statement and Disclaimer Notice and all Agreements: &quot;Client&quot;, &quot;You&quot; and &quot;Your&quot; refers to you, the person log on this website and compliant to the Company&apos;s terms and conditions. &quot;The Company&quot;, &quot;Ourselves&quot;, &quot;We&quot;, &quot;Our&quot; and &quot;Us&quot;, refers to our Company. &quot;Party&quot;, &quot;Parties&quot;, or &quot;Us&quot;, refers to both the Client and ourselves. All terms refer to the offer, acceptance and consideration of payment necessary to undertake the process of our assistance to the Client in the most appropriate manner for the express purpose of meeting the Client&apos;s needs in respect of provision of the Company&apos;s stated services, in accordance with and subject to, prevailing law of Netherlands. Any use of the above terminology or other words in the singular, plural, capitalization and/or he/she or they, are taken as interchangeable and therefore as referring to same.
+                              </p>
+
+                              <h3 className="text-lg font-semibold mt-6 mb-3">Cookies</h3>
+                              <p>
+                                We employ the use of cookies. By accessing The Coordinated Living, you agreed to use cookies in agreement with the The Coordinated Living&apos;s Privacy Policy.
+                              </p>
+                              <p>
+                                Most interactive websites use cookies to let us retrieve the user&apos;s details for each visit. Cookies are used by our website to enable the functionality of certain areas to make it easier for people visiting our website. Some of our affiliate/advertising partners may also use cookies.
+                              </p>
+
+                              <h3 className="text-lg font-semibold mt-6 mb-3">License</h3>
+                              <p>
+                                Unless otherwise stated, The Coordinated Living and/or its licensors own the intellectual property rights for all material on The Coordinated Living. All intellectual property rights are reserved. You may access this from The Coordinated Living for your own personal use subjected to restrictions set in these terms and conditions.
+                              </p>
+                              <p>You must not:</p>
+                              <ul className="list-disc list-inside ml-4 space-y-2">
+                                <li>Republish material from The Coordinated Living</li>
+                                <li>Sell, rent or sub-license material from The Coordinated Living</li>
+                                <li>Reproduce, duplicate or copy material from The Coordinated Living</li>
+                                <li>Redistribute content from The Coordinated Living</li>
+                              </ul>
+
+                              <h3 className="text-lg font-semibold mt-6 mb-3">Content Liability</h3>
+                              <p>
+                                We shall not be hold responsible for any content that appears on your Website. You agree to protect and defend us against all claims that is rising on your Website. No link(s) should appear on any Website that may be interpreted as libelous, obscene or criminal, or which infringes, otherwise violates, or advocates the infringement or other violation of, any third party rights.
+                              </p>
+
+                              <h3 className="text-lg font-semibold mt-6 mb-3">Reservation of Rights</h3>
+                              <p>
+                                We reserve the right to request that you remove all links or any particular link to our Website. You approve to immediately remove all links to our Website upon request. We also reserve the right to amen these terms and conditions and it&apos;s linking policy at any time. By continuously linking to our Website, you agree to be bound to and follow these linking terms and conditions.
+                              </p>
+
+                              <h3 className="text-lg font-semibold mt-6 mb-3">Disclaimer</h3>
+                              <p>
+                                To the maximum extent permitted by applicable law, we exclude all representations, warranties and conditions relating to our website and the use of this website. Nothing in this disclaimer will:
+                              </p>
+                              <ul className="list-disc list-inside ml-4 space-y-2">
+                                <li>limit or exclude our or your liability for death or personal injury;</li>
+                                <li>limit or exclude our or your liability for fraud or fraudulent misrepresentation;</li>
+                                <li>limit any of our or your liabilities in any way that is not permitted under applicable law; or</li>
+                                <li>exclude any of our or your liabilities that may not be excluded under applicable law.</li>
+                              </ul>
+                              <p>
+                                The limitations and prohibitions of liability set in this Section and elsewhere in this disclaimer: (a) are subject to the preceding paragraph; and (b) govern all liabilities arising under the disclaimer, including liabilities arising in contract, in tort and for breach of statutory duty.
+                              </p>
+                              <p>
+                                As long as the website and the information and services on the website are provided free of charge, we will not be liable for any loss or damage of any nature.
+                              </p>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     ) : activeMobileItem === 'JOIN OUR CHANNEL' ? (
@@ -1164,10 +1277,10 @@ const Page = () => {
                             fill
                             className="object-cover"
                           />
-                          {/* JOIN OUR CHANNEL text overlay */}
+                          {/* CHANNEL text overlay */}
                           <div className="absolute inset-0 flex items-center justify-center">
                             <h1 className="text-white text-2xl font-bold" style={{ fontFamily: 'Amita, serif' }}>
-                              JOIN OUR CHANNEL
+                              CHANNEL
                             </h1>
                           </div>
                         </div>
@@ -1212,6 +1325,32 @@ const Page = () => {
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                               </svg>
                             </button>
+                          </div>
+
+                          {/* Content - Scrollable Container */}
+                          <div 
+                            className="absolute top-12 left-4 right-4 bottom-16 z-20 text-white px-4 overflow-y-auto scrollbar-hide"
+                            style={{ 
+                              maxHeight: 'calc(100vh - 140px)'
+                            }}
+                          >
+                            {/* Body content - Roboto font */}
+                            <div className="space-y-6 text-base leading-relaxed pb-32" style={{ fontFamily: 'Roboto, sans-serif' }}>
+                              <p>
+                                Are you longing for an in-depth exploration of God&apos;s Word and its application to the complexities of life? Our videos, delivered through an exclusive paid WhatsApp channel, provide detailed teaching and deeper insights. Join our community to journey further into understanding how His grace abounds even in the most profound changing scenes of life and cultivate an intimate relationship with the Lord.
+                              </p>
+                              
+                              {/* Join Channel Button */}
+                              <div className="flex justify-center pt-8">
+                                <Image
+                                  src="/join-channel-mobile-new.png"
+                                  alt="Join Channel Button"
+                                  width={160}
+                                  height={48}
+                                  className="object-contain cursor-pointer hover:opacity-90 transition-opacity"
+                                />
+                              </div>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -1273,6 +1412,39 @@ const Page = () => {
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                               </svg>
                             </button>
+                          </div>
+
+                          {/* Content - Scrollable Container */}
+                          <div 
+                            className="absolute top-16 left-4 right-4 bottom-16 z-20 text-white px-4 overflow-y-auto scrollbar-hide"
+                            style={{ 
+                              maxHeight: 'calc(100vh - 140px)'
+                            }}
+                          >
+                            {/* Title - Amita font */}
+                            <div className="mb-6">
+                              <h2 className="text-2xl font-bold leading-tight" style={{ fontFamily: 'Amita, serif' }}>
+                                A Cheerful Gift, A Full Cup
+                              </h2>
+                            </div>
+
+                            {/* Body content - Roboto font */}
+                            <div className="space-y-6 text-base leading-relaxed pb-32" style={{ fontFamily: 'Roboto, sans-serif' }}>
+                              <p>
+                                Having my cuppa on my table is one sure comfort as I get work done. Your support would be a lovely way to keep it full every time I sit at my desk, and it genuinely helps me sustainably run this platform. Thank you for your kindness!
+                              </p>
+                              
+                              {/* Pour Into My Cup Button */}
+                              <div className="flex justify-center pt-8">
+                                <Image
+                                  src="/donation-mobile-new.png"
+                                  alt="Pour Into My Cup Button"
+                                  width={200}
+                                  height={60}
+                                  className="object-contain cursor-pointer hover:opacity-90 transition-opacity"
+                                />
+                              </div>
+                            </div>
                           </div>
                         </div>
                       </div>
