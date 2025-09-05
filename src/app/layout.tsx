@@ -1,10 +1,17 @@
 import type { Metadata } from "next";
-import { Manrope } from "next/font/google";
+import { Manrope, Roboto } from "next/font/google";
 import { Amita } from "next/font/google";
 import "./globals.css";
 
 const manrope = Manrope({ 
   subsets: ["latin"],
+  display: 'swap'
+});
+
+const roboto = Roboto({ 
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "700"],
+  variable: "--font-roboto",
   display: 'swap'
 });
 
@@ -32,7 +39,7 @@ export default function RootLayout({
         <link rel="preload" href="/coordinated.webp" as="image" type="image/webp" />
         <link rel="icon" href="/coordinated.ico" />
       </head>
-      <body className={`${manrope.className} ${amita.variable}`}>{children}</body>
+      <body className={`${manrope.className} ${roboto.variable} ${amita.variable}`}>{children}</body>
     </html>
   );
 }

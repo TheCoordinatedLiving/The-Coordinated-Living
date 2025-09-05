@@ -1121,6 +1121,44 @@ const Page = () => {
                               className="object-contain"
                             />
                           </div>
+
+                          {/* Content - Scrollable Container */}
+                          <div 
+                            className="absolute top-20 left-4 right-4 bottom-16 z-20 text-white px-4 overflow-y-auto scrollbar-hide"
+                            style={{ 
+                              maxHeight: 'calc(100vh - 140px)'
+                            }}
+                          >
+                            {/* Hello text - Amita font */}
+                            <h2 className="text-2xl mb-4" style={{ fontFamily: 'Amita, serif' }}>
+                              Hello,
+                            </h2>
+
+                            {/* Body content - Roboto font */}
+                            <div className="space-y-4 text-sm leading-relaxed pb-20" style={{ fontFamily: 'Roboto, sans-serif' }}>
+                              <p>
+                                Have you ever felt caught in a cycle of desires, wondering if there's more to life than this constant pull? In a world where truth often feels twisted, you're not alone.
+                              </p>
+                              
+                              <p>
+                                My name is Lesley, and like you, I've navigated these challenging times through my journey and calling. I'm now honored to serve you by sharing the Word of God. I welcome you to this space, a place where we seek 'the coordinated living' - aligning our lives with God's Word and His purpose. Our goal is to be the sheep of His pasture, finding guidance, nourishment, and belonging within His fold.
+                              </p>
+                              
+                              <p>
+                                I believe that living the identity the Lord created for us in Christ is essential, and through teachings and reflections on His Word, we will explore what that may look like for each of us. Ultimately, we trust in the Father to guide us in living out that unique identity He has given each of us in Christ. He has blessed us with the presence of the Holy Spirit, our guide to navigate this. This is our confidence.
+                              </p>
+                              
+                              <p>
+                                I look forward to serving you through the tasks assigned to me. You're loved, cared for, and provided for. I invite you to explore the resources here and join our community as we learn and grow together in His grace.
+                              </p>
+                              
+                              {/* Signature - Amita font */}
+                              <div className="mt-8 mb-8">
+                                <p className="text-sm mb-2 text-white" style={{ fontFamily: 'Roboto, sans-serif' }}>Signed</p>
+                                <p className="text-xl text-white" style={{ fontFamily: 'Amita, serif' }}>Lesley.</p>
+                              </div>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     ) : (
