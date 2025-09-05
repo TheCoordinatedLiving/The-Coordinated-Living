@@ -1511,10 +1511,8 @@ const Page = () => {
             {/* Floating Tab Bar - Mobile Only */}
             <div className="md:hidden fixed left-1/2 transform -translate-x-1/2 z-[99999] floating-tab-container" style={{ bottom: '100px' }}>
               <div 
-                className="flex items-center space-x-2 px-4 py-3 rounded-full overflow-x-auto scrollbar-hide tab-bar-scroll"
+                className="flex items-center space-x-2 px-4 py-3 rounded-full overflow-x-auto scrollbar-hide tab-bar-scroll glass-floating-tab"
                 style={{
-                  backgroundColor: '#2F4C6C',
-                  boxShadow: '0px 2.31px 13.88px rgba(0, 0, 0, 0.3)',
                   width: '320px', // Increased width to show all 5 tabs fully
                   maxWidth: '90vw'
                 }}
@@ -1594,14 +1592,12 @@ const Page = () => {
                         setActiveMobileItem(item);
                         setCurrentMobileIndex(index);
                       }}
-                      className={`flex items-center justify-center p-2 rounded-full transition-all duration-200 ${
+                      className={`flex items-center justify-center p-2 rounded-full transition-all duration-300 ${
                         isActive 
-                          ? 'text-white' 
-                          : 'text-gray-400 hover:text-gray-300'
+                          ? 'text-white glass-active-tab' 
+                          : 'text-gray-400 hover:text-gray-300 glass-inactive-tab'
                       }`}
                       style={{
-                        backgroundColor: isActive ? 'rgba(255, 255, 255, 0.05)' : 'transparent',
-                        border: isActive ? '1px solid rgba(255, 255, 255, 0.05)' : 'none',
                         width: '52px',
                         height: '52px',
                         flexShrink: 0 // Prevent tabs from shrinking
