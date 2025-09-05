@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { Manrope, Amita } from "next/font/google";
+import { Manrope } from "next/font/google";
+import { Amita } from "next/font/google";
 import "./globals.css";
 
 const manrope = Manrope({ 
@@ -9,10 +10,9 @@ const manrope = Manrope({
 
 const amita = Amita({ 
   subsets: ["latin"],
-  weight: ["400", "700"],
+  weight: "400",
   variable: "--font-amita",
-  display: 'swap',
-  fallback: ['serif']
+  display: 'swap'
 });
 
 export const metadata: Metadata = {
