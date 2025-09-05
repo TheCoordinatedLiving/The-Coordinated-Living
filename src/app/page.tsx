@@ -1057,7 +1057,7 @@ const Page = () => {
                               </p>
                               
                               {/* View Our Guides Button */}
-                              <div className="flex justify-center pt-6 xs:pt-8">
+                              <div className="flex justify-center pt-8 xs:pt-10">
                                 <button
                                   className="bg-white px-8 xs:px-10 sm:px-12 py-3 xs:py-4 rounded-full font-medium hover:bg-white/90 transition-colors text-sm xs:text-base"
                                   style={{ fontFamily: 'Roboto, sans-serif', color: '#2481C2' }}
@@ -1229,7 +1229,7 @@ const Page = () => {
                               </p>
                               
                               {/* Join Channel Button */}
-                              <div className="flex justify-center pt-8">
+                              <div className="flex justify-center pt-8 xs:pt-10">
                                 <button 
                                   className="flex items-center space-x-3 px-8 py-3 bg-white hover:bg-gray-100 font-bold rounded-full transition-colors duration-200 shadow-lg"
                                   style={{ color: '#2481C2' }}
@@ -1305,7 +1305,7 @@ const Page = () => {
                               </p>
                               
                               {/* Pour Into My Cup Button */}
-                              <div className="flex justify-center pt-8">
+                              <div className="flex justify-center pt-8 xs:pt-10">
                                 <button 
                                   className="flex items-center space-x-3 px-8 py-3 bg-white hover:bg-gray-100 font-bold rounded-full transition-colors duration-200 shadow-lg"
                                   style={{ color: '#2481C2' }}
