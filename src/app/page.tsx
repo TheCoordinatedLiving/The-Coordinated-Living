@@ -944,34 +944,6 @@ const Page = () => {
                             zIndex: 10
                           }}
                         >
-                          {/* Navigation Chevrons */}
-                          <div className="absolute top-1/2 left-2 xs:left-3 sm:left-4 transform -translate-y-1/2 z-30">
-                            <button
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                handleMobileNav('prev');
-                              }}
-                              className="w-8 h-8 xs:w-9 xs:h-9 sm:w-10 sm:h-10 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition-colors"
-                            >
-                              <svg className="w-4 h-4 xs:w-4 xs:h-4 sm:w-5 sm:h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                              </svg>
-                            </button>
-                          </div>
-                          
-                          <div className="absolute top-1/2 right-2 xs:right-3 sm:right-4 transform -translate-y-1/2 z-30">
-                            <button
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                handleMobileNav('next');
-                              }}
-                              className="w-8 h-8 xs:w-9 xs:h-9 sm:w-10 sm:h-10 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition-colors"
-                            >
-                              <svg className="w-4 h-4 xs:w-4 xs:h-4 sm:w-5 sm:h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                              </svg>
-                            </button>
-                          </div>
 
                           {/* Contact Form */}
                           <div className="absolute top-12 xs:top-14 sm:top-16 left-2 xs:left-3 sm:left-4 right-2 xs:right-3 sm:right-4 bottom-12 xs:bottom-14 sm:bottom-16 z-20 text-white px-2 xs:px-3 sm:px-4 overflow-y-auto scrollbar-hide">
@@ -1063,34 +1035,6 @@ const Page = () => {
                             zIndex: 10
                           }}
                         >
-                          {/* Navigation Chevrons */}
-                          <div className="absolute top-1/2 left-2 xs:left-3 sm:left-4 transform -translate-y-1/2 z-30">
-                            <button
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                handleMobileNav('prev');
-                              }}
-                              className="w-8 h-8 xs:w-9 xs:h-9 sm:w-10 sm:h-10 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition-colors"
-                            >
-                              <svg className="w-4 h-4 xs:w-4 xs:h-4 sm:w-5 sm:h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                              </svg>
-                            </button>
-                          </div>
-                          
-                          <div className="absolute top-1/2 right-2 xs:right-3 sm:right-4 transform -translate-y-1/2 z-30">
-                            <button
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                handleMobileNav('next');
-                              }}
-                              className="w-8 h-8 xs:w-9 xs:h-9 sm:w-10 sm:h-10 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition-colors"
-                            >
-                              <svg className="w-4 h-4 xs:w-4 xs:h-4 sm:w-5 sm:h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                              </svg>
-                            </button>
-                          </div>
 
                           {/* Content - Scrollable Container */}
                           <div 
@@ -1156,34 +1100,6 @@ const Page = () => {
                             zIndex: 10
                           }}
                         >
-                          {/* Navigation Chevrons */}
-                          <div className="absolute top-1/2 left-2 xs:left-3 sm:left-4 transform -translate-y-1/2 z-30">
-                            <button
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                handleMobileNav('prev');
-                              }}
-                              className="w-8 h-8 xs:w-9 xs:h-9 sm:w-10 sm:h-10 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition-colors"
-                            >
-                              <svg className="w-4 h-4 xs:w-4 xs:h-4 sm:w-5 sm:h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                              </svg>
-                            </button>
-                          </div>
-                          
-                          <div className="absolute top-1/2 right-2 xs:right-3 sm:right-4 transform -translate-y-1/2 z-30">
-                            <button
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                handleMobileNav('next');
-                              }}
-                              className="w-8 h-8 xs:w-9 xs:h-9 sm:w-10 sm:h-10 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition-colors"
-                            >
-                              <svg className="w-4 h-4 xs:w-4 xs:h-4 sm:w-5 sm:h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                              </svg>
-                            </button>
-                          </div>
 
                           {/* Content - Scrollable Container */}
                           <div 
@@ -1298,34 +1214,6 @@ const Page = () => {
                             zIndex: 10
                           }}
                         >
-                          {/* Navigation Chevrons */}
-                          <div className="absolute top-1/2 left-2 xs:left-3 sm:left-4 transform -translate-y-1/2 z-30">
-                            <button
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                handleMobileNav('prev');
-                              }}
-                              className="w-8 h-8 xs:w-9 xs:h-9 sm:w-10 sm:h-10 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition-colors"
-                            >
-                              <svg className="w-4 h-4 xs:w-4 xs:h-4 sm:w-5 sm:h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                              </svg>
-                            </button>
-                          </div>
-                          
-                          <div className="absolute top-1/2 right-2 xs:right-3 sm:right-4 transform -translate-y-1/2 z-30">
-                            <button
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                handleMobileNav('next');
-                              }}
-                              className="w-8 h-8 xs:w-9 xs:h-9 sm:w-10 sm:h-10 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition-colors"
-                            >
-                              <svg className="w-4 h-4 xs:w-4 xs:h-4 sm:w-5 sm:h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                              </svg>
-                            </button>
-                          </div>
 
                           {/* Content - Scrollable Container */}
                           <div 
@@ -1385,34 +1273,6 @@ const Page = () => {
                             zIndex: 10
                           }}
                         >
-                          {/* Navigation Chevrons */}
-                          <div className="absolute top-1/2 left-2 xs:left-3 sm:left-4 transform -translate-y-1/2 z-30">
-                            <button
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                handleMobileNav('prev');
-                              }}
-                              className="w-8 h-8 xs:w-9 xs:h-9 sm:w-10 sm:h-10 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition-colors"
-                            >
-                              <svg className="w-4 h-4 xs:w-4 xs:h-4 sm:w-5 sm:h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                              </svg>
-                            </button>
-                          </div>
-                          
-                          <div className="absolute top-1/2 right-2 xs:right-3 sm:right-4 transform -translate-y-1/2 z-30">
-                            <button
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                handleMobileNav('next');
-                              }}
-                              className="w-8 h-8 xs:w-9 xs:h-9 sm:w-10 sm:h-10 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition-colors"
-                            >
-                              <svg className="w-4 h-4 xs:w-4 xs:h-4 sm:w-5 sm:h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                              </svg>
-                            </button>
-                          </div>
 
                           {/* Content - Scrollable Container */}
                           <div 
@@ -1479,34 +1339,6 @@ const Page = () => {
                             zIndex: 10
                           }}
                         >
-                          {/* Navigation Chevrons */}
-                          <div className="absolute top-1/2 left-2 xs:left-3 sm:left-4 transform -translate-y-1/2 z-30">
-                            <button
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                handleMobileNav('prev');
-                              }}
-                              className="w-8 h-8 xs:w-9 xs:h-9 sm:w-10 sm:h-10 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition-colors"
-                            >
-                              <svg className="w-4 h-4 xs:w-4 xs:h-4 sm:w-5 sm:h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                              </svg>
-                            </button>
-                          </div>
-                          
-                          <div className="absolute top-1/2 right-2 xs:right-3 sm:right-4 transform -translate-y-1/2 z-30">
-                            <button
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                handleMobileNav('next');
-                              }}
-                              className="w-8 h-8 xs:w-9 xs:h-9 sm:w-10 sm:h-10 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition-colors"
-                            >
-                              <svg className="w-4 h-4 xs:w-4 xs:h-4 sm:w-5 sm:h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                              </svg>
-                            </button>
-                          </div>
                           {/* Header Logo - Top Left */}
                           <div className="absolute top-4 left-4 z-20">
                             <Image
@@ -1601,34 +1433,6 @@ const Page = () => {
                             zIndex: 10
                           }}
                         >
-                          {/* Navigation Chevrons */}
-                          <div className="absolute top-1/2 left-2 xs:left-3 sm:left-4 transform -translate-y-1/2 z-30">
-                            <button
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                handleMobileNav('prev');
-                              }}
-                              className="w-8 h-8 xs:w-9 xs:h-9 sm:w-10 sm:h-10 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition-colors"
-                            >
-                              <svg className="w-4 h-4 xs:w-4 xs:h-4 sm:w-5 sm:h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                              </svg>
-                            </button>
-                          </div>
-                          
-                          <div className="absolute top-1/2 right-2 xs:right-3 sm:right-4 transform -translate-y-1/2 z-30">
-                            <button
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                handleMobileNav('next');
-                              }}
-                              className="w-8 h-8 xs:w-9 xs:h-9 sm:w-10 sm:h-10 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition-colors"
-                            >
-                              <svg className="w-4 h-4 xs:w-4 xs:h-4 sm:w-5 sm:h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                              </svg>
-                            </button>
-                          </div>
 
                           {/* Header Logo - Top Left */}
                           <div className="absolute top-4 left-4 z-20">
