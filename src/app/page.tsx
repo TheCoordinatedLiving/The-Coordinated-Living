@@ -1178,6 +1178,106 @@ const Page = () => {
 
           </div>
           
+          {/* Bottom Tab Bar */}
+          <div className="xl:hidden fixed bottom-0 left-0 right-0 z-[9999] p-3" style={{ paddingBottom: 'max(12px, env(safe-area-inset-bottom))' }}>
+            <div 
+              className="flex items-center rounded-full px-4 py-3 mx-8 overflow-x-auto scrollbar-hide"
+              style={{ backgroundColor: '#2F4C6C' }}
+            >
+              {/* About Me Icon */}
+              <div 
+                className={`flex items-center justify-center w-10 h-10 rounded-full flex-shrink-0 mr-3 ${activeMobileItem === 'ABOUT ME' ? '' : ''}`}
+                style={{ backgroundColor: activeMobileItem === 'ABOUT ME' ? 'rgba(255, 255, 255, 0.05)' : 'transparent' }}
+                onClick={() => handleMobileNav('ABOUT ME')}
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={activeMobileItem === 'ABOUT ME' ? '#FFFFFF' : '#7D7D7D'} strokeWidth="2">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                  <circle cx="12" cy="7" r="4"/>
+                </svg>
+              </div>
+              
+              {/* Posts Icon */}
+              <div 
+                className={`flex items-center justify-center w-10 h-10 rounded-full flex-shrink-0 mr-3 ${activeMobileItem === 'POST' ? '' : ''}`}
+                style={{ backgroundColor: activeMobileItem === 'POST' ? 'rgba(255, 255, 255, 0.05)' : 'transparent' }}
+                onClick={() => handleMobileNav('POST')}
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={activeMobileItem === 'POST' ? '#FFFFFF' : '#7D7D7D'} strokeWidth="2">
+                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                  <line x1="9" y1="9" x2="15" y2="9"/>
+                  <line x1="9" y1="13" x2="15" y2="13"/>
+                  <line x1="9" y1="17" x2="13" y2="17"/>
+                </svg>
+              </div>
+              
+              {/* Ask Me A Question Icon */}
+              <div 
+                className={`flex items-center justify-center w-10 h-10 rounded-full flex-shrink-0 mr-3 ${activeMobileItem === 'ASK ME A QUESTION' ? '' : ''}`}
+                style={{ backgroundColor: activeMobileItem === 'ASK ME A QUESTION' ? 'rgba(255, 255, 255, 0.05)' : 'transparent' }}
+                onClick={() => handleMobileNav('ASK ME A QUESTION')}
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={activeMobileItem === 'ASK ME A QUESTION' ? '#FFFFFF' : '#7D7D7D'} strokeWidth="2">
+                  <circle cx="12" cy="12" r="10"/>
+                  <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+                  <line x1="12" y1="17" x2="12.01" y2="17"/>
+                </svg>
+              </div>
+              
+              {/* Join Our Channel Icon */}
+              <div 
+                className={`flex items-center justify-center w-10 h-10 rounded-full flex-shrink-0 mr-3 ${activeMobileItem === 'JOIN OUR CHANNEL' ? '' : ''}`}
+                style={{ backgroundColor: activeMobileItem === 'JOIN OUR CHANNEL' ? 'rgba(255, 255, 255, 0.05)' : 'transparent' }}
+                onClick={() => handleMobileNav('JOIN OUR CHANNEL')}
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={activeMobileItem === 'JOIN OUR CHANNEL' ? '#FFFFFF' : '#7D7D7D'} strokeWidth="2">
+                  <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                  <circle cx="9" cy="7" r="4"/>
+                  <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                </svg>
+              </div>
+              
+              {/* Guides Icon */}
+              <div 
+                className={`flex items-center justify-center w-10 h-10 rounded-full flex-shrink-0 mr-3 ${activeMobileItem === 'GUIDES' ? '' : ''}`}
+                style={{ backgroundColor: activeMobileItem === 'GUIDES' ? 'rgba(255, 255, 255, 0.05)' : 'transparent' }}
+                onClick={() => handleMobileNav('GUIDES')}
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={activeMobileItem === 'GUIDES' ? '#FFFFFF' : '#7D7D7D'} strokeWidth="2">
+                  <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+                  <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+                </svg>
+              </div>
+              
+              {/* Pour Into My Cup Icon */}
+              <div 
+                className={`flex items-center justify-center w-10 h-10 rounded-full flex-shrink-0 mr-3 ${activeMobileItem === 'POUR INTO MY CUP' ? '' : ''}`}
+                style={{ backgroundColor: activeMobileItem === 'POUR INTO MY CUP' ? 'rgba(255, 255, 255, 0.05)' : 'transparent' }}
+                onClick={() => handleMobileNav('POUR INTO MY CUP')}
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={activeMobileItem === 'POUR INTO MY CUP' ? '#FFFFFF' : '#7D7D7D'} strokeWidth="2">
+                  <path d="M3 2h7l4 9H8l-2 4.5c-.3.7-.1 1.6.5 2.1.9.9 2.4.9 3.3 0l6.3-6.3c.9-.9.9-2.4 0-3.3-.5-.6-1.4-.8-2.1-.5L3 2z"/>
+                  <path d="M7 13h10"/>
+                  <path d="M9 19h6"/>
+                </svg>
+              </div>
+              
+              {/* Terms and Conditions Icon */}
+              <div 
+                className={`flex items-center justify-center w-10 h-10 rounded-full flex-shrink-0 ${activeMobileItem === 'TERMS AND CONDITIONS' ? '' : ''}`}
+                style={{ backgroundColor: activeMobileItem === 'TERMS AND CONDITIONS' ? 'rgba(255, 255, 255, 0.05)' : 'transparent' }}
+                onClick={() => handleMobileNav('TERMS AND CONDITIONS')}
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={activeMobileItem === 'TERMS AND CONDITIONS' ? '#FFFFFF' : '#7D7D7D'} strokeWidth="2">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                  <polyline points="14,2 14,8 20,8"/>
+                  <line x1="16" y1="13" x2="8" y2="13"/>
+                  <line x1="16" y1="17" x2="8" y2="17"/>
+                  <polyline points="10,9 9,9 8,9"/>
+                </svg>
+              </div>
+            </div>
+          </div>
           
           {/* Lesley Letter Overlay - Visible on all devices */}
           {showLesleyLetter && (
