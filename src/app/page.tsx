@@ -159,7 +159,6 @@ const Page = () => {
   const [messageText, setMessageText] = useState('');
   const [showExpandedEmailModal, setShowExpandedEmailModal] = useState(false);
   const [showGuidesModal, setShowGuidesModal] = useState(false);
-  const [currentGuideIndex, setCurrentGuideIndex] = useState(0);
   const handleCloseExpandedEmailModal = () => {
     // Animate expanded email modal out with ease
     const modalContainer = document.querySelector('.expanded-email-modal-card');
@@ -193,12 +192,10 @@ const Page = () => {
         ease: "power2.inOut",
         onComplete: () => {
           setShowGuidesModal(false);
-          setCurrentGuideIndex(0); // Reset to first guide
         }
       });
     } else {
       setShowGuidesModal(false);
-      setCurrentGuideIndex(0);
     }
   };
 
@@ -441,51 +438,6 @@ const Page = () => {
     setCurrentPostIndex(prev => Math.min(posts.length - 1, prev + 1));
   };
 
-  const handlePreviousGuide = () => {
-    const guideImage = document.querySelector('.guide-image');
-    if (guideImage) {
-      gsap.to(guideImage, {
-        opacity: 0,
-        x: 50,
-        duration: 0.3,
-        ease: "power2.in",
-        onComplete: () => {
-          setCurrentGuideIndex(prev => Math.max(0, prev - 1));
-          gsap.to(guideImage, {
-            opacity: 1,
-            x: 0,
-            duration: 0.3,
-            ease: "power2.out"
-          });
-        }
-      });
-    } else {
-      setCurrentGuideIndex(prev => Math.max(0, prev - 1));
-    }
-  };
-
-  const handleNextGuide = () => {
-    const guideImage = document.querySelector('.guide-image');
-    if (guideImage) {
-      gsap.to(guideImage, {
-        opacity: 0,
-        x: -50,
-        duration: 0.3,
-        ease: "power2.in",
-        onComplete: () => {
-          setCurrentGuideIndex(prev => Math.min(3, prev + 1));
-          gsap.to(guideImage, {
-            opacity: 1,
-            x: 0,
-            duration: 0.3,
-            ease: "power2.out"
-          });
-        }
-      });
-    } else {
-      setCurrentGuideIndex(prev => Math.min(3, prev + 1));
-    }
-  };
 
 
 
