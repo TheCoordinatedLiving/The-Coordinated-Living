@@ -2,6 +2,7 @@
 import { useRef, useLayoutEffect, useState, useEffect } from 'react';
 import Image from "next/image";
 import { gsap } from 'gsap';
+import Lottie from 'lottie-react';
 import PostTemplate from '../components/PostTemplate';
 import { generatePDFFromPostData, generatePostPDF } from '../lib/pdfGenerator';
 
@@ -209,6 +210,7 @@ const Page = () => {
   const [toastMessage, setToastMessage] = useState('');
   const [showTermsModal, setShowTermsModal] = useState(false);
   const [isClosingTermsModal, setIsClosingTermsModal] = useState(false);
+  const [clickAnimation, setClickAnimation] = useState(null);
   const postTemplateRef = useRef<HTMLDivElement>(null);
   const termsModalBackdropRef = useRef<HTMLDivElement>(null);
   const termsModalContentRef = useRef<HTMLDivElement>(null);
@@ -602,6 +604,20 @@ const Page = () => {
       }
     };
     loadAnimation();
+  }, []);
+
+  // Load click animation Lottie
+  useEffect(() => {
+    const loadClickAnimation = async () => {
+      try {
+        const response = await fetch('/click-animation.json');
+        const animation = await response.json();
+        setClickAnimation(animation);
+      } catch (error) {
+        console.error('Failed to load click animation:', error);
+      }
+    };
+    loadClickAnimation();
   }, []);
 
   // Check if coming back from Windows page
@@ -1531,6 +1547,18 @@ const Page = () => {
                               <p>
                                 When we align ourselves with God&apos;s purpose for our lives, we find a peace that surpasses all understanding. This isn&apos;t about perfection – it&apos;s about walking in the identity He has given us, trusting that He has equipped us for every good work.
                               </p>
+                              
+                              {/* Click Animation Lottie */}
+                              {clickAnimation && (
+                                <div className="flex justify-end items-center mt-6 pr-4">
+                                  <Lottie
+                                    animationData={clickAnimation}
+                                    loop={true}
+                                    autoplay={true}
+                                    style={{ width: '80px', height: '80px' }}
+                                  />
+                                </div>
+                              )}
                             </div>
                           </div>
                         </div>
