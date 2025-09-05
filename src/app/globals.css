@@ -805,4 +805,76 @@ img {
   }
 }
 
+/* Tablet and iPad specific banner fixes */
+@media (min-width: 768px) and (max-width: 1023px) {
+  /* Override banner height for tablets */
+  .tablet-banner {
+    height: 600px !important;
+  }
+  
+  /* Override banner positioning for tablets */
+  .tablet-banner {
+    top: calc(-50vh + 50% - 300px) !important;
+  }
+  
+  /* Override content card positioning for tablets */
+  .tablet-content-card {
+    top: clamp(-120px, -12vh, -250px) !important;
+    height: calc(100vh + clamp(120px, 12vh, 250px)) !important;
+  }
+  
+  /* Override content container max height for tablets */
+  .tablet-content-container {
+    max-height: calc(100vh - clamp(180px, 27vh, 300px)) !important;
+  }
+  
+  /* Override content container max height for tablets with logos */
+  .tablet-content-container-with-logo {
+    max-height: calc(100vh - clamp(200px, 30vh, 320px)) !important;
+  }
+  
+  /* Override title positioning for tablets */
+  .tablet-title {
+    bottom: 2rem !important;
+    padding-bottom: 15% !important;
+    padding-top: 5% !important;
+  }
+}
+
+/* iPad specific banner fixes */
+@media (min-width: 1024px) {
+  /* Override banner height for iPads */
+  .ipad-banner {
+    height: 700px !important;
+  }
+  
+  /* Override banner positioning for iPads */
+  .ipad-banner {
+    top: calc(-50vh + 50% - 350px) !important;
+  }
+  
+  /* Override content card positioning for iPads */
+  .ipad-content-card {
+    top: clamp(-140px, -14vh, -280px) !important;
+    height: calc(100vh + clamp(140px, 14vh, 280px)) !important;
+  }
+  
+  /* Override content container max height for iPads */
+  .ipad-content-container {
+    max-height: calc(100vh - clamp(200px, 30vh, 350px)) !important;
+  }
+  
+  /* Override content container max height for iPads with logos */
+  .ipad-content-container-with-logo {
+    max-height: calc(100vh - clamp(220px, 33vh, 370px)) !important;
+  }
+  
+  /* Override title positioning for iPads */
+  .ipad-title {
+    bottom: 3rem !important;
+    padding-bottom: 12% !important;
+    padding-top: 3% !important;
+  }
+}
+
 

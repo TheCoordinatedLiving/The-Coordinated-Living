@@ -897,11 +897,11 @@ const Page = () => {
             
             
             {/* Mobile Noticeboard Post */}
-            <div className="absolute top-1/2 transform -translate-y-1/2 left-2 xs:left-3 sm:left-4 right-2 xs:right-3 sm:right-4 z-10">
-              <div className="relative flex items-center justify-center" style={{ minHeight: '280px' }}>
+            <div className="absolute top-1/2 transform -translate-y-1/2 left-1 xs:left-2 sm:left-3 right-1 xs:right-2 sm:right-3 z-10">
+              <div className="relative flex items-center justify-center" style={{ minHeight: 'clamp(250px, 35vh, 400px)' }}>
                 
                 {/* Content Card */}
-                <div className="relative flex-1 mx-8 xs:mx-10 sm:mx-12 md:mx-16" style={{ minHeight: '280px', maxWidth: 'calc(100vw - 120px)' }}>
+                <div className="relative flex-1 mx-2 xs:mx-4 sm:mx-6 md:mx-8" style={{ minHeight: 'clamp(250px, 35vh, 400px)', maxWidth: 'calc(100vw - 20px)' }}>
                   <div 
                     className="cursor-pointer"
                     onTouchStart={onTouchStart}
@@ -914,9 +914,9 @@ const Page = () => {
                     }}
                   >
                     {activeMobileItem === 'ASK ME A QUESTION' ? (
-                      <div className="w-full h-full flex flex-col">
-                        {/* Banner Image with ASK ME A QUESTION text */}
-                        <div className="relative w-full" style={{ height: '200px', width: '100vw', marginLeft: 'calc(-50vw + 50%)', marginRight: 'calc(-50vw + 50%)', marginTop: 'calc(-50vh + 50%)', position: 'absolute', top: 0 }}>
+                                              <div className="w-full h-full flex flex-col">
+                          {/* Banner Image with ASK ME A QUESTION text */}
+                         <div className="relative w-full md:h-[600px] lg:h-[700px] tablet-banner ipad-banner" style={{ height: 'clamp(300px, 45vh, 500px)', width: '100vw', marginLeft: 'calc(-50vw + 50%)', marginRight: 'calc(-50vw + 50%)', position: 'absolute', top: 'calc(-50vh + 50% - clamp(150px, 22.5vh, 250px))' }}>
                           <Image
                             src="/about-me-mobile-banner.png"
                             alt="Ask Me A Question Banner"
@@ -924,8 +924,8 @@ const Page = () => {
                             className="object-cover"
                           />
                           {/* ASK ME A QUESTION text overlay */}
-                          <div className="absolute inset-0 flex items-center justify-center">
-                            <h1 className="text-white text-2xl font-bold" style={{ fontFamily: 'Amita, serif' }}>
+                          <div className="absolute bottom-0 left-0 right-0 flex items-center justify-center md:bottom-4 lg:bottom-8 tablet-title ipad-title" style={{ paddingBottom: '20%', paddingTop: '10%' }}>
+                            <h1 className="text-white text-base xs:text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold px-2 xs:px-3 sm:px-4 text-center" style={{ fontFamily: 'Amita, serif' }}>
                               ASK ME A QUESTION
                             </h1>
                           </div>
@@ -933,96 +933,96 @@ const Page = () => {
                         
                         {/* Content Card - Overlapping the banner */}
                         <div 
-                          className="fixed rounded-t-3xl"
+                          className="fixed rounded-t-3xl tablet-content-card ipad-content-card"
                           style={{ 
                             backgroundColor: '#2481C2',
-                            top: '-60px',
+                            top: 'clamp(-100px, -10vh, -200px)',
                             left: '50%',
                             transform: 'translateX(-50%)',
                             width: '100vw',
-                            height: 'calc(100vh + 60px)',
+                            height: 'calc(100vh + clamp(100px, 10vh, 200px))',
                             zIndex: 10
                           }}
                         >
                           {/* Navigation Chevrons */}
-                          <div className="absolute top-1/2 left-4 transform -translate-y-1/2 z-30">
+                          <div className="absolute top-1/2 left-2 xs:left-3 sm:left-4 transform -translate-y-1/2 z-30">
                             <button
                               onClick={(e) => {
                                 e.stopPropagation();
                                 handleMobileNav('prev');
                               }}
-                              className="w-10 h-10 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition-colors"
+                              className="w-8 h-8 xs:w-9 xs:h-9 sm:w-10 sm:h-10 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition-colors"
                             >
-                              <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <svg className="w-4 h-4 xs:w-4 xs:h-4 sm:w-5 sm:h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                               </svg>
                             </button>
                           </div>
                           
-                          <div className="absolute top-1/2 right-4 transform -translate-y-1/2 z-30">
+                          <div className="absolute top-1/2 right-2 xs:right-3 sm:right-4 transform -translate-y-1/2 z-30">
                             <button
                               onClick={(e) => {
                                 e.stopPropagation();
                                 handleMobileNav('next');
                               }}
-                              className="w-10 h-10 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition-colors"
+                              className="w-8 h-8 xs:w-9 xs:h-9 sm:w-10 sm:h-10 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition-colors"
                             >
-                              <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <svg className="w-4 h-4 xs:w-4 xs:h-4 sm:w-5 sm:h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                               </svg>
                             </button>
                           </div>
 
                           {/* Contact Form */}
-                          <div className="absolute top-12 left-4 right-4 bottom-16 z-20 text-white px-4 overflow-y-auto scrollbar-hide">
-                            <form className="space-y-0 pb-8">
+                          <div className="absolute top-12 xs:top-14 sm:top-16 left-2 xs:left-3 sm:left-4 right-2 xs:right-3 sm:right-4 bottom-12 xs:bottom-14 sm:bottom-16 z-20 text-white px-2 xs:px-3 sm:px-4 overflow-y-auto scrollbar-hide">
+                            <form className="space-y-0 pb-4 xs:pb-6 sm:pb-8">
                               {/* To Field */}
-                              <div className="flex items-center space-x-4 pb-4 border-b border-white/20">
-                                <label className="text-base font-medium" style={{ fontFamily: 'Roboto, sans-serif' }}>
+                              <div className="flex items-center space-x-2 xs:space-x-3 pb-3 xs:pb-4 border-b border-white/20">
+                                <label className="text-sm xs:text-base font-medium" style={{ fontFamily: 'Roboto, sans-serif' }}>
                                   To
                                 </label>
-                                <div className="bg-white rounded-full px-6 py-3 flex-1">
-                                  <span className="text-base text-black" style={{ fontFamily: 'Roboto, sans-serif' }}>
+                                <div className="bg-white rounded-full px-3 xs:px-4 sm:px-6 py-2 xs:py-3 flex-1">
+                                  <span className="text-xs xs:text-sm sm:text-base text-black" style={{ fontFamily: 'Roboto, sans-serif' }}>
                                     letstalk@thecoordinatedliving.com
                                   </span>
                                 </div>
                               </div>
 
                               {/* Your Email Address Field */}
-                              <div className="py-4 border-b border-white/20">
+                              <div className="py-3 xs:py-4 border-b border-white/20">
                                 <input
                                   type="email"
-                                  className="w-full bg-transparent text-white placeholder-white focus:outline-none text-base"
+                                  className="w-full bg-transparent text-white placeholder-white focus:outline-none text-sm xs:text-base"
                                   placeholder="Your email address"
                                   style={{ fontFamily: 'Roboto, sans-serif' }}
                                 />
                               </div>
 
                               {/* Subject Field */}
-                              <div className="py-4 border-b border-white/20">
+                              <div className="py-3 xs:py-4 border-b border-white/20">
                                 <input
                                   type="text"
-                                  className="w-full bg-transparent text-white placeholder-white focus:outline-none text-base"
+                                  className="w-full bg-transparent text-white placeholder-white focus:outline-none text-sm xs:text-base"
                                   placeholder="Subject"
                                   style={{ fontFamily: 'Roboto, sans-serif' }}
                                 />
                               </div>
 
                               {/* Message Field */}
-                              <div className="py-4">
+                              <div className="py-3 xs:py-4">
                                 <textarea
-                                  rows={6}
-                                  className="w-full bg-transparent text-white placeholder-white focus:outline-none resize-none text-base"
+                                  rows={4}
+                                  className="w-full bg-transparent text-white placeholder-white focus:outline-none resize-none text-sm xs:text-base"
                                   placeholder="Enter message"
                                   style={{ fontFamily: 'Roboto, sans-serif' }}
                                 />
                               </div>
 
                               {/* Send Button */}
-                              <div className="flex justify-center pt-6">
+                              <div className="flex justify-center pt-4 xs:pt-6">
                                 <button
                                   type="submit"
-                                  className="bg-white px-20 py-4 rounded-full font-medium hover:bg-white/90 transition-colors"
+                                  className="bg-white px-12 xs:px-16 sm:px-20 py-3 xs:py-4 rounded-full font-medium hover:bg-white/90 transition-colors text-sm xs:text-base"
                                   style={{ fontFamily: 'Roboto, sans-serif', color: '#2481C2' }}
                                 >
                                   Send
@@ -1033,9 +1033,9 @@ const Page = () => {
                         </div>
                       </div>
                     ) : activeMobileItem === 'GUIDES' ? (
-                      <div className="w-full h-full flex flex-col">
-                        {/* Banner Image with GUIDES text */}
-                        <div className="relative w-full" style={{ height: '200px', width: '100vw', marginLeft: 'calc(-50vw + 50%)', marginRight: 'calc(-50vw + 50%)', marginTop: 'calc(-50vh + 50%)', position: 'absolute', top: 0 }}>
+                                              <div className="w-full h-full flex flex-col">
+                          {/* Banner Image with GUIDES text */}
+                         <div className="relative w-full md:h-[600px] lg:h-[700px] tablet-banner ipad-banner" style={{ height: 'clamp(300px, 45vh, 500px)', width: '100vw', marginLeft: 'calc(-50vw + 50%)', marginRight: 'calc(-50vw + 50%)', position: 'absolute', top: 'calc(-50vh + 50% - clamp(150px, 22.5vh, 250px))' }}>
                           <Image
                             src="/about-me-mobile-banner.png"
                             alt="Guides Banner"
@@ -1043,8 +1043,8 @@ const Page = () => {
                             className="object-cover"
                           />
                           {/* GUIDES text overlay */}
-                          <div className="absolute inset-0 flex items-center justify-center">
-                            <h1 className="text-white text-2xl font-bold" style={{ fontFamily: 'Amita, serif' }}>
+                          <div className="absolute bottom-0 left-0 right-0 flex items-center justify-center md:bottom-4 lg:bottom-8 tablet-title ipad-title" style={{ paddingBottom: '20%', paddingTop: '10%' }}>
+                            <h1 className="text-white text-base xs:text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold px-2 xs:px-3 sm:px-4 text-center" style={{ fontFamily: 'Amita, serif' }}>
                               GUIDES
                             </h1>
                           </div>
@@ -1052,41 +1052,41 @@ const Page = () => {
                         
                         {/* Content Card - Overlapping the banner */}
                         <div 
-                          className="fixed rounded-t-3xl"
+                          className="fixed rounded-t-3xl tablet-content-card ipad-content-card"
                           style={{ 
                             backgroundColor: '#2481C2',
-                            top: '-60px',
+                            top: 'clamp(-100px, -10vh, -200px)',
                             left: '50%',
                             transform: 'translateX(-50%)',
                             width: '100vw',
-                            height: 'calc(100vh + 60px)',
+                            height: 'calc(100vh + clamp(100px, 10vh, 200px))',
                             zIndex: 10
                           }}
                         >
                           {/* Navigation Chevrons */}
-                          <div className="absolute top-1/2 left-4 transform -translate-y-1/2 z-30">
+                          <div className="absolute top-1/2 left-2 xs:left-3 sm:left-4 transform -translate-y-1/2 z-30">
                             <button
                               onClick={(e) => {
                                 e.stopPropagation();
                                 handleMobileNav('prev');
                               }}
-                              className="w-10 h-10 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition-colors"
+                              className="w-8 h-8 xs:w-9 xs:h-9 sm:w-10 sm:h-10 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition-colors"
                             >
-                              <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <svg className="w-4 h-4 xs:w-4 xs:h-4 sm:w-5 sm:h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                               </svg>
                             </button>
                           </div>
                           
-                          <div className="absolute top-1/2 right-4 transform -translate-y-1/2 z-30">
+                          <div className="absolute top-1/2 right-2 xs:right-3 sm:right-4 transform -translate-y-1/2 z-30">
                             <button
                               onClick={(e) => {
                                 e.stopPropagation();
                                 handleMobileNav('next');
                               }}
-                              className="w-10 h-10 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition-colors"
+                              className="w-8 h-8 xs:w-9 xs:h-9 sm:w-10 sm:h-10 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition-colors"
                             >
-                              <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <svg className="w-4 h-4 xs:w-4 xs:h-4 sm:w-5 sm:h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                               </svg>
                             </button>
@@ -1094,28 +1094,28 @@ const Page = () => {
 
                           {/* Content - Scrollable Container */}
                           <div 
-                            className="absolute top-16 left-4 right-4 bottom-16 z-20 text-white px-4 overflow-y-auto scrollbar-hide"
+                            className="absolute top-12 xs:top-14 sm:top-16 left-2 xs:left-3 sm:left-4 right-2 xs:right-3 sm:right-4 bottom-12 xs:bottom-14 sm:bottom-16 z-20 text-white px-2 xs:px-3 sm:px-4 overflow-y-auto scrollbar-hide tablet-content-container ipad-content-container"
                             style={{ 
-                              maxHeight: 'calc(100vh - 140px)'
+                              maxHeight: 'calc(100vh - clamp(160px, 24vh, 260px))'
                             }}
                           >
                             {/* Title - Amita font */}
-                            <div className="mb-6">
-                              <h2 className="text-2xl font-bold leading-tight" style={{ fontFamily: 'Amita, serif' }}>
+                            <div className="mb-4 xs:mb-6">
+                              <h2 className="text-lg xs:text-xl sm:text-2xl font-bold leading-tight" style={{ fontFamily: 'Amita, serif' }}>
                                 Practical Guides For Your Journey
                               </h2>
                             </div>
 
                             {/* Body content - Roboto font */}
-                            <div className="space-y-6 text-base leading-relaxed pb-32" style={{ fontFamily: 'Roboto, sans-serif' }}>
+                            <div className="space-y-4 xs:space-y-6 text-sm xs:text-base leading-relaxed pb-20 xs:pb-32" style={{ fontFamily: 'Roboto, sans-serif' }}>
                               <p>
                                 Explore these resources to experience His abounding grace as you navigate specific scenes of life and grow in faith.
                               </p>
                               
                               {/* View Our Guides Button */}
-                              <div className="flex justify-center pt-8">
+                              <div className="flex justify-center pt-6 xs:pt-8">
                                 <button
-                                  className="bg-white px-8 py-3 rounded-full font-medium hover:bg-white/90 transition-colors"
+                                  className="bg-white px-8 xs:px-10 sm:px-12 py-3 xs:py-4 rounded-full font-medium hover:bg-white/90 transition-colors text-sm xs:text-base"
                                   style={{ fontFamily: 'Roboto, sans-serif', color: '#2481C2' }}
                                 >
                                   View Our Guides
@@ -1126,9 +1126,9 @@ const Page = () => {
                         </div>
                       </div>
                     ) : activeMobileItem === 'TERMS AND CONDITIONS' ? (
-                      <div className="w-full h-full flex flex-col">
-                        {/* Banner Image with TERMS AND CONDITIONS text */}
-                        <div className="relative w-full" style={{ height: '200px', width: '100vw', marginLeft: 'calc(-50vw + 50%)', marginRight: 'calc(-50vw + 50%)', marginTop: 'calc(-50vh + 50%)', position: 'absolute', top: 0 }}>
+                                              <div className="w-full h-full flex flex-col">
+                          {/* Banner Image with TERMS AND CONDITIONS text */}
+                         <div className="relative w-full md:h-[600px] lg:h-[700px] tablet-banner ipad-banner" style={{ height: 'clamp(300px, 45vh, 500px)', width: '100vw', marginLeft: 'calc(-50vw + 50%)', marginRight: 'calc(-50vw + 50%)', position: 'absolute', top: 'calc(-50vh + 50% - clamp(150px, 22.5vh, 250px))' }}>
                           <Image
                             src="/about-me-mobile-banner.png"
                             alt="Terms And Conditions Banner"
@@ -1136,8 +1136,8 @@ const Page = () => {
                             className="object-cover"
                           />
                           {/* TERMS AND CONDITIONS text overlay */}
-                          <div className="absolute inset-0 flex items-center justify-center">
-                            <h1 className="text-white text-2xl font-bold" style={{ fontFamily: 'Amita, serif' }}>
+                          <div className="absolute bottom-0 left-0 right-0 flex items-center justify-center md:bottom-4 lg:bottom-8 tablet-title ipad-title" style={{ paddingBottom: '20%', paddingTop: '10%' }}>
+                            <h1 className="text-white text-sm xs:text-base sm:text-lg md:text-xl lg:text-2xl font-bold px-2 xs:px-3 sm:px-4 text-center" style={{ fontFamily: 'Amita, serif' }}>
                               TERMS AND CONDITIONS
                             </h1>
                           </div>
@@ -1145,41 +1145,41 @@ const Page = () => {
                         
                         {/* Content Card - Overlapping the banner */}
                         <div 
-                          className="fixed rounded-t-3xl"
+                          className="fixed rounded-t-3xl tablet-content-card ipad-content-card"
                           style={{ 
                             backgroundColor: '#2481C2',
-                            top: '-60px',
+                            top: 'clamp(-100px, -10vh, -200px)',
                             left: '50%',
                             transform: 'translateX(-50%)',
                             width: '100vw',
-                            height: 'calc(100vh + 60px)',
+                            height: 'calc(100vh + clamp(100px, 10vh, 200px))',
                             zIndex: 10
                           }}
                         >
                           {/* Navigation Chevrons */}
-                          <div className="absolute top-1/2 left-4 transform -translate-y-1/2 z-30">
+                          <div className="absolute top-1/2 left-2 xs:left-3 sm:left-4 transform -translate-y-1/2 z-30">
                             <button
                               onClick={(e) => {
                                 e.stopPropagation();
                                 handleMobileNav('prev');
                               }}
-                              className="w-10 h-10 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition-colors"
+                              className="w-8 h-8 xs:w-9 xs:h-9 sm:w-10 sm:h-10 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition-colors"
                             >
-                              <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <svg className="w-4 h-4 xs:w-4 xs:h-4 sm:w-5 sm:h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                               </svg>
                             </button>
                           </div>
                           
-                          <div className="absolute top-1/2 right-4 transform -translate-y-1/2 z-30">
+                          <div className="absolute top-1/2 right-2 xs:right-3 sm:right-4 transform -translate-y-1/2 z-30">
                             <button
                               onClick={(e) => {
                                 e.stopPropagation();
                                 handleMobileNav('next');
                               }}
-                              className="w-10 h-10 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition-colors"
+                              className="w-8 h-8 xs:w-9 xs:h-9 sm:w-10 sm:h-10 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition-colors"
                             >
-                              <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <svg className="w-4 h-4 xs:w-4 xs:h-4 sm:w-5 sm:h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                               </svg>
                             </button>
@@ -1187,20 +1187,20 @@ const Page = () => {
 
                           {/* Content - Scrollable Container */}
                           <div 
-                            className="absolute top-12 left-4 right-4 bottom-16 z-20 text-white px-4 overflow-y-auto scrollbar-hide"
+                            className="absolute top-12 xs:top-14 sm:top-16 left-2 xs:left-3 sm:left-4 right-2 xs:right-3 sm:right-4 bottom-12 xs:bottom-14 sm:bottom-16 z-20 text-white px-2 xs:px-3 sm:px-4 overflow-y-auto scrollbar-hide tablet-content-container ipad-content-container"
                             style={{ 
-                              maxHeight: 'calc(100vh - 140px)'
+                              maxHeight: 'calc(100vh - clamp(160px, 24vh, 260px))'
                             }}
                           >
                             {/* Title - Amita font */}
-                            <div className="mb-6">
-                              <h2 className="text-2xl font-bold leading-tight" style={{ fontFamily: 'Amita, serif' }}>
+                            <div className="mb-4 xs:mb-6">
+                              <h2 className="text-lg xs:text-xl sm:text-2xl font-bold leading-tight" style={{ fontFamily: 'Amita, serif' }}>
                                 Welcome to The Coordinated Living!
                               </h2>
                             </div>
 
                             {/* Body content - Roboto font */}
-                            <div className="space-y-4 text-sm leading-relaxed pb-32" style={{ fontFamily: 'Roboto, sans-serif' }}>
+                            <div className="space-y-4 xs:space-y-6 text-sm xs:text-base leading-relaxed pb-20 xs:pb-32" style={{ fontFamily: 'Roboto, sans-serif' }}>
                               <p>
                                 These terms and conditions outline the rules and regulations for the use of the Website, located at <strong>https://thecoordinatedliving.com/</strong>.
                               </p>
@@ -1268,9 +1268,9 @@ const Page = () => {
                         </div>
                       </div>
                     ) : activeMobileItem === 'JOIN OUR CHANNEL' ? (
-                      <div className="w-full h-full flex flex-col">
-                        {/* Banner Image with JOIN OUR CHANNEL text */}
-                        <div className="relative w-full" style={{ height: '200px', width: '100vw', marginLeft: 'calc(-50vw + 50%)', marginRight: 'calc(-50vw + 50%)', marginTop: 'calc(-50vh + 50%)', position: 'absolute', top: 0 }}>
+                                              <div className="w-full h-full flex flex-col">
+                          {/* Banner Image with JOIN OUR CHANNEL text */}
+                         <div className="relative w-full md:h-[600px] lg:h-[700px] tablet-banner ipad-banner" style={{ height: 'clamp(300px, 45vh, 500px)', width: '100vw', marginLeft: 'calc(-50vw + 50%)', marginRight: 'calc(-50vw + 50%)', position: 'absolute', top: 'calc(-50vh + 50% - clamp(150px, 22.5vh, 250px))' }}>
                           <Image
                             src="/about-me-mobile-banner.png"
                             alt="Join Our Channel Banner"
@@ -1278,8 +1278,8 @@ const Page = () => {
                             className="object-cover"
                           />
                           {/* CHANNEL text overlay */}
-                          <div className="absolute inset-0 flex items-center justify-center">
-                            <h1 className="text-white text-2xl font-bold" style={{ fontFamily: 'Amita, serif' }}>
+                          <div className="absolute bottom-0 left-0 right-0 flex items-center justify-center md:bottom-4 lg:bottom-8 tablet-title ipad-title" style={{ paddingBottom: '20%', paddingTop: '10%' }}>
+                            <h1 className="text-white text-base xs:text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold px-2 xs:px-3 sm:px-4 text-center" style={{ fontFamily: 'Amita, serif' }}>
                               CHANNEL
                             </h1>
                           </div>
@@ -1287,41 +1287,41 @@ const Page = () => {
                         
                         {/* Content Card - Overlapping the banner */}
                         <div 
-                          className="fixed rounded-t-3xl"
+                          className="fixed rounded-t-3xl tablet-content-card ipad-content-card"
                           style={{ 
                             backgroundColor: '#2481C2',
-                            top: '-60px',
+                            top: 'clamp(-100px, -10vh, -200px)',
                             left: '50%',
                             transform: 'translateX(-50%)',
                             width: '100vw',
-                            height: 'calc(100vh + 60px)',
+                            height: 'calc(100vh + clamp(100px, 10vh, 200px))',
                             zIndex: 10
                           }}
                         >
                           {/* Navigation Chevrons */}
-                          <div className="absolute top-1/2 left-4 transform -translate-y-1/2 z-30">
+                          <div className="absolute top-1/2 left-2 xs:left-3 sm:left-4 transform -translate-y-1/2 z-30">
                             <button
                               onClick={(e) => {
                                 e.stopPropagation();
                                 handleMobileNav('prev');
                               }}
-                              className="w-10 h-10 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition-colors"
+                              className="w-8 h-8 xs:w-9 xs:h-9 sm:w-10 sm:h-10 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition-colors"
                             >
-                              <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <svg className="w-4 h-4 xs:w-4 xs:h-4 sm:w-5 sm:h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                               </svg>
                             </button>
                           </div>
                           
-                          <div className="absolute top-1/2 right-4 transform -translate-y-1/2 z-30">
+                          <div className="absolute top-1/2 right-2 xs:right-3 sm:right-4 transform -translate-y-1/2 z-30">
                             <button
                               onClick={(e) => {
                                 e.stopPropagation();
                                 handleMobileNav('next');
                               }}
-                              className="w-10 h-10 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition-colors"
+                              className="w-8 h-8 xs:w-9 xs:h-9 sm:w-10 sm:h-10 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition-colors"
                             >
-                              <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <svg className="w-4 h-4 xs:w-4 xs:h-4 sm:w-5 sm:h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                               </svg>
                             </button>
@@ -1329,13 +1329,13 @@ const Page = () => {
 
                           {/* Content - Scrollable Container */}
                           <div 
-                            className="absolute top-12 left-4 right-4 bottom-16 z-20 text-white px-4 overflow-y-auto scrollbar-hide"
+                            className="absolute top-12 xs:top-14 sm:top-16 left-2 xs:left-3 sm:left-4 right-2 xs:right-3 sm:right-4 bottom-12 xs:bottom-14 sm:bottom-16 z-20 text-white px-2 xs:px-3 sm:px-4 overflow-y-auto scrollbar-hide tablet-content-container ipad-content-container"
                             style={{ 
-                              maxHeight: 'calc(100vh - 140px)'
+                              maxHeight: 'calc(100vh - clamp(160px, 24vh, 260px))'
                             }}
                           >
                             {/* Body content - Roboto font */}
-                            <div className="space-y-6 text-base leading-relaxed pb-32" style={{ fontFamily: 'Roboto, sans-serif' }}>
+                            <div className="space-y-4 xs:space-y-6 text-sm xs:text-base leading-relaxed pb-20 xs:pb-32" style={{ fontFamily: 'Roboto, sans-serif' }}>
                               <p>
                                 Are you longing for an in-depth exploration of God&apos;s Word and its application to the complexities of life? Our videos, delivered through an exclusive paid WhatsApp channel, provide detailed teaching and deeper insights. Join our community to journey further into understanding how His grace abounds even in the most profound changing scenes of life and cultivate an intimate relationship with the Lord.
                               </p>
@@ -1355,9 +1355,9 @@ const Page = () => {
                         </div>
                       </div>
                     ) : activeMobileItem === 'POUR INTO MY CUP' ? (
-                      <div className="w-full h-full flex flex-col">
-                        {/* Banner Image with POUR INTO MY CUP text */}
-                        <div className="relative w-full" style={{ height: '200px', width: '100vw', marginLeft: 'calc(-50vw + 50%)', marginRight: 'calc(-50vw + 50%)', marginTop: 'calc(-50vh + 50%)', position: 'absolute', top: 0 }}>
+                                              <div className="w-full h-full flex flex-col">
+                          {/* Banner Image with POUR INTO MY CUP text */}
+                         <div className="relative w-full md:h-[600px] lg:h-[700px] tablet-banner ipad-banner" style={{ height: 'clamp(300px, 45vh, 500px)', width: '100vw', marginLeft: 'calc(-50vw + 50%)', marginRight: 'calc(-50vw + 50%)', position: 'absolute', top: 'calc(-50vh + 50% - clamp(150px, 22.5vh, 250px))' }}>
                           <Image
                             src="/about-me-mobile-banner.png"
                             alt="Pour Into My Cup Banner"
@@ -1365,8 +1365,8 @@ const Page = () => {
                             className="object-cover"
                           />
                           {/* POUR INTO MY CUP text overlay */}
-                          <div className="absolute inset-0 flex items-center justify-center">
-                            <h1 className="text-white text-2xl font-bold" style={{ fontFamily: 'Amita, serif' }}>
+                          <div className="absolute bottom-0 left-0 right-0 flex items-center justify-center md:bottom-4 lg:bottom-8 tablet-title ipad-title" style={{ paddingBottom: '20%', paddingTop: '10%' }}>
+                            <h1 className="text-white text-base xs:text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold px-2 xs:px-3 sm:px-4 text-center" style={{ fontFamily: 'Amita, serif' }}>
                               POUR INTO MY CUP
                             </h1>
                           </div>
@@ -1374,41 +1374,41 @@ const Page = () => {
                         
                         {/* Content Card - Overlapping the banner */}
                         <div 
-                          className="fixed rounded-t-3xl"
+                          className="fixed rounded-t-3xl tablet-content-card ipad-content-card"
                           style={{ 
                             backgroundColor: '#2481C2',
-                            top: '-60px',
+                            top: 'clamp(-100px, -10vh, -200px)',
                             left: '50%',
                             transform: 'translateX(-50%)',
                             width: '100vw',
-                            height: 'calc(100vh + 60px)',
+                            height: 'calc(100vh + clamp(100px, 10vh, 200px))',
                             zIndex: 10
                           }}
                         >
                           {/* Navigation Chevrons */}
-                          <div className="absolute top-1/2 left-4 transform -translate-y-1/2 z-30">
+                          <div className="absolute top-1/2 left-2 xs:left-3 sm:left-4 transform -translate-y-1/2 z-30">
                             <button
                               onClick={(e) => {
                                 e.stopPropagation();
                                 handleMobileNav('prev');
                               }}
-                              className="w-10 h-10 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition-colors"
+                              className="w-8 h-8 xs:w-9 xs:h-9 sm:w-10 sm:h-10 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition-colors"
                             >
-                              <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <svg className="w-4 h-4 xs:w-4 xs:h-4 sm:w-5 sm:h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                               </svg>
                             </button>
                           </div>
                           
-                          <div className="absolute top-1/2 right-4 transform -translate-y-1/2 z-30">
+                          <div className="absolute top-1/2 right-2 xs:right-3 sm:right-4 transform -translate-y-1/2 z-30">
                             <button
                               onClick={(e) => {
                                 e.stopPropagation();
                                 handleMobileNav('next');
                               }}
-                              className="w-10 h-10 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition-colors"
+                              className="w-8 h-8 xs:w-9 xs:h-9 sm:w-10 sm:h-10 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition-colors"
                             >
-                              <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <svg className="w-4 h-4 xs:w-4 xs:h-4 sm:w-5 sm:h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                               </svg>
                             </button>
@@ -1416,20 +1416,20 @@ const Page = () => {
 
                           {/* Content - Scrollable Container */}
                           <div 
-                            className="absolute top-16 left-4 right-4 bottom-16 z-20 text-white px-4 overflow-y-auto scrollbar-hide"
+                            className="absolute top-12 xs:top-14 sm:top-16 left-2 xs:left-3 sm:left-4 right-2 xs:right-3 sm:right-4 bottom-12 xs:bottom-14 sm:bottom-16 z-20 text-white px-2 xs:px-3 sm:px-4 overflow-y-auto scrollbar-hide tablet-content-container ipad-content-container"
                             style={{ 
-                              maxHeight: 'calc(100vh - 140px)'
+                              maxHeight: 'calc(100vh - clamp(160px, 24vh, 260px))'
                             }}
                           >
                             {/* Title - Amita font */}
-                            <div className="mb-6">
-                              <h2 className="text-2xl font-bold leading-tight" style={{ fontFamily: 'Amita, serif' }}>
+                            <div className="mb-4 xs:mb-6">
+                              <h2 className="text-lg xs:text-xl sm:text-2xl font-bold leading-tight" style={{ fontFamily: 'Amita, serif' }}>
                                 A Cheerful Gift, A Full Cup
                               </h2>
                             </div>
 
                             {/* Body content - Roboto font */}
-                            <div className="space-y-6 text-base leading-relaxed pb-32" style={{ fontFamily: 'Roboto, sans-serif' }}>
+                            <div className="space-y-4 xs:space-y-6 text-sm xs:text-base leading-relaxed pb-20 xs:pb-32" style={{ fontFamily: 'Roboto, sans-serif' }}>
                               <p>
                                 Having my cuppa on my table is one sure comfort as I get work done. Your support would be a lovely way to keep it full every time I sit at my desk, and it genuinely helps me sustainably run this platform. Thank you for your kindness!
                               </p>
@@ -1449,9 +1449,9 @@ const Page = () => {
                         </div>
                       </div>
                     ) : activeMobileItem === 'ABOUT ME' ? (
-                      <div className="w-full h-full flex flex-col">
-                        {/* Banner Image with ABOUT ME text */}
-                        <div className="relative w-full" style={{ height: '200px', width: '100vw', marginLeft: 'calc(-50vw + 50%)', marginRight: 'calc(-50vw + 50%)', marginTop: 'calc(-50vh + 50%)', position: 'absolute', top: 0 }}>
+                                              <div className="w-full h-full flex flex-col">
+                          {/* Banner Image with ABOUT ME text */}
+                         <div className="relative w-full md:h-[600px] lg:h-[700px] tablet-banner ipad-banner" style={{ height: 'clamp(300px, 45vh, 500px)', width: '100vw', marginLeft: 'calc(-50vw + 50%)', marginRight: 'calc(-50vw + 50%)', position: 'absolute', top: 'calc(-50vh + 50% - clamp(150px, 22.5vh, 250px))' }}>
                           <Image
                             src="/about-me-mobile-banner.png"
                             alt="About Me Banner"
@@ -1459,8 +1459,8 @@ const Page = () => {
                             className="object-cover"
                           />
                           {/* ABOUT ME text overlay */}
-                          <div className="absolute inset-0 flex items-center justify-center">
-                            <h1 className="text-white text-2xl font-bold" style={{ fontFamily: 'Amita, serif' }}>
+                          <div className="absolute bottom-0 left-0 right-0 flex items-center justify-center md:bottom-4 lg:bottom-8 tablet-title ipad-title" style={{ paddingBottom: '20%', paddingTop: '10%' }}>
+                            <h1 className="text-white text-base xs:text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold px-2 xs:px-3 sm:px-4 text-center" style={{ fontFamily: 'Amita, serif' }}>
                               ABOUT ME
                             </h1>
                           </div>
@@ -1468,41 +1468,41 @@ const Page = () => {
                         
                         {/* Content Card - Overlapping the banner */}
                         <div 
-                          className="fixed rounded-t-3xl"
+                          className="fixed rounded-t-3xl tablet-content-card ipad-content-card"
                           style={{ 
                             backgroundColor: '#2481C2',
-                            top: '-60px',
+                            top: 'clamp(-100px, -10vh, -200px)',
                             left: '50%',
                             transform: 'translateX(-50%)',
                             width: '100vw',
-                            height: 'calc(100vh + 60px)',
+                            height: 'calc(100vh + clamp(100px, 10vh, 200px))',
                             zIndex: 10
                           }}
                         >
                           {/* Navigation Chevrons */}
-                          <div className="absolute top-1/2 left-4 transform -translate-y-1/2 z-30">
+                          <div className="absolute top-1/2 left-2 xs:left-3 sm:left-4 transform -translate-y-1/2 z-30">
                             <button
                               onClick={(e) => {
                                 e.stopPropagation();
                                 handleMobileNav('prev');
                               }}
-                              className="w-10 h-10 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition-colors"
+                              className="w-8 h-8 xs:w-9 xs:h-9 sm:w-10 sm:h-10 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition-colors"
                             >
-                              <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <svg className="w-4 h-4 xs:w-4 xs:h-4 sm:w-5 sm:h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                               </svg>
                             </button>
                           </div>
                           
-                          <div className="absolute top-1/2 right-4 transform -translate-y-1/2 z-30">
+                          <div className="absolute top-1/2 right-2 xs:right-3 sm:right-4 transform -translate-y-1/2 z-30">
                             <button
                               onClick={(e) => {
                                 e.stopPropagation();
                                 handleMobileNav('next');
                               }}
-                              className="w-10 h-10 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition-colors"
+                              className="w-8 h-8 xs:w-9 xs:h-9 sm:w-10 sm:h-10 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition-colors"
                             >
-                              <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <svg className="w-4 h-4 xs:w-4 xs:h-4 sm:w-5 sm:h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                               </svg>
                             </button>
@@ -1520,9 +1520,9 @@ const Page = () => {
 
                           {/* Content - Scrollable Container */}
                           <div 
-                            className="absolute top-20 left-4 right-4 bottom-16 z-20 text-white px-4 overflow-y-auto scrollbar-hide"
+                            className="absolute top-20 xs:top-24 sm:top-28 left-2 xs:left-3 sm:left-4 right-2 xs:right-3 sm:right-4 bottom-12 xs:bottom-14 sm:bottom-16 z-20 text-white px-2 xs:px-3 sm:px-4 overflow-y-auto scrollbar-hide tablet-content-container-with-logo ipad-content-container-with-logo"
                             style={{ 
-                              maxHeight: 'calc(100vh - 140px)'
+                              maxHeight: 'calc(100vh - clamp(160px, 24vh, 260px))'
                             }}
                           >
                             {/* Hello text - Amita font */}
@@ -1531,7 +1531,7 @@ const Page = () => {
                             </h2>
 
                             {/* Body content - Roboto font */}
-                            <div className="space-y-4 text-sm leading-relaxed pb-32" style={{ fontFamily: 'Roboto, sans-serif' }}>
+                            <div className="space-y-4 xs:space-y-6 text-sm xs:text-base leading-relaxed pb-20 xs:pb-32" style={{ fontFamily: 'Roboto, sans-serif' }}>
                               <p>
                                 Have you ever felt caught in a cycle of desires, wondering if there&apos;s more to life than this constant pull? In a world where truth often feels twisted, you&apos;re not alone.
                               </p>
@@ -1571,9 +1571,9 @@ const Page = () => {
                         </div>
                       </div>
                     ) : (
-                      <div className="w-full h-full flex flex-col">
-                        {/* Banner Image with POST text */}
-                        <div className="relative w-full" style={{ height: '200px', width: '100vw', marginLeft: 'calc(-50vw + 50%)', marginRight: 'calc(-50vw + 50%)', marginTop: 'calc(-50vh + 50%)', position: 'absolute', top: 0 }}>
+                                              <div className="w-full h-full flex flex-col">
+                          {/* Banner Image with POST text */}
+                         <div className="relative w-full md:h-[600px] lg:h-[700px] tablet-banner ipad-banner" style={{ height: 'clamp(300px, 45vh, 500px)', width: '100vw', marginLeft: 'calc(-50vw + 50%)', marginRight: 'calc(-50vw + 50%)', position: 'absolute', top: 'calc(-50vh + 50% - clamp(150px, 22.5vh, 250px))' }}>
                           <Image
                             src="/about-me-mobile-banner.png"
                             alt="Post Banner"
@@ -1581,8 +1581,8 @@ const Page = () => {
                             className="object-cover"
                           />
                           {/* POST text overlay */}
-                          <div className="absolute inset-0 flex items-center justify-center">
-                            <h1 className="text-white text-2xl font-bold" style={{ fontFamily: 'Amita, serif' }}>
+                          <div className="absolute bottom-0 left-0 right-0 flex items-center justify-center md:bottom-4 lg:bottom-8 tablet-title ipad-title" style={{ paddingBottom: '20%', paddingTop: '10%' }}>
+                            <h1 className="text-white text-base xs:text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold px-2 xs:px-3 sm:px-4 text-center" style={{ fontFamily: 'Amita, serif' }}>
                               POST
                             </h1>
                           </div>
@@ -1590,41 +1590,41 @@ const Page = () => {
                         
                         {/* Content Card - Overlapping the banner */}
                         <div 
-                          className="fixed rounded-t-3xl"
+                          className="fixed rounded-t-3xl tablet-content-card ipad-content-card"
                           style={{ 
                             backgroundColor: '#2481C2',
-                            top: '-60px',
+                            top: 'clamp(-100px, -10vh, -200px)',
                             left: '50%',
                             transform: 'translateX(-50%)',
                             width: '100vw',
-                            height: 'calc(100vh + 60px)',
+                            height: 'calc(100vh + clamp(100px, 10vh, 200px))',
                             zIndex: 10
                           }}
                         >
                           {/* Navigation Chevrons */}
-                          <div className="absolute top-1/2 left-4 transform -translate-y-1/2 z-30">
+                          <div className="absolute top-1/2 left-2 xs:left-3 sm:left-4 transform -translate-y-1/2 z-30">
                             <button
                               onClick={(e) => {
                                 e.stopPropagation();
                                 handleMobileNav('prev');
                               }}
-                              className="w-10 h-10 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition-colors"
+                              className="w-8 h-8 xs:w-9 xs:h-9 sm:w-10 sm:h-10 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition-colors"
                             >
-                              <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <svg className="w-4 h-4 xs:w-4 xs:h-4 sm:w-5 sm:h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                               </svg>
                             </button>
                           </div>
                           
-                          <div className="absolute top-1/2 right-4 transform -translate-y-1/2 z-30">
+                          <div className="absolute top-1/2 right-2 xs:right-3 sm:right-4 transform -translate-y-1/2 z-30">
                             <button
                               onClick={(e) => {
                                 e.stopPropagation();
                                 handleMobileNav('next');
                               }}
-                              className="w-10 h-10 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition-colors"
+                              className="w-8 h-8 xs:w-9 xs:h-9 sm:w-10 sm:h-10 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition-colors"
                             >
-                              <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <svg className="w-4 h-4 xs:w-4 xs:h-4 sm:w-5 sm:h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                               </svg>
                             </button>
@@ -1643,13 +1643,13 @@ const Page = () => {
 
                           {/* Content - Scrollable Container */}
                           <div 
-                            className="absolute top-20 left-4 right-4 bottom-16 z-20 text-white px-4 overflow-y-auto scrollbar-hide"
+                            className="absolute top-20 xs:top-24 sm:top-28 left-2 xs:left-3 sm:left-4 right-2 xs:right-3 sm:right-4 bottom-12 xs:bottom-14 sm:bottom-16 z-20 text-white px-2 xs:px-3 sm:px-4 overflow-y-auto scrollbar-hide tablet-content-container-with-logo ipad-content-container-with-logo"
                             style={{ 
-                              maxHeight: 'calc(100vh - 140px)'
+                              maxHeight: 'calc(100vh - clamp(160px, 24vh, 260px))'
                             }}
                           >
                             {/* Body content - Roboto font */}
-                            <div className="space-y-4 text-sm leading-relaxed pb-32" style={{ fontFamily: 'Roboto, sans-serif' }}>
+                            <div className="space-y-4 xs:space-y-6 text-sm xs:text-base leading-relaxed pb-20 xs:pb-32" style={{ fontFamily: 'Roboto, sans-serif' }}>
                               <p className="italic">
                                 &quot;A thousand times I failed, still your mercy remains, should I stumble out here still I&apos;m caught in your grace.&quot; This Hillsong lyric has always echoed in my heart, and its truth resonates even stronger today
                               </p>
