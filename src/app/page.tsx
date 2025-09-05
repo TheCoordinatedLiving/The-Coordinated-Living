@@ -226,7 +226,24 @@ const Page = () => {
   // Swipe functionality state
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
+  
+  // Tab container ref for auto-scroll
+  const tabContainerRef = useRef<HTMLDivElement>(null);
 
+  // Auto-scroll to active tab function
+  const scrollToActiveTab = (index: number) => {
+    if (tabContainerRef.current) {
+      const tabWidth = 52; // Width of each tab button
+      const spacing = 8; // Space between tabs (space-x-2 = 8px)
+      const containerPadding = 16; // px-4 = 16px on each side
+      const scrollPosition = (index * (tabWidth + spacing)) - containerPadding;
+      
+      tabContainerRef.current.scrollTo({
+        left: scrollPosition,
+        behavior: 'smooth'
+      });
+    }
+  };
   
   const handleMobileNav = (direction: 'prev' | 'next' | string) => {
     let newIndex;
@@ -237,6 +254,8 @@ const Page = () => {
       if (pageIndex !== -1) {
         setCurrentMobileIndex(pageIndex);
         setActiveMobileItem(mobileItems[pageIndex]);
+        // Auto-scroll to the active tab
+        setTimeout(() => scrollToActiveTab(pageIndex), 100);
         return;
       }
     }
@@ -249,6 +268,8 @@ const Page = () => {
     }
     setCurrentMobileIndex(newIndex);
     setActiveMobileItem(mobileItems[newIndex]);
+    // Auto-scroll to the active tab
+    setTimeout(() => scrollToActiveTab(newIndex), 100);
   };
 
   // Swipe functionality
@@ -1511,6 +1532,7 @@ const Page = () => {
             {/* Floating Tab Bar - Mobile Only */}
             <div className="md:hidden fixed left-1/2 transform -translate-x-1/2 z-[99999] floating-tab-container" style={{ bottom: '100px' }}>
               <div 
+                ref={tabContainerRef}
                 className="flex items-center space-x-2 px-4 py-3 rounded-full overflow-x-auto scrollbar-hide tab-bar-scroll glass-floating-tab"
                 style={{
                   width: '320px', // Increased width to show all 5 tabs fully
@@ -1591,6 +1613,8 @@ const Page = () => {
                       onClick={() => {
                         setActiveMobileItem(item);
                         setCurrentMobileIndex(index);
+                        // Auto-scroll to the clicked tab
+                        setTimeout(() => scrollToActiveTab(index), 100);
                       }}
                       className={`flex items-center justify-center p-2 rounded-full transition-all duration-300 ${
                         isActive 
