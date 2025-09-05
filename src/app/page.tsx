@@ -684,6 +684,42 @@ const Page = () => {
     return () => clearTimeout(timer);
   }, [fromWindows]);
 
+  // Preload guide images to prevent flashing
+  useEffect(() => {
+    const guideImages = [
+      '/guide-cover-mobile.png',
+      '/his-grace.png', 
+      '/Fhis-grace.png',
+      '/post-hero.png'
+    ];
+    
+    guideImages.forEach(src => {
+      const preloadImage = new window.Image();
+      preloadImage.src = src;
+    });
+  }, []);
+
+  // Animate guides modal entrance
+  useEffect(() => {
+    if (showGuidesModal) {
+      const bottomSheet = document.querySelector('.guides-bottom-sheet');
+      if (bottomSheet) {
+        gsap.fromTo(bottomSheet, 
+          { 
+            y: '100%',
+            opacity: 0
+          },
+          { 
+            y: 0,
+            opacity: 1,
+            duration: 0.6,
+            ease: "power2.out"
+          }
+        );
+      }
+    }
+  }, [showGuidesModal]);
+
   // Add escape key handler for zoom out
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -3244,22 +3280,6 @@ const Page = () => {
               minHeight: '85vh',
               backgroundColor: '#2481C2'
             }}
-            ref={(el) => {
-              if (el) {
-                gsap.fromTo(el, 
-                  { 
-                    y: '100%',
-                    opacity: 0
-                  },
-                  { 
-                    y: 0,
-                    opacity: 1,
-                    duration: 0.6,
-                    ease: "power2.out"
-                  }
-                );
-              }
-            }}
           >
             {/* Drag Handle */}
             <div className="flex justify-center pt-3 pb-2">
@@ -3288,7 +3308,7 @@ const Page = () => {
             {/* Swipeable Guides Container */}
             <div className="px-6 pb-6">
               {/* Card Holder */}
-              <div className="bg-gray-800 rounded-3xl mb-6" style={{ minHeight: '400px' }}>
+              <div className="mb-6" style={{ minHeight: '400px' }}>
                 <div 
                   className="relative overflow-hidden rounded-2xl"
                   style={{ height: '400px' }}
@@ -3301,23 +3321,39 @@ const Page = () => {
                     }}
                   >
                     {/* Guide Cards */}
-                    {[0, 1, 2, 3].map((index) => (
-                      <div key={index} className="w-full flex-shrink-0 h-full">
-                        <div className="h-full w-full bg-white rounded-2xl flex items-center justify-center p-4">
-                          <img
-                            src="/guide-cover-mobile.png"
-                            alt={`Guide ${index + 1}`}
-                            className="max-w-full max-h-full object-contain"
-                            style={{ width: 'auto', height: 'auto' }}
-                            onError={(e) => {
-                              const target = e.target as HTMLImageElement;
-                              console.log('Image failed to load:', target.src);
-                              target.style.display = 'none';
-                            }}
-                          />
+                    {[0, 1, 2, 3].map((index) => {
+                      const guideImages = [
+                        '/guide-cover-mobile.png',
+                        '/guide-cover-mobile.png',
+                        '/guide-cover-mobile.png',
+                        '/guide-cover-mobile.png'
+                      ];
+                      
+                      return (
+                        <div key={index} className="w-full flex-shrink-0 h-full">
+                          <div className="h-full w-full rounded-2xl overflow-hidden">
+                            <Image
+                              src={guideImages[index]}
+                              alt={`Guide ${index + 1}`}
+                              width={400}
+                              height={400}
+                              className="w-full h-full object-cover"
+                              style={{ 
+                                width: '100%', 
+                                height: '100%',
+                                objectFit: 'cover'
+                              }}
+                              onLoad={() => {
+                                console.log(`Guide ${index + 1} image loaded successfully`);
+                              }}
+                              onError={() => {
+                                console.log(`Guide ${index + 1} image failed to load`);
+                              }}
+                            />
+                          </div>
                         </div>
-                      </div>
-                    ))}
+                      );
+                    })}
                   </div>
                 </div>
               </div>
