@@ -1111,6 +1111,16 @@ const Page = () => {
                             zIndex: 10
                           }}
                         >
+                          {/* Header Logo - Top Left */}
+                          <div className="absolute top-4 left-4 z-20">
+                            <Image
+                              src="/about-me-mobile-header.png"
+                              alt="About Me Header Logo"
+                              width={120}
+                              height={60}
+                              className="object-contain"
+                            />
+                          </div>
                         </div>
                       </div>
                     ) : (
