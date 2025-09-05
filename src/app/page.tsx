@@ -234,7 +234,9 @@ const Page = () => {
   // Auto-scroll to active tab function
   const scrollToActiveTab = (index: number) => {
     if (tabContainerRef.current) {
-      const tabWidth = 52; // Width of each tab button
+      // Get responsive tab width based on screen size
+      const screenWidth = window.innerWidth;
+      const tabWidth = screenWidth >= 768 ? 64 : 52; // Larger tabs on tablet/iPad
       const spacing = 8; // Space between tabs (space-x-2 = 8px)
       const containerPadding = 16; // px-4 = 16px on each side
       const scrollPosition = (index * (tabWidth + spacing)) - containerPadding;
@@ -1574,13 +1576,13 @@ const Page = () => {
 
             </div>
 
-            {/* Floating Tab Bar - Mobile Only */}
-            <div className="md:hidden fixed left-1/2 transform -translate-x-1/2 z-[99999] floating-tab-container" style={{ bottom: '60px' }}>
+            {/* Floating Tab Bar - Mobile, Tablet & iPad */}
+            <div className="xl:hidden fixed left-1/2 transform -translate-x-1/2 z-[99999] floating-tab-container" style={{ bottom: 'clamp(60px, 8vh, 80px)' }}>
               <div 
                 ref={tabContainerRef}
                 className="flex items-center space-x-2 px-4 py-3 rounded-full overflow-x-auto scrollbar-hide tab-bar-scroll glass-floating-tab"
                 style={{
-                  width: '320px', // Increased width to show all 5 tabs fully
+                  width: 'clamp(320px, 50vw, 500px)', // Responsive width for different screen sizes
                   maxWidth: '90vw'
                 }}
               >
@@ -1593,7 +1595,7 @@ const Page = () => {
                         alt="About Me"
                         width={24}
                         height={24}
-                        className={`w-6 h-6 tab-icon ${isActive ? 'active' : ''}`}
+                        className={`w-6 h-6 md:w-7 md:h-7 tab-icon ${isActive ? 'active' : ''}`}
                       />
                     ),
                     'POST': (
@@ -1602,7 +1604,7 @@ const Page = () => {
                         alt="Post"
                         width={24}
                         height={24}
-                        className={`w-6 h-6 tab-icon ${isActive ? 'active' : ''}`}
+                        className={`w-6 h-6 md:w-7 md:h-7 tab-icon ${isActive ? 'active' : ''}`}
                       />
                     ),
                     'ASK ME A QUESTION': (
@@ -1611,7 +1613,7 @@ const Page = () => {
                         alt="Ask Me A Question"
                         width={24}
                         height={24}
-                        className={`w-6 h-6 tab-icon ${isActive ? 'active' : ''}`}
+                        className={`w-6 h-6 md:w-7 md:h-7 tab-icon ${isActive ? 'active' : ''}`}
                       />
                     ),
                     'JOIN OUR CHANNEL': (
@@ -1620,7 +1622,7 @@ const Page = () => {
                         alt="Join Our Channel"
                         width={24}
                         height={24}
-                        className={`w-6 h-6 tab-icon ${isActive ? 'active' : ''}`}
+                        className={`w-6 h-6 md:w-7 md:h-7 tab-icon ${isActive ? 'active' : ''}`}
                       />
                     ),
                     'GUIDES': (
@@ -1629,7 +1631,7 @@ const Page = () => {
                         alt="Guides"
                         width={24}
                         height={24}
-                        className={`w-6 h-6 tab-icon ${isActive ? 'active' : ''}`}
+                        className={`w-6 h-6 md:w-7 md:h-7 tab-icon ${isActive ? 'active' : ''}`}
                       />
                     ),
                     'POUR INTO MY CUP': (
@@ -1638,7 +1640,7 @@ const Page = () => {
                         alt="Pour Into My Cup"
                         width={24}
                         height={24}
-                        className={`w-6 h-6 tab-icon ${isActive ? 'active' : ''}`}
+                        className={`w-6 h-6 md:w-7 md:h-7 tab-icon ${isActive ? 'active' : ''}`}
                       />
                     ),
                     'TERMS AND CONDITIONS': (
@@ -1647,7 +1649,7 @@ const Page = () => {
                         alt="Terms And Conditions"
                         width={24}
                         height={24}
-                        className={`w-6 h-6 tab-icon ${isActive ? 'active' : ''}`}
+                        className={`w-6 h-6 md:w-7 md:h-7 tab-icon ${isActive ? 'active' : ''}`}
                       />
                     )
                   };
@@ -1667,8 +1669,8 @@ const Page = () => {
                           : 'text-gray-400 hover:text-gray-300 glass-inactive-tab'
                       }`}
                       style={{
-                        width: '52px',
-                        height: '52px',
+                        width: 'clamp(52px, 8vw, 64px)', // Responsive tab size
+                        height: 'clamp(52px, 8vw, 64px)', // Responsive tab size
                         flexShrink: 0 // Prevent tabs from shrinking
                       }}
                     >
