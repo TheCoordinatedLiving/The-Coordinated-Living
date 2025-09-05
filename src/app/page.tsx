@@ -222,6 +222,10 @@ const Page = () => {
   // Mobile navigation state
   const [currentMobileIndex, setCurrentMobileIndex] = useState(0);
   const [activeMobileItem, setActiveMobileItem] = useState(mobileItems[0]);
+  
+  // Swipe functionality state
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
 
   
   const handleMobileNav = (direction: 'prev' | 'next') => {
@@ -233,6 +237,35 @@ const Page = () => {
     }
     setCurrentMobileIndex(newIndex);
     setActiveMobileItem(mobileItems[newIndex]);
+  };
+
+  // Swipe functionality
+  const minSwipeDistance = 50;
+
+  const onTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const onTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+
+    if (isLeftSwipe) {
+      // Swipe left = next page
+      handleMobileNav('next');
+    }
+    if (isRightSwipe) {
+      // Swipe right = previous page
+      handleMobileNav('prev');
+    }
   };
 
   const handleCloseTermsModal = () => {
@@ -874,6 +907,9 @@ const Page = () => {
                 <div className="relative flex-1 mx-8 xs:mx-10 sm:mx-12 md:mx-16" style={{ minHeight: '280px', maxWidth: 'calc(100vw - 120px)' }}>
                   <div 
                     className="cursor-pointer"
+                    onTouchStart={onTouchStart}
+                    onTouchMove={onTouchMove}
+                    onTouchEnd={onTouchEnd}
                     onClick={() => {
                       if (activeMobileItem === 'POST') {
                         setShowPostModal(true);
@@ -883,224 +919,168 @@ const Page = () => {
                     }}
                   >
                     {activeMobileItem === 'ASK ME A QUESTION' ? (
-                      <div 
-                        className="w-full h-auto rounded-lg shadow-lg overflow-hidden flex flex-col"
-                        style={{
-                          maxHeight: '60vh',
-                          minHeight: '250px',
-                          maxWidth: '100%',
-                          backgroundColor: '#2481C2'
-                        }}
-                      >
-                        {/* Modal Header */}
-                        <div className="flex justify-between items-center p-2 border-b border-gray-200 flex-shrink-0" style={{ backgroundColor: 'rgba(255, 255, 255, 0.1)' }}>
-                          <span className="text-white font-medium text-sm">New Message</span>
-                          <button 
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              console.log('Expand button clicked!');
-                              setShowExpandedEmailModal(true);
-                              console.log('showExpandedEmailModal set to true');
-                            }}
-                            className="text-white px-3 py-1 rounded-full text-xs font-medium transition-colors duration-200 shadow-md hover:shadow-lg"
-                            style={{ backgroundColor: '#ffffff', color: '#2481C2' }}
-                          >
-                            Expand
-                          </button>
-                        </div>
-                        
-                        {/* Email Form */}
-                        <div className="p-4 space-y-4 flex-1 overflow-y-auto">
-                          {/* To Field */}
-                          <div className="flex items-center space-x-2">
-                            <span className="text-white font-medium w-8">To:</span>
-                            <div className="px-2 py-1 rounded-full text-xs font-bold" style={{ backgroundColor: 'rgba(255, 255, 255, 0.2)', color: '#ffffff' }}>
-                              letstalk@coordinatedliving.com
-                            </div>
-                          </div>
-                          
-                          <div className="border-b border-gray-200"></div>
-                          
-                          {/* From Field */}
-                          <div className="flex items-center space-x-2">
-                            <input 
-                              type="email" 
-                              placeholder="Your email address"
-                              className="flex-1 border-none outline-none text-white placeholder-gray-300 text-sm"
-                              style={{ backgroundColor: 'transparent' }}
-                            />
-                          </div>
-                          
-                          <div className="border-b border-gray-200"></div>
-                          
-                          {/* Subject Field */}
-                          <div className="flex items-center space-x-2">
-                            <input 
-                              type="text" 
-                              placeholder="Subject"
-                              className="flex-1 border-none outline-none text-white placeholder-gray-300 text-sm"
-                              style={{ backgroundColor: 'transparent' }}
-                            />
-                          </div>
-                          
-                          <div className="border-b border-gray-200"></div>
-                          
-                          {/* Message Field */}
-                          <div className="mt-4">
-                            <div className="text-white font-medium mb-2 text-base">
-                              Enter message
-                            </div>
-                            <textarea 
-                              placeholder=""
-                              rows={6}
-                              value={messageText}
-                              onChange={(e) => setMessageText(e.target.value)}
-                              className="w-full border-none outline-none resize-none text-white placeholder-gray-300"
-                              style={{ backgroundColor: 'transparent' }}
-                            />
+                      <div className="w-full h-full flex flex-col">
+                        {/* Banner Image with ASK ME A QUESTION text */}
+                        <div className="relative w-full" style={{ height: '200px', width: '100vw', marginLeft: 'calc(-50vw + 50%)', marginRight: 'calc(-50vw + 50%)', marginTop: 'calc(-50vh + 50%)', position: 'absolute', top: 0 }}>
+                          <Image
+                            src="/about-me-mobile-banner.png"
+                            alt="Ask Me A Question Banner"
+                            fill
+                            className="object-cover"
+                          />
+                          {/* ASK ME A QUESTION text overlay */}
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <h1 className="text-white text-2xl font-bold" style={{ fontFamily: 'Amita, serif' }}>
+                              ASK ME A QUESTION
+                            </h1>
                           </div>
                         </div>
                         
-                        {/* Send Button */}
-                        <div className="p-4 border-t border-gray-200 flex-shrink-0">
-                          <button 
-                            className="w-full text-white font-medium py-2 px-6 rounded-lg transition-colors duration-200 shadow-md hover:shadow-lg"
-                            style={{ backgroundColor: '#ffffff', color: '#2481C2' }}
-                            onClick={() => {
-                              // Handle send email functionality
-                              console.log('Send email clicked');
-                            }}
-                          >
-                            Send
-                          </button>
+                        {/* Content Card - Overlapping the banner */}
+                        <div 
+                          className="fixed rounded-t-3xl"
+                          style={{ 
+                            backgroundColor: '#2481C2',
+                            top: '-60px',
+                            left: '50%',
+                            transform: 'translateX(-50%)',
+                            width: '100vw',
+                            height: 'calc(100vh + 60px)',
+                            zIndex: 10
+                          }}
+                        >
                         </div>
                       </div>
                     ) : activeMobileItem === 'GUIDES' ? (
-                      <Image
-                        src="/guides-mobile.svg"
-                        alt="Guides"
-                        width={300}
-                        height={200}
-                        className="w-full h-auto object-contain max-w-full"
-                        style={{
-                          maxHeight: '60vh',
-                          minHeight: '250px'
-                        }}
-                      />
+                      <div className="w-full h-full flex flex-col">
+                        {/* Banner Image with GUIDES text */}
+                        <div className="relative w-full" style={{ height: '200px', width: '100vw', marginLeft: 'calc(-50vw + 50%)', marginRight: 'calc(-50vw + 50%)', marginTop: 'calc(-50vh + 50%)', position: 'absolute', top: 0 }}>
+                          <Image
+                            src="/about-me-mobile-banner.png"
+                            alt="Guides Banner"
+                            fill
+                            className="object-cover"
+                          />
+                          {/* GUIDES text overlay */}
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <h1 className="text-white text-2xl font-bold" style={{ fontFamily: 'Amita, serif' }}>
+                              GUIDES
+                            </h1>
+                          </div>
+                        </div>
+                        
+                        {/* Content Card - Overlapping the banner */}
+                        <div 
+                          className="fixed rounded-t-3xl"
+                          style={{ 
+                            backgroundColor: '#2481C2',
+                            top: '-60px',
+                            left: '50%',
+                            transform: 'translateX(-50%)',
+                            width: '100vw',
+                            height: 'calc(100vh + 60px)',
+                            zIndex: 10
+                          }}
+                        >
+                        </div>
+                      </div>
                     ) : activeMobileItem === 'TERMS AND CONDITIONS' ? (
-                      <div className="w-full h-full flex items-center justify-center p-2 pt-16">
-                        <div className="rounded-2xl shadow-xl w-full max-w-lg max-h-[60vh] overflow-hidden" style={{ backgroundColor: '#2481C2' }}>
-                          {/* Header */}
-                          <div className="px-6 py-4">
-                            <h2 className="text-lg font-bold text-white">TERMS AND CONDITIONS</h2>
+                      <div className="w-full h-full flex flex-col">
+                        {/* Banner Image with TERMS AND CONDITIONS text */}
+                        <div className="relative w-full" style={{ height: '200px', width: '100vw', marginLeft: 'calc(-50vw + 50%)', marginRight: 'calc(-50vw + 50%)', marginTop: 'calc(-50vh + 50%)', position: 'absolute', top: 0 }}>
+                          <Image
+                            src="/about-me-mobile-banner.png"
+                            alt="Terms And Conditions Banner"
+                            fill
+                            className="object-cover"
+                          />
+                          {/* TERMS AND CONDITIONS text overlay */}
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <h1 className="text-white text-2xl font-bold" style={{ fontFamily: 'Amita, serif' }}>
+                              TERMS AND CONDITIONS
+                            </h1>
                           </div>
-                          
-                          {/* Content */}
-                          <div className="px-8 py-4 overflow-y-auto max-h-[35vh]">
-                            <div className="text-sm text-white leading-relaxed space-y-3">
-                              <p>
-                                <strong>Welcome to The Coordinated Living!</strong>
-                              </p>
-                              <p>
-                                These terms and conditions outline the rules and regulations for the use of the Website, located at{' '}
-                                <a href="https://thecoordinatedliving.com/" className="underline font-bold" target="_blank" rel="noopener noreferrer" style={{ color: 'white' }}>
-                                  https://thecoordinatedliving.<br />com/
-                                </a>
-                              </p>
-                              <p>
-                                The Terms and Conditions on this webpage, as may without notice, be amended from time to time, shall apply to all our services directly or indirectly (through our authorized agents and sub-agents) made available online, any mobile device, by email or by telephone, as well as any other electronic media.
-                              </p>
-                              <p>
-                                By accessing, browsing and using our website or any of our platform (hereafter collectively referred to as the &quot;website&quot;) and/or by completing a booking, you recognize and agree to have read, understood and agreed to the terms and conditions, including the privacy statement as set out below. You must NOT use this website if you disagree with any of the Terms and Conditions as stated below.
-                              </p>
-                            </div>
-                          </div>
-                          
-                          {/* Footer with View Full Terms button */}
-                          <div className="px-6 py-4">
-                            <button
-                              onClick={() => setShowTermsModal(true)}
-                              className="w-full bg-white text-gray-800 py-2 px-4 rounded-full font-medium hover:bg-gray-50 transition-colors duration-200"
-                            >
-                              View Full Terms
-                            </button>
-                          </div>
+                        </div>
+                        
+                        {/* Content Card - Overlapping the banner */}
+                        <div 
+                          className="fixed rounded-t-3xl"
+                          style={{ 
+                            backgroundColor: '#2481C2',
+                            top: '-60px',
+                            left: '50%',
+                            transform: 'translateX(-50%)',
+                            width: '100vw',
+                            height: 'calc(100vh + 60px)',
+                            zIndex: 10
+                          }}
+                        >
                         </div>
                       </div>
                     ) : activeMobileItem === 'JOIN OUR CHANNEL' ? (
-                      <div 
-                        className="w-full h-full flex items-center justify-center p-2 pt-16"
-                        style={{
-                          maxHeight: '60vh',
-                          minHeight: '250px'
-                        }}
-                      >
-                        <div className="rounded-2xl shadow-xl w-full max-w-lg max-h-[60vh] overflow-hidden" style={{ backgroundColor: '#2481C2' }}>
-                          {/* Modal Header */}
-                          <div className="flex justify-center items-center p-4">
-                            <span className="text-white font-bold text-xl xs:text-2xl sm:text-3xl text-center" style={{ fontFamily: 'Amita, serif', whiteSpace: 'nowrap' }}>Deep Dive Teachings</span>
+                      <div className="w-full h-full flex flex-col">
+                        {/* Banner Image with JOIN OUR CHANNEL text */}
+                        <div className="relative w-full" style={{ height: '200px', width: '100vw', marginLeft: 'calc(-50vw + 50%)', marginRight: 'calc(-50vw + 50%)', marginTop: 'calc(-50vh + 50%)', position: 'absolute', top: 0 }}>
+                          <Image
+                            src="/about-me-mobile-banner.png"
+                            alt="Join Our Channel Banner"
+                            fill
+                            className="object-cover"
+                          />
+                          {/* JOIN OUR CHANNEL text overlay */}
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <h1 className="text-white text-2xl font-bold" style={{ fontFamily: 'Amita, serif' }}>
+                              JOIN OUR CHANNEL
+                            </h1>
                           </div>
-                          
-                          {/* Content */}
-                          <div className="p-4 xs:p-5 sm:p-6 space-y-4 overflow-y-auto text-center" style={{ maxHeight: 'calc(60vh - 120px)' }}>
-                            <p className="text-white text-xs xs:text-sm leading-relaxed">
-                              Are you longing for an in-depth exploration of God&apos;s Word and its application to the complexities of life? Our videos, delivered through an exclusive paid WhatsApp channel, provide detailed teaching and deeper insights. Join our community to journey further into understanding how His grace abounds even in the most profound changing scenes of life and cultivate an intimate relationship with the Lord.
-                            </p>
-                          </div>
-                          
-                          {/* Join Channel Button */}
-                          <div className="p-4 xs:p-5 sm:p-6">
-                            <Image
-                              src="/join-channel-button-mobile.svg"
-                              alt="Join Channel"
-                              width={200}
-                              height={60}
-                              className="w-1/2 h-auto cursor-pointer hover:opacity-80 transition-opacity mx-auto"
-                              onClick={() => {
-                                // Handle join channel functionality
-                                console.log('Join channel clicked');
-                              }}
-                            />
-                          </div>
+                        </div>
+                        
+                        {/* Content Card - Overlapping the banner */}
+                        <div 
+                          className="fixed rounded-t-3xl"
+                          style={{ 
+                            backgroundColor: '#2481C2',
+                            top: '-60px',
+                            left: '50%',
+                            transform: 'translateX(-50%)',
+                            width: '100vw',
+                            height: 'calc(100vh + 60px)',
+                            zIndex: 10
+                          }}
+                        >
                         </div>
                       </div>
                     ) : activeMobileItem === 'POUR INTO MY CUP' ? (
-                      <div 
-                        className="w-full h-full flex items-center justify-center p-2 pt-16"
-                        style={{
-                          maxHeight: '60vh',
-                          minHeight: '250px'
-                        }}
-                      >
-                        <div className="rounded-2xl shadow-xl w-full max-w-lg max-h-[60vh] overflow-hidden" style={{ backgroundColor: '#2481C2' }}>
-                          {/* Modal Header */}
-                          <div className="flex justify-center items-center p-4">
-                            <span className="text-white font-bold text-xl xs:text-2xl sm:text-3xl text-center" style={{ fontFamily: 'Amita, serif' }}>
-                              A Cheerful Gift,<br />A Full Cup
-                            </span>
+                      <div className="w-full h-full flex flex-col">
+                        {/* Banner Image with POUR INTO MY CUP text */}
+                        <div className="relative w-full" style={{ height: '200px', width: '100vw', marginLeft: 'calc(-50vw + 50%)', marginRight: 'calc(-50vw + 50%)', marginTop: 'calc(-50vh + 50%)', position: 'absolute', top: 0 }}>
+                          <Image
+                            src="/about-me-mobile-banner.png"
+                            alt="Pour Into My Cup Banner"
+                            fill
+                            className="object-cover"
+                          />
+                          {/* POUR INTO MY CUP text overlay */}
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <h1 className="text-white text-2xl font-bold" style={{ fontFamily: 'Amita, serif' }}>
+                              POUR INTO MY CUP
+                            </h1>
                           </div>
-                          
-                          {/* Content */}
-                          <div className="p-4 xs:p-5 sm:p-6 space-y-4 overflow-y-auto text-center" style={{ maxHeight: 'calc(60vh - 120px)' }}>
-                            <p className="text-white text-sm xs:text-base leading-relaxed">
-                              Having my cuppa on my table is one sure comfort as I get work done. Your support would be a lovely way to keep it full every time I sit at my desk, and it genuinely helps me sustainably run this platform. Thank you for your kindness!
-                            </p>
-                          </div>
-                          
-                          {/* Pour Into My Cup Button */}
-                          <div className="p-4 xs:p-5 sm:p-6">
-                            <Image
-                              src="/pour-into-cup-mobile.svg"
-                              alt="Pour Into My Cup"
-                              width={200}
-                              height={60}
-                              className="w-1/2 h-auto cursor-pointer hover:opacity-80 transition-opacity mx-auto"
-                              onClick={() => {
-                                // Handle pour into my cup functionality
-                                console.log('Pour into my cup clicked');
-                              }}
-                            />
-                          </div>
+                        </div>
+                        
+                        {/* Content Card - Overlapping the banner */}
+                        <div 
+                          className="fixed rounded-t-3xl"
+                          style={{ 
+                            backgroundColor: '#2481C2',
+                            top: '-60px',
+                            left: '50%',
+                            transform: 'translateX(-50%)',
+                            width: '100vw',
+                            height: 'calc(100vh + 60px)',
+                            zIndex: 10
+                          }}
+                        >
                         </div>
                       </div>
                     ) : activeMobileItem === 'ABOUT ME' ? (
@@ -1137,17 +1117,38 @@ const Page = () => {
                         </div>
                       </div>
                     ) : (
-                      <Image
-                        src="/new-post-mobile.svg"
-                        alt="New Post"
-                        width={300}
-                        height={200}
-                        className="w-full h-auto object-contain max-w-full"
-                        style={{
-                          maxHeight: '60vh',
-                          minHeight: '250px'
-                        }}
-                      />
+                      <div className="w-full h-full flex flex-col">
+                        {/* Banner Image with POST text */}
+                        <div className="relative w-full" style={{ height: '200px', width: '100vw', marginLeft: 'calc(-50vw + 50%)', marginRight: 'calc(-50vw + 50%)', marginTop: 'calc(-50vh + 50%)', position: 'absolute', top: 0 }}>
+                          <Image
+                            src="/about-me-mobile-banner.png"
+                            alt="Post Banner"
+                            fill
+                            className="object-cover"
+                          />
+                          {/* POST text overlay */}
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <h1 className="text-white text-2xl font-bold" style={{ fontFamily: 'Amita, serif' }}>
+                              POST
+                            </h1>
+                          </div>
+                        </div>
+                        
+                        {/* Content Card - Overlapping the banner */}
+                        <div 
+                          className="fixed rounded-t-3xl"
+                          style={{ 
+                            backgroundColor: '#2481C2',
+                            top: '-60px',
+                            left: '50%',
+                            transform: 'translateX(-50%)',
+                            width: '100vw',
+                            height: 'calc(100vh + 60px)',
+                            zIndex: 10
+                          }}
+                        >
+                        </div>
+                      </div>
                     )}
                   </div>
                   
