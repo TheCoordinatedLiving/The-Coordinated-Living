@@ -181,16 +181,15 @@ const Page = () => {
   };
 
   const handleCloseGuidesModal = () => {
-    // Animate guides modal out with ease
-    const modalContainer = document.querySelector('.guides-modal-card');
+    // Animate bottom sheet out with ease
+    const bottomSheet = document.querySelector('.guides-bottom-sheet');
     
-    if (modalContainer) {
-      gsap.to(modalContainer, {
+    if (bottomSheet) {
+      gsap.to(bottomSheet, {
+        y: '100%',
         opacity: 0,
-        scale: 0.95,
-        y: -20,
-        duration: 0.6,
-        ease: "power2.inOut",
+        duration: 0.4,
+        ease: "power2.in",
         onComplete: () => {
           setShowGuidesModal(false);
           setCurrentGuideIndex(0); // Reset to first guide
@@ -276,11 +275,19 @@ const Page = () => {
   const minSwipeDistance = 50;
 
   const onTouchStart = (e: React.TouchEvent) => {
+    // Don't handle touch events if clicking on guide indicators
+    if (e.target instanceof Element && e.target.closest('button[data-guide-indicator]')) {
+      return;
+    }
     setTouchEnd(null);
     setTouchStart(e.targetTouches[0].clientX);
   };
 
   const onTouchMove = (e: React.TouchEvent) => {
+    // Don't handle touch events if clicking on guide indicators
+    if (e.target instanceof Element && e.target.closest('button[data-guide-indicator]')) {
+      return;
+    }
     setTouchEnd(e.targetTouches[0].clientX);
   };
 
@@ -291,13 +298,24 @@ const Page = () => {
     const isLeftSwipe = distance > minSwipeDistance;
     const isRightSwipe = distance < -minSwipeDistance;
 
-    if (isLeftSwipe) {
-      // Swipe left = next page
-      handleMobileNav('next');
-    }
-    if (isRightSwipe) {
-      // Swipe right = previous page
-      handleMobileNav('prev');
+    // Handle guide navigation when guides modal is open
+    if (showGuidesModal) {
+      if (isLeftSwipe && currentGuideIndex < 3) {
+        handleNextGuide();
+      }
+      if (isRightSwipe && currentGuideIndex > 0) {
+        handlePreviousGuide();
+      }
+    } else {
+      // Handle main navigation when guides modal is closed
+      if (isLeftSwipe) {
+        // Swipe left = next page
+        handleMobileNav('next');
+      }
+      if (isRightSwipe) {
+        // Swipe right = previous page
+        handleMobileNav('prev');
+      }
     }
   };
 
@@ -463,50 +481,13 @@ const Page = () => {
   };
 
   const handlePreviousGuide = () => {
-    const guideImage = document.querySelector('.guide-image');
-    if (guideImage) {
-      gsap.to(guideImage, {
-        opacity: 0,
-        x: 50,
-        duration: 0.3,
-        ease: "power2.in",
-        onComplete: () => {
-          setCurrentGuideIndex(prev => Math.max(0, prev - 1));
-          gsap.to(guideImage, {
-            opacity: 1,
-            x: 0,
-            duration: 0.3,
-            ease: "power2.out"
-          });
-        }
-      });
-    } else {
-      setCurrentGuideIndex(prev => Math.max(0, prev - 1));
-    }
+    setCurrentGuideIndex(prev => Math.max(0, prev - 1));
   };
 
   const handleNextGuide = () => {
-    const guideImage = document.querySelector('.guide-image');
-    if (guideImage) {
-      gsap.to(guideImage, {
-        opacity: 0,
-        x: -50,
-        duration: 0.3,
-        ease: "power2.in",
-        onComplete: () => {
-          setCurrentGuideIndex(prev => Math.min(3, prev + 1));
-          gsap.to(guideImage, {
-            opacity: 1,
-            x: 0,
-            duration: 0.3,
-            ease: "power2.out"
-          });
-        }
-      });
-    } else {
-      setCurrentGuideIndex(prev => Math.min(3, prev + 1));
-    }
+    setCurrentGuideIndex(prev => Math.min(3, prev + 1));
   };
+
 
 
 
@@ -3241,102 +3222,141 @@ const Page = () => {
 
 
 
-      {/* Guides Modal - Mobile Only */}
+      {/* Guides Bottom Sheet - Mobile Only */}
       {showGuidesModal && (
         <div className="fixed inset-0 z-[9999]">
-          {/* Black overlay */}
+          {/* Blurred background overlay */}
           <div 
             className="absolute inset-0"
             style={{ 
-              backgroundColor: 'rgba(0, 0, 0, 0.8)',
+              backgroundColor: 'rgba(0, 0, 0, 0.3)',
               backdropFilter: 'blur(8px)',
               WebkitBackdropFilter: 'blur(8px)'
             }}
             onClick={handleCloseGuidesModal}
           />
           
-          {/* Close button - top left */}
-          <button
-            onClick={handleCloseGuidesModal}
-            className="absolute top-6 left-6 z-20 bg-white bg-opacity-80 backdrop-blur-sm text-gray-800 px-4 py-2 rounded-lg font-medium hover:bg-opacity-100 transition-all shadow-lg cursor-pointer"
+          {/* Bottom Sheet */}
+          <div 
+            className="absolute bottom-0 left-0 right-0 rounded-t-3xl shadow-2xl guides-bottom-sheet"
+            style={{ 
+              maxHeight: '95vh',
+              minHeight: '85vh',
+              backgroundColor: '#2481C2'
+            }}
+            ref={(el) => {
+              if (el) {
+                gsap.fromTo(el, 
+                  { 
+                    y: '100%',
+                    opacity: 0
+                  },
+                  { 
+                    y: 0,
+                    opacity: 1,
+                    duration: 0.6,
+                    ease: "power2.out"
+                  }
+                );
+              }
+            }}
           >
-            Close
-          </button>
-          
-          {/* Modal content */}
-          <div className="absolute inset-0 flex items-center justify-center p-4 pt-20">
-            <div 
-              className="relative z-10 w-full max-w-md guides-modal-card"
-              ref={(el) => {
-                if (el) {
-                  gsap.fromTo(el, 
-                    { 
-                      opacity: 0, 
-                      y: 60,
-                      scale: 0.9
-                    },
-                    { 
-                      opacity: 1, 
-                      y: 0, 
-                      scale: 1,
-                      duration: 0.8,
-                      ease: "power2.out",
-                      delay: 0.2
-                    }
-                  );
-                }
-              }}
-            >
-              {/* Guide Image */}
-              <div className="w-full flex items-center justify-center">
-                <Image
-                  src={`/guide-${currentGuideIndex + 1}-mobile.svg`}
-                  alt={`Guide ${currentGuideIndex + 1}`}
-                  width={400}
-                  height={600}
-                  className="w-full h-auto object-contain guide-image"
-                />
-              </div>
-              
-              {/* Navigation and Download Buttons */}
-              <div className="p-4 flex items-center justify-between">
-                {/* Previous Button */}
-                {currentGuideIndex > 0 && (
-                  <button
-                    onClick={handlePreviousGuide}
-                    className="bg-white bg-opacity-80 backdrop-blur-sm text-gray-800 p-2 rounded-full font-medium shadow-lg hover:bg-opacity-100 transition-all cursor-pointer"
-                  >
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <polyline points="15,18 9,12 15,6"></polyline>
-                    </svg>
-                  </button>
-                )}
-                
-                {/* Download Button */}
-                <button
-                  className="bg-white bg-opacity-80 backdrop-blur-sm text-gray-800 px-4 py-2 rounded-lg font-medium shadow-lg hover:bg-opacity-100 transition-all cursor-pointer"
-                  onClick={() => {
-                    // Handle download functionality
-                    console.log('Download guide clicked');
-                  }}
+            {/* Drag Handle */}
+            <div className="flex justify-center pt-3 pb-2">
+              <div className="w-12 h-1 bg-gray-300 rounded-full"></div>
+            </div>
+            
+            {/* Header */}
+            <div className="flex items-center justify-between px-6 pb-4">
+              <h2 
+                className="text-2xl font-bold text-white"
+                style={{ fontFamily: 'var(--font-amita), cursive' }}
+              >
+                Available Guides
+              </h2>
+              <button
+                onClick={handleCloseGuidesModal}
+                className="w-10 h-10 bg-white rounded-full flex items-center justify-center hover:bg-gray-100 transition-colors duration-200"
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="black" strokeWidth="2">
+                  <line x1="18" y1="6" x2="6" y2="18"/>
+                  <line x1="6" y1="6" x2="18" y2="18"/>
+                </svg>
+              </button>
+            </div>
+            
+            {/* Swipeable Guides Container */}
+            <div className="px-6 pb-6">
+              {/* Card Holder */}
+              <div className="bg-gray-800 rounded-3xl mb-6" style={{ minHeight: '400px' }}>
+                <div 
+                  className="relative overflow-hidden rounded-2xl"
+                  style={{ height: '400px' }}
                 >
-                  Download
-                </button>
-                
-                {/* Next Button */}
-                {currentGuideIndex < 3 && (
-                  <button
-                    onClick={handleNextGuide}
-                    className="bg-white bg-opacity-80 backdrop-blur-sm text-gray-800 p-2 rounded-full font-medium shadow-lg hover:bg-opacity-100 transition-all cursor-pointer"
+                  <div 
+                    className="flex transition-transform duration-300 ease-out h-full"
+                    style={{ 
+                      transform: `translateX(-${currentGuideIndex * 100}%)`,
+                      width: '400%'
+                    }}
                   >
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <polyline points="9,18 15,12 9,6"></polyline>
-                    </svg>
-                  </button>
-                )}
+                    {/* Guide Cards */}
+                    {[0, 1, 2, 3].map((index) => (
+                      <div key={index} className="w-full flex-shrink-0 h-full">
+                        <div className="h-full w-full bg-white rounded-2xl flex items-center justify-center p-4">
+                          <img
+                            src="/guide-cover-mobile.png"
+                            alt={`Guide ${index + 1}`}
+                            className="max-w-full max-h-full object-contain"
+                            style={{ width: 'auto', height: 'auto' }}
+                            onError={(e) => {
+                              console.log('Image failed to load:', e.target.src);
+                              e.target.style.display = 'none';
+                            }}
+                          />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
               
-
+              {/* Guide Indicators */}
+              <div className="flex justify-center space-x-3 mt-6">
+                {[0, 1, 2, 3].map((index) => (
+                  <button
+                    key={index}
+                    data-guide-indicator
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setCurrentGuideIndex(index);
+                    }}
+                    onTouchStart={(e) => e.stopPropagation()}
+                    onTouchMove={(e) => e.stopPropagation()}
+                    onTouchEnd={(e) => e.stopPropagation()}
+                    className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                      index === currentGuideIndex 
+                        ? 'bg-white scale-125' 
+                        : 'bg-white opacity-30 hover:opacity-50'
+                    }`}
+                  />
+                ))}
+              </div>
+              
+              {/* Download Button */}
+              <button
+                className="w-full mt-6 py-4 rounded-full font-semibold text-lg transition-colors duration-200 shadow-lg"
+                style={{ 
+                  backgroundColor: '#FFFFFF',
+                  color: '#2481C2'
+                }}
+                onClick={() => {
+                  // Handle download functionality
+                  console.log('Download guide clicked');
+                }}
+              >
+                Download This Guide
+              </button>
             </div>
           </div>
         </div>
