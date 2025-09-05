@@ -878,21 +878,21 @@ img {
 
 /* Floating Tab Bar Safe Area Support */
 .floating-tab-container {
-  bottom: 100px !important;
+  bottom: 80px !important;
   padding-bottom: env(safe-area-inset-bottom, 0px);
 }
 
 /* Additional bottom spacing for devices with home indicators */
 @media (max-width: 767px) {
   .floating-tab-container {
-    bottom: 100px !important;
+    bottom: 80px !important;
   }
 }
 
 /* Extra spacing for iPhone devices with browser navigation */
 @media (max-width: 430px) {
   .floating-tab-container {
-    bottom: 100px !important;
+    bottom: 80px !important;
   }
 }
 
