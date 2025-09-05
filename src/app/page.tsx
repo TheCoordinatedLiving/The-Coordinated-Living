@@ -953,8 +953,8 @@ const Page = () => {
                                 <label className="text-sm xs:text-base font-medium" style={{ fontFamily: 'Roboto, sans-serif' }}>
                                   To
                                 </label>
-                                <div className="bg-white rounded-full px-4 xs:px-6 sm:px-8 py-3 xs:py-4 inline-block max-w-full">
-                                  <span className="text-sm xs:text-base sm:text-lg text-black font-bold whitespace-nowrap" style={{ fontFamily: 'Roboto, sans-serif' }}>
+                                <div className="bg-white rounded-full px-4 xs:px-6 sm:px-8 py-3 xs:py-4 w-3/4 max-w-md">
+                                  <span className="text-sm xs:text-base sm:text-lg text-black font-bold whitespace-nowrap overflow-hidden" style={{ fontFamily: 'Roboto, sans-serif' }}>
                                     letstalk@thecoordinatedliving.com
                                   </span>
                                 </div>
