@@ -159,6 +159,7 @@ const Page = () => {
   const [messageText, setMessageText] = useState('');
   const [showExpandedEmailModal, setShowExpandedEmailModal] = useState(false);
   const [showGuidesModal, setShowGuidesModal] = useState(false);
+  const [currentGuideIndex, setCurrentGuideIndex] = useState(0);
   const handleCloseExpandedEmailModal = () => {
     // Animate expanded email modal out with ease
     const modalContainer = document.querySelector('.expanded-email-modal-card');
@@ -192,10 +193,12 @@ const Page = () => {
         ease: "power2.inOut",
         onComplete: () => {
           setShowGuidesModal(false);
+          setCurrentGuideIndex(0); // Reset to first guide
         }
       });
     } else {
       setShowGuidesModal(false);
+      setCurrentGuideIndex(0);
     }
   };
 
@@ -438,6 +441,51 @@ const Page = () => {
     setCurrentPostIndex(prev => Math.min(posts.length - 1, prev + 1));
   };
 
+  const handlePreviousGuide = () => {
+    const guideImage = document.querySelector('.guide-image');
+    if (guideImage) {
+      gsap.to(guideImage, {
+        opacity: 0,
+        x: 50,
+        duration: 0.3,
+        ease: "power2.in",
+        onComplete: () => {
+          setCurrentGuideIndex(prev => Math.max(0, prev - 1));
+          gsap.to(guideImage, {
+            opacity: 1,
+            x: 0,
+            duration: 0.3,
+            ease: "power2.out"
+          });
+        }
+      });
+    } else {
+      setCurrentGuideIndex(prev => Math.max(0, prev - 1));
+    }
+  };
+
+  const handleNextGuide = () => {
+    const guideImage = document.querySelector('.guide-image');
+    if (guideImage) {
+      gsap.to(guideImage, {
+        opacity: 0,
+        x: -50,
+        duration: 0.3,
+        ease: "power2.in",
+        onComplete: () => {
+          setCurrentGuideIndex(prev => Math.min(3, prev + 1));
+          gsap.to(guideImage, {
+            opacity: 1,
+            x: 0,
+            duration: 0.3,
+            ease: "power2.out"
+          });
+        }
+      });
+    } else {
+      setCurrentGuideIndex(prev => Math.min(3, prev + 1));
+    }
+  };
 
 
 
@@ -2763,31 +2811,53 @@ const Page = () => {
                 }
               }}
             >
-              {/* Blue Card Content */}
-              <div className="bg-blue-600 rounded-2xl p-8 text-center shadow-2xl" style={{ backgroundColor: '#2563eb' }}>
-                {/* Title */}
-                <h2 className="text-2xl font-bold text-white mb-4 leading-tight" style={{ fontFamily: 'serif' }}>
-                  Practical Guides For<br />
-                  Your Journey
-                </h2>
+              {/* Guide Image */}
+              <div className="w-full flex items-center justify-center">
+                <Image
+                  src={`/guide-${currentGuideIndex + 1}-mobile.svg`}
+                  alt={`Guide ${currentGuideIndex + 1}`}
+                  width={400}
+                  height={600}
+                  className="w-full h-auto object-contain guide-image"
+                />
+              </div>
+              
+              {/* Navigation and Download Buttons */}
+              <div className="p-4 flex items-center justify-between">
+                {/* Previous Button */}
+                {currentGuideIndex > 0 && (
+                  <button
+                    onClick={handlePreviousGuide}
+                    className="bg-white bg-opacity-80 backdrop-blur-sm text-gray-800 p-2 rounded-full font-medium shadow-lg hover:bg-opacity-100 transition-all cursor-pointer"
+                  >
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <polyline points="15,18 9,12 15,6"></polyline>
+                    </svg>
+                  </button>
+                )}
                 
-                {/* Description */}
-                <p className="text-white text-sm mb-8 leading-relaxed" style={{ fontFamily: 'sans-serif' }}>
-                  Explore these resources to experience<br />
-                  His abounding grace as you navigate<br />
-                  specific scenes of life and grow in faith.
-                </p>
-                
-                {/* View Our Guides Button */}
+                {/* Download Button */}
                 <button
-                  className="bg-white text-gray-800 px-8 py-3 rounded-xl font-medium shadow-lg hover:bg-gray-100 transition-all cursor-pointer w-full"
+                  className="bg-white bg-opacity-80 backdrop-blur-sm text-gray-800 px-4 py-2 rounded-lg font-medium shadow-lg hover:bg-opacity-100 transition-all cursor-pointer"
                   onClick={() => {
-                    // Handle view guides functionality
-                    console.log('View Our Guides clicked');
+                    // Handle download functionality
+                    console.log('Download guide clicked');
                   }}
                 >
-                  View Our Guides
+                  Download
                 </button>
+                
+                {/* Next Button */}
+                {currentGuideIndex < 3 && (
+                  <button
+                    onClick={handleNextGuide}
+                    className="bg-white bg-opacity-80 backdrop-blur-sm text-gray-800 p-2 rounded-full font-medium shadow-lg hover:bg-opacity-100 transition-all cursor-pointer"
+                  >
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <polyline points="9,18 15,12 9,6"></polyline>
+                    </svg>
+                  </button>
+                )}
               </div>
               
 
