@@ -908,9 +908,7 @@ const Page = () => {
                     onTouchMove={onTouchMove}
                     onTouchEnd={onTouchEnd}
                     onClick={() => {
-                      if (activeMobileItem === 'POST') {
-                        setShowPostModal(true);
-                                            } else if (activeMobileItem === 'GUIDES') {
+                      if (activeMobileItem === 'GUIDES') {
                         setShowGuidesModal(true);
                       }
                     }}
@@ -946,6 +944,92 @@ const Page = () => {
                             zIndex: 10
                           }}
                         >
+                          {/* Navigation Chevrons */}
+                          <div className="absolute top-1/2 left-4 transform -translate-y-1/2 z-30">
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleMobileNav('prev');
+                              }}
+                              className="w-10 h-10 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition-colors"
+                            >
+                              <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                              </svg>
+                            </button>
+                          </div>
+                          
+                          <div className="absolute top-1/2 right-4 transform -translate-y-1/2 z-30">
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleMobileNav('next');
+                              }}
+                              className="w-10 h-10 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition-colors"
+                            >
+                              <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                              </svg>
+                            </button>
+                          </div>
+
+                          {/* Contact Form */}
+                          <div className="absolute top-12 left-4 right-4 bottom-16 z-20 text-white px-4">
+                            <form className="space-y-0">
+                              {/* To Field */}
+                              <div className="flex items-center space-x-4 pb-4 border-b border-white/20">
+                                <label className="text-base font-medium" style={{ fontFamily: 'Roboto, sans-serif' }}>
+                                  To
+                                </label>
+                                <div className="bg-white rounded-full px-6 py-3 flex-1">
+                                  <span className="text-base text-black" style={{ fontFamily: 'Roboto, sans-serif' }}>
+                                    letstalk@thecoordinatedliving.com
+                                  </span>
+                                </div>
+                              </div>
+
+                              {/* Your Email Address Field */}
+                              <div className="py-4 border-b border-white/20">
+                                <input
+                                  type="email"
+                                  className="w-full bg-transparent text-white placeholder-white focus:outline-none text-base"
+                                  placeholder="Your email address"
+                                  style={{ fontFamily: 'Roboto, sans-serif' }}
+                                />
+                              </div>
+
+                              {/* Subject Field */}
+                              <div className="py-4 border-b border-white/20">
+                                <input
+                                  type="text"
+                                  className="w-full bg-transparent text-white placeholder-white focus:outline-none text-base"
+                                  placeholder="Subject"
+                                  style={{ fontFamily: 'Roboto, sans-serif' }}
+                                />
+                              </div>
+
+                              {/* Message Field */}
+                              <div className="py-4">
+                                <textarea
+                                  rows={6}
+                                  className="w-full bg-transparent text-white placeholder-white focus:outline-none resize-none text-base"
+                                  placeholder="Enter message"
+                                  style={{ fontFamily: 'Roboto, sans-serif' }}
+                                />
+                              </div>
+
+                              {/* Send Button */}
+                              <div className="flex justify-center pt-6">
+                                <button
+                                  type="submit"
+                                  className="bg-white px-20 py-4 rounded-full font-medium hover:bg-white/90 transition-colors"
+                                  style={{ fontFamily: 'Roboto, sans-serif', color: '#2481C2' }}
+                                >
+                                  Send
+                                </button>
+                              </div>
+                            </form>
+                          </div>
                         </div>
                       </div>
                     ) : activeMobileItem === 'GUIDES' ? (
@@ -979,6 +1063,34 @@ const Page = () => {
                             zIndex: 10
                           }}
                         >
+                          {/* Navigation Chevrons */}
+                          <div className="absolute top-1/2 left-4 transform -translate-y-1/2 z-30">
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleMobileNav('prev');
+                              }}
+                              className="w-10 h-10 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition-colors"
+                            >
+                              <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                              </svg>
+                            </button>
+                          </div>
+                          
+                          <div className="absolute top-1/2 right-4 transform -translate-y-1/2 z-30">
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleMobileNav('next');
+                              }}
+                              className="w-10 h-10 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition-colors"
+                            >
+                              <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                              </svg>
+                            </button>
+                          </div>
                         </div>
                       </div>
                     ) : activeMobileItem === 'TERMS AND CONDITIONS' ? (
@@ -1012,6 +1124,34 @@ const Page = () => {
                             zIndex: 10
                           }}
                         >
+                          {/* Navigation Chevrons */}
+                          <div className="absolute top-1/2 left-4 transform -translate-y-1/2 z-30">
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleMobileNav('prev');
+                              }}
+                              className="w-10 h-10 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition-colors"
+                            >
+                              <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                              </svg>
+                            </button>
+                          </div>
+                          
+                          <div className="absolute top-1/2 right-4 transform -translate-y-1/2 z-30">
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleMobileNav('next');
+                              }}
+                              className="w-10 h-10 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition-colors"
+                            >
+                              <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                              </svg>
+                            </button>
+                          </div>
                         </div>
                       </div>
                     ) : activeMobileItem === 'JOIN OUR CHANNEL' ? (
@@ -1045,6 +1185,34 @@ const Page = () => {
                             zIndex: 10
                           }}
                         >
+                          {/* Navigation Chevrons */}
+                          <div className="absolute top-1/2 left-4 transform -translate-y-1/2 z-30">
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleMobileNav('prev');
+                              }}
+                              className="w-10 h-10 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition-colors"
+                            >
+                              <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                              </svg>
+                            </button>
+                          </div>
+                          
+                          <div className="absolute top-1/2 right-4 transform -translate-y-1/2 z-30">
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleMobileNav('next');
+                              }}
+                              className="w-10 h-10 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition-colors"
+                            >
+                              <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                              </svg>
+                            </button>
+                          </div>
                         </div>
                       </div>
                     ) : activeMobileItem === 'POUR INTO MY CUP' ? (
@@ -1078,6 +1246,34 @@ const Page = () => {
                             zIndex: 10
                           }}
                         >
+                          {/* Navigation Chevrons */}
+                          <div className="absolute top-1/2 left-4 transform -translate-y-1/2 z-30">
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleMobileNav('prev');
+                              }}
+                              className="w-10 h-10 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition-colors"
+                            >
+                              <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                              </svg>
+                            </button>
+                          </div>
+                          
+                          <div className="absolute top-1/2 right-4 transform -translate-y-1/2 z-30">
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleMobileNav('next');
+                              }}
+                              className="w-10 h-10 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition-colors"
+                            >
+                              <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                              </svg>
+                            </button>
+                          </div>
                         </div>
                       </div>
                     ) : activeMobileItem === 'ABOUT ME' ? (
@@ -1111,6 +1307,34 @@ const Page = () => {
                             zIndex: 10
                           }}
                         >
+                          {/* Navigation Chevrons */}
+                          <div className="absolute top-1/2 left-4 transform -translate-y-1/2 z-30">
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleMobileNav('prev');
+                              }}
+                              className="w-10 h-10 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition-colors"
+                            >
+                              <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                              </svg>
+                            </button>
+                          </div>
+                          
+                          <div className="absolute top-1/2 right-4 transform -translate-y-1/2 z-30">
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleMobileNav('next');
+                              }}
+                              className="w-10 h-10 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition-colors"
+                            >
+                              <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                              </svg>
+                            </button>
+                          </div>
                           {/* Header Logo - Top Left */}
                           <div className="absolute top-4 left-4 z-20">
                             <Image
@@ -1153,9 +1377,22 @@ const Page = () => {
                               </p>
                               
                               {/* Signature - Amita font */}
-                              <div className="mt-8 mb-16">
+                              <div className="mt-8 mb-8">
                                 <p className="text-sm mb-2 text-white" style={{ fontFamily: 'Roboto, sans-serif' }}>Signed</p>
                                 <p className="text-xl text-white" style={{ fontFamily: 'Amita, serif' }}>Lesley.</p>
+                              </div>
+
+                              {/* Email section */}
+                              <div className="mt-8 mb-16">
+                                {/* Thin horizontal line */}
+                                <div className="w-full h-px bg-white mb-4"></div>
+                                
+                                {/* Email address - centered */}
+                                <div className="text-center">
+                                  <p className="text-sm text-white" style={{ fontFamily: 'Roboto, sans-serif' }}>
+                                    letstalk@thecoordinatedliving.com
+                                  </p>
+                                </div>
                               </div>
                             </div>
                           </div>
@@ -1192,6 +1429,76 @@ const Page = () => {
                             zIndex: 10
                           }}
                         >
+                          {/* Navigation Chevrons */}
+                          <div className="absolute top-1/2 left-4 transform -translate-y-1/2 z-30">
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleMobileNav('prev');
+                              }}
+                              className="w-10 h-10 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition-colors"
+                            >
+                              <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                              </svg>
+                            </button>
+                          </div>
+                          
+                          <div className="absolute top-1/2 right-4 transform -translate-y-1/2 z-30">
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleMobileNav('next');
+                              }}
+                              className="w-10 h-10 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition-colors"
+                            >
+                              <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                              </svg>
+                            </button>
+                          </div>
+
+                          {/* Header Logo - Top Left */}
+                          <div className="absolute top-4 left-4 z-20">
+                            <Image
+                              src="/about-me-mobile-header.png"
+                              alt="Post Header Logo"
+                              width={120}
+                              height={60}
+                              className="object-contain"
+                            />
+                          </div>
+
+                          {/* Content - Scrollable Container */}
+                          <div 
+                            className="absolute top-20 left-4 right-4 bottom-16 z-20 text-white px-4 overflow-y-auto scrollbar-hide"
+                            style={{ 
+                              maxHeight: 'calc(100vh - 140px)'
+                            }}
+                          >
+                            {/* Body content - Roboto font */}
+                            <div className="space-y-4 text-sm leading-relaxed pb-32" style={{ fontFamily: 'Roboto, sans-serif' }}>
+                              <p className="italic">
+                                &quot;A thousand times I failed, still your mercy remains, should I stumble out here still I&apos;m caught in your grace.&quot; This Hillsong lyric has always echoed in my heart, and its truth resonates even stronger today
+                              </p>
+                              
+                              <p>
+                                For years, I pursued other paths, pouring tireless effort into fields he hadn&apos;t called me to, only to find no lasting fruit. That rollercoaster of emotions, the unpleasant experiences, the endless accusations and judgments thrown around – they&apos;re hallmarks of a mind out of alignment.
+                              </p>
+                              
+                              <p>
+                                Want to know the root cause? It&apos;s simply a lack of trust in the Father. No matter how you rationalize it, we constantly try to force a fit where there isn&apos;t one.
+                              </p>
+                              
+                              <p>
+                                But in Christ, we step into the true identity the Father created for us. This identity comes with specific tasks, assignments, and responsibilities, all of which we are perfectly equipped for. It&apos;s there we discover an unexplainable peace, joy, and confidence.
+                              </p>
+                              
+                              <p>
+                                When we align ourselves with God&apos;s purpose for our lives, we find a peace that surpasses all understanding. This isn&apos;t about perfection – it&apos;s about walking in the identity He has given us, trusting that He has equipped us for every good work.
+                              </p>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     )}
