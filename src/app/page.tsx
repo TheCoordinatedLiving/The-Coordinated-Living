@@ -3310,8 +3310,9 @@ const Page = () => {
                             className="max-w-full max-h-full object-contain"
                             style={{ width: 'auto', height: 'auto' }}
                             onError={(e) => {
-                              console.log('Image failed to load:', e.target.src);
-                              e.target.style.display = 'none';
+                              const target = e.target as HTMLImageElement;
+                              console.log('Image failed to load:', target.src);
+                              target.style.display = 'none';
                             }}
                           />
                         </div>
