@@ -1135,7 +1135,7 @@ const Page = () => {
                             </h2>
 
                             {/* Body content - Roboto font */}
-                            <div className="space-y-4 text-sm leading-relaxed pb-20" style={{ fontFamily: 'Roboto, sans-serif' }}>
+                            <div className="space-y-4 text-sm leading-relaxed pb-32" style={{ fontFamily: 'Roboto, sans-serif' }}>
                               <p>
                                 Have you ever felt caught in a cycle of desires, wondering if there&apos;s more to life than this constant pull? In a world where truth often feels twisted, you&apos;re not alone.
                               </p>
@@ -1153,7 +1153,7 @@ const Page = () => {
                               </p>
                               
                               {/* Signature - Amita font */}
-                              <div className="mt-8 mb-8">
+                              <div className="mt-8 mb-16">
                                 <p className="text-sm mb-2 text-white" style={{ fontFamily: 'Roboto, sans-serif' }}>Signed</p>
                                 <p className="text-xl text-white" style={{ fontFamily: 'Amita, serif' }}>Lesley.</p>
                               </div>
