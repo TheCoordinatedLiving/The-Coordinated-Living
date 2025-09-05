@@ -1509,7 +1509,7 @@ const Page = () => {
             </div>
 
             {/* Floating Tab Bar - Mobile Only */}
-            <div className="md:hidden fixed left-1/2 transform -translate-x-1/2 z-50 floating-tab-container" style={{ bottom: 'max(40px, calc(env(safe-area-inset-bottom, 24px) + 16px))' }}>
+            <div className="md:hidden fixed left-1/2 transform -translate-x-1/2 z-50 floating-tab-container" style={{ bottom: 'max(80px, calc(env(safe-area-inset-bottom, 24px) + 56px))' }}>
               <div 
                 className="flex items-center space-x-2 px-4 py-3 rounded-full overflow-x-auto scrollbar-hide tab-bar-scroll"
                 style={{
