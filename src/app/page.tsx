@@ -824,7 +824,7 @@ const Page = () => {
           className="bg-white relative overflow-hidden workspace-bg"
         >
           {/* Mobile Background */}
-          <div className="xl:hidden absolute inset-0 bg-white">
+          <div className="xl:hidden absolute inset-0 bg-white" style={{ paddingBottom: '100px' }}>
             
             
             
@@ -1155,7 +1155,7 @@ const Page = () => {
           </div>
           
           {/* Bottom Tab Bar */}
-          <div className="xl:hidden fixed bottom-0 left-0 right-0 z-50 p-3">
+          <div className="xl:hidden fixed bottom-0 left-0 right-0 z-50 p-3" style={{ paddingBottom: 'max(12px, env(safe-area-inset-bottom))' }}>
             <div 
               className="flex items-center justify-around rounded-full px-4 py-3 mx-8"
               style={{ backgroundColor: '#2F4C6C' }}
