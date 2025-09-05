@@ -946,7 +946,7 @@ const Page = () => {
                         >
 
                           {/* Contact Form */}
-                          <div className="absolute top-12 xs:top-14 sm:top-16 left-2 xs:left-3 sm:left-4 right-2 xs:right-3 sm:right-4 bottom-12 xs:bottom-14 sm:bottom-16 z-20 text-white px-2 xs:px-3 sm:px-4 overflow-y-auto scrollbar-hide">
+                          <div className="absolute top-12 xs:top-14 sm:top-16 left-2 xs:left-3 sm:left-4 right-2 xs:right-3 sm:right-4 bottom-12 xs:bottom-14 sm:bottom-16 z-20 text-white px-2 xs:px-3 sm:px-4 overflow-y-auto scrollbar-hide pb-20">
                             <form className="space-y-0 pb-4 xs:pb-6 sm:pb-8">
                               {/* To Field */}
                               <div className="flex items-center space-x-2 xs:space-x-3 pb-3 xs:pb-4 border-b border-white/20">
@@ -1038,7 +1038,7 @@ const Page = () => {
 
                           {/* Content - Scrollable Container */}
                           <div 
-                            className="absolute top-12 xs:top-14 sm:top-16 left-2 xs:left-3 sm:left-4 right-2 xs:right-3 sm:right-4 bottom-12 xs:bottom-14 sm:bottom-16 z-20 text-white px-2 xs:px-3 sm:px-4 overflow-y-auto scrollbar-hide tablet-content-container ipad-content-container"
+                            className="absolute top-12 xs:top-14 sm:top-16 left-2 xs:left-3 sm:left-4 right-2 xs:right-3 sm:right-4 bottom-12 xs:bottom-14 sm:bottom-16 z-20 text-white px-2 xs:px-3 sm:px-4 overflow-y-auto scrollbar-hide tablet-content-container ipad-content-container pb-20"
                             style={{ 
                               maxHeight: 'calc(100vh - clamp(160px, 24vh, 260px))'
                             }}
@@ -1103,7 +1103,7 @@ const Page = () => {
 
                           {/* Content - Scrollable Container */}
                           <div 
-                            className="absolute top-12 xs:top-14 sm:top-16 left-2 xs:left-3 sm:left-4 right-2 xs:right-3 sm:right-4 bottom-12 xs:bottom-14 sm:bottom-16 z-20 text-white px-2 xs:px-3 sm:px-4 overflow-y-auto scrollbar-hide tablet-content-container ipad-content-container"
+                            className="absolute top-12 xs:top-14 sm:top-16 left-2 xs:left-3 sm:left-4 right-2 xs:right-3 sm:right-4 bottom-12 xs:bottom-14 sm:bottom-16 z-20 text-white px-2 xs:px-3 sm:px-4 overflow-y-auto scrollbar-hide tablet-content-container ipad-content-container pb-20"
                             style={{ 
                               maxHeight: 'calc(100vh - clamp(160px, 24vh, 260px))'
                             }}
@@ -1217,7 +1217,7 @@ const Page = () => {
 
                           {/* Content - Scrollable Container */}
                           <div 
-                            className="absolute top-12 xs:top-14 sm:top-16 left-2 xs:left-3 sm:left-4 right-2 xs:right-3 sm:right-4 bottom-12 xs:bottom-14 sm:bottom-16 z-20 text-white px-2 xs:px-3 sm:px-4 overflow-y-auto scrollbar-hide tablet-content-container ipad-content-container"
+                            className="absolute top-12 xs:top-14 sm:top-16 left-2 xs:left-3 sm:left-4 right-2 xs:right-3 sm:right-4 bottom-12 xs:bottom-14 sm:bottom-16 z-20 text-white px-2 xs:px-3 sm:px-4 overflow-y-auto scrollbar-hide tablet-content-container ipad-content-container pb-20"
                             style={{ 
                               maxHeight: 'calc(100vh - clamp(160px, 24vh, 260px))'
                             }}
@@ -1276,7 +1276,7 @@ const Page = () => {
 
                           {/* Content - Scrollable Container */}
                           <div 
-                            className="absolute top-12 xs:top-14 sm:top-16 left-2 xs:left-3 sm:left-4 right-2 xs:right-3 sm:right-4 bottom-12 xs:bottom-14 sm:bottom-16 z-20 text-white px-2 xs:px-3 sm:px-4 overflow-y-auto scrollbar-hide tablet-content-container ipad-content-container"
+                            className="absolute top-12 xs:top-14 sm:top-16 left-2 xs:left-3 sm:left-4 right-2 xs:right-3 sm:right-4 bottom-12 xs:bottom-14 sm:bottom-16 z-20 text-white px-2 xs:px-3 sm:px-4 overflow-y-auto scrollbar-hide tablet-content-container ipad-content-container pb-20"
                             style={{ 
                               maxHeight: 'calc(100vh - clamp(160px, 24vh, 260px))'
                             }}
@@ -1352,7 +1352,7 @@ const Page = () => {
 
                           {/* Content - Scrollable Container */}
                           <div 
-                            className="absolute top-20 xs:top-24 sm:top-28 left-2 xs:left-3 sm:left-4 right-2 xs:right-3 sm:right-4 bottom-12 xs:bottom-14 sm:bottom-16 z-20 text-white px-2 xs:px-3 sm:px-4 overflow-y-auto scrollbar-hide tablet-content-container-with-logo ipad-content-container-with-logo"
+                            className="absolute top-20 xs:top-24 sm:top-28 left-2 xs:left-3 sm:left-4 right-2 xs:right-3 sm:right-4 bottom-12 xs:bottom-14 sm:bottom-16 z-20 text-white px-2 xs:px-3 sm:px-4 overflow-y-auto scrollbar-hide tablet-content-container-with-logo ipad-content-container-with-logo pb-20"
                             style={{ 
                               maxHeight: 'calc(100vh - clamp(160px, 24vh, 260px))'
                             }}
@@ -1447,7 +1447,7 @@ const Page = () => {
 
                           {/* Content - Scrollable Container */}
                           <div 
-                            className="absolute top-20 xs:top-24 sm:top-28 left-2 xs:left-3 sm:left-4 right-2 xs:right-3 sm:right-4 bottom-12 xs:bottom-14 sm:bottom-16 z-20 text-white px-2 xs:px-3 sm:px-4 overflow-y-auto scrollbar-hide tablet-content-container-with-logo ipad-content-container-with-logo"
+                            className="absolute top-20 xs:top-24 sm:top-28 left-2 xs:left-3 sm:left-4 right-2 xs:right-3 sm:right-4 bottom-12 xs:bottom-14 sm:bottom-16 z-20 text-white px-2 xs:px-3 sm:px-4 overflow-y-auto scrollbar-hide tablet-content-container-with-logo ipad-content-container-with-logo pb-20"
                             style={{ 
                               maxHeight: 'calc(100vh - clamp(160px, 24vh, 260px))'
                             }}
@@ -3130,7 +3130,7 @@ const Page = () => {
               </div>
               
               {/* Email Form */}
-              <div className="p-6 space-y-6 overflow-y-auto flex-1">
+              <div className="p-6 space-y-6 overflow-y-auto flex-1 pb-20">
                 {/* To Field */}
                 <div className="flex items-center space-x-2">
                   <span className="text-white font-medium w-8">To:</span>
@@ -3521,7 +3521,7 @@ const Page = () => {
             </div>
             
             {/* Content */}
-            <div className="px-6 py-4 overflow-y-auto max-h-[70vh]">
+            <div className="px-6 py-4 overflow-y-auto max-h-[70vh] pb-20">
               <div className="text-sm text-white leading-relaxed space-y-4">
                 <p>
                   <strong>Welcome to The Coordinated Living!</strong>

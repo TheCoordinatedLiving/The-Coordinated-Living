@@ -839,6 +839,19 @@ img {
   }
 }
 
+/* Content padding to prevent hiding behind floating tab bar */
+@media (max-width: 767px) {
+  .pb-20 {
+    padding-bottom: 5rem !important; /* 80px */
+  }
+}
+
+@media (max-width: 430px) {
+  .pb-20 {
+    padding-bottom: 6rem !important; /* 96px for smaller devices */
+  }
+}
+
 /* Tab Icon Styles */
 .tab-icon {
   filter: brightness(0) saturate(100%) invert(62%) sepia(8%) saturate(464%) hue-rotate(202deg) brightness(95%) contrast(89%);
