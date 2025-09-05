@@ -3347,6 +3347,36 @@ const Page = () => {
                           console.log('Guide image failed to load:', e);
                         }}
                       />
+                      
+                      {/* Logo - Top Left */}
+                      <div className="absolute top-4 left-4 z-10">
+                        <Image
+                          src="/guide-logo.svg"
+                          alt="Guide Logo"
+                          width={120}
+                          height={120}
+                          className="w-24 h-24"
+                        />
+                      </div>
+                      
+                      {/* Title and Description - Bottom Left */}
+                      <div className="absolute bottom-4 left-4 z-10">
+                        <h3 
+                          className="text-white text-lg font-bold mb-1"
+                          style={{ fontFamily: 'Amita, serif' }}
+                        >
+                          GUIDE 1 TITLE
+                        </h3>
+                        <p 
+                          className="text-white text-sm"
+                          style={{ 
+                            fontFamily: 'Roboto, sans-serif',
+                            opacity: 0.7
+                          }}
+                        >
+                          GUIDE TITLE 1 DESCRIPTION
+                        </p>
+                      </div>
                     </div>
                   </div>
 
@@ -3357,8 +3387,8 @@ const Page = () => {
                       style={{ width: 'calc(100vw - 32px)' }}
                     >
                       <Image
-                        src="/his-grace.png"
-                        alt="His Grace Guide"
+                        src="/guide-cover-mobile.png"
+                        alt="Guide Cover"
                         width={400}
                         height={400}
                         className="w-full h-full object-cover"
@@ -3374,6 +3404,36 @@ const Page = () => {
                           console.log('Second guide image failed to load:', e);
                         }}
                       />
+                      
+                      {/* Logo - Top Left */}
+                      <div className="absolute top-4 left-4 z-10">
+                        <Image
+                          src="/guide-logo.svg"
+                          alt="Guide Logo"
+                          width={120}
+                          height={120}
+                          className="w-24 h-24"
+                        />
+                      </div>
+                      
+                      {/* Title and Description - Bottom Left */}
+                      <div className="absolute bottom-4 left-4 z-10">
+                        <h3 
+                          className="text-white text-lg font-bold mb-1"
+                          style={{ fontFamily: 'Amita, serif' }}
+                        >
+                          GUIDE 2 TITLE
+                        </h3>
+                        <p 
+                          className="text-white text-sm"
+                          style={{ 
+                            fontFamily: 'Roboto, sans-serif',
+                            opacity: 0.7
+                          }}
+                        >
+                          GUIDE TITLE 2 DESCRIPTION
+                        </p>
+                      </div>
                     </div>
                   </div>
 
@@ -3384,8 +3444,8 @@ const Page = () => {
                       style={{ width: 'calc(100vw - 32px)' }}
                     >
                       <Image
-                        src="/Fhis-grace.png"
-                        alt="F His Grace Guide"
+                        src="/guide-cover-mobile.png"
+                        alt="Guide Cover"
                         width={400}
                         height={400}
                         className="w-full h-full object-cover"
@@ -3401,6 +3461,36 @@ const Page = () => {
                           console.log('Third guide image failed to load:', e);
                         }}
                       />
+                      
+                      {/* Logo - Top Left */}
+                      <div className="absolute top-4 left-4 z-10">
+                        <Image
+                          src="/guide-logo.svg"
+                          alt="Guide Logo"
+                          width={120}
+                          height={120}
+                          className="w-24 h-24"
+                        />
+                      </div>
+                      
+                      {/* Title and Description - Bottom Left */}
+                      <div className="absolute bottom-4 left-4 z-10">
+                        <h3 
+                          className="text-white text-lg font-bold mb-1"
+                          style={{ fontFamily: 'Amita, serif' }}
+                        >
+                          GUIDE 3 TITLE
+                        </h3>
+                        <p 
+                          className="text-white text-sm"
+                          style={{ 
+                            fontFamily: 'Roboto, sans-serif',
+                            opacity: 0.7
+                          }}
+                        >
+                          GUIDE TITLE 3 DESCRIPTION
+                        </p>
+                      </div>
                     </div>
                   </div>
 
@@ -3411,8 +3501,8 @@ const Page = () => {
                       style={{ width: 'calc(100vw - 32px)' }}
                     >
                       <Image
-                        src="/post-hero.png"
-                        alt="Post Hero Guide"
+                        src="/guide-cover-mobile.png"
+                        alt="Guide Cover"
                         width={400}
                         height={400}
                         className="w-full h-full object-cover"
@@ -3428,6 +3518,36 @@ const Page = () => {
                           console.log('Fourth guide image failed to load:', e);
                         }}
                       />
+                      
+                      {/* Logo - Top Left */}
+                      <div className="absolute top-4 left-4 z-10">
+                        <Image
+                          src="/guide-logo.svg"
+                          alt="Guide Logo"
+                          width={120}
+                          height={120}
+                          className="w-24 h-24"
+                        />
+                      </div>
+                      
+                      {/* Title and Description - Bottom Left */}
+                      <div className="absolute bottom-4 left-4 z-10">
+                        <h3 
+                          className="text-white text-lg font-bold mb-1"
+                          style={{ fontFamily: 'Amita, serif' }}
+                        >
+                          GUIDE 4 TITLE
+                        </h3>
+                        <p 
+                          className="text-white text-sm"
+                          style={{ 
+                            fontFamily: 'Roboto, sans-serif',
+                            opacity: 0.7
+                          }}
+                        >
+                          GUIDE TITLE 4 DESCRIPTION
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
