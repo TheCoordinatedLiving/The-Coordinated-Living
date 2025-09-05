@@ -3307,78 +3307,33 @@ const Page = () => {
             
             {/* Swipeable Guides Container */}
             <div className="px-6 pb-6">
-              {/* Card Holder */}
+              {/* Single Card */}
               <div className="mb-6" style={{ minHeight: '400px' }}>
                 <div 
-                  className="relative overflow-hidden rounded-2xl"
+                  className="relative overflow-hidden rounded-2xl bg-white flex items-center justify-center"
                   style={{ height: '400px' }}
                 >
-                  <div 
-                    className="flex transition-transform duration-300 ease-out h-full"
+                  <Image
+                    src="/guide-cover-mobile.png"
+                    alt="Guide Cover"
+                    width={400}
+                    height={400}
+                    className="w-full h-full object-cover"
                     style={{ 
-                      transform: `translateX(-${currentGuideIndex * 100}%)`,
-                      width: '400%'
+                      width: '100%', 
+                      height: '100%',
+                      objectFit: 'cover'
                     }}
-                  >
-                    {/* Guide Cards */}
-                    {[0, 1, 2, 3].map((index) => {
-                      const guideImages = [
-                        '/guide-cover-mobile.png',
-                        '/guide-cover-mobile.png',
-                        '/guide-cover-mobile.png',
-                        '/guide-cover-mobile.png'
-                      ];
-                      
-                      return (
-                        <div key={index} className="w-full flex-shrink-0 h-full">
-                          <div className="h-full w-full rounded-2xl overflow-hidden">
-                            <Image
-                              src={guideImages[index]}
-                              alt={`Guide ${index + 1}`}
-                              width={400}
-                              height={400}
-                              className="w-full h-full object-cover"
-                              style={{ 
-                                width: '100%', 
-                                height: '100%',
-                                objectFit: 'cover'
-                              }}
-                              onLoad={() => {
-                                console.log(`Guide ${index + 1} image loaded successfully`);
-                              }}
-                              onError={() => {
-                                console.log(`Guide ${index + 1} image failed to load`);
-                              }}
-                            />
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
+                    onLoad={() => {
+                      console.log('Guide image loaded successfully');
+                    }}
+                    onError={(e) => {
+                      console.log('Guide image failed to load:', e);
+                    }}
+                  />
                 </div>
               </div>
               
-              {/* Guide Indicators */}
-              <div className="flex justify-center space-x-3 mt-6">
-                {[0, 1, 2, 3].map((index) => (
-                  <button
-                    key={index}
-                    data-guide-indicator
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setCurrentGuideIndex(index);
-                    }}
-                    onTouchStart={(e) => e.stopPropagation()}
-                    onTouchMove={(e) => e.stopPropagation()}
-                    onTouchEnd={(e) => e.stopPropagation()}
-                    className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                      index === currentGuideIndex 
-                        ? 'bg-white scale-125' 
-                        : 'bg-white opacity-30 hover:opacity-50'
-                    }`}
-                  />
-                ))}
-              </div>
               
               {/* Download Button */}
               <button
