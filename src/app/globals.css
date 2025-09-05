@@ -819,6 +819,19 @@ img {
   scrollbar-width: none;
 }
 
+/* Floating Tab Bar Safe Area Support */
+.floating-tab-container {
+  bottom: max(24px, env(safe-area-inset-bottom, 24px)) !important;
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* Additional bottom spacing for devices with home indicators */
+@media (max-width: 767px) {
+  .floating-tab-container {
+    bottom: max(32px, calc(env(safe-area-inset-bottom, 24px) + 8px)) !important;
+  }
+}
+
 /* Tab Icon Styles */
 .tab-icon {
   filter: brightness(0) saturate(100%) invert(62%) sepia(8%) saturate(464%) hue-rotate(202deg) brightness(95%) contrast(89%);
