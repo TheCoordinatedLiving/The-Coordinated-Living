@@ -228,8 +228,20 @@ const Page = () => {
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
 
   
-  const handleMobileNav = (direction: 'prev' | 'next') => {
+  const handleMobileNav = (direction: 'prev' | 'next' | string) => {
     let newIndex;
+    
+    // If direction is a page name, find its index
+    if (direction !== 'prev' && direction !== 'next') {
+      const pageIndex = mobileItems.indexOf(direction);
+      if (pageIndex !== -1) {
+        setCurrentMobileIndex(pageIndex);
+        setActiveMobileItem(mobileItems[pageIndex]);
+        return;
+      }
+    }
+    
+    // Handle prev/next navigation
     if (direction === 'prev') {
       newIndex = currentMobileIndex === 0 ? mobileItems.length - 1 : currentMobileIndex - 1;
     } else {
