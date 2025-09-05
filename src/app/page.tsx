@@ -938,9 +938,7 @@ const Page = () => {
                   <div 
                     className="cursor-pointer"
                     onClick={() => {
-                      if (activeMobileItem === 'ABOUT ME') {
-                        setShowLesleyLetter(true);
-                      } else if (activeMobileItem === 'POST') {
+                      if (activeMobileItem === 'POST') {
                         setShowPostModal(true);
                                             } else if (activeMobileItem === 'GUIDES') {
                         setShowGuidesModal(true);
@@ -1191,11 +1189,11 @@ const Page = () => {
                           className="fixed rounded-t-3xl"
                           style={{ 
                             backgroundColor: '#2481C2',
-                            top: '-80px',
+                            top: '-60px',
                             left: '50%',
                             transform: 'translateX(-50%)',
                             width: '100vw',
-                            height: 'calc(100vh + 80px)',
+                            height: 'calc(100vh + 60px)',
                             zIndex: 10
                           }}
                         >
