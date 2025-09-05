@@ -946,15 +946,15 @@ const Page = () => {
                         >
 
                           {/* Contact Form */}
-                          <div className="absolute top-12 xs:top-14 sm:top-16 left-2 xs:left-3 sm:left-4 right-2 xs:right-3 sm:right-4 bottom-12 xs:bottom-14 sm:bottom-16 z-20 text-white px-2 xs:px-3 sm:px-4 overflow-y-auto scrollbar-hide pb-20">
+                          <div className="absolute top-12 xs:top-14 sm:top-16 left-8 xs:left-12 sm:left-16 right-8 xs:right-12 sm:right-16 bottom-12 xs:bottom-14 sm:bottom-16 z-20 text-white px-2 xs:px-3 sm:px-4 overflow-y-auto scrollbar-hide pb-20">
                             <form className="space-y-0 pb-4 xs:pb-6 sm:pb-8">
                               {/* To Field */}
                               <div className="flex items-center space-x-2 xs:space-x-3 pb-3 xs:pb-4 border-b border-white/20">
                                 <label className="text-sm xs:text-base font-medium" style={{ fontFamily: 'Roboto, sans-serif' }}>
                                   To
                                 </label>
-                                <div className="bg-white rounded-full px-3 xs:px-4 sm:px-6 py-2 xs:py-3 flex-1">
-                                  <span className="text-xs xs:text-sm sm:text-base text-black" style={{ fontFamily: 'Roboto, sans-serif' }}>
+                                <div className="bg-white rounded-full px-4 xs:px-6 sm:px-8 py-3 xs:py-4 flex-1 min-w-0">
+                                  <span className="text-sm xs:text-base sm:text-lg text-black break-all" style={{ fontFamily: 'Roboto, sans-serif' }}>
                                     letstalk@thecoordinatedliving.com
                                   </span>
                                 </div>
@@ -1230,13 +1230,23 @@ const Page = () => {
                               
                               {/* Join Channel Button */}
                               <div className="flex justify-center pt-8">
-                                <Image
-                                  src="/join-channel-mobile-new.png"
-                                  alt="Join Channel Button"
-                                  width={160}
-                                  height={48}
-                                  className="object-contain cursor-pointer hover:opacity-90 transition-opacity"
-                                />
+                                <button 
+                                  className="flex items-center space-x-3 px-8 py-3 bg-white hover:bg-gray-100 font-bold rounded-full transition-colors duration-200 shadow-lg"
+                                  style={{ color: '#2481C2' }}
+                                  onClick={() => {
+                                    // Add WhatsApp link functionality here
+                                    window.open('https://wa.me/your-whatsapp-number', '_blank');
+                                  }}
+                                >
+                                  <Image
+                                    src="/whatsapp-mobile.svg"
+                                    alt="WhatsApp Icon"
+                                    width={24}
+                                    height={24}
+                                    className="w-6 h-6"
+                                  />
+                                  <span className="text-sm xs:text-base">Join Channel</span>
+                                </button>
                               </div>
                             </div>
                           </div>
@@ -1296,13 +1306,23 @@ const Page = () => {
                               
                               {/* Pour Into My Cup Button */}
                               <div className="flex justify-center pt-8">
-                                <Image
-                                  src="/donation-mobile-new.png"
-                                  alt="Pour Into My Cup Button"
-                                  width={200}
-                                  height={60}
-                                  className="object-contain cursor-pointer hover:opacity-90 transition-opacity"
-                                />
+                                <button 
+                                  className="flex items-center space-x-3 px-8 py-3 bg-white hover:bg-gray-100 font-bold rounded-full transition-colors duration-200 shadow-lg"
+                                  style={{ color: '#2481C2' }}
+                                  onClick={() => {
+                                    // Add donation link functionality here
+                                    window.open('https://your-donation-link.com', '_blank');
+                                  }}
+                                >
+                                  <Image
+                                    src="/pour-tab-mobile.svg"
+                                    alt="Pour Into My Cup Icon"
+                                    width={24}
+                                    height={24}
+                                    className="w-6 h-6"
+                                  />
+                                  <span className="text-sm xs:text-base">Pour Into My Cup</span>
+                                </button>
                               </div>
                             </div>
                           </div>
