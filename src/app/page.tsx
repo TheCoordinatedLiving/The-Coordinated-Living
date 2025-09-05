@@ -147,7 +147,6 @@ const Page = () => {
   const [showLesleyLetter, setShowLesleyLetter] = useState(false);
   // Remove isLetterLoaded state
   const [showVideos, setShowVideos] = useState(false);
-  const [showWelcomeModal, setShowWelcomeModal] = useState(false);
   const [showPostModal, setShowPostModal] = useState(false);
   
   // Debug: Log when showPostModal changes
@@ -605,29 +604,6 @@ const Page = () => {
     }
   }, [showPostModal]);
 
-  // Auto-hide welcome modal after 5 seconds
-  useEffect(() => {
-    if (showWelcomeModal) {
-      const timer = setTimeout(() => {
-        const modal = document.querySelector('.welcome-modal-card');
-        if (modal) {
-          gsap.to(modal, {
-            opacity: 0,
-            scale: 0.95,
-            duration: 0.6,
-            ease: 'power2.inOut',
-            onComplete: () => {
-              setShowWelcomeModal(false);
-            }
-          });
-        } else {
-          setShowWelcomeModal(false);
-        }
-      }, 5000); // 5 seconds
-
-      return () => clearTimeout(timer);
-    }
-  }, [showWelcomeModal]);
 
   useEffect(() => {
     // Don't start the loader timer if coming from Windows
@@ -703,9 +679,8 @@ const Page = () => {
         duration: 0.6,
         ease: 'power3.inOut'
       }, "<")
-      // Show welcome modal and experience page immediately when curtain starts sliding
+      // Show experience page immediately when curtain starts sliding
       .add(() => {
-        setShowWelcomeModal(true);
         setExperienceVisible(true);
       })
       // Now slide the entire curtain (main page) up to reveal experience
@@ -852,67 +827,6 @@ const Page = () => {
           <div className="xl:hidden absolute inset-0 bg-white">
             
             
-            {/* Mobile Welcome Card */}
-            {showWelcomeModal && (
-              <div className="absolute inset-0 flex items-center justify-center p-4 xs:p-6 sm:p-8 z-20">
-                {/* Darker blur background overlay */}
-                <div 
-                  className="absolute inset-0"
-                  style={{ 
-                    backgroundColor: 'rgba(0, 0, 0, 0.6)',
-                    backdropFilter: 'blur(20px)',
-                    WebkitBackdropFilter: 'blur(20px)'
-                  }}
-                />
-                
-                <div 
-                  className="relative max-w-sm w-full p-6 xs:p-8 text-center welcome-modal-card"
-                  style={{
-                    backgroundColor: '#0F0F0F',
-                    borderRadius: '26.22px',
-                    boxShadow: '0 20px 40px rgba(0, 0, 0, 0.3)'
-                  }}
-                >
-                  {/* Coordinated Living Logo */}
-                  <div className="flex justify-center" style={{ marginBottom: '20px' }}>
-                    <Image
-                      src="/modal-logo.svg"
-                      alt="Coordinated Living Logo"
-                      width={80}
-                      height={80}
-                      className="w-16 xs:w-20 sm:w-24 h-auto"
-                    />
-                  </div>
-
-                  {/* Welcome Banner */}
-                  <div
-                    className="px-3 xs:px-4 py-2"
-                    style={{
-                      backgroundColor: '#1D1C1E',
-                      color: 'white',
-                      borderRadius: '33.86px',
-                      maxWidth: '280px',
-                      margin: '0 auto',
-                      marginBottom: '20px',
-                    }}
-                  >
-                    <h2 className="text-white font-medium text-xs xs:text-sm" style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', fontFamily: 'Amita, serif' }}>
-                      Welcome to The Interactive Workspace
-                    </h2>
-                  </div>
-
-                  {/* Instructional Text */}
-                  <div className="text-center" style={{ marginBottom: '20px' }}>
-                    <p className="text-white font-bold text-base xs:text-lg mb-2" style={{ fontSize: '1rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', marginBottom: '8px', fontFamily: 'Amita, serif' }}>
-                      Things aren&apos;t always what they seem.
-                    </p>
-                    <p className="text-gray-300 text-sm xs:text-base" style={{ margin: 0, fontFamily: 'Roboto, sans-serif' }}>
-                      Tap on each item around you to explore further, every object holds a surprise waiting to be discovered.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            )}
             
             {/* Mobile Noticeboard Post */}
             <div className="absolute top-1/2 transform -translate-y-1/2 left-2 xs:left-3 sm:left-4 right-2 xs:right-3 sm:right-4 z-10">
@@ -1238,6 +1152,58 @@ const Page = () => {
             </div>
 
 
+          </div>
+          
+          {/* Bottom Tab Bar */}
+          <div className="xl:hidden fixed bottom-0 left-0 right-0 z-50 p-3">
+            <div 
+              className="flex items-center justify-around rounded-full px-4 py-3 mx-8"
+              style={{ backgroundColor: '#2F4C6C' }}
+            >
+              {/* Home Icon */}
+              <div className="flex items-center justify-center w-10 h-10">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#7D7D7D" strokeWidth="2">
+                  <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                  <polyline points="9,22 9,12 15,12 15,22"/>
+                </svg>
+              </div>
+              
+              {/* Card/Wallet Icon - Active */}
+              <div 
+                className="flex items-center justify-center w-10 h-10 rounded-full"
+                style={{ backgroundColor: 'rgba(255, 255, 255, 0.05)' }}
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" strokeWidth="2">
+                  <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
+                  <line x1="1" y1="10" x2="23" y2="10"/>
+                </svg>
+              </div>
+              
+              {/* Two-way Arrow Icon */}
+              <div className="flex items-center justify-center w-10 h-10">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#7D7D7D" strokeWidth="2">
+                  <path d="M8 3L4 7l4 4"/>
+                  <path d="M4 7h16"/>
+                  <path d="M16 21l4-4-4-4"/>
+                  <path d="M20 17H4"/>
+                </svg>
+              </div>
+              
+              {/* Line Graph Icon */}
+              <div className="flex items-center justify-center w-10 h-10">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#7D7D7D" strokeWidth="2">
+                  <polyline points="22,12 18,12 15,21 9,3 6,9 2,9"/>
+                </svg>
+              </div>
+              
+              {/* Settings/Gear Icon */}
+              <div className="flex items-center justify-center w-10 h-10">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#7D7D7D" strokeWidth="2">
+                  <circle cx="12" cy="12" r="3"/>
+                  <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1 1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+                </svg>
+              </div>
+            </div>
           </div>
           
           {/* Lesley Letter Overlay - Visible on all devices */}
@@ -2549,72 +2515,6 @@ const Page = () => {
 
 
 
-          {/* Welcome Modal */}
-          {showWelcomeModal && (
-            <div className="fixed inset-0 z-50">
-              {/* Glass background blur */}
-              <div 
-                className="absolute inset-0"
-                style={{ 
-                  backgroundColor: 'rgba(0, 0, 0, 0.15)',
-                  backdropFilter: 'blur(16px)',
-                  WebkitBackdropFilter: 'blur(16px)'
-                }}
-              />
-              
-              {/* Welcome Card */}
-              <div className="absolute inset-0 flex items-center justify-center p-8">
-                <div 
-                  className="relative z-10 max-w-md w-full p-8 text-center welcome-modal-card"
-                  style={{
-                    backgroundColor: '#0F0F0F',
-                    borderRadius: '26.22px',
-                    boxShadow: '0 20px 40px rgba(0, 0, 0, 0.3)'
-                  }}
-                >
-                  {/* Coordinated Living Logo */}
-                  <div className="flex justify-center" style={{ marginBottom: '24px' }}>
-                    <Image
-                      src="/modal-logo.svg"
-                      alt="Coordinated Living Logo"
-                      width={120}
-                      height={120}
-                      className="w-[120px] h-[120px]"
-                    />
-                  </div>
-
-                  {/* Welcome Banner */}
-                  <div
-                    className="px-4 py-2"
-                    style={{
-                      backgroundColor: '#1D1C1E',
-                      color: 'white',
-                      borderRadius: '33.86px',
-                      maxWidth: '300px',
-                      margin: '0 auto',
-                      marginBottom: '24px',
-                    }}
-                  >
-                    <h2 className="text-white font-medium text-sm" style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', fontFamily: 'Amita, serif' }}>
-                      Welcome to The Interactive Workspace
-                    </h2>
-                  </div>
-
-                  {/* Instructional Text */}
-                  <div className="text-center" style={{ marginBottom: '24px' }}>
-                    <p className="text-white font-bold text-lg mb-2" style={{ fontSize: '1.2rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', marginBottom: '12px', fontFamily: 'Amita, serif' }}>
-                      Things aren&apos;t always what they seem.
-                    </p>
-                    <p className="text-gray-300 text-base" style={{ margin: 0, fontFamily: 'Roboto, sans-serif' }}>
-                      Explore the workspace — you might be surprised by what you find.
-                    </p>
-                  </div>
-
-
-                </div>
-              </div>
-            </div>
-          )}
 
           {/* Fumaa Modal */}
           {showFumaaModal && (
