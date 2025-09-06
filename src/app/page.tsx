@@ -4131,7 +4131,7 @@ const Page = () => {
                   }
                 } catch (error) {
                   // Handle share errors (user cancelled, etc.)
-                  if (error.name !== 'AbortError') {
+                  if (error instanceof Error && error.name !== 'AbortError') {
                     console.log('Share failed:', error);
                     // Fallback to clipboard if share fails
                     try {
