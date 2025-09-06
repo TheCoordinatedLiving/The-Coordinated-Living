@@ -1580,10 +1580,11 @@ const Page = () => {
             <div className="xl:hidden fixed left-1/2 transform -translate-x-1/2 z-[99999] floating-tab-container" style={{ bottom: 'clamp(60px, 8vh, 80px)' }}>
               <div 
                 ref={tabContainerRef}
-                className="flex items-center space-x-2 px-4 py-3 rounded-full overflow-x-auto scrollbar-hide tab-bar-scroll glass-floating-tab"
+                className="flex items-center space-x-2 px-4 py-3 rounded-full overflow-x-auto scrollbar-hide tab-bar-scroll"
                 style={{
                   width: 'clamp(320px, 50vw, 500px)', // Responsive width for different screen sizes
-                  maxWidth: '90vw'
+                  maxWidth: '90vw',
+                  backgroundColor: '#2F4C6C'
                 }}
               >
                 {mobileItems.map((item, index) => {
@@ -1665,13 +1666,17 @@ const Page = () => {
                       }}
                       className={`flex items-center justify-center p-2 rounded-full transition-all duration-300 ${
                         isActive 
-                          ? 'text-white glass-active-tab' 
-                          : 'text-gray-400 hover:text-gray-300 glass-inactive-tab'
+                          ? 'text-white' 
+                          : 'text-gray-300 hover:text-white hover:bg-white hover:bg-opacity-10'
                       }`}
                       style={{
                         width: 'clamp(52px, 8vw, 64px)', // Responsive tab size
                         height: 'clamp(52px, 8vw, 64px)', // Responsive tab size
-                        flexShrink: 0 // Prevent tabs from shrinking
+                        flexShrink: 0, // Prevent tabs from shrinking
+                        ...(isActive && {
+                          backgroundColor: 'rgba(255, 255, 255, 0.05)',
+                          border: '1px solid rgba(255, 255, 255, 0.05)'
+                        })
                       }}
                     >
                       {iconMap[item as keyof typeof iconMap]}
