@@ -300,19 +300,29 @@ const Page = () => {
         // Base spacing calculation
         let bottomSpacing = 80; // Base spacing
         
-        // Chrome mobile browser specific handling
+        // Chrome mobile browser specific handling - VERY AGGRESSIVE
         if (isChrome && (isIOS || isAndroid)) {
-          // Chrome mobile has more aggressive browser UI
-          bottomSpacing = Math.max(bottomSpacing, 100);
+          // Chrome mobile has very aggressive browser UI - start with much higher base
+          bottomSpacing = Math.max(bottomSpacing, 150);
           
           // Add extra spacing for Chrome's dynamic viewport
           if (heightDifference > 0) {
-            bottomSpacing = Math.max(bottomSpacing, heightDifference + 60);
+            bottomSpacing = Math.max(bottomSpacing, heightDifference + 80);
           }
           
-          // Additional spacing for Chrome on iOS
+          // Additional spacing for Chrome on iOS - even more aggressive
           if (isIOS && isChrome) {
-            bottomSpacing = Math.max(bottomSpacing, 120);
+            bottomSpacing = Math.max(bottomSpacing, 180);
+          }
+          
+          // Additional spacing for Chrome on Android
+          if (isAndroid && isChrome) {
+            bottomSpacing = Math.max(bottomSpacing, 160);
+          }
+          
+          // Extra aggressive for Chrome mobile on small screens
+          if (window.innerWidth <= 430) {
+            bottomSpacing = Math.max(bottomSpacing, 200);
           }
         }
         // Safari specific handling
@@ -363,6 +373,13 @@ const Page = () => {
     setTimeout(adjustFloatingTabPosition, 100);
     setTimeout(adjustFloatingTabPosition, 500);
     setTimeout(adjustFloatingTabPosition, 1000);
+    setTimeout(adjustFloatingTabPosition, 2000);
+    
+    // For Chrome mobile, add even more frequent adjustments
+    if (isChrome && (isIOS || isAndroid)) {
+      setTimeout(adjustFloatingTabPosition, 3000);
+      setTimeout(adjustFloatingTabPosition, 5000);
+    }
 
     // Listen for viewport changes (browser UI show/hide)
     if (window.visualViewport) {
@@ -389,6 +406,14 @@ const Page = () => {
     const isMobile = window.innerWidth < 1280;
     if (isChrome && isMobile && floatingTabRef.current) {
       floatingTabRef.current.classList.add('chrome-mobile-tab');
+      
+      // For Chrome mobile, add continuous monitoring
+      const chromeInterval = setInterval(() => {
+        adjustFloatingTabPosition();
+      }, 2000); // Check every 2 seconds
+      
+      // Store interval ID for cleanup
+      (floatingTabRef.current as any).chromeInterval = chromeInterval;
     }
 
     return () => {
@@ -397,6 +422,11 @@ const Page = () => {
       }
       window.removeEventListener('resize', adjustFloatingTabPosition);
       window.removeEventListener('orientationchange', adjustFloatingTabPosition);
+      
+      // Clean up Chrome interval if it exists
+      if (floatingTabRef.current && (floatingTabRef.current as any).chromeInterval) {
+        clearInterval((floatingTabRef.current as any).chromeInterval);
+      }
     };
   }, []);
 
