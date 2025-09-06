@@ -921,21 +921,14 @@ img {
   }
 }
 
-/* Chrome mobile specific class for additional spacing - VERY AGGRESSIVE */
+/* Chrome mobile specific class for additional spacing */
 .chrome-mobile-tab {
-  bottom: max(180px, env(safe-area-inset-bottom, 0px) + 100px) !important;
+  bottom: max(120px, env(safe-area-inset-bottom, 0px) + 60px) !important;
 }
 
 @media (max-width: 430px) {
   .chrome-mobile-tab {
-    bottom: max(220px, env(safe-area-inset-bottom, 0px) + 120px) !important;
-  }
-}
-
-/* Extra aggressive for Chrome mobile on very small screens */
-@media (max-width: 375px) {
-  .chrome-mobile-tab {
-    bottom: max(240px, env(safe-area-inset-bottom, 0px) + 140px) !important;
+    bottom: max(140px, env(safe-area-inset-bottom, 0px) + 80px) !important;
   }
 }
 
