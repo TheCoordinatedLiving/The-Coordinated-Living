@@ -378,7 +378,7 @@ const Page = () => {
     });
     
     // Listen for scroll events that might trigger browser UI changes
-    let scrollTimeout;
+    let scrollTimeout: NodeJS.Timeout | undefined;
     window.addEventListener('scroll', () => {
       clearTimeout(scrollTimeout);
       scrollTimeout = setTimeout(adjustFloatingTabPosition, 100);
