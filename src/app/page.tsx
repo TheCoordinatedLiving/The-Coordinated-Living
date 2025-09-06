@@ -4605,7 +4605,7 @@ const Page = () => {
                 lineHeight: '1.4'
               }}
             >
-              Things aren't always what they seem.<br />
+              Things aren&apos;t always what they seem.<br />
               Explore, click, and discover.
             </p>
           </div>
