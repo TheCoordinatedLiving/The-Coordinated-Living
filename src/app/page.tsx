@@ -3598,7 +3598,7 @@ const Page = () => {
             style={{ 
               maxHeight: '95vh',
               minHeight: '85vh',
-              backgroundColor: '#2481C2'
+              backgroundColor: '#2f4c6c'
             }}
           >
             {/* Drag Handle */}
@@ -3930,7 +3930,7 @@ const Page = () => {
             style={{ 
               maxHeight: '90vh',
               minHeight: '80vh',
-              backgroundColor: '#2481C2'
+              backgroundColor: '#2f4c6c'
             }}
           >
             {/* Drag Handle */}
