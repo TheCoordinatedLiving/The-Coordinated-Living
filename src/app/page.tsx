@@ -5,6 +5,7 @@ import { gsap } from 'gsap';
 import Lottie from 'lottie-react';
 import PostTemplate from '../components/PostTemplate';
 import { generatePDFFromPostData, generatePostPDF } from '../lib/pdfGenerator';
+import FullTermsContent from '../components/FullTermsContent';
 
 const Loader = () => {
   const logoRef = useRef(null);
@@ -167,6 +168,7 @@ const Page = () => {
   const [currentPostBottomSheetIndex, setCurrentPostBottomSheetIndex] = useState(0);
   const [showFullPostBottomSheet, setShowFullPostBottomSheet] = useState(false);
   const [currentFullPostIndex, setCurrentFullPostIndex] = useState(0);
+  
   const handleCloseExpandedEmailModal = () => {
     // Animate expanded email modal out with ease
     const modalContainer = document.querySelector('.expanded-email-modal-card');
@@ -1433,67 +1435,31 @@ const Page = () => {
                             {/* Body content - Roboto font */}
                             <div className="space-y-4 xs:space-y-6 text-sm xs:text-base leading-relaxed pb-20 xs:pb-32" style={{ fontFamily: 'Roboto, sans-serif' }}>
                               <p>
-                                These terms and conditions outline the rules and regulations for the use of the Website, located at <strong>https://thecoordinatedliving.com/</strong>.
+                                <strong>Welcome to The Coordinated Living!</strong>
                               </p>
-                              
+                              <p>
+                                These terms and conditions outline the rules and regulations for the use of the Website, located at{' '}
+                                <a href="https://thecoordinatedliving.com/" className="underline font-bold text-white" target="_blank" rel="noopener noreferrer">
+                                  https://thecoordinatedliving.com/
+                                </a>
+                              </p>
                               <p>
                                 The Terms and Conditions on this webpage, as may without notice, be amended from time to time, shall apply to all our services directly or indirectly (through our authorized agents and sub-agents) made available online, any mobile device, by email or by telephone, as well as any other electronic media.
                               </p>
-
                               <p>
-                                By accessing this website we assume you accept these terms and conditions. Do not continue to use The Coordinated Living if you do not agree to take all of the terms and conditions stated on this page.
+                                By accessing, browsing and using our website or any of our platform (hereafter collectively referred to as the &quot;website&quot;) and/or by completing a booking, you recognize and agree to have read, understood and agreed to the terms and conditions, including the privacy statement as set out below. You must NOT use this website if you disagree with any of the Terms and Conditions as stated below.
+                              </p>
+                              <p>
+                                The pages, content and set-up of these pages, and the services provided on these pages and through the website are owned, operated and provide by THE COORDINATE LIVING (hereinafter referred to as IKOORDINATE) and are provided for your personal, non-commercial use only, subject to the terms and conditions set out below.
+                              </p>
+                              <p>
+                                The following terminology applies to these Terms and Conditions, Privacy Statement and Disclaimer Notice and all Agreements: &quot;Client&quot;, &quot;You&quot; and &quot;Your&quot; refers to you, the person log on this website and compliant to the Company&apos;s terms and conditions. &quot;The Company&quot;, &quot;Ourselves&quot;, &quot;We&quot;, &quot;Our&quot; and &quot;Us&quot;, refers to our Company. &quot;Party&quot;, &quot;Parties&quot;, or &quot;Us&quot;, refers to both the Client and ourselves. All terms refer to the offer, acceptance and consideration of payment necessary to undertake the process of our assistance to the Client in the most appropriate manner for the express purpose of meeting the Client&apos;s needs in respect of provision of the Company&apos;s stated services, in accordance with and subject to, prevailing law of Ghana. Any use of the above terminology or other words in the singular, plural, capitalization and/or he/she or they, are taken as interchangeable and therefore as referring to same.
+                              </p>
+                              <p>
+                                IKOORDINATE reserves the right to modify all information, including Terms and Conditions, as well as all other features at any time without giving you prior notice. Your use of this website following any modifications constitutes your agreement to follow and be bound by the Terms and Conditions as modified.
                               </p>
 
-                              <p>
-                                The following terminology applies to these Terms and Conditions, Privacy Statement and Disclaimer Notice and all Agreements: &quot;Client&quot;, &quot;You&quot; and &quot;Your&quot; refers to you, the person log on this website and compliant to the Company&apos;s terms and conditions. &quot;The Company&quot;, &quot;Ourselves&quot;, &quot;We&quot;, &quot;Our&quot; and &quot;Us&quot;, refers to our Company. &quot;Party&quot;, &quot;Parties&quot;, or &quot;Us&quot;, refers to both the Client and ourselves. All terms refer to the offer, acceptance and consideration of payment necessary to undertake the process of our assistance to the Client in the most appropriate manner for the express purpose of meeting the Client&apos;s needs in respect of provision of the Company&apos;s stated services, in accordance with and subject to, prevailing law of Netherlands. Any use of the above terminology or other words in the singular, plural, capitalization and/or he/she or they, are taken as interchangeable and therefore as referring to same.
-                              </p>
-
-                              <h3 className="text-lg font-semibold mt-6 mb-3">Cookies</h3>
-                              <p>
-                                We employ the use of cookies. By accessing The Coordinated Living, you agreed to use cookies in agreement with the The Coordinated Living&apos;s Privacy Policy.
-                              </p>
-                              <p>
-                                Most interactive websites use cookies to let us retrieve the user&apos;s details for each visit. Cookies are used by our website to enable the functionality of certain areas to make it easier for people visiting our website. Some of our affiliate/advertising partners may also use cookies.
-                              </p>
-
-                              <h3 className="text-lg font-semibold mt-6 mb-3">License</h3>
-                              <p>
-                                Unless otherwise stated, The Coordinated Living and/or its licensors own the intellectual property rights for all material on The Coordinated Living. All intellectual property rights are reserved. You may access this from The Coordinated Living for your own personal use subjected to restrictions set in these terms and conditions.
-                              </p>
-                              <p>You must not:</p>
-                              <ul className="list-disc list-inside ml-4 space-y-2">
-                                <li>Republish material from The Coordinated Living</li>
-                                <li>Sell, rent or sub-license material from The Coordinated Living</li>
-                                <li>Reproduce, duplicate or copy material from The Coordinated Living</li>
-                                <li>Redistribute content from The Coordinated Living</li>
-                              </ul>
-
-                              <h3 className="text-lg font-semibold mt-6 mb-3">Content Liability</h3>
-                              <p>
-                                We shall not be hold responsible for any content that appears on your Website. You agree to protect and defend us against all claims that is rising on your Website. No link(s) should appear on any Website that may be interpreted as libelous, obscene or criminal, or which infringes, otherwise violates, or advocates the infringement or other violation of, any third party rights.
-                              </p>
-
-                              <h3 className="text-lg font-semibold mt-6 mb-3">Reservation of Rights</h3>
-                              <p>
-                                We reserve the right to request that you remove all links or any particular link to our Website. You approve to immediately remove all links to our Website upon request. We also reserve the right to amen these terms and conditions and it&apos;s linking policy at any time. By continuously linking to our Website, you agree to be bound to and follow these linking terms and conditions.
-                              </p>
-
-                              <h3 className="text-lg font-semibold mt-6 mb-3">Disclaimer</h3>
-                              <p>
-                                To the maximum extent permitted by applicable law, we exclude all representations, warranties and conditions relating to our website and the use of this website. Nothing in this disclaimer will:
-                              </p>
-                              <ul className="list-disc list-inside ml-4 space-y-2">
-                                <li>limit or exclude our or your liability for death or personal injury;</li>
-                                <li>limit or exclude our or your liability for fraud or fraudulent misrepresentation;</li>
-                                <li>limit any of our or your liabilities in any way that is not permitted under applicable law; or</li>
-                                <li>exclude any of our or your liabilities that may not be excluded under applicable law.</li>
-                              </ul>
-                              <p>
-                                The limitations and prohibitions of liability set in this Section and elsewhere in this disclaimer: (a) are subject to the preceding paragraph; and (b) govern all liabilities arising under the disclaimer, including liabilities arising in contract, in tort and for breach of statutory duty.
-                              </p>
-                              <p>
-                                As long as the website and the information and services on the website are provided free of charge, we will not be liable for any loss or damage of any nature.
-                              </p>
+                              <FullTermsContent />
                             </div>
                           </div>
                         </div>
@@ -4547,7 +4513,6 @@ const Page = () => {
             className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
             style={{
               width: '450px',
-              height: '300px',
               backgroundColor: '#000000',
               borderRadius: '24px',
               boxShadow: '0 20px 40px rgba(0, 0, 0, 0.5)',
