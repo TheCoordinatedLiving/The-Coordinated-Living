@@ -1250,7 +1250,7 @@ const Page = () => {
                         <div 
                           className="fixed rounded-t-3xl tablet-content-card ipad-content-card"
                           style={{ 
-                            backgroundColor: '#2481C2',
+                            backgroundColor: '#2F4C6C',
                             top: 'clamp(-100px, -10vh, -200px)',
                             left: '50%',
                             transform: 'translateX(-50%)',
@@ -1310,7 +1310,7 @@ const Page = () => {
                                 <button
                                   type="submit"
                                   className="bg-white px-12 xs:px-16 sm:px-20 py-3 xs:py-4 rounded-full font-medium hover:bg-white/90 transition-colors text-sm xs:text-base"
-                                  style={{ fontFamily: 'Roboto, sans-serif', color: '#2481C2' }}
+                                  style={{ fontFamily: 'Roboto, sans-serif', color: '#2F4C6C' }}
                                 >
                                   Send
                                 </button>
@@ -1341,7 +1341,7 @@ const Page = () => {
                         <div 
                           className="fixed rounded-t-3xl tablet-content-card ipad-content-card"
                           style={{ 
-                            backgroundColor: '#2481C2',
+                            backgroundColor: '#2F4C6C',
                             top: 'clamp(-100px, -10vh, -200px)',
                             left: '50%',
                             transform: 'translateX(-50%)',
@@ -1375,7 +1375,7 @@ const Page = () => {
                               <div className="flex justify-center pt-6 xs:pt-8">
                                 <button
                                   className="bg-white px-8 xs:px-10 sm:px-12 py-3 xs:py-4 rounded-full font-medium hover:bg-white/90 transition-colors text-sm xs:text-base"
-                                  style={{ fontFamily: 'Roboto, sans-serif', color: '#2481C2' }}
+                                  style={{ fontFamily: 'Roboto, sans-serif', color: '#2F4C6C' }}
                                 >
                                   View Our Guides
                                 </button>
@@ -1406,7 +1406,7 @@ const Page = () => {
                         <div 
                           className="fixed rounded-t-3xl tablet-content-card ipad-content-card"
                           style={{ 
-                            backgroundColor: '#2481C2',
+                            backgroundColor: '#2F4C6C',
                             top: 'clamp(-100px, -10vh, -200px)',
                             left: '50%',
                             transform: 'translateX(-50%)',
@@ -1520,7 +1520,7 @@ const Page = () => {
                         <div 
                           className="fixed rounded-t-3xl tablet-content-card ipad-content-card"
                           style={{ 
-                            backgroundColor: '#2481C2',
+                            backgroundColor: '#2F4C6C',
                             top: 'clamp(-100px, -10vh, -200px)',
                             left: '50%',
                             transform: 'translateX(-50%)',
@@ -1547,7 +1547,7 @@ const Page = () => {
                               <div className="flex justify-center pt-8">
                                 <button 
                                   className="flex items-center space-x-3 px-8 py-3 bg-white hover:bg-gray-100 font-bold rounded-full transition-colors duration-200 shadow-lg"
-                                  style={{ color: '#2481C2' }}
+                                  style={{ color: '#2F4C6C' }}
                                   onClick={() => {
                                     // Add WhatsApp link functionality here
                                     window.open('https://wa.me/your-whatsapp-number', '_blank');
@@ -1589,7 +1589,7 @@ const Page = () => {
                         <div 
                           className="fixed rounded-t-3xl tablet-content-card ipad-content-card"
                           style={{ 
-                            backgroundColor: '#2481C2',
+                            backgroundColor: '#2F4C6C',
                             top: 'clamp(-100px, -10vh, -200px)',
                             left: '50%',
                             transform: 'translateX(-50%)',
@@ -1623,7 +1623,7 @@ const Page = () => {
                               <div className="flex justify-center pt-8">
                                 <button 
                                   className="flex items-center space-x-3 px-8 py-3 bg-white hover:bg-gray-100 font-bold rounded-full transition-colors duration-200 shadow-lg"
-                                  style={{ color: '#2481C2' }}
+                                  style={{ color: '#2F4C6C' }}
                                   onClick={() => {
                                     // Add donation link functionality here
                                     window.open('https://your-donation-link.com', '_blank');
@@ -1656,7 +1656,7 @@ const Page = () => {
                           {/* ABOUT ME text overlay */}
                           <div className="absolute bottom-0 left-0 right-0 flex items-center justify-center md:bottom-4 lg:bottom-8 tablet-title ipad-title" style={{ paddingBottom: '20%', paddingTop: '10%' }}>
                             <h1 className="text-white text-base xs:text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold px-2 xs:px-3 sm:px-4 text-center" style={{ fontFamily: 'Amita, serif' }}>
-                              ABOUT ME
+                              Welcome
                             </h1>
                           </div>
                         </div>
@@ -1665,7 +1665,7 @@ const Page = () => {
                         <div 
                           className="fixed rounded-t-3xl tablet-content-card ipad-content-card"
                           style={{ 
-                            backgroundColor: '#2481C2',
+                            backgroundColor: '#2f4c6c',
                             top: 'clamp(-100px, -10vh, -200px)',
                             left: '50%',
                             transform: 'translateX(-50%)',
@@ -1698,7 +1698,7 @@ const Page = () => {
                             </h2>
 
                             {/* Body content - Roboto font */}
-                            <div className="space-y-4 xs:space-y-6 text-sm xs:text-base leading-relaxed pb-20 xs:pb-32" style={{ fontFamily: 'Roboto, sans-serif' }}>
+                            <div className="space-y-4 xs:space-y-6 text-sm xs:text-base leading-relaxed pb-20 xs:pb-32" style={{ fontFamily: 'Roboto, sans-serif', backgroundColor: '#2f4c6c', padding: '16px', borderRadius: '8px' }}>
                               <p>
                                 Have you ever felt caught in a cycle of desires, wondering if there&apos;s more to life than this constant pull? In a world where truth often feels twisted, you&apos;re not alone.
                               </p>
@@ -1759,7 +1759,7 @@ const Page = () => {
                         <div 
                           className="fixed rounded-t-3xl tablet-content-card ipad-content-card"
                           style={{ 
-                            backgroundColor: '#2481C2',
+                            backgroundColor: '#2F4C6C',
                             top: 'clamp(-100px, -10vh, -200px)',
                             left: '50%',
                             transform: 'translateX(-50%)',
@@ -1850,7 +1850,7 @@ const Page = () => {
                 style={{
                   width: 'clamp(320px, 50vw, 500px)', // Responsive width for different screen sizes
                   maxWidth: '90vw',
-                  backgroundColor: '#2F4C6C'
+                  backgroundColor: '#ffffff'
                 }}
               >
                 {mobileItems.map((item, index) => {
@@ -1932,17 +1932,15 @@ const Page = () => {
                       }}
                       className={`flex items-center justify-center p-2 rounded-full transition-all duration-300 ${
                         isActive 
-                          ? 'text-white' 
-                          : 'text-gray-300 hover:text-white hover:bg-white hover:bg-opacity-10'
+                          ? 'text-[#2F4C6C]' 
+                          : 'text-[#2F4C6C] hover:text-[#2F4C6C] hover:bg-gray-100 hover:bg-opacity-50'
                       }`}
                       style={{
                         width: 'clamp(52px, 8vw, 64px)', // Responsive tab size
                         height: 'clamp(52px, 8vw, 64px)', // Responsive tab size
                         flexShrink: 0, // Prevent tabs from shrinking
-                        ...(isActive && {
-                          backgroundColor: 'rgba(255, 255, 255, 0.05)',
-                          border: '1px solid rgba(255, 255, 255, 0.05)'
-                        })
+                        backgroundColor: isActive ? 'rgba(47, 76, 108, 0.05)' : 'transparent',
+                        border: isActive ? '1px solid rgba(47, 76, 108, 0.05)' : '1px solid transparent'
                       }}
                     >
                       {iconMap[item as keyof typeof iconMap]}
@@ -3896,7 +3894,7 @@ const Page = () => {
                   className="px-8 py-4 rounded-full font-semibold text-lg transition-colors duration-200 shadow-lg"
                   style={{ 
                     backgroundColor: '#FFFFFF',
-                    color: '#2481C2',
+                    color: '#2F4C6C',
                     width: '80%'
                   }}
                   onClick={() => {
@@ -4188,7 +4186,7 @@ const Page = () => {
                   className="px-8 py-4 rounded-full font-semibold text-lg transition-colors duration-200 shadow-lg"
                   style={{ 
                     backgroundColor: '#FFFFFF',
-                    color: '#2481C2',
+                    color: '#2F4C6C',
                     width: '80%'
                   }}
                   onClick={() => {
@@ -4338,7 +4336,7 @@ const Page = () => {
                   }}
                   className="px-6 py-3 rounded-full font-medium transition-colors duration-200"
                   style={{ 
-                    backgroundColor: '#2481C2',
+                    backgroundColor: '#2F4C6C',
                     color: '#FFFFFF',
                     fontFamily: 'Roboto, sans-serif'
                   }}
@@ -4575,7 +4573,7 @@ const Page = () => {
             {/* Blue Welcome Card */}
             <div 
               style={{
-                backgroundColor: '#2481C2',
+                backgroundColor: '#2F4C6C',
                 borderRadius: '50px',
                 padding: '8px 20px',
                 marginBottom: '20px'
