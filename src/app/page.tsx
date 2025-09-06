@@ -280,7 +280,7 @@ const Page = () => {
   // Floating tab container ref for dynamic positioning
   const floatingTabRef = useRef<HTMLDivElement>(null);
 
-  // Dynamic floating tab positioning for iPhone 14/15 browser UI
+  // Dynamic floating tab positioning for mobile browser UI (including Chrome)
   useEffect(() => {
     const adjustFloatingTabPosition = () => {
       if (floatingTabRef.current && window.innerWidth < 1280) { // Only for mobile/tablet
@@ -291,12 +291,49 @@ const Page = () => {
         // Get safe area inset bottom
         const safeAreaBottom = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--safe-area-inset-bottom') || '0');
         
-        // More aggressive spacing calculation
+        // Detect browser type
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+        const isAndroid = /Android/.test(navigator.userAgent);
+        const isChrome = /Chrome/.test(navigator.userAgent);
+        const isSafari = /Safari/.test(navigator.userAgent) && !/Chrome/.test(navigator.userAgent);
+        
+        // Base spacing calculation
         let bottomSpacing = 80; // Base spacing
         
-        // Add extra spacing for browser UI
+        // Chrome mobile browser specific handling
+        if (isChrome && (isIOS || isAndroid)) {
+          // Chrome mobile has more aggressive browser UI
+          bottomSpacing = Math.max(bottomSpacing, 100);
+          
+          // Add extra spacing for Chrome's dynamic viewport
+          if (heightDifference > 0) {
+            bottomSpacing = Math.max(bottomSpacing, heightDifference + 60);
+          }
+          
+          // Additional spacing for Chrome on iOS
+          if (isIOS && isChrome) {
+            bottomSpacing = Math.max(bottomSpacing, 120);
+          }
+        }
+        // Safari specific handling
+        else if (isIOS && isSafari) {
+          bottomSpacing = Math.max(bottomSpacing, 120);
         if (heightDifference > 0) {
           bottomSpacing = Math.max(bottomSpacing, heightDifference + 40);
+          }
+        }
+        // Android Chrome specific handling
+        else if (isAndroid && isChrome) {
+          bottomSpacing = Math.max(bottomSpacing, 90);
+          if (heightDifference > 0) {
+            bottomSpacing = Math.max(bottomSpacing, heightDifference + 50);
+          }
+        }
+        // Fallback for other browsers
+        else {
+          if (heightDifference > 0) {
+            bottomSpacing = Math.max(bottomSpacing, heightDifference + 40);
+          }
         }
         
         // Add safe area bottom
@@ -307,22 +344,25 @@ const Page = () => {
           bottomSpacing = Math.max(bottomSpacing, 140);
         }
         
-        // Detect if we're in Safari on iOS (more aggressive spacing)
-        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
-        const isSafari = /Safari/.test(navigator.userAgent) && !/Chrome/.test(navigator.userAgent);
-        
-        if (isIOS && isSafari) {
-          bottomSpacing = Math.max(bottomSpacing, 120);
-        }
-        
-        // Apply the spacing
+        // Apply the spacing with transition
+        floatingTabRef.current.style.transition = 'bottom 0.3s ease-in-out';
         floatingTabRef.current.style.bottom = `${bottomSpacing}px`;
         floatingTabRef.current.style.paddingBottom = `${safeAreaBottom}px`;
+        
+        console.log('Floating tab positioned:', {
+          browser: isChrome ? 'Chrome' : isSafari ? 'Safari' : 'Other',
+          platform: isIOS ? 'iOS' : isAndroid ? 'Android' : 'Other',
+          bottomSpacing,
+          heightDifference,
+          safeAreaBottom
+        });
       }
     };
 
-    // Initial adjustment with delay to ensure DOM is ready
+    // Initial adjustment with multiple attempts to catch Chrome's delayed viewport changes
     setTimeout(adjustFloatingTabPosition, 100);
+    setTimeout(adjustFloatingTabPosition, 500);
+    setTimeout(adjustFloatingTabPosition, 1000);
 
     // Listen for viewport changes (browser UI show/hide)
     if (window.visualViewport) {
@@ -332,10 +372,24 @@ const Page = () => {
     // Fallback for older browsers
     window.addEventListener('resize', adjustFloatingTabPosition);
     
-    // Also listen for orientation changes
+    // Additional event listeners for Chrome mobile
     window.addEventListener('orientationchange', () => {
-      setTimeout(adjustFloatingTabPosition, 500);
+      setTimeout(adjustFloatingTabPosition, 300);
     });
+    
+    // Listen for scroll events that might trigger browser UI changes
+    let scrollTimeout;
+    window.addEventListener('scroll', () => {
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(adjustFloatingTabPosition, 100);
+    });
+    
+    // Add Chrome-specific CSS class for additional styling
+    const isChrome = /Chrome/.test(navigator.userAgent);
+    const isMobile = window.innerWidth < 1280;
+    if (isChrome && isMobile && floatingTabRef.current) {
+      floatingTabRef.current.classList.add('chrome-mobile-tab');
+    }
 
     return () => {
       if (window.visualViewport) {

@@ -906,6 +906,32 @@ img {
   }
 }
 
+/* Chrome mobile browser specific fixes */
+@media (max-width: 767px) {
+  .floating-tab-container {
+    /* Chrome mobile needs extra spacing */
+    bottom: max(110px, env(safe-area-inset-bottom, 0px) + 50px) !important;
+  }
+}
+
+/* Chrome mobile on iOS - very aggressive spacing */
+@media (max-width: 430px) {
+  .floating-tab-container {
+    bottom: max(130px, env(safe-area-inset-bottom, 0px) + 70px) !important;
+  }
+}
+
+/* Chrome mobile specific class for additional spacing */
+.chrome-mobile-tab {
+  bottom: max(120px, env(safe-area-inset-bottom, 0px) + 60px) !important;
+}
+
+@media (max-width: 430px) {
+  .chrome-mobile-tab {
+    bottom: max(140px, env(safe-area-inset-bottom, 0px) + 80px) !important;
+  }
+}
+
 /* Specific fixes for iPhone 14/15 models and newer - Very aggressive */
 @media (max-width: 430px) and (min-height: 844px) {
   .floating-tab-container {
