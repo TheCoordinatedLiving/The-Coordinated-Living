@@ -230,6 +230,48 @@ const Page = () => {
   
   // Tab container ref for auto-scroll
   const tabContainerRef = useRef<HTMLDivElement>(null);
+  
+  // Floating tab container ref for dynamic positioning
+  const floatingTabRef = useRef<HTMLDivElement>(null);
+
+  // Dynamic floating tab positioning for iPhone 14/15 browser UI
+  useEffect(() => {
+    const adjustFloatingTabPosition = () => {
+      if (floatingTabRef.current && window.innerWidth < 1280) { // Only for mobile/tablet
+        const viewportHeight = window.visualViewport?.height || window.innerHeight;
+        const windowHeight = window.innerHeight;
+        const heightDifference = windowHeight - viewportHeight;
+        
+        // If browser UI is visible (viewport height is smaller than window height)
+        if (heightDifference > 0) {
+          // Add extra spacing when browser UI is visible
+          const extraSpacing = Math.min(heightDifference + 20, 100);
+          floatingTabRef.current.style.bottom = `${extraSpacing}px`;
+        } else {
+          // Reset to default when browser UI is hidden
+          floatingTabRef.current.style.bottom = '';
+        }
+      }
+    };
+
+    // Initial adjustment
+    adjustFloatingTabPosition();
+
+    // Listen for viewport changes (browser UI show/hide)
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener('resize', adjustFloatingTabPosition);
+    }
+
+    // Fallback for older browsers
+    window.addEventListener('resize', adjustFloatingTabPosition);
+
+    return () => {
+      if (window.visualViewport) {
+        window.visualViewport.removeEventListener('resize', adjustFloatingTabPosition);
+      }
+      window.removeEventListener('resize', adjustFloatingTabPosition);
+    };
+  }, []);
 
   // Auto-scroll to active tab function
   const scrollToActiveTab = (index: number) => {
@@ -1577,7 +1619,14 @@ const Page = () => {
             </div>
 
             {/* Floating Tab Bar - Mobile, Tablet & iPad */}
-            <div className="xl:hidden fixed left-1/2 transform -translate-x-1/2 z-[99999] floating-tab-container" style={{ bottom: 'clamp(60px, 8vh, 80px)' }}>
+            <div 
+              ref={floatingTabRef}
+              className="xl:hidden fixed left-1/2 transform -translate-x-1/2 z-[99999] floating-tab-container" 
+              style={{ 
+                bottom: 'max(clamp(60px, 8vh, 80px), env(safe-area-inset-bottom, 0px) + 20px)',
+                paddingBottom: 'env(safe-area-inset-bottom, 0px)'
+              }}
+            >
               <div 
                 ref={tabContainerRef}
                 className="flex items-center space-x-2 px-4 py-3 rounded-full overflow-x-auto scrollbar-hide tab-bar-scroll"
