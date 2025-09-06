@@ -161,6 +161,10 @@ const Page = () => {
   const [showExpandedEmailModal, setShowExpandedEmailModal] = useState(false);
   const [showGuidesModal, setShowGuidesModal] = useState(false);
   const [currentGuideIndex, setCurrentGuideIndex] = useState(0);
+  const [showPostBottomSheet, setShowPostBottomSheet] = useState(false);
+  const [currentPostBottomSheetIndex, setCurrentPostBottomSheetIndex] = useState(0);
+  const [showFullPostBottomSheet, setShowFullPostBottomSheet] = useState(false);
+  const [currentFullPostIndex, setCurrentFullPostIndex] = useState(0);
   const handleCloseExpandedEmailModal = () => {
     // Animate expanded email modal out with ease
     const modalContainer = document.querySelector('.expanded-email-modal-card');
@@ -199,6 +203,48 @@ const Page = () => {
     } else {
       setShowGuidesModal(false);
       setCurrentGuideIndex(0);
+    }
+  };
+
+  const handleClosePostBottomSheet = () => {
+    // Animate bottom sheet out with ease
+    const bottomSheet = document.querySelector('.post-bottom-sheet');
+    
+    if (bottomSheet) {
+      gsap.to(bottomSheet, {
+        y: '100%',
+        opacity: 0,
+        duration: 0.4,
+        ease: "power2.in",
+        onComplete: () => {
+          setShowPostBottomSheet(false);
+          setCurrentPostBottomSheetIndex(0); // Reset to first post
+        }
+      });
+    } else {
+      setShowPostBottomSheet(false);
+      setCurrentPostBottomSheetIndex(0);
+    }
+  };
+
+  const handleCloseFullPostBottomSheet = () => {
+    // Animate bottom sheet out with ease
+    const bottomSheet = document.querySelector('.full-post-bottom-sheet');
+    
+    if (bottomSheet) {
+      gsap.to(bottomSheet, {
+        y: '100%',
+        opacity: 0,
+        duration: 0.4,
+        ease: "power2.in",
+        onComplete: () => {
+          setShowFullPostBottomSheet(false);
+          setCurrentFullPostIndex(0); // Reset to first post
+        }
+      });
+    } else {
+      setShowFullPostBottomSheet(false);
+      setCurrentFullPostIndex(0);
     }
   };
 
@@ -807,6 +853,48 @@ const Page = () => {
     }
   }, [showGuidesModal]);
 
+  // Animate post bottom sheet entrance
+  useEffect(() => {
+    if (showPostBottomSheet) {
+      const bottomSheet = document.querySelector('.post-bottom-sheet');
+      if (bottomSheet) {
+        gsap.fromTo(bottomSheet, 
+          { 
+            y: '100%',
+            opacity: 0
+          },
+          { 
+            y: 0,
+            opacity: 1,
+            duration: 0.6,
+            ease: "power2.out"
+          }
+        );
+      }
+    }
+  }, [showPostBottomSheet]);
+
+  // Animate full post bottom sheet entrance
+  useEffect(() => {
+    if (showFullPostBottomSheet) {
+      const bottomSheet = document.querySelector('.full-post-bottom-sheet');
+      if (bottomSheet) {
+        gsap.fromTo(bottomSheet, 
+          { 
+            y: '100%',
+            opacity: 0
+          },
+          { 
+            y: 0,
+            opacity: 1,
+            duration: 0.6,
+            ease: "power2.out"
+          }
+        );
+      }
+    }
+  }, [showFullPostBottomSheet]);
+
   // Add escape key handler for zoom out
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -1035,6 +1123,8 @@ const Page = () => {
                     onClick={() => {
                       if (activeMobileItem === 'GUIDES') {
                         setShowGuidesModal(true);
+                      } else if (activeMobileItem === 'POST') {
+                        setShowPostBottomSheet(true);
                       }
                     }}
                   >
@@ -3701,7 +3791,431 @@ const Page = () => {
         </div>
       )}
 
+      {/* Post Bottom Sheet - Mobile Only */}
+      {showPostBottomSheet && (
+        <div className="fixed inset-0 z-[9999]">
+          {/* Blurred background overlay */}
+          <div 
+            className="absolute inset-0"
+            style={{ 
+              backgroundColor: 'rgba(0, 0, 0, 0.3)',
+              backdropFilter: 'blur(8px)',
+              WebkitBackdropFilter: 'blur(8px)'
+            }}
+            onClick={handleClosePostBottomSheet}
+          />
+          
+          {/* Bottom Sheet */}
+          <div 
+            className="absolute bottom-0 left-0 right-0 rounded-t-3xl shadow-2xl post-bottom-sheet"
+            style={{ 
+              maxHeight: '95vh',
+              minHeight: '85vh',
+              backgroundColor: '#2481C2'
+            }}
+          >
+            {/* Drag Handle */}
+            <div className="flex justify-center pt-3 pb-2">
+              <div className="w-12 h-1 bg-gray-300 rounded-full"></div>
+            </div>
+            
+            {/* Header */}
+            <div className="flex items-center justify-between px-6 pb-4">
+              <h2 
+                className="text-2xl font-bold text-white"
+                style={{ fontFamily: 'var(--font-amita), cursive' }}
+              >
+                Latest Posts
+              </h2>
+              <button
+                onClick={handleClosePostBottomSheet}
+                className="w-10 h-10 bg-white rounded-full flex items-center justify-center hover:bg-gray-100 transition-colors duration-200"
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="black" strokeWidth="2">
+                  <line x1="18" y1="6" x2="6" y2="18"/>
+                  <line x1="6" y1="6" x2="18" y2="18"/>
+                </svg>
+              </button>
+            </div>
+            
+            {/* Swipeable Posts Container */}
+            <div className="pb-6">
+              {/* Cards Container with Single Active Card */}
+              <div 
+                className="mb-6 relative overflow-hidden" 
+                style={{ minHeight: '400px' }}
+                onTouchStart={onTouchStart}
+                onTouchMove={onTouchMove}
+                onTouchEnd={onTouchEnd}
+              >
+                <div 
+                  className="flex transition-transform duration-300 ease-out" 
+                  style={{ 
+                    height: '400px',
+                    transform: `translateX(-${currentPostBottomSheetIndex * (100 + 4)}%)`,
+                    gap: '16px'
+                  }}
+                >
+                  {/* First Post Card */}
+                  <div className="flex-shrink-0 flex justify-center" style={{ width: '100vw' }}>
+                    <div 
+                      className="relative overflow-hidden rounded-2xl bg-white h-full"
+                      style={{ width: 'calc(100vw - 32px)' }}
+                    >
+                      <Image
+                        src="/post-card-mobile.png"
+                        alt="Post Card"
+                        width={400}
+                        height={400}
+                        className="w-full h-full object-cover"
+                        style={{ 
+                          width: '100%', 
+                          height: '100%',
+                          objectFit: 'cover'
+                        }}
+                        onLoad={() => {
+                          console.log('Post card image loaded successfully');
+                        }}
+                        onError={(e) => {
+                          console.log('Post card image failed to load:', e);
+                        }}
+                      />
+                      
+                      {/* Logo - Top Left */}
+                      <div className="absolute top-4 left-4 z-10">
+                        <Image
+                          src="/guide-logo.svg"
+                          alt="Post Logo"
+                          width={120}
+                          height={120}
+                          className="w-24 h-24"
+                        />
+                      </div>
+                      
+                      {/* Title and Description - Bottom Left */}
+                      <div className="absolute bottom-4 left-4 z-10">
+                        <h3 
+                          className="text-white text-lg font-bold mb-1"
+                          style={{ fontFamily: 'Amita, serif' }}
+                        >
+                          {posts[0].title}
+                        </h3>
+                        <p 
+                          className="text-white text-sm"
+                          style={{ 
+                            fontFamily: 'Roboto, sans-serif',
+                            opacity: 0.9
+                          }}
+                        >
+                          A thousand times I failed, still your mercy remains...
+                        </p>
+                      </div>
+                    </div>
+                  </div>
 
+                  {/* Second Post Card */}
+                  <div className="flex-shrink-0 flex justify-center" style={{ width: '100vw' }}>
+                    <div 
+                      className="relative overflow-hidden rounded-2xl bg-white h-full"
+                      style={{ width: 'calc(100vw - 32px)' }}
+                    >
+                      <Image
+                        src="/post-card-mobile.png"
+                        alt="Post Card"
+                        width={400}
+                        height={400}
+                        className="w-full h-full object-cover"
+                        style={{ 
+                          width: '100%', 
+                          height: '100%',
+                          objectFit: 'cover'
+                        }}
+                        onLoad={() => {
+                          console.log('Second post card image loaded successfully');
+                        }}
+                        onError={(e) => {
+                          console.log('Second post card image failed to load:', e);
+                        }}
+                      />
+                      
+                      {/* Logo - Top Left */}
+                      <div className="absolute top-4 left-4 z-10">
+                        <Image
+                          src="/guide-logo.svg"
+                          alt="Post Logo"
+                          width={120}
+                          height={120}
+                          className="w-24 h-24"
+                        />
+                      </div>
+                      
+                      {/* Title and Description - Bottom Left */}
+                      <div className="absolute bottom-4 left-4 z-10">
+                        <h3 
+                          className="text-white text-lg font-bold mb-1"
+                          style={{ fontFamily: 'Amita, serif' }}
+                        >
+                          {posts[1].title}
+                        </h3>
+                        <p 
+                          className="text-white text-sm"
+                          style={{ 
+                            fontFamily: 'Roboto, sans-serif',
+                            opacity: 0.9
+                          }}
+                        >
+                          In all things God works for the good of those who love him...
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Third Post Card */}
+                  <div className="flex-shrink-0 flex justify-center" style={{ width: '100vw' }}>
+                    <div 
+                      className="relative overflow-hidden rounded-2xl bg-white h-full"
+                      style={{ width: 'calc(100vw - 32px)' }}
+                    >
+                      <Image
+                        src="/post-card-mobile.png"
+                        alt="Post Card"
+                        width={400}
+                        height={400}
+                        className="w-full h-full object-cover"
+                        style={{ 
+                          width: '100%', 
+                          height: '100%',
+                          objectFit: 'cover'
+                        }}
+                        onLoad={() => {
+                          console.log('Third post card image loaded successfully');
+                        }}
+                        onError={(e) => {
+                          console.log('Third post card image failed to load:', e);
+                        }}
+                      />
+                      
+                      {/* Logo - Top Left */}
+                      <div className="absolute top-4 left-4 z-10">
+                        <Image
+                          src="/guide-logo.svg"
+                          alt="Post Logo"
+                          width={120}
+                          height={120}
+                          className="w-24 h-24"
+                        />
+                      </div>
+                      
+                      {/* Title and Description - Bottom Left */}
+                      <div className="absolute bottom-4 left-4 z-10">
+                        <h3 
+                          className="text-white text-lg font-bold mb-1"
+                          style={{ fontFamily: 'Amita, serif' }}
+                        >
+                          {posts[2].title}
+                        </h3>
+                        <p 
+                          className="text-white text-sm"
+                          style={{ 
+                            fontFamily: 'Roboto, sans-serif',
+                            opacity: 0.9
+                          }}
+                        >
+                          Be still and know that I am God...
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Post Indicators */}
+              <div className="flex justify-center space-x-3 mt-6">
+                {[0, 1, 2].map((index) => (
+                  <button
+                    key={index}
+                    onClick={() => setCurrentPostBottomSheetIndex(index)}
+                    className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                      index === currentPostBottomSheetIndex 
+                        ? 'bg-white scale-125' 
+                        : 'bg-white opacity-30 hover:opacity-50'
+                    }`}
+                  />
+                ))}
+              </div>
+              
+              {/* Read More Button */}
+              <div className="flex justify-center mt-6">
+                <button
+                  className="px-8 py-4 rounded-full font-semibold text-lg transition-colors duration-200 shadow-lg"
+                  style={{ 
+                    backgroundColor: '#FFFFFF',
+                    color: '#2481C2',
+                    width: '80%'
+                  }}
+                  onClick={() => {
+                    // Handle read more functionality - open full post bottom sheet
+                    setCurrentFullPostIndex(currentPostBottomSheetIndex);
+                    setShowPostBottomSheet(false);
+                    setShowFullPostBottomSheet(true);
+                  }}
+                >
+                  Read Full Post
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Full Post Bottom Sheet - Mobile Only */}
+      {showFullPostBottomSheet && (
+        <div className="fixed inset-0 z-[9999]">
+          {/* Blurred background overlay */}
+          <div 
+            className="absolute inset-0"
+            style={{ 
+              backgroundColor: 'rgba(0, 0, 0, 0.3)',
+              backdropFilter: 'blur(8px)',
+              WebkitBackdropFilter: 'blur(8px)'
+            }}
+            onClick={handleCloseFullPostBottomSheet}
+          />
+          
+          {/* Floating Action Buttons - Outside Bottom Sheet */}
+          <div className="absolute top-12 left-6 right-6 flex items-center justify-between z-10">
+            <div className="flex items-center space-x-2">
+              {/* Previous Post Button */}
+              <button
+                onClick={() => {
+                  setCurrentFullPostIndex(prev => Math.max(0, prev - 1));
+                }}
+                disabled={currentFullPostIndex === 0}
+                className="w-12 h-12 bg-white rounded-full flex items-center justify-center hover:bg-gray-100 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="black" strokeWidth="2">
+                  <path d="M15 18l-6-6 6-6"/>
+                </svg>
+              </button>
+              
+              {/* Next Post Button */}
+              <button
+                onClick={() => {
+                  setCurrentFullPostIndex(prev => Math.min(posts.length - 1, prev + 1));
+                }}
+                disabled={currentFullPostIndex === posts.length - 1}
+                className="w-12 h-12 bg-white rounded-full flex items-center justify-center hover:bg-gray-100 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="black" strokeWidth="2">
+                  <path d="M9 18l6-6-6-6"/>
+                </svg>
+              </button>
+            </div>
+            
+            {/* Share Button */}
+            <button
+              onClick={async () => {
+                // Handle share functionality with error handling
+                try {
+                  if (navigator.share) {
+                    await navigator.share({
+                      title: posts[currentFullPostIndex].title,
+                      text: 'Check out this post from Coordinated Living',
+                      url: window.location.href
+                    });
+                  } else {
+                    // Fallback: copy to clipboard
+                    await navigator.clipboard.writeText(window.location.href);
+                    // You could add a toast notification here
+                    console.log('Link copied to clipboard');
+                  }
+                } catch (error) {
+                  // Handle share errors (user cancelled, etc.)
+                  if (error.name !== 'AbortError') {
+                    console.log('Share failed:', error);
+                    // Fallback to clipboard if share fails
+                    try {
+                      await navigator.clipboard.writeText(window.location.href);
+                      console.log('Link copied to clipboard as fallback');
+                    } catch (clipboardError) {
+                      console.log('Clipboard copy also failed:', clipboardError);
+                    }
+                  }
+                }
+              }}
+              className="w-12 h-12 rounded-full flex items-center justify-center transition-colors duration-200 shadow-lg"
+              style={{ backgroundColor: '#2481C2' }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = '#1e6ba3';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = '#2481C2';
+              }}
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
+                <circle cx="18" cy="5" r="3"/>
+                <circle cx="6" cy="12" r="3"/>
+                <circle cx="18" cy="19" r="3"/>
+                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
+                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+              </svg>
+            </button>
+          </div>
+          
+          {/* Bottom Sheet */}
+          <div 
+            className="absolute bottom-0 left-0 right-0 rounded-t-3xl shadow-2xl full-post-bottom-sheet flex flex-col"
+            style={{ 
+              maxHeight: '80vh',
+              minHeight: '70vh',
+              backgroundColor: '#FFFFFF'
+            }}
+          >
+            {/* Drag Handle */}
+            <div className="flex justify-center pt-3 pb-2">
+              <div className="w-12 h-1 bg-gray-300 rounded-full"></div>
+            </div>
+
+            {/* Header with Back Arrow and Title */}
+            <div className="flex items-center px-6 pb-4">
+              <button
+                onClick={() => {
+                  setShowFullPostBottomSheet(false);
+                  setShowPostBottomSheet(true);
+                }}
+                className="w-10 h-10 bg-black rounded-full flex items-center justify-center hover:bg-gray-800 transition-colors duration-200 mr-4"
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
+                  <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+              </button>
+              <h2 
+                className="text-2xl font-bold text-black flex-1"
+                style={{ fontFamily: 'var(--font-amita), cursive' }}
+              >
+                {posts[currentFullPostIndex].title}
+              </h2>
+            </div>
+            
+            {/* Scrollable Content Card */}
+            <div className="px-6 pb-6 flex-1 flex flex-col min-h-0">
+              <div 
+                className="bg-white border border-gray-200 rounded-2xl p-6 flex-1 overflow-y-auto min-h-0"
+                style={{ 
+                  fontFamily: 'Roboto, sans-serif',
+                  color: '#000000'
+                }}
+              >
+                {/* Post Content */}
+                <div className="space-y-4 text-base leading-relaxed">
+                  {posts[currentFullPostIndex].leftContent}
+                  {posts[currentFullPostIndex].rightContent}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Post Modal - Accessible from both mobile and desktop */}
       {showPostModal && (
