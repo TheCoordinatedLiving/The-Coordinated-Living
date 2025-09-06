@@ -54,6 +54,7 @@ const WelcomeScreen = ({ onEnterClick }: { onEnterClick: () => void }) => {
   const logoRef = useRef(null);
 
   useLayoutEffect(() => {
+    console.log('WelcomeScreen useLayoutEffect - animating logo');
     gsap.to(logoRef.current, {
       rotation: 360,
       duration: 20,
@@ -157,6 +158,7 @@ const Page = () => {
   const [currentPostIndex, setCurrentPostIndex] = useState(0);
   const [fromWindows, setFromWindows] = useState(false);
   const [showFumaaModal, setShowFumaaModal] = useState(false);
+  const [showBlurEffect, setShowBlurEffect] = useState(false);
   const [messageText, setMessageText] = useState('');
   const [showExpandedEmailModal, setShowExpandedEmailModal] = useState(false);
   const [showGuidesModal, setShowGuidesModal] = useState(false);
@@ -796,7 +798,10 @@ const Page = () => {
     const urlParams = new URLSearchParams(window.location.search);
     const fromWindowsParam = urlParams.get('fromWindows');
     
+    console.log('URL params check - fromWindowsParam:', fromWindowsParam);
+    
     if (fromWindowsParam === 'true') {
+      console.log('Setting fromWindows to true - skipping WelcomeScreen');
       setFromWindows(true);
       // Show loader briefly, then go directly to experience
       const timer = setTimeout(() => {
@@ -987,7 +992,15 @@ const Page = () => {
   }, [laptopZoomed]);
 
   const handleEnterClick = () => {
+    console.log('ENTER EXPERIENCE button clicked!');
     if (!pageRef.current) return;
+    
+    // Trigger blur effect immediately when button is clicked
+    setShowBlurEffect(true);
+    setTimeout(() => {
+      setShowBlurEffect(false);
+    }, 7000);
+    
     const tl = gsap.timeline();
 
     // First, animate the button and text as before
@@ -1015,6 +1028,7 @@ const Page = () => {
       }, "<")
       // Show experience page immediately when curtain starts sliding
       .add(() => {
+        console.log('Setting experienceVisible to true');
         setExperienceVisible(true);
       })
       // Now slide the entire curtain (main page) up to reveal experience
@@ -1053,21 +1067,53 @@ const Page = () => {
   // }, [isVideoEnded]);
 
   useLayoutEffect(() => {
-    if (isLoaded && pageRef.current) {
+    console.log('Main useLayoutEffect - isLoaded:', isLoaded, 'fromWindows:', fromWindows);
+    if (isLoaded && pageRef.current && !fromWindows) {
       const loader = pageRef.current.querySelector('.loader-container');
       const welcome = pageRef.current.querySelector('.welcome-container');
 
+      console.log('Found elements - loader:', !!loader, 'welcome:', !!welcome);
+
       if (loader && welcome) {
+        console.log('Starting welcome screen animation');
         gsap.timeline({
           onComplete: () => {
+            console.log('Welcome screen animation complete');
             if (loader instanceof HTMLElement) loader.style.display = 'none';
           }
         })
           .to(loader, { opacity: 0, duration: 1.5, ease: 'power2.inOut' })
           .to(welcome, { opacity: 1, duration: 1.5, ease: 'power2.inOut' }, "-=1.0");
+      } else {
+        console.log('Missing elements - loader or welcome not found');
+        // Fallback: if welcome screen exists but animation failed, make it visible
+        if (welcome) {
+          console.log('Fallback: Making welcome screen visible');
+          gsap.set(welcome, { opacity: 1 });
+        }
       }
     }
-  }, [isLoaded]);
+  }, [isLoaded, fromWindows]);
+
+  // Debug: Log WelcomeScreen rendering state
+  useEffect(() => {
+    console.log('WelcomeScreen render state - fromWindows:', fromWindows, 'isLoaded:', isLoaded);
+  }, [fromWindows, isLoaded]);
+
+  // Fallback: Ensure WelcomeScreen shows up on desktop even if timing is off
+  useEffect(() => {
+    if (isLoaded && !fromWindows && pageRef.current) {
+      const timeout = setTimeout(() => {
+        const welcome = pageRef.current?.querySelector('.welcome-container');
+        if (welcome && getComputedStyle(welcome).opacity === '0') {
+          console.log('Fallback timeout: Making welcome screen visible');
+          gsap.set(welcome, { opacity: 1 });
+        }
+      }, 3000); // 3 second fallback
+
+      return () => clearTimeout(timeout);
+    }
+  }, [isLoaded, fromWindows]);
 
   const handleCloseVideos = () => {
     // Create a timeline for smooth exit animation
@@ -3051,6 +3097,27 @@ const Page = () => {
                   opacity: 0;
                 }
               }
+              
+              @keyframes fadeInOut {
+                0% {
+                  opacity: 0;
+                }
+                8% {
+                  opacity: 1;
+                }
+                80% {
+                  opacity: 1;
+                }
+                88% {
+                  opacity: 0.6;
+                }
+                94% {
+                  opacity: 0.2;
+                }
+                100% {
+                  opacity: 0;
+                }
+              }
             `}</style>
 
 
@@ -4461,6 +4528,86 @@ const Page = () => {
                 </button>
               </div>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* Background Blur Effect - Desktop Only */}
+      {showBlurEffect && (
+        <div 
+          className="fixed inset-0 w-screen h-screen pointer-events-none hidden lg:block"
+          style={{ 
+            zIndex: 5,
+            backgroundColor: 'rgba(0, 0, 0, 0.3)',
+            backdropFilter: 'blur(20px)',
+            WebkitBackdropFilter: 'blur(20px)',
+            animation: 'fadeInOut 7s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards'
+          }}
+        >
+          {/* Welcome Card */}
+          <div 
+            className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+            style={{
+              width: '450px',
+              height: '300px',
+              backgroundColor: '#000000',
+              borderRadius: '24px',
+              boxShadow: '0 20px 40px rgba(0, 0, 0, 0.5)',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              padding: '32px',
+              animation: 'fadeInOut 7s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards'
+            }}
+          >
+            {/* Logo */}
+            <div className="mb-6">
+              <Image
+                src="/welcome-card-logo.svg"
+                alt="Welcome Logo"
+                width={60}
+                height={60}
+                className="w-15 h-15"
+              />
+            </div>
+            
+            {/* Blue Welcome Card */}
+            <div 
+              style={{
+                backgroundColor: '#2481C2',
+                borderRadius: '50px',
+                padding: '8px 20px',
+                marginBottom: '20px'
+              }}
+            >
+              <h2 
+                className="text-white text-center"
+                style={{
+                  fontFamily: 'Amita, cursive',
+                  fontSize: '16px',
+                  fontWeight: '600',
+                  margin: 0
+                }}
+              >
+                Welcome To My Interactive Workspace
+              </h2>
+            </div>
+            
+            {/* Bottom Text */}
+            <p 
+              className="text-white text-center"
+              style={{
+                fontFamily: 'Amita, cursive',
+                fontSize: '20px',
+                fontWeight: '400',
+                margin: 0,
+                lineHeight: '1.4'
+              }}
+            >
+              Things aren't always what they seem.<br />
+              Explore, click, and discover.
+            </p>
           </div>
         </div>
       )}

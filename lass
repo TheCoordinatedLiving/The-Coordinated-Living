@@ -44,7 +44,7 @@ const Loader = () => {
   );
 };
 
-const WelcomeScreen = ({ onEnterClick }: { onEnterClick: () => void }) => {
+const WelcomeScreen = ({ onEnterClick, setShowWelcomeModal }) => {
   const logoRef = useRef(null);
 
   useLayoutEffect(() => {
@@ -76,6 +76,28 @@ const WelcomeScreen = ({ onEnterClick }: { onEnterClick: () => void }) => {
         <div ref={logoRef} className="w-24 h-auto welcome-logo">
           <Image src="/loading-screen/logo.svg" width={96} height={36} alt="Logo" />
         </div>
+        {/* Temporary test button */}
+        <button 
+          onClick={() => {
+            console.log('Test button clicked, showing welcome modal');
+            setShowWelcomeModal(true);
+            setTimeout(() => setShowWelcomeModal(false), 5000);
+          }}
+          style={{
+            position: 'absolute',
+            top: '20px',
+            right: '20px',
+            background: 'red',
+            color: 'white',
+            padding: '10px',
+            border: 'none',
+            borderRadius: '5px',
+            cursor: 'pointer',
+            zIndex: 1000
+          }}
+        >
+          Test Welcome Modal
+        </button>
         <div className="max-w-3xl mx-auto welcome-text" style={{ marginTop: '137px' }}>
           <h1 className="text-4xl sm:text-6xl font-bold leading-tight">
             Where His grace abounds through the changing scenes of life.
@@ -126,12 +148,12 @@ const Page = () => {
   const [fumaaAnimation, setFumaaAnimation] = useState(null);
   const [showFumaaModal, setShowFumaaModal] = useState(false);
 
-  const pageRef = useRef<HTMLDivElement>(null);
-  const curtainRef = useRef<HTMLDivElement>(null);
-  const experienceRef = useRef<HTMLDivElement>(null);
-  const laptopRef = useRef<HTMLDivElement>(null);
+  const pageRef = useRef(null);
+  const curtainRef = useRef(null);
+  const experienceRef = useRef(null);
+  const laptopRef = useRef(null);
 
-  // Load Fumaa Lottie animation
+  // Load Fumaa Lottie animation and preload experience background
   useEffect(() => {
     const loadAnimation = async () => {
       try {
@@ -142,7 +164,18 @@ const Page = () => {
         console.error('Failed to load Fumaa animation:', error);
       }
     };
+    
+    // Preload the experience background image
+    const preloadImage = () => {
+      const img = new Image();
+      img.src = '/coordinated.webp';
+      img.onload = () => {
+        console.log('Experience background preloaded');
+      };
+    };
+    
     loadAnimation();
+    preloadImage();
   }, []);
 
   // Check if coming back from Windows page
@@ -184,7 +217,7 @@ const Page = () => {
 
   // Add escape key handler for zoom out
   useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
+    const handleKeyDown = (e) => {
       console.log('Key pressed:', e.key, 'laptopZoomed:', laptopZoomed);
       if (e.key === 'Escape' && laptopZoomed) {
         console.log('ESC key detected, zooming out...');
@@ -246,9 +279,8 @@ const Page = () => {
         duration: 0.6,
         ease: 'power3.inOut'
       }, "<")
-      // Show welcome modal and experience page immediately when curtain starts sliding
+      // Show experience page immediately when curtain starts sliding
       .add(() => {
-        setShowWelcomeModal(true);
         setExperienceVisible(true);
       })
       // Now slide the entire curtain (main page) up to reveal experience
@@ -256,7 +288,21 @@ const Page = () => {
         y: '-100%',
         duration: 1.2,
         ease: 'power3.inOut'
-      }, "-=0.2");
+      })
+      // Show welcome modal after curtain animation completes
+      .add(() => {
+        console.log('Curtain animation completed, showing welcome modal...');
+        // Small delay to ensure smooth transition
+        setTimeout(() => {
+          console.log('Setting showWelcomeModal to true');
+          setShowWelcomeModal(true);
+          // Auto-hide the welcome modal after 5 seconds
+          setTimeout(() => {
+            console.log('Auto-hiding welcome modal');
+            setShowWelcomeModal(false);
+          }, 5000);
+        }, 300);
+      });
   };
 
   // Commented out video handling for demo
@@ -309,21 +355,26 @@ const Page = () => {
       {experienceVisible && (
         <div
           ref={experienceRef}
-          className="fixed inset-0 w-screen h-screen bg-black"
-          style={{ zIndex: 1 }}
+          className="fixed inset-0 w-screen h-screen"
+          style={{ 
+            zIndex: 1,
+            backgroundColor: '#000000'
+          }}
         >
           <img
             src="/coordinated.webp"
             alt="Experience Background"
-            // className="w- h-full object-cover object-center"
             width="100%"
             height="auto"
             style={{
               objectFit: 'cover',
               objectPosition: 'center top',
- 
+              backgroundColor: '#000000'
             }}
-           
+            onLoad={() => {
+              // Ensure the image is fully loaded before showing
+              console.log('Experience background loaded');
+            }}
           />
 
           <div style={{
@@ -1607,95 +1658,6 @@ const Page = () => {
             </div>
           )}
 
-          {/* Welcome Modal */}
-          {showWelcomeModal && (
-            <div className="fixed inset-0 z-50">
-              {/* Glass background blur */}
-              <div 
-                className="absolute inset-0"
-                style={{ 
-                  backgroundColor: 'rgba(0, 0, 0, 0.15)',
-                  backdropFilter: 'blur(16px)',
-                  WebkitBackdropFilter: 'blur(16px)'
-                }}
-              />
-              
-              {/* Welcome Card */}
-              <div className="absolute inset-0 flex items-center justify-center p-8">
-                <div 
-                  className="relative z-10 max-w-md w-full p-8 text-center welcome-modal-card"
-                  style={{
-                    backgroundColor: '#0F0F0F',
-                    borderRadius: '26.22px',
-                    boxShadow: '0 20px 40px rgba(0, 0, 0, 0.3)'
-                  }}
-                >
-                  {/* Coordinated Living Logo */}
-                  <div className="flex justify-center" style={{ marginBottom: '24px' }}>
-                    <Image
-                      src="/modal-logo.svg"
-                      alt="Coordinated Living Logo"
-                      width={120}
-                      height={120}
-                      className="w-[120px] h-[120px]"
-                    />
-                  </div>
-
-                  {/* Welcome Banner */}
-                  <div
-                    className="px-4 py-2"
-                    style={{
-                      backgroundColor: '#1D1C1E',
-                      color: 'white',
-                      borderRadius: '33.86px',
-                      maxWidth: '300px',
-                      margin: '0 auto',
-                      marginBottom: '24px',
-                    }}
-                  >
-                    <h2 className="text-white font-medium text-sm" style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                      Welcome to Your Interactive Workspace
-                    </h2>
-                  </div>
-
-                  {/* Instructional Text */}
-                  <div className="text-center" style={{ marginBottom: '24px' }}>
-                    <p className="text-white font-bold text-lg mb-2" style={{ fontSize: '1.2rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', marginBottom: '12px' }}>
-                      Things aren&apos;t always what they seem.
-                    </p>
-                    <p className="text-gray-300 text-base" style={{ margin: 0 }}>
-                      Explore the workspace — you might be surprised by what you find.
-                    </p>
-                  </div>
-
-                  {/* Get Started Button */}
-                  <button
-                    onClick={() => {
-                      // Smoothly fade out the welcome modal
-                      const modal = document.querySelector('.welcome-modal-card');
-                      if (modal) {
-                        gsap.to(modal, {
-                          opacity: 0,
-                          scale: 0.95,
-                          duration: 0.6,
-                          ease: 'power2.inOut',
-                          onComplete: () => {
-                            setShowWelcomeModal(false);
-                          }
-                        });
-                      } else {
-                        setShowWelcomeModal(false);
-                      }
-                    }}
-                    className="w-full text-white font-medium py-3 px-6 transition-colors duration-200 cursor-pointer get-started-glow"
-                    style={{ backgroundColor: '#5C3262', borderRadius: '35px' }}
-                  >
-                    Get Started
-                  </button>
-                </div>
-              </div>
-            </div>
-          )}
 
           {/* Fumaa Modal */}
           {showFumaaModal && (
@@ -1749,6 +1711,34 @@ const Page = () => {
         </div>
       )}
 
+      {/* Welcome Modal - Outside experience section for proper z-index */}
+      {showWelcomeModal && (
+        <div className="fixed inset-0 z-50 pointer-events-none">
+          {/* Welcome Card - positioned at top center */}
+          <div className="absolute top-8 left-1/2 transform -translate-x-1/2 p-4">
+            <div 
+              className="welcome-modal-card"
+              style={{
+                backgroundColor: '#000000',
+                color: 'white',
+                borderRadius: '33.86px',
+                maxWidth: '300px',
+                margin: '0 auto',
+                padding: '16px 24px',
+                boxShadow: '0 8px 32px rgba(0, 0, 0, 0.6)',
+                border: '1px solid rgba(255, 255, 255, 0.2)',
+                backdropFilter: 'blur(10px)',
+                WebkitBackdropFilter: 'blur(10px)'
+              }}
+            >
+              <h2 className="text-white font-medium text-sm text-center" style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', margin: 0 }}>
+                Welcome to Your Interactive Workspace
+              </h2>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Curtain (main page) that slides up */}
       <div
         ref={curtainRef}
@@ -1756,7 +1746,7 @@ const Page = () => {
         style={{ zIndex: 10 }}
       >
         <Loader />
-        {!fromWindows && <WelcomeScreen onEnterClick={handleEnterClick} />}
+        {!fromWindows && <WelcomeScreen onEnterClick={handleEnterClick} setShowWelcomeModal={setShowWelcomeModal} />}
       </div>
     </div>
   );
