@@ -3809,8 +3809,8 @@ const Page = () => {
           <div 
             className="absolute bottom-0 left-0 right-0 rounded-t-3xl shadow-2xl post-bottom-sheet"
             style={{ 
-              maxHeight: '95vh',
-              minHeight: '85vh',
+              maxHeight: '90vh',
+              minHeight: '80vh',
               backgroundColor: '#2481C2'
             }}
           >
@@ -3844,9 +3844,26 @@ const Page = () => {
               <div 
                 className="mb-6 relative overflow-hidden" 
                 style={{ minHeight: '400px' }}
-                onTouchStart={onTouchStart}
-                onTouchMove={onTouchMove}
-                onTouchEnd={onTouchEnd}
+                onTouchStart={(e) => {
+                  setTouchStart(e.targetTouches[0].clientX);
+                }}
+                onTouchMove={(e) => {
+                  setTouchEnd(e.targetTouches[0].clientX);
+                }}
+                onTouchEnd={() => {
+                  if (!touchStart || !touchEnd) return;
+                  
+                  const distance = touchStart - touchEnd;
+                  const isLeftSwipe = distance > 50;
+                  const isRightSwipe = distance < -50;
+                  
+                  if (isLeftSwipe && currentPostBottomSheetIndex < posts.length - 1) {
+                    setCurrentPostBottomSheetIndex(prev => prev + 1);
+                  }
+                  if (isRightSwipe && currentPostBottomSheetIndex > 0) {
+                    setCurrentPostBottomSheetIndex(prev => prev - 1);
+                  }
+                }}
               >
                 <div 
                   className="flex transition-transform duration-300 ease-out" 
@@ -4083,17 +4100,17 @@ const Page = () => {
           />
           
           {/* Floating Action Buttons - Outside Bottom Sheet */}
-          <div className="absolute top-12 left-6 right-6 flex items-center justify-between z-10">
-            <div className="flex items-center space-x-2">
+          <div className="absolute top-8 sm:top-12 left-4 sm:left-6 right-4 sm:right-6 flex items-center justify-between z-10">
+            <div className="flex items-center space-x-3 sm:space-x-4">
               {/* Previous Post Button */}
               <button
                 onClick={() => {
                   setCurrentFullPostIndex(prev => Math.max(0, prev - 1));
                 }}
                 disabled={currentFullPostIndex === 0}
-                className="w-12 h-12 bg-white rounded-full flex items-center justify-center hover:bg-gray-100 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
+                className="w-10 h-10 sm:w-12 sm:h-12 bg-white rounded-full flex items-center justify-center hover:bg-gray-100 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
               >
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="black" strokeWidth="2">
+                <svg width="16" height="16" className="sm:w-[18px] sm:h-[18px]" viewBox="0 0 24 24" fill="none" stroke="black" strokeWidth="2">
                   <path d="M15 18l-6-6 6-6"/>
                 </svg>
               </button>
@@ -4104,9 +4121,9 @@ const Page = () => {
                   setCurrentFullPostIndex(prev => Math.min(posts.length - 1, prev + 1));
                 }}
                 disabled={currentFullPostIndex === posts.length - 1}
-                className="w-12 h-12 bg-white rounded-full flex items-center justify-center hover:bg-gray-100 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
+                className="w-10 h-10 sm:w-12 sm:h-12 bg-white rounded-full flex items-center justify-center hover:bg-gray-100 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
               >
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="black" strokeWidth="2">
+                <svg width="16" height="16" className="sm:w-[18px] sm:h-[18px]" viewBox="0 0 24 24" fill="none" stroke="black" strokeWidth="2">
                   <path d="M9 18l6-6-6-6"/>
                 </svg>
               </button>
@@ -4143,7 +4160,7 @@ const Page = () => {
                   }
                 }
               }}
-              className="w-12 h-12 rounded-full flex items-center justify-center transition-colors duration-200 shadow-lg"
+              className="w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center transition-colors duration-200 shadow-lg"
               style={{ backgroundColor: '#2481C2' }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.backgroundColor = '#1e6ba3';
@@ -4152,7 +4169,7 @@ const Page = () => {
                 e.currentTarget.style.backgroundColor = '#2481C2';
               }}
             >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
+              <svg width="16" height="16" className="sm:w-[18px] sm:h-[18px]" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
                 <circle cx="18" cy="5" r="3"/>
                 <circle cx="6" cy="12" r="3"/>
                 <circle cx="18" cy="19" r="3"/>
@@ -4166,8 +4183,8 @@ const Page = () => {
           <div 
             className="absolute bottom-0 left-0 right-0 rounded-t-3xl shadow-2xl full-post-bottom-sheet flex flex-col"
             style={{ 
-              maxHeight: '80vh',
-              minHeight: '70vh',
+              maxHeight: '85vh',
+              minHeight: '75vh',
               backgroundColor: '#FFFFFF'
             }}
           >
