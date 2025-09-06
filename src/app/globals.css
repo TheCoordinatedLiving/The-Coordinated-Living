@@ -876,40 +876,54 @@ img {
   scrollbar-width: none;
 }
 
-/* Floating Tab Bar Safe Area Support */
+/* CSS Custom Properties for Safe Area */
+:root {
+  --safe-area-inset-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* Floating Tab Bar Safe Area Support - More Aggressive */
 .floating-tab-container {
-  /* Use CSS max() function to ensure minimum spacing above browser UI */
-  bottom: max(80px, env(safe-area-inset-bottom, 0px) + 20px) !important;
+  /* Much more aggressive spacing to prevent touching browser UI */
+  bottom: max(100px, env(safe-area-inset-bottom, 0px) + 40px) !important;
   padding-bottom: env(safe-area-inset-bottom, 0px);
   /* Ensure it stays above browser UI on all devices */
   z-index: 99999 !important;
+  /* Add transition for smooth adjustments */
+  transition: bottom 0.3s ease-in-out;
 }
 
 /* Additional bottom spacing for devices with home indicators */
 @media (max-width: 767px) {
   .floating-tab-container {
-    bottom: max(80px, env(safe-area-inset-bottom, 0px) + 20px) !important;
+    bottom: max(110px, env(safe-area-inset-bottom, 0px) + 50px) !important;
   }
 }
 
-/* Extra spacing for iPhone devices with browser navigation */
+/* Extra aggressive spacing for iPhone devices with browser navigation */
 @media (max-width: 430px) {
   .floating-tab-container {
-    bottom: max(90px, env(safe-area-inset-bottom, 0px) + 30px) !important;
+    bottom: max(120px, env(safe-area-inset-bottom, 0px) + 60px) !important;
   }
 }
 
-/* Specific fixes for iPhone 14/15 models and newer */
+/* Specific fixes for iPhone 14/15 models and newer - Very aggressive */
 @media (max-width: 430px) and (min-height: 844px) {
   .floating-tab-container {
-    bottom: max(100px, env(safe-area-inset-bottom, 0px) + 40px) !important;
+    bottom: max(140px, env(safe-area-inset-bottom, 0px) + 80px) !important;
   }
 }
 
 /* Support for devices with dynamic viewport height (like iPhone with browser UI) */
 @supports (height: 100dvh) {
   .floating-tab-container {
-    bottom: max(80px, env(safe-area-inset-bottom, 0px) + 20px) !important;
+    bottom: max(120px, env(safe-area-inset-bottom, 0px) + 60px) !important;
+  }
+}
+
+/* Force minimum spacing on all mobile devices */
+@media (max-width: 1023px) {
+  .floating-tab-container {
+    bottom: max(100px, env(safe-area-inset-bottom, 0px) + 40px) !important;
   }
 }
 

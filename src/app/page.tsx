@@ -242,20 +242,41 @@ const Page = () => {
         const windowHeight = window.innerHeight;
         const heightDifference = windowHeight - viewportHeight;
         
-        // If browser UI is visible (viewport height is smaller than window height)
+        // Get safe area inset bottom
+        const safeAreaBottom = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--safe-area-inset-bottom') || '0');
+        
+        // More aggressive spacing calculation
+        let bottomSpacing = 80; // Base spacing
+        
+        // Add extra spacing for browser UI
         if (heightDifference > 0) {
-          // Add extra spacing when browser UI is visible
-          const extraSpacing = Math.min(heightDifference + 20, 100);
-          floatingTabRef.current.style.bottom = `${extraSpacing}px`;
-        } else {
-          // Reset to default when browser UI is hidden
-          floatingTabRef.current.style.bottom = '';
+          bottomSpacing = Math.max(bottomSpacing, heightDifference + 40);
         }
+        
+        // Add safe area bottom
+        bottomSpacing += safeAreaBottom;
+        
+        // For iPhone 14/15 models, ensure minimum spacing
+        if (window.innerWidth <= 430 && window.innerHeight >= 844) {
+          bottomSpacing = Math.max(bottomSpacing, 140);
+        }
+        
+        // Detect if we're in Safari on iOS (more aggressive spacing)
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+        const isSafari = /Safari/.test(navigator.userAgent) && !/Chrome/.test(navigator.userAgent);
+        
+        if (isIOS && isSafari) {
+          bottomSpacing = Math.max(bottomSpacing, 120);
+        }
+        
+        // Apply the spacing
+        floatingTabRef.current.style.bottom = `${bottomSpacing}px`;
+        floatingTabRef.current.style.paddingBottom = `${safeAreaBottom}px`;
       }
     };
 
-    // Initial adjustment
-    adjustFloatingTabPosition();
+    // Initial adjustment with delay to ensure DOM is ready
+    setTimeout(adjustFloatingTabPosition, 100);
 
     // Listen for viewport changes (browser UI show/hide)
     if (window.visualViewport) {
@@ -264,12 +285,18 @@ const Page = () => {
 
     // Fallback for older browsers
     window.addEventListener('resize', adjustFloatingTabPosition);
+    
+    // Also listen for orientation changes
+    window.addEventListener('orientationchange', () => {
+      setTimeout(adjustFloatingTabPosition, 500);
+    });
 
     return () => {
       if (window.visualViewport) {
         window.visualViewport.removeEventListener('resize', adjustFloatingTabPosition);
       }
       window.removeEventListener('resize', adjustFloatingTabPosition);
+      window.removeEventListener('orientationchange', adjustFloatingTabPosition);
     };
   }, []);
 
@@ -1623,7 +1650,7 @@ const Page = () => {
               ref={floatingTabRef}
               className="xl:hidden fixed left-1/2 transform -translate-x-1/2 z-[99999] floating-tab-container" 
               style={{ 
-                bottom: 'max(clamp(60px, 8vh, 80px), env(safe-area-inset-bottom, 0px) + 20px)',
+                bottom: 'max(120px, env(safe-area-inset-bottom, 0px) + 60px)',
                 paddingBottom: 'env(safe-area-inset-bottom, 0px)'
               }}
             >
