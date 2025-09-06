@@ -4099,86 +4099,6 @@ const Page = () => {
             onClick={handleCloseFullPostBottomSheet}
           />
           
-          {/* Floating Action Buttons - Outside Bottom Sheet */}
-          <div className="absolute top-8 sm:top-12 left-4 sm:left-6 right-4 sm:right-6 flex items-center justify-between z-10">
-            <div className="flex items-center space-x-3 sm:space-x-4">
-              {/* Previous Post Button */}
-              <button
-                onClick={() => {
-                  setCurrentFullPostIndex(prev => Math.max(0, prev - 1));
-                }}
-                disabled={currentFullPostIndex === 0}
-                className="w-10 h-10 sm:w-12 sm:h-12 bg-white rounded-full flex items-center justify-center hover:bg-gray-100 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
-              >
-                <svg width="16" height="16" className="sm:w-[18px] sm:h-[18px]" viewBox="0 0 24 24" fill="none" stroke="black" strokeWidth="2">
-                  <path d="M15 18l-6-6 6-6"/>
-                </svg>
-              </button>
-              
-              {/* Next Post Button */}
-              <button
-                onClick={() => {
-                  setCurrentFullPostIndex(prev => Math.min(posts.length - 1, prev + 1));
-                }}
-                disabled={currentFullPostIndex === posts.length - 1}
-                className="w-10 h-10 sm:w-12 sm:h-12 bg-white rounded-full flex items-center justify-center hover:bg-gray-100 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
-              >
-                <svg width="16" height="16" className="sm:w-[18px] sm:h-[18px]" viewBox="0 0 24 24" fill="none" stroke="black" strokeWidth="2">
-                  <path d="M9 18l6-6-6-6"/>
-                </svg>
-              </button>
-            </div>
-            
-            {/* Share Button */}
-            <button
-              onClick={async () => {
-                // Handle share functionality with error handling
-                try {
-                  if (navigator.share) {
-                    await navigator.share({
-                      title: posts[currentFullPostIndex].title,
-                      text: 'Check out this post from Coordinated Living',
-                      url: window.location.href
-                    });
-                  } else {
-                    // Fallback: copy to clipboard
-                    await navigator.clipboard.writeText(window.location.href);
-                    // You could add a toast notification here
-                    console.log('Link copied to clipboard');
-                  }
-                } catch (error) {
-                  // Handle share errors (user cancelled, etc.)
-                  if (error instanceof Error && error.name !== 'AbortError') {
-                    console.log('Share failed:', error);
-                    // Fallback to clipboard if share fails
-                    try {
-                      await navigator.clipboard.writeText(window.location.href);
-                      console.log('Link copied to clipboard as fallback');
-                    } catch (clipboardError) {
-                      console.log('Clipboard copy also failed:', clipboardError);
-                    }
-                  }
-                }
-              }}
-              className="w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center transition-colors duration-200 shadow-lg"
-              style={{ backgroundColor: '#2481C2' }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = '#1e6ba3';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = '#2481C2';
-              }}
-            >
-              <svg width="16" height="16" className="sm:w-[18px] sm:h-[18px]" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
-                <circle cx="18" cy="5" r="3"/>
-                <circle cx="6" cy="12" r="3"/>
-                <circle cx="18" cy="19" r="3"/>
-                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
-                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
-              </svg>
-            </button>
-          </div>
-          
           {/* Bottom Sheet */}
           <div 
             className="absolute bottom-0 left-0 right-0 rounded-t-3xl shadow-2xl full-post-bottom-sheet flex flex-col"
@@ -4215,12 +4135,13 @@ const Page = () => {
             </div>
             
             {/* Scrollable Content Card */}
-            <div className="px-6 pb-6 flex-1 flex flex-col min-h-0">
+            <div className="px-6 pb-4 flex-1 flex flex-col min-h-0">
               <div 
                 className="bg-white border border-gray-200 rounded-2xl p-6 flex-1 overflow-y-auto min-h-0"
                 style={{ 
                   fontFamily: 'Roboto, sans-serif',
-                  color: '#000000'
+                  color: '#000000',
+                  maxHeight: '50vh'
                 }}
               >
                 {/* Post Content */}
@@ -4228,6 +4149,87 @@ const Page = () => {
                   {posts[currentFullPostIndex].leftContent}
                   {posts[currentFullPostIndex].rightContent}
                 </div>
+              </div>
+            </div>
+
+            {/* Action Buttons Row */}
+            <div className="px-6 pb-6">
+              <div className="flex items-center justify-between">
+                {/* Navigation Buttons */}
+                <div className="flex items-center space-x-3">
+                  {/* Previous Post Button */}
+                  <button
+                    onClick={() => {
+                      setCurrentFullPostIndex(prev => Math.max(0, prev - 1));
+                    }}
+                    disabled={currentFullPostIndex === 0}
+                    className="w-10 h-10 bg-white border border-gray-300 rounded-full flex items-center justify-center hover:bg-gray-50 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="black" strokeWidth="2">
+                      <path d="M15 18l-6-6 6-6"/>
+                    </svg>
+                  </button>
+                  
+                  {/* Next Post Button */}
+                  <button
+                    onClick={() => {
+                      setCurrentFullPostIndex(prev => Math.min(posts.length - 1, prev + 1));
+                    }}
+                    disabled={currentFullPostIndex === posts.length - 1}
+                    className="w-10 h-10 bg-white border border-gray-300 rounded-full flex items-center justify-center hover:bg-gray-50 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="black" strokeWidth="2">
+                      <path d="M9 18l6-6-6-6"/>
+                    </svg>
+                  </button>
+                </div>
+                
+                {/* Share Button */}
+                <button
+                  onClick={async () => {
+                    // Handle share functionality with error handling
+                    try {
+                      if (navigator.share) {
+                        await navigator.share({
+                          title: posts[currentFullPostIndex].title,
+                          text: 'Check out this post from Coordinated Living',
+                          url: window.location.href
+                        });
+                      } else {
+                        // Fallback: copy to clipboard
+                        await navigator.clipboard.writeText(window.location.href);
+                        // You could add a toast notification here
+                        console.log('Link copied to clipboard');
+                      }
+                    } catch (error) {
+                      // Handle share errors (user cancelled, etc.)
+                      if (error instanceof Error && error.name !== 'AbortError') {
+                        console.log('Share failed:', error);
+                        // Fallback to clipboard if share fails
+                        try {
+                          await navigator.clipboard.writeText(window.location.href);
+                          console.log('Link copied to clipboard as fallback');
+                        } catch (clipboardError) {
+                          console.log('Clipboard copy also failed:', clipboardError);
+                        }
+                      }
+                    }
+                  }}
+                  className="px-6 py-3 rounded-full font-medium transition-colors duration-200"
+                  style={{ 
+                    backgroundColor: '#2481C2',
+                    color: '#FFFFFF',
+                    fontFamily: 'Roboto, sans-serif'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.backgroundColor = '#1e6ba3';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.backgroundColor = '#2481C2';
+                  }}
+                >
+                  Share this post
+                </button>
               </div>
             </div>
           </div>
