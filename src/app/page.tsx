@@ -1235,7 +1235,7 @@ const Page = () => {
                           {/* Banner Image with ASK ME A QUESTION text */}
                          <div className="relative w-full md:h-[600px] lg:h-[700px] tablet-banner ipad-banner" style={{ height: 'clamp(300px, 45vh, 500px)', width: '100vw', marginLeft: 'calc(-50vw + 50%)', marginRight: 'calc(-50vw + 50%)', position: 'absolute', top: 'calc(-50vh + 50% - clamp(150px, 22.5vh, 250px))' }}>
                           <Image
-                            src="/about-me-mobile-banner.png"
+                            src="/about-me-mobile-banner-2.png"
                             alt="Ask Me A Question Banner"
                             fill
                             className="object-cover"
@@ -1326,7 +1326,7 @@ const Page = () => {
                           {/* Banner Image with GUIDES text */}
                          <div className="relative w-full md:h-[600px] lg:h-[700px] tablet-banner ipad-banner" style={{ height: 'clamp(300px, 45vh, 500px)', width: '100vw', marginLeft: 'calc(-50vw + 50%)', marginRight: 'calc(-50vw + 50%)', position: 'absolute', top: 'calc(-50vh + 50% - clamp(150px, 22.5vh, 250px))' }}>
                           <Image
-                            src="/about-me-mobile-banner.png"
+                            src="/about-me-mobile-banner-2.png"
                             alt="Guides Banner"
                             fill
                             className="object-cover"
@@ -1391,7 +1391,7 @@ const Page = () => {
                           {/* Banner Image with TERMS AND CONDITIONS text */}
                          <div className="relative w-full md:h-[600px] lg:h-[700px] tablet-banner ipad-banner" style={{ height: 'clamp(300px, 45vh, 500px)', width: '100vw', marginLeft: 'calc(-50vw + 50%)', marginRight: 'calc(-50vw + 50%)', position: 'absolute', top: 'calc(-50vh + 50% - clamp(150px, 22.5vh, 250px))' }}>
                           <Image
-                            src="/about-me-mobile-banner.png"
+                            src="/about-me-mobile-banner-2.png"
                             alt="Terms And Conditions Banner"
                             fill
                             className="object-cover"
@@ -1469,7 +1469,7 @@ const Page = () => {
                           {/* Banner Image with JOIN OUR CHANNEL text */}
                          <div className="relative w-full md:h-[600px] lg:h-[700px] tablet-banner ipad-banner" style={{ height: 'clamp(300px, 45vh, 500px)', width: '100vw', marginLeft: 'calc(-50vw + 50%)', marginRight: 'calc(-50vw + 50%)', position: 'absolute', top: 'calc(-50vh + 50% - clamp(150px, 22.5vh, 250px))' }}>
                           <Image
-                            src="/about-me-mobile-banner.png"
+                            src="/about-me-mobile-banner-2.png"
                             alt="Join Our Channel Banner"
                             fill
                             className="object-cover"
@@ -1538,7 +1538,7 @@ const Page = () => {
                           {/* Banner Image with POUR INTO MY CUP text */}
                          <div className="relative w-full md:h-[600px] lg:h-[700px] tablet-banner ipad-banner" style={{ height: 'clamp(300px, 45vh, 500px)', width: '100vw', marginLeft: 'calc(-50vw + 50%)', marginRight: 'calc(-50vw + 50%)', position: 'absolute', top: 'calc(-50vh + 50% - clamp(150px, 22.5vh, 250px))' }}>
                           <Image
-                            src="/about-me-mobile-banner.png"
+                            src="/about-me-mobile-banner-2.png"
                             alt="Pour Into My Cup Banner"
                             fill
                             className="object-cover"
@@ -1614,7 +1614,7 @@ const Page = () => {
                           {/* Banner Image with ABOUT ME text */}
                          <div className="relative w-full md:h-[600px] lg:h-[700px] tablet-banner ipad-banner" style={{ height: 'clamp(300px, 45vh, 500px)', width: '100vw', marginLeft: 'calc(-50vw + 50%)', marginRight: 'calc(-50vw + 50%)', position: 'absolute', top: 'calc(-50vh + 50% - clamp(150px, 22.5vh, 250px))' }}>
                           <Image
-                            src="/about-me-mobile-banner.png"
+                            src="/about-me-mobile-banner-2.png"
                             alt="About Me Banner"
                             fill
                             className="object-cover"
@@ -1708,7 +1708,7 @@ const Page = () => {
                           {/* Banner Image with POST text */}
                          <div className="relative w-full md:h-[600px] lg:h-[700px] tablet-banner ipad-banner" style={{ height: 'clamp(300px, 45vh, 500px)', width: '100vw', marginLeft: 'calc(-50vw + 50%)', marginRight: 'calc(-50vw + 50%)', position: 'absolute', top: 'calc(-50vh + 50% - clamp(150px, 22.5vh, 250px))' }}>
                           <Image
-                            src="/about-me-mobile-banner.png"
+                            src="/about-me-mobile-banner-2.png"
                             alt="Post Banner"
                             fill
                             className="object-cover"
