@@ -261,6 +261,7 @@ const Page = () => {
   const [showTermsModal, setShowTermsModal] = useState(false);
   const [isClosingTermsModal, setIsClosingTermsModal] = useState(false);
   const [clickAnimation, setClickAnimation] = useState(null);
+  const [welcomeLottieData, setWelcomeLottieData] = useState(null);
   const postTemplateRef = useRef<HTMLDivElement>(null);
   const termsModalBackdropRef = useRef<HTMLDivElement>(null);
   const termsModalContentRef = useRef<HTMLDivElement>(null);
@@ -793,6 +794,17 @@ const Page = () => {
       }
     };
     loadClickAnimation();
+
+    const loadWelcomeAnimation = async () => {
+      try {
+        const response = await fetch('/welcome-lottie.json');
+        const animation = await response.json();
+        setWelcomeLottieData(animation);
+      } catch (error) {
+        console.error('Failed to load welcome animation:', error);
+      }
+    };
+    loadWelcomeAnimation();
   }, []);
 
   // Check if coming back from Windows page
@@ -1619,11 +1631,22 @@ const Page = () => {
                             fill
                             className="object-cover"
                           />
-                          {/* ABOUT ME text overlay */}
-                          <div className="absolute bottom-0 left-0 right-0 flex items-center justify-center md:bottom-4 lg:bottom-8 tablet-title ipad-title" style={{ paddingBottom: '20%', paddingTop: '10%' }}>
-                            <h1 className="text-white text-base xs:text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold px-2 xs:px-3 sm:px-4 text-center" style={{ fontFamily: 'Amita, serif' }}>
-                              Welcome
-                            </h1>
+                          {/* ABOUT ME Lottie animation overlay - Mobile only */}
+                          <div className="absolute bottom-0 left-0 right-0 flex items-center justify-center md:bottom-4 lg:bottom-8 tablet-title ipad-title" style={{ paddingBottom: '2%', paddingTop: '1%' }}>
+                            {welcomeLottieData ? (
+                              <div className="w-44 h-44 xs:w-48 xs:h-48 sm:w-52 sm:h-52 md:w-56 md:h-56 lg:w-60 lg:h-60">
+                                <Lottie
+                                  animationData={welcomeLottieData}
+                                  loop={true}
+                                  autoplay={true}
+                                  style={{ width: '100%', height: '100%' }}
+                                />
+                              </div>
+                            ) : (
+                              <h1 className="text-white text-base xs:text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold px-2 xs:px-3 sm:px-4 text-center" style={{ fontFamily: 'Amita, serif' }}>
+                                Welcome
+                              </h1>
+                            )}
                           </div>
                         </div>
                         
