@@ -1634,7 +1634,7 @@ const Page = () => {
                           {/* ABOUT ME Lottie animation overlay - Mobile only */}
                           <div className="absolute bottom-0 left-0 right-0 flex items-center justify-center md:bottom-4 lg:bottom-8 tablet-title ipad-title" style={{ paddingBottom: '2%', paddingTop: '1%' }}>
                             {welcomeLottieData ? (
-                              <div className="w-44 h-44 xs:w-48 xs:h-48 sm:w-52 sm:h-52 md:w-56 md:h-56 lg:w-64 lg:h-64 xl:w-72 xl:h-72 2xl:w-80 2xl:h-80">
+                              <div className="w-44 h-44 xs:w-48 xs:h-48 sm:w-52 sm:h-52 md:w-56 md:h-56 lg:w-60 lg:h-60">
                                 <Lottie
                                   animationData={welcomeLottieData}
                                   loop={true}
