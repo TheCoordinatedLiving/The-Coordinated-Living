@@ -986,6 +986,20 @@ img {
   filter: brightness(0) saturate(100%) invert(18%) sepia(100%) saturate(1000%) hue-rotate(200deg) brightness(90%) contrast(90%);
 }
 
+/* Mobile-specific tab icon active state - more prominent */
+@media (max-width: 1023px) {
+  .tab-icon.active {
+    filter: brightness(0) saturate(100%) invert(60%) sepia(100%) saturate(2500%) hue-rotate(200deg) brightness(120%) contrast(120%) !important;
+    transform: scale(1.1);
+  }
+  
+  /* Ensure active state is visible on touch devices */
+  .floating-tab-container button[style*="rgba(47, 76, 108, 0.05)"] .tab-icon {
+    filter: brightness(0) saturate(100%) invert(60%) sepia(100%) saturate(2500%) hue-rotate(200deg) brightness(120%) contrast(120%) !important;
+    transform: scale(1.1);
+  }
+}
+
 /* Ensure tab bar is always visible on mobile devices */
 @media (max-width: 1279px) {
   .mobile-tab-bar {

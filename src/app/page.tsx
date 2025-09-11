@@ -124,6 +124,159 @@ const WelcomeScreen = ({ onEnterClick }: { onEnterClick: () => void }) => {
   );
 };
 
+// One UI Lockscreen Component
+const OneUILockscreen = ({ onUnlock }: { onUnlock: () => void }) => {
+  const lockscreenRef = useRef<HTMLDivElement>(null);
+  const [currentTime, setCurrentTime] = useState(new Date());
+  const [isUnlocking, setIsUnlocking] = useState(false);
+
+  // Update time every minute
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 60000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const handleUnlock = () => {
+    if (isUnlocking) return;
+    setIsUnlocking(true);
+    
+    // One UI unlock animation
+    gsap.timeline({
+      onComplete: () => {
+        onUnlock();
+      }
+    })
+    .to(lockscreenRef.current, {
+      y: '-100%',
+      duration: 0.8,
+      ease: 'power2.inOut'
+    });
+  };
+
+  const formatTime = (date: Date) => {
+    return date.toLocaleTimeString('en-US', { 
+      hour: 'numeric', 
+      minute: '2-digit',
+      hour12: true 
+    });
+  };
+
+  const formatDate = (date: Date) => {
+    return date.toLocaleDateString('en-US', { 
+      weekday: 'long',
+      month: 'long',
+      day: 'numeric'
+    });
+  };
+
+  return (
+    <div 
+      ref={lockscreenRef}
+      className="one-ui-lockscreen fixed inset-0 z-50 w-screen h-screen overflow-hidden"
+      style={{
+        backgroundImage: 'url(/mobile-wallpaper.png)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat'
+      }}
+    >
+      {/* One UI Status Bar */}
+      <div className="absolute top-0 left-0 right-0 z-10 flex justify-between items-center px-6 pt-3 pb-2">
+        {/* Left Status - TCL Text and Icons */}
+        <div className="flex items-center space-x-2">
+          <div className="text-white text-sm font-bold">
+            TCL
+          </div>
+          <Image 
+            src="/left-status.svg" 
+            alt="Left Status Icons" 
+            width={40} 
+            height={16}
+            className="h-4 w-auto"
+          />
+        </div>
+        
+        {/* Right Status Icons */}
+        <div className="flex items-center space-x-2">
+          <Image 
+            src="/status-icons.svg" 
+            alt="Status Icons" 
+            width={80} 
+            height={16}
+            className="h-4 w-auto"
+          />
+        </div>
+      </div>
+
+      {/* Lock Icon - Right below status bar */}
+      <div className="absolute top-16 left-1/2 transform -translate-x-1/2">
+        <Image 
+          src="/lock-icon.svg" 
+          alt="Lock Icon" 
+          width={32} 
+          height={32}
+          className="w-8 h-8"
+        />
+      </div>
+
+      {/* One UI Date and Time Display */}
+      <div className="absolute top-32 left-1/2 transform -translate-x-1/2 text-center">
+        {/* Date */}
+        <div className="text-white text-lg font-normal mb-4">
+          {currentTime.toLocaleDateString('en-US', { 
+            weekday: 'short',
+            month: 'short',
+            day: 'numeric'
+          })}
+        </div>
+        
+        {/* Time - Large Bold Numbers */}
+        <div className="text-white text-8xl font-bold leading-none">
+          <div>{currentTime.getHours().toString().padStart(2, '0')}</div>
+          <div>{currentTime.getMinutes().toString().padStart(2, '0')}</div>
+        </div>
+      </div>
+
+      {/* One UI Bottom Shortcuts and Unlock */}
+      <div className="absolute bottom-0 left-0 right-0 p-6 pb-12">
+        {/* Swipe to Unlock Text */}
+        <div className="text-center mb-6">
+          <div className="text-white text-base font-normal">
+            Swipe to unlock
+          </div>
+        </div>
+        
+        {/* Shortcut Icons - No Background Circles */}
+        <div className="flex justify-between items-center">
+          {/* Phone Icon - Left */}
+          <div className="flex items-center justify-center">
+            <Image 
+              src="/call-shortcut-icon.svg" 
+              alt="Phone" 
+              width={48} 
+              height={48}
+              className="w-12 h-12"
+            />
+          </div>
+          
+          {/* Camera Icon - Right */}
+          <div className="flex items-center justify-center">
+            <Image 
+              src="/camera-shortcut.svg" 
+              alt="Camera" 
+              width={48} 
+              height={48}
+              className="w-12 h-12"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 // Commented out video animation for demo
 // const VideoAnimation = ({ videoRef, onVideoEnd }: { videoRef: React.RefObject<HTMLVideoElement | null>, onVideoEnd: () => void }) => {
 //   return (
@@ -168,6 +321,8 @@ const Page = () => {
   const [currentPostBottomSheetIndex, setCurrentPostBottomSheetIndex] = useState(0);
   const [showFullPostBottomSheet, setShowFullPostBottomSheet] = useState(false);
   const [currentFullPostIndex, setCurrentFullPostIndex] = useState(0);
+  const [showLockscreen, setShowLockscreen] = useState(false);
+  const [isLockscreenUnlocked, setIsLockscreenUnlocked] = useState(false);
   
   const handleCloseExpandedEmailModal = () => {
     // Animate expanded email modal out with ease
@@ -1028,12 +1183,12 @@ const Page = () => {
         duration: 0.6,
         ease: 'power3.inOut'
       }, "<")
-      // Show experience page immediately when curtain starts sliding
+      // Show lockscreen instead of experience page directly
       .add(() => {
-        console.log('Setting experienceVisible to true');
-        setExperienceVisible(true);
+        console.log('Showing One UI lockscreen');
+        setShowLockscreen(true);
       })
-      // Now slide the entire curtain (main page) up to reveal experience
+      // Now slide the entire curtain (main page) up to reveal lockscreen
       .to(curtainRef.current, {
         y: '-100%',
         duration: 1.2,
@@ -1193,12 +1348,27 @@ const Page = () => {
     });
   };
 
+  const handleLockscreenUnlock = () => {
+    console.log('Lockscreen unlocked!');
+    setIsLockscreenUnlocked(true);
+    
+    // Show experience page after unlock
+    setTimeout(() => {
+      setExperienceVisible(true);
+    }, 500);
+  };
+
 
 
 
 
   return (
     <div ref={pageRef} className="relative" style={{ height: '100vh', overflow: 'hidden' }}>
+      {/* One UI Lockscreen - Mobile Only */}
+      {showLockscreen && !isLockscreenUnlocked && (
+        <OneUILockscreen onUnlock={handleLockscreenUnlock} />
+      )}
+      
       {/* Experience page hidden behind */}
       {experienceVisible && ( 
         <div
@@ -1896,6 +2066,18 @@ const Page = () => {
                         // Auto-scroll to the clicked tab
                         setTimeout(() => scrollToActiveTab(index), 100);
                       }}
+                      onTouchStart={(e) => {
+                        // Prevent default touch behavior that might interfere
+                        e.stopPropagation();
+                      }}
+                      onTouchEnd={(e) => {
+                        // Handle touch end to ensure click is registered
+                        e.stopPropagation();
+                        setActiveMobileItem(item);
+                        setCurrentMobileIndex(index);
+                        // Auto-scroll to the clicked tab
+                        setTimeout(() => scrollToActiveTab(index), 100);
+                      }}
                       className={`flex items-center justify-center p-2 rounded-full transition-all duration-300 ${
                         isActive 
                           ? 'text-[#2F4C6C]' 
@@ -1906,7 +2088,10 @@ const Page = () => {
                         height: 'clamp(52px, 8vw, 64px)', // Responsive tab size
                         flexShrink: 0, // Prevent tabs from shrinking
                         backgroundColor: isActive ? 'rgba(47, 76, 108, 0.05)' : 'transparent',
-                        border: isActive ? '1px solid rgba(47, 76, 108, 0.05)' : '1px solid transparent'
+                        border: isActive ? '1px solid rgba(47, 76, 108, 0.05)' : '1px solid transparent',
+                        // Ensure proper touch handling on mobile
+                        touchAction: 'manipulation',
+                        WebkitTapHighlightColor: 'transparent'
                       }}
                     >
                       {iconMap[item as keyof typeof iconMap]}
