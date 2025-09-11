@@ -166,8 +166,87 @@ const NewHomepage = () => {
       </div>
 
       {/* Main Content Area - Empty for now */}
-      <div className="absolute top-16 left-0 right-0 bottom-0 flex items-center justify-center">
+      <div className="absolute top-16 left-0 right-0 bottom-32 flex items-center justify-center">
         {/* Empty space for future content */}
+      </div>
+
+      {/* App Icons Row */}
+      <div className="absolute bottom-20 left-0 right-0 flex justify-center items-center">
+        <div className="flex justify-between items-center w-full max-w-sm px-12">
+          {/* Phone Icon */}
+          <div className="flex items-center justify-center p-3">
+            <img 
+              src="/phone.svg" 
+              alt="Phone" 
+              style={{ width: '60px', height: '60px' }}
+            />
+          </div>
+          
+          {/* Keep Icon */}
+          <div className="flex items-center justify-center p-3">
+            <img 
+              src="/keep.svg" 
+              alt="Keep" 
+              style={{ width: '60px', height: '60px' }}
+            />
+          </div>
+          
+          {/* Mail Icon */}
+          <div className="flex items-center justify-center p-3">
+            <img 
+              src="/mail.svg" 
+              alt="Mail" 
+              style={{ width: '60px', height: '60px' }}
+            />
+          </div>
+          
+          {/* Meet Icon */}
+          <div className="flex items-center justify-center p-3">
+            <img 
+              src="/meet.svg" 
+              alt="Meet" 
+              style={{ width: '60px', height: '60px' }}
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* Bottom Navigation Bar */}
+      <div className="absolute bottom-0 left-0 right-0 flex justify-center items-center py-4" style={{ paddingBottom: 'max(1rem, env(safe-area-inset-bottom, 1rem) + 0.5rem)' }}>
+        <div className="flex justify-between items-center w-full max-w-xs px-8">
+          {/* Left Icon - Minimize */}
+          <div className="flex items-center justify-center p-2">
+            <Image 
+              src="/minimize.svg" 
+              alt="Minimize" 
+              width={24} 
+              height={24}
+              className="w-6 h-6"
+            />
+          </div>
+          
+          {/* Middle Icon - Close */}
+          <div className="flex items-center justify-center p-2">
+            <Image 
+              src="/close.svg" 
+              alt="Close" 
+              width={24} 
+              height={24}
+              className="w-6 h-6"
+            />
+          </div>
+          
+          {/* Right Icon - Back */}
+          <div className="flex items-center justify-center p-2">
+            <Image 
+              src="/back.svg" 
+              alt="Back" 
+              width={24} 
+              height={24}
+              className="w-6 h-6"
+            />
+          </div>
+        </div>
       </div>
     </div>
   );
@@ -287,10 +366,23 @@ const OneUILockscreen = ({ onUnlock }: { onUnlock: () => void }) => {
 
       {/* One UI Bottom Shortcuts and Unlock */}
       <div className="absolute bottom-0 left-0 right-0 p-6" style={{ paddingBottom: 'max(4rem, env(safe-area-inset-bottom, 2rem) + 2rem)' }}>
-        {/* Swipe to Unlock Text */}
+        {/* Swipe to Unlock Text and Chevron */}
         <div className="text-center mb-6">
-          <div className="text-white text-base font-normal">
+          <div className="text-white text-base font-normal mb-2">
             Swipe to unlock
+          </div>
+          {/* Chevron Icon for Navigation */}
+          <div 
+            className="flex justify-center cursor-pointer"
+            onClick={onUnlock}
+          >
+            <Image 
+              src="/chevron-up.svg" 
+              alt="Navigate to Homepage" 
+              width={24} 
+              height={24}
+              className="w-6 h-6 opacity-80 hover:opacity-100 transition-opacity"
+            />
           </div>
         </div>
         
