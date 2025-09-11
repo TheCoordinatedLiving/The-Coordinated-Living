@@ -1409,6 +1409,11 @@ const Page = () => {
         }} />
       )}
       
+      {/* New Homepage */}
+      {showHomepage && (
+        <NewHomepage />
+      )}
+      
       {/* Experience page hidden behind */}
       {experienceVisible && ( 
         <div
