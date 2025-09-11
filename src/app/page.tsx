@@ -138,38 +138,8 @@ const OneUILockscreen = ({ onUnlock }: { onUnlock: () => void }) => {
     return () => clearInterval(timer);
   }, []);
 
-  const handleUnlock = () => {
-    if (isUnlocking) return;
-    setIsUnlocking(true);
-    
-    // One UI unlock animation
-    gsap.timeline({
-      onComplete: () => {
-        onUnlock();
-      }
-    })
-    .to(lockscreenRef.current, {
-      y: '-100%',
-      duration: 0.8,
-      ease: 'power2.inOut'
-    });
-  };
 
-  const formatTime = (date: Date) => {
-    return date.toLocaleTimeString('en-US', { 
-      hour: 'numeric', 
-      minute: '2-digit',
-      hour12: true 
-    });
-  };
 
-  const formatDate = (date: Date) => {
-    return date.toLocaleDateString('en-US', { 
-      weekday: 'long',
-      month: 'long',
-      day: 'numeric'
-    });
-  };
 
   return (
     <div 
