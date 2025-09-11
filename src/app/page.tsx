@@ -209,7 +209,7 @@ const OneUILockscreen = () => {
       </div>
 
       {/* One UI Bottom Shortcuts and Unlock */}
-      <div className="absolute bottom-0 left-0 right-0 p-6 pb-12">
+      <div className="absolute bottom-0 left-0 right-0 p-6" style={{ paddingBottom: 'max(4rem, env(safe-area-inset-bottom, 2rem) + 2rem)' }}>
         {/* Swipe to Unlock Text */}
         <div className="text-center mb-6">
           <div className="text-white text-base font-normal">
