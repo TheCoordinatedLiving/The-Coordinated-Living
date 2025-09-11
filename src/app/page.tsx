@@ -143,8 +143,9 @@ const OneUILockscreen = () => {
   return (
     <div 
       ref={lockscreenRef}
-      className="one-ui-lockscreen fixed inset-0 z-50 w-screen h-screen overflow-hidden"
+      className="one-ui-lockscreen fixed inset-0 z-50 w-screen overflow-hidden"
       style={{
+        height: '100dvh', // Use dynamic viewport height instead of 100vh
         backgroundImage: 'url(/mobile-wallpaper.png)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
