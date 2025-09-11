@@ -125,10 +125,9 @@ const WelcomeScreen = ({ onEnterClick }: { onEnterClick: () => void }) => {
 };
 
 // One UI Lockscreen Component
-const OneUILockscreen = ({ onUnlock }: { onUnlock: () => void }) => {
+const OneUILockscreen = () => {
   const lockscreenRef = useRef<HTMLDivElement>(null);
   const [currentTime, setCurrentTime] = useState(new Date());
-  const [isUnlocking, setIsUnlocking] = useState(false);
 
   // Update time every minute
   useEffect(() => {
@@ -1336,7 +1335,7 @@ const Page = () => {
     <div ref={pageRef} className="relative" style={{ height: '100vh', overflow: 'hidden' }}>
       {/* One UI Lockscreen - Mobile Only */}
       {showLockscreen && !isLockscreenUnlocked && (
-        <OneUILockscreen onUnlock={handleLockscreenUnlock} />
+        <OneUILockscreen />
       )}
       
       {/* Experience page hidden behind */}
