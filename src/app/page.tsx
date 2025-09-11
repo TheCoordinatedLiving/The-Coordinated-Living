@@ -1317,15 +1317,6 @@ const Page = () => {
     });
   };
 
-  const handleLockscreenUnlock = () => {
-    console.log('Lockscreen unlocked!');
-    setIsLockscreenUnlocked(true);
-    
-    // Show experience page after unlock
-    setTimeout(() => {
-      setExperienceVisible(true);
-    }, 500);
-  };
 
 
 
