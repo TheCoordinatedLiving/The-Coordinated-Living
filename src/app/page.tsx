@@ -172,40 +172,64 @@ const NewHomepage = () => {
 
       {/* App Icons Row */}
       <div className="absolute bottom-20 left-0 right-0 flex justify-center items-center">
-        <div className="flex justify-between items-center w-full max-w-sm px-12">
+        <div className="flex justify-between items-center w-full px-12 sm:px-16 md:px-20 lg:px-24">
           {/* Phone Icon */}
-          <div className="flex items-center justify-center p-3">
+          <div className="flex items-center justify-center p-2 sm:p-3 md:p-4">
             <img 
-              src="/phone.svg" 
+              src="/Phone.svg" 
               alt="Phone" 
-              style={{ width: '60px', height: '60px' }}
+              style={{ 
+                width: '80px', 
+                height: '80px',
+                transform: 'scale(1.2)',
+                transformOrigin: 'center'
+              }}
+              className="sm:scale-110 md:scale-125 lg:scale-150"
             />
           </div>
           
           {/* Keep Icon */}
-          <div className="flex items-center justify-center p-3">
+          <div className="flex items-center justify-center p-2 sm:p-3 md:p-4">
             <img 
               src="/keep.svg" 
               alt="Keep" 
-              style={{ width: '60px', height: '60px' }}
+              style={{ 
+                width: '80px', 
+                height: '80px',
+                transform: 'scale(1.2)',
+                transformOrigin: 'center'
+              }}
+              className="sm:scale-110 md:scale-125 lg:scale-150"
             />
           </div>
           
           {/* Mail Icon */}
-          <div className="flex items-center justify-center p-3">
+          <div className="flex items-center justify-center p-2 sm:p-3 md:p-4">
             <img 
               src="/mail.svg" 
               alt="Mail" 
-              style={{ width: '60px', height: '60px' }}
+              style={{ 
+                width: '80px', 
+                height: '80px',
+                transform: 'scale(1.2)',
+                transformOrigin: 'center'
+              }}
+              className="sm:scale-110 md:scale-125 lg:scale-150"
             />
           </div>
           
           {/* Meet Icon */}
-          <div className="flex items-center justify-center p-3">
+          <div className="flex items-center justify-center p-2 sm:p-3 md:p-4">
             <img 
-              src="/meet.svg" 
+              src="/Meet.svg" 
               alt="Meet" 
-              style={{ width: '60px', height: '60px' }}
+              style={{ 
+                width: '80px', 
+                height: '80px',
+                transform: 'scale(1.2)',
+                transformOrigin: 'center'
+              }}
+              className="sm:scale-110 md:scale-125 lg:scale-150"
             />
           </div>
         </div>
@@ -213,37 +237,37 @@ const NewHomepage = () => {
 
       {/* Bottom Navigation Bar */}
       <div className="absolute bottom-0 left-0 right-0 flex justify-center items-center py-4" style={{ paddingBottom: 'max(1rem, env(safe-area-inset-bottom, 1rem) + 0.5rem)' }}>
-        <div className="flex justify-between items-center w-full max-w-xs px-8">
+        <div className="flex justify-between items-center w-full max-w-sm sm:max-w-md md:max-w-lg px-8 sm:px-12 md:px-16">
           {/* Left Icon - Minimize */}
-          <div className="flex items-center justify-center p-2">
+          <div className="flex items-center justify-center p-2 sm:p-3 md:p-4">
             <Image 
               src="/minimize.svg" 
               alt="Minimize" 
               width={24} 
               height={24}
-              className="w-6 h-6"
+              className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8"
             />
           </div>
           
           {/* Middle Icon - Close */}
-          <div className="flex items-center justify-center p-2">
+          <div className="flex items-center justify-center p-2 sm:p-3 md:p-4">
             <Image 
               src="/close.svg" 
               alt="Close" 
               width={24} 
               height={24}
-              className="w-6 h-6"
+              className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8"
             />
           </div>
           
           {/* Right Icon - Back */}
-          <div className="flex items-center justify-center p-2">
+          <div className="flex items-center justify-center p-2 sm:p-3 md:p-4">
             <Image 
               src="/back.svg" 
               alt="Back" 
               width={24} 
               height={24}
-              className="w-6 h-6"
+              className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8"
             />
           </div>
         </div>
