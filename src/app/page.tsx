@@ -155,22 +155,6 @@ const OneUILockscreen = ({ onUnlock }: { onUnlock: () => void }) => {
     });
   };
 
-  const formatTime = (date: Date) => {
-    return date.toLocaleTimeString('en-US', { 
-      hour: 'numeric', 
-      minute: '2-digit',
-      hour12: true 
-    });
-  };
-
-  const formatDate = (date: Date) => {
-    return date.toLocaleDateString('en-US', { 
-      weekday: 'long',
-      month: 'long',
-      day: 'numeric'
-    });
-  };
-
   return (
     <div 
       ref={lockscreenRef}
@@ -251,7 +235,7 @@ const OneUILockscreen = ({ onUnlock }: { onUnlock: () => void }) => {
         {/* Shortcut Icons - No Background Circles */}
         <div className="flex justify-between items-center">
           {/* Phone Icon - Left */}
-          <div className="flex items-center justify-center">
+          <div className="flex items-center justify-center cursor-pointer" onClick={handleUnlock}>
             <Image 
               src="/call-shortcut-icon.svg" 
               alt="Phone" 
@@ -262,7 +246,7 @@ const OneUILockscreen = ({ onUnlock }: { onUnlock: () => void }) => {
           </div>
           
           {/* Camera Icon - Right */}
-          <div className="flex items-center justify-center">
+          <div className="flex items-center justify-center cursor-pointer" onClick={handleUnlock}>
             <Image 
               src="/camera-shortcut.svg" 
               alt="Camera" 
