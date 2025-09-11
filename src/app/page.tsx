@@ -125,9 +125,11 @@ const WelcomeScreen = ({ onEnterClick }: { onEnterClick: () => void }) => {
 };
 
 // One UI Lockscreen Component
-const OneUILockscreen = () => {
+const OneUILockscreen = ({ onUnlock }: { onUnlock: () => void }) => {
   const lockscreenRef = useRef<HTMLDivElement>(null);
   const [currentTime, setCurrentTime] = useState(new Date());
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
 
   // Update time every minute
   useEffect(() => {
@@ -136,6 +138,28 @@ const OneUILockscreen = () => {
     }, 60000);
     return () => clearInterval(timer);
   }, []);
+
+  // Swipe functionality
+  const minSwipeDistance = 50;
+
+  const onTouchStart = (e: React.TouchEvent) => {
+    setTouchStart(e.targetTouches[0].clientY);
+  };
+
+  const onTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientY);
+  };
+
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    
+    const distance = touchStart - touchEnd;
+    const isUpSwipe = distance > minSwipeDistance;
+
+    if (isUpSwipe) {
+      onUnlock();
+    }
+  };
 
 
 
@@ -151,6 +175,9 @@ const OneUILockscreen = () => {
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat'
       }}
+      onTouchStart={onTouchStart}
+      onTouchMove={onTouchMove}
+      onTouchEnd={onTouchEnd}
     >
       {/* One UI Status Bar */}
       <div className="absolute top-0 left-0 right-0 z-10 flex justify-between items-center px-6 pt-3 pb-2">
@@ -1326,7 +1353,10 @@ const Page = () => {
     <div ref={pageRef} className="relative" style={{ height: '100vh', overflow: 'hidden' }}>
       {/* One UI Lockscreen - Mobile Only */}
       {showLockscreen && (
-        <OneUILockscreen />
+        <OneUILockscreen onUnlock={() => {
+          setShowLockscreen(false);
+          setExperienceVisible(true);
+        }} />
       )}
       
       {/* Experience page hidden behind */}
