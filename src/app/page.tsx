@@ -166,12 +166,12 @@ const NewHomepage = () => {
       </div>
 
       {/* Main Content Area - Empty for now */}
-      <div className="absolute top-16 left-0 right-0 bottom-32 flex items-center justify-center">
+      <div className="absolute top-16 left-0 right-0 bottom-24 flex items-center justify-center">
         {/* Empty space for future content */}
       </div>
 
       {/* App Icons Row */}
-      <div className="absolute bottom-20 left-0 right-0 flex justify-center items-center">
+      <div className="absolute bottom-12 left-0 right-0 flex justify-center items-center">
         <div className="flex justify-between items-center w-full px-8 sm:px-12 md:px-16 lg:px-20">
           {/* Phone Icon */}
           <div className="flex items-center justify-center p-6 sm:p-8 md:p-10 lg:p-12">
@@ -179,12 +179,12 @@ const NewHomepage = () => {
               src="/Phone.svg" 
               alt="Phone" 
               style={{ 
-                width: '80px', 
-                height: '80px',
-                transform: 'scale(1.2)',
+                width: '100px', 
+                height: '100px',
+                transform: 'scale(1.8)',
                 transformOrigin: 'center'
               }}
-              className="sm:scale-110 md:scale-125 lg:scale-150"
+              className="sm:scale-150 md:scale-175 lg:scale-200"
             />
           </div>
           
@@ -194,12 +194,12 @@ const NewHomepage = () => {
               src="/keep.svg" 
               alt="Keep" 
               style={{ 
-                width: '80px', 
-                height: '80px',
-                transform: 'scale(1.2)',
+                width: '100px', 
+                height: '100px',
+                transform: 'scale(1.8)',
                 transformOrigin: 'center'
               }}
-              className="sm:scale-110 md:scale-125 lg:scale-150"
+              className="sm:scale-150 md:scale-175 lg:scale-200"
             />
           </div>
           
@@ -209,12 +209,12 @@ const NewHomepage = () => {
               src="/mail.svg" 
               alt="Mail" 
               style={{ 
-                width: '80px', 
-                height: '80px',
-                transform: 'scale(1.2)',
+                width: '100px', 
+                height: '100px',
+                transform: 'scale(1.8)',
                 transformOrigin: 'center'
               }}
-              className="sm:scale-110 md:scale-125 lg:scale-150"
+              className="sm:scale-150 md:scale-175 lg:scale-200"
             />
           </div>
           
@@ -224,12 +224,12 @@ const NewHomepage = () => {
               src="/Meet.svg" 
               alt="Meet" 
               style={{ 
-                width: '80px', 
-                height: '80px',
-                transform: 'scale(1.2)',
+                width: '100px', 
+                height: '100px',
+                transform: 'scale(1.8)',
                 transformOrigin: 'center'
               }}
-              className="sm:scale-110 md:scale-125 lg:scale-150"
+              className="sm:scale-150 md:scale-175 lg:scale-200"
             />
           </div>
         </div>
