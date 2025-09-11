@@ -1095,28 +1095,4 @@ img {
   }
 }
 
-/* Gradient Background for Loader and Welcome Screen */
-.gradient-background {
-  background: linear-gradient(135deg, 
-    rgba(139, 69, 19, 0.3) 0%, 
-    rgba(160, 82, 45, 0.2) 25%, 
-    rgba(205, 133, 63, 0.3) 50%, 
-    rgba(222, 184, 135, 0.2) 75%, 
-    rgba(245, 245, 220, 0.1) 100%
-  );
-  background-size: 400% 400%;
-  animation: gradientShift 8s ease infinite;
-}
-
-@keyframes gradientShift {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
 
