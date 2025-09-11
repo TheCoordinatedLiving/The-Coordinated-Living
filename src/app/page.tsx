@@ -124,6 +124,55 @@ const WelcomeScreen = ({ onEnterClick }: { onEnterClick: () => void }) => {
   );
 };
 
+// New Homepage Component
+const NewHomepage = () => {
+  return (
+    <div 
+      className="fixed inset-0 z-40 w-screen overflow-hidden"
+      style={{
+        height: '100dvh',
+        backgroundImage: 'url(/mobile-wallpaper.png)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat'
+      }}
+    >
+      {/* TCL Status Bar - Same as lockscreen */}
+      <div className="absolute top-0 left-0 right-0 z-10 flex justify-between items-center px-6 pt-3 pb-2">
+        {/* Left Status - TCL Text and Icons */}
+        <div className="flex items-center space-x-2">
+          <div className="text-white text-sm font-bold">
+            TCL
+          </div>
+          <Image 
+            src="/left-status.svg" 
+            alt="Left Status Icons" 
+            width={40} 
+            height={16}
+            className="h-4 w-auto"
+          />
+        </div>
+        
+        {/* Right Status Icons */}
+        <div className="flex items-center space-x-2">
+          <Image 
+            src="/status-icons.svg" 
+            alt="Status Icons" 
+            width={80} 
+            height={16}
+            className="h-4 w-auto"
+          />
+        </div>
+      </div>
+
+      {/* Main Content Area - Empty for now */}
+      <div className="absolute top-16 left-0 right-0 bottom-0 flex items-center justify-center">
+        {/* Empty space for future content */}
+      </div>
+    </div>
+  );
+};
+
 // One UI Lockscreen Component
 const OneUILockscreen = ({ onUnlock }: { onUnlock: () => void }) => {
   const lockscreenRef = useRef<HTMLDivElement>(null);
@@ -319,6 +368,7 @@ const Page = () => {
   const [showFullPostBottomSheet, setShowFullPostBottomSheet] = useState(false);
   const [currentFullPostIndex, setCurrentFullPostIndex] = useState(0);
   const [showLockscreen, setShowLockscreen] = useState(false);
+  const [showHomepage, setShowHomepage] = useState(false);
   
   const handleCloseExpandedEmailModal = () => {
     // Animate expanded email modal out with ease
@@ -1355,7 +1405,7 @@ const Page = () => {
       {showLockscreen && (
         <OneUILockscreen onUnlock={() => {
           setShowLockscreen(false);
-          setExperienceVisible(true);
+          setShowHomepage(true);
         }} />
       )}
       
