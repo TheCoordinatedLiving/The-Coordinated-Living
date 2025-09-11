@@ -291,7 +291,6 @@ const Page = () => {
   const [showFullPostBottomSheet, setShowFullPostBottomSheet] = useState(false);
   const [currentFullPostIndex, setCurrentFullPostIndex] = useState(0);
   const [showLockscreen, setShowLockscreen] = useState(false);
-  const [isLockscreenUnlocked, setIsLockscreenUnlocked] = useState(false);
   
   const handleCloseExpandedEmailModal = () => {
     // Animate expanded email modal out with ease
@@ -1325,7 +1324,7 @@ const Page = () => {
   return (
     <div ref={pageRef} className="relative" style={{ height: '100vh', overflow: 'hidden' }}>
       {/* One UI Lockscreen - Mobile Only */}
-      {showLockscreen && !isLockscreenUnlocked && (
+      {showLockscreen && (
         <OneUILockscreen />
       )}
       
