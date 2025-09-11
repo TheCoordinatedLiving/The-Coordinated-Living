@@ -172,9 +172,9 @@ const NewHomepage = () => {
 
       {/* App Icons Row */}
       <div className="absolute bottom-20 left-0 right-0 flex justify-center items-center">
-        <div className="flex justify-between items-center w-full px-12 sm:px-16 md:px-20 lg:px-24">
+        <div className="flex justify-between items-center w-full px-8 sm:px-12 md:px-16 lg:px-20">
           {/* Phone Icon */}
-          <div className="flex items-center justify-center p-2 sm:p-3 md:p-4">
+          <div className="flex items-center justify-center p-6 sm:p-8 md:p-10 lg:p-12">
             <img 
               src="/Phone.svg" 
               alt="Phone" 
@@ -189,7 +189,7 @@ const NewHomepage = () => {
           </div>
           
           {/* Keep Icon */}
-          <div className="flex items-center justify-center p-2 sm:p-3 md:p-4">
+          <div className="flex items-center justify-center p-6 sm:p-8 md:p-10 lg:p-12">
             <img 
               src="/keep.svg" 
               alt="Keep" 
@@ -204,7 +204,7 @@ const NewHomepage = () => {
           </div>
           
           {/* Mail Icon */}
-          <div className="flex items-center justify-center p-2 sm:p-3 md:p-4">
+          <div className="flex items-center justify-center p-6 sm:p-8 md:p-10 lg:p-12">
             <img 
               src="/mail.svg" 
               alt="Mail" 
@@ -219,7 +219,7 @@ const NewHomepage = () => {
           </div>
           
           {/* Meet Icon */}
-          <div className="flex items-center justify-center p-2 sm:p-3 md:p-4">
+          <div className="flex items-center justify-center p-6 sm:p-8 md:p-10 lg:p-12">
             <img 
               src="/Meet.svg" 
               alt="Meet" 
@@ -1345,10 +1345,15 @@ const Page = () => {
         duration: 0.6,
         ease: 'power3.inOut'
       }, "<")
-      // Show lockscreen instead of experience page directly
+      // Show experience page on desktop, lockscreen on mobile
       .add(() => {
-        console.log('Showing One UI lockscreen');
-        setShowLockscreen(true);
+        console.log('Showing experience page or lockscreen');
+        // Check if we're on mobile (screen width < 1280px)
+        if (window.innerWidth < 1280) {
+          setShowLockscreen(true);
+        } else {
+          setExperienceVisible(true);
+        }
       })
       // Now slide the entire curtain (main page) up to reveal lockscreen
       .to(curtainRef.current, {
@@ -1519,15 +1524,19 @@ const Page = () => {
     <div ref={pageRef} className="relative" style={{ height: '100vh', overflow: 'hidden' }}>
       {/* One UI Lockscreen - Mobile Only */}
       {showLockscreen && (
-        <OneUILockscreen onUnlock={() => {
-          setShowLockscreen(false);
-          setShowHomepage(true);
-        }} />
+        <div className="xl:hidden">
+          <OneUILockscreen onUnlock={() => {
+            setShowLockscreen(false);
+            setShowHomepage(true);
+          }} />
+        </div>
       )}
       
-      {/* New Homepage */}
+      {/* New Homepage - Mobile Only */}
       {showHomepage && (
-        <NewHomepage />
+        <div className="xl:hidden">
+          <NewHomepage />
+        </div>
       )}
       
       {/* Experience page hidden behind */}
