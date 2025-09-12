@@ -126,19 +126,52 @@ const WelcomeScreen = ({ onEnterClick }: { onEnterClick: () => void }) => {
 
 // New Homepage Component
 const NewHomepage = () => {
+  const homepageRef = useRef<HTMLDivElement>(null);
+  const statusBarRef = useRef<HTMLDivElement>(null);
+  const iconsRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (homepageRef.current && statusBarRef.current && iconsRef.current) {
+      // Set initial states
+      gsap.set(homepageRef.current, { opacity: 0, y: 20 });
+      gsap.set(statusBarRef.current, { opacity: 0, y: -20 });
+      gsap.set(iconsRef.current, { opacity: 0, y: 30 });
+
+      // Create entrance animation timeline
+      const tl = gsap.timeline();
+      
+      tl.to(homepageRef.current, {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        ease: 'power3.out'
+      })
+      .to(statusBarRef.current, {
+        opacity: 1,
+        y: 0,
+        duration: 0.6,
+        ease: 'power2.out'
+      }, "-=0.4")
+      .to(iconsRef.current, {
+        opacity: 1,
+        y: 0,
+        duration: 0.7,
+        ease: 'power2.out'
+      }, "-=0.3");
+    }
+  }, []);
+
   return (
     <div 
+      ref={homepageRef}
       className="fixed inset-0 z-40 w-screen overflow-hidden"
       style={{
         height: '100dvh',
-        backgroundImage: 'url(/mobile-wallpaper.png)',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat'
+        backgroundColor: '#2F4C6C'
       }}
     >
       {/* TCL Status Bar - Same as lockscreen */}
-      <div className="absolute top-0 left-0 right-0 z-10 flex justify-between items-center px-6 pt-3 pb-2">
+      <div ref={statusBarRef} className="absolute top-0 left-0 right-0 z-10 flex justify-between items-center px-6 pt-3 pb-2">
         {/* Left Status - TCL Text and Icons */}
         <div className="flex items-center space-x-2">
           <div className="text-white text-sm font-bold">
@@ -170,8 +203,10 @@ const NewHomepage = () => {
         {/* Empty space for future content */}
       </div>
 
-      {/* App Icons Row */}
-      <div className="absolute bottom-12 left-0 right-0 flex justify-center items-center">
+      {/* App Icons Rows */}
+      <div ref={iconsRef} className="absolute bottom-12 left-0 right-0 flex flex-col justify-center items-center">
+        
+        {/* Bottom Row - 4 Original Icons */}
         <div className="flex justify-between items-center w-full px-8 sm:px-12 md:px-16 lg:px-20">
           {/* Phone Icon */}
           <div className="flex items-center justify-center p-6 sm:p-8 md:p-10 lg:p-12">
@@ -276,168 +311,6 @@ const NewHomepage = () => {
   );
 };
 
-// One UI Lockscreen Component
-const OneUILockscreen = ({ onUnlock }: { onUnlock: () => void }) => {
-  const lockscreenRef = useRef<HTMLDivElement>(null);
-  const [currentTime, setCurrentTime] = useState(new Date());
-  const [touchStart, setTouchStart] = useState<number | null>(null);
-  const [touchEnd, setTouchEnd] = useState<number | null>(null);
-
-  // Update time every minute
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentTime(new Date());
-    }, 60000);
-    return () => clearInterval(timer);
-  }, []);
-
-  // Swipe functionality
-  const minSwipeDistance = 50;
-
-  const onTouchStart = (e: React.TouchEvent) => {
-    setTouchStart(e.targetTouches[0].clientY);
-  };
-
-  const onTouchMove = (e: React.TouchEvent) => {
-    setTouchEnd(e.targetTouches[0].clientY);
-  };
-
-  const onTouchEnd = () => {
-    if (!touchStart || !touchEnd) return;
-    
-    const distance = touchStart - touchEnd;
-    const isUpSwipe = distance > minSwipeDistance;
-
-    if (isUpSwipe) {
-      onUnlock();
-    }
-  };
-
-
-
-
-  return (
-    <div 
-      ref={lockscreenRef}
-      className="one-ui-lockscreen fixed inset-0 z-50 w-screen overflow-hidden"
-      style={{
-        height: '100dvh', // Use dynamic viewport height instead of 100vh
-        backgroundImage: 'url(/mobile-wallpaper.png)',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat'
-      }}
-      onTouchStart={onTouchStart}
-      onTouchMove={onTouchMove}
-      onTouchEnd={onTouchEnd}
-    >
-      {/* One UI Status Bar */}
-      <div className="absolute top-0 left-0 right-0 z-10 flex justify-between items-center px-6 pt-3 pb-2">
-        {/* Left Status - TCL Text and Icons */}
-        <div className="flex items-center space-x-2">
-          <div className="text-white text-sm font-bold">
-            TCL
-          </div>
-          <Image 
-            src="/left-status.svg" 
-            alt="Left Status Icons" 
-            width={40} 
-            height={16}
-            className="h-4 w-auto"
-          />
-        </div>
-        
-        {/* Right Status Icons */}
-        <div className="flex items-center space-x-2">
-          <Image 
-            src="/status-icons.svg" 
-            alt="Status Icons" 
-            width={80} 
-            height={16}
-            className="h-4 w-auto"
-          />
-        </div>
-      </div>
-
-      {/* Lock Icon - Right below status bar */}
-      <div className="absolute top-16 left-1/2 transform -translate-x-1/2">
-        <Image 
-          src="/lock-icon.svg" 
-          alt="Lock Icon" 
-          width={32} 
-          height={32}
-          className="w-8 h-8"
-        />
-      </div>
-
-      {/* One UI Date and Time Display */}
-      <div className="absolute top-32 left-1/2 transform -translate-x-1/2 text-center">
-        {/* Date */}
-        <div className="text-white text-lg font-normal mb-4">
-          {currentTime.toLocaleDateString('en-US', { 
-            weekday: 'short',
-            month: 'short',
-            day: 'numeric'
-          })}
-        </div>
-        
-        {/* Time - Large Bold Numbers */}
-        <div className="text-white text-8xl font-bold leading-none">
-          <div>{currentTime.getHours().toString().padStart(2, '0')}</div>
-          <div>{currentTime.getMinutes().toString().padStart(2, '0')}</div>
-        </div>
-      </div>
-
-      {/* One UI Bottom Shortcuts and Unlock */}
-      <div className="absolute bottom-0 left-0 right-0 p-6" style={{ paddingBottom: 'max(4rem, env(safe-area-inset-bottom, 2rem) + 2rem)' }}>
-        {/* Swipe to Unlock Text and Chevron */}
-        <div className="text-center mb-6">
-          <div className="text-white text-base font-normal mb-2">
-            Swipe to unlock
-          </div>
-          {/* Chevron Icon for Navigation */}
-          <div 
-            className="flex justify-center cursor-pointer"
-            onClick={onUnlock}
-          >
-            <Image 
-              src="/chevron-up.svg" 
-              alt="Navigate to Homepage" 
-              width={24} 
-              height={24}
-              className="w-6 h-6 opacity-80 hover:opacity-100 transition-opacity"
-            />
-          </div>
-        </div>
-        
-        {/* Shortcut Icons - No Background Circles */}
-        <div className="flex justify-between items-center">
-          {/* Phone Icon - Left */}
-          <div className="flex items-center justify-center">
-            <Image 
-              src="/call-shortcut-icon.svg" 
-              alt="Phone" 
-              width={48} 
-              height={48}
-              className="w-12 h-12"
-            />
-          </div>
-          
-          {/* Camera Icon - Right */}
-          <div className="flex items-center justify-center">
-            <Image 
-              src="/camera-shortcut.svg" 
-              alt="Camera" 
-              width={48} 
-              height={48}
-              className="w-12 h-12"
-            />
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
 
 // Commented out video animation for demo
 // const VideoAnimation = ({ videoRef, onVideoEnd }: { videoRef: React.RefObject<HTMLVideoElement | null>, onVideoEnd: () => void }) => {
@@ -483,7 +356,6 @@ const Page = () => {
   const [currentPostBottomSheetIndex, setCurrentPostBottomSheetIndex] = useState(0);
   const [showFullPostBottomSheet, setShowFullPostBottomSheet] = useState(false);
   const [currentFullPostIndex, setCurrentFullPostIndex] = useState(0);
-  const [showLockscreen, setShowLockscreen] = useState(false);
   const [showHomepage, setShowHomepage] = useState(false);
   
   const handleCloseExpandedEmailModal = () => {
@@ -1345,17 +1217,17 @@ const Page = () => {
         duration: 0.6,
         ease: 'power3.inOut'
       }, "<")
-      // Show experience page on desktop, lockscreen on mobile
+      // Show experience page on desktop, homepage on mobile
       .add(() => {
-        console.log('Showing experience page or lockscreen');
+        console.log('Showing experience page or homepage');
         // Check if we're on mobile (screen width < 1280px)
         if (window.innerWidth < 1280) {
-          setShowLockscreen(true);
+          setShowHomepage(true);
         } else {
           setExperienceVisible(true);
         }
       })
-      // Now slide the entire curtain (main page) up to reveal lockscreen
+      // Now slide the entire curtain (main page) up to reveal experience/homepage
       .to(curtainRef.current, {
         y: '-100%',
         duration: 1.2,
@@ -1522,15 +1394,6 @@ const Page = () => {
 
   return (
     <div ref={pageRef} className="relative" style={{ height: '100vh', overflow: 'hidden' }}>
-      {/* One UI Lockscreen - Mobile Only */}
-      {showLockscreen && (
-        <div className="xl:hidden">
-          <OneUILockscreen onUnlock={() => {
-            setShowLockscreen(false);
-            setShowHomepage(true);
-          }} />
-        </div>
-      )}
       
       {/* New Homepage - Mobile Only */}
       {showHomepage && (
