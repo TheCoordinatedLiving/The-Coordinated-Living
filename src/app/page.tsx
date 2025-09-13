@@ -198,8 +198,35 @@ const NewHomepage = () => {
         </div>
       </div>
 
+      {/* Top Widgets */}
+      <div className="absolute top-16 left-0 right-0 flex justify-between items-end px-2">
+        {/* Left Date Widget */}
+        <div className="w-32 h-36 rounded-[26px] flex flex-col p-4" style={{ backgroundColor: 'rgba(0, 0, 0, 0.7)' }}>
+          {/* Month and Year */}
+          <div className="text-white text-xs font-bold uppercase">
+            {new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' }).toUpperCase()}
+          </div>
+          
+          {/* Date and Day */}
+          <div className="flex items-end justify-start mt-2">
+            <span className="text-white text-6xl font-bold">{new Date().getDate()}</span>
+            <span className="text-white text-xs font-bold ml-2 mb-2">
+              {new Date().toLocaleDateString('en-US', { weekday: 'short' }).toUpperCase()}
+            </span>
+          </div>
+        </div>
+        
+        {/* Right widgets placeholder */}
+        <div className="flex flex-col justify-end h-36">
+          {/* Activity widget placeholder */}
+          <div className="w-40 h-16 rounded-[26px] mb-2 backdrop-blur-[16px]" style={{ backgroundColor: 'rgba(23, 23, 26, 0.3)' }}></div>
+          {/* Watch widget placeholder */}
+          <div className="w-40 h-16 rounded-[26px] backdrop-blur-[16px]" style={{ backgroundColor: 'rgba(23, 23, 26, 0.3)' }}></div>
+        </div>
+      </div>
+
       {/* Main Content Area - Empty for now */}
-      <div className="absolute top-16 left-0 right-0 bottom-24 flex items-center justify-center">
+      <div className="absolute top-40 left-0 right-0 bottom-24 flex items-center justify-center">
         {/* Empty space for future content */}
       </div>
 
