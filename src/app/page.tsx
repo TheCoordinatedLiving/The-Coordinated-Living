@@ -206,13 +206,45 @@ const NewHomepage = () => {
       {/* App Icons Rows */}
       <div ref={iconsRef} className="absolute bottom-12 left-0 right-0 flex flex-col justify-center items-center">
         
+        {/* Widget Card */}
+        <div className="w-full max-w-xs mx-auto mb-4 px-4 py-3 rounded-[20px] flex items-center justify-between" style={{ backgroundColor: '#D0B3D6', height: '140px' }}>
+          {/* Left side content */}
+          <div className="flex flex-col justify-between h-full">
+            {/* Top left - Title and description */}
+            <div>
+              <h3 className="text-black font-bold text-lg uppercase">POSTS</h3>
+              <p className="text-black text-xs mt-1">Navigate life with faith-filled reflections.</p>
+            </div>
+            
+            {/* Bottom left - Count */}
+            <div className="flex items-baseline">
+              <span className="text-black font-bold text-3xl">4</span>
+              <span className="text-black text-sm ml-2">Posts Available</span>
+            </div>
+          </div>
+          
+          {/* Right side - Icon */}
+          <div className="flex items-center justify-center">
+            <img 
+              src="/post-widget-icon.svg" 
+              alt="Posts Icon" 
+              className="w-24 h-24"
+            />
+          </div>
+        </div>
+        
+        {/* Page Identifier Circle */}
+        <div className="flex justify-center items-center mb-4">
+          <div className="w-2 h-2 bg-white rounded-full"></div>
+        </div>
+        
         {/* Bottom Row - 4 Original Icons */}
         <div className="flex justify-between items-center w-full px-8 sm:px-12 md:px-16 lg:px-20">
-          {/* Phone Icon */}
+          {/* Ask Me Question Icon */}
           <div className="flex items-center justify-center p-6 sm:p-8 md:p-10 lg:p-12">
             <img 
-              src="/Phone.svg" 
-              alt="Phone" 
+              src="/ask-me-question-mobile.svg" 
+              alt="Ask Me Question" 
               style={{ 
                 width: '100px', 
                 height: '100px',
@@ -223,11 +255,11 @@ const NewHomepage = () => {
             />
           </div>
           
-          {/* Keep Icon */}
+          {/* Guides Icon */}
           <div className="flex items-center justify-center p-6 sm:p-8 md:p-10 lg:p-12">
             <img 
-              src="/keep.svg" 
-              alt="Keep" 
+              src="/guides-icon.svg" 
+              alt="Guides" 
               style={{ 
                 width: '100px', 
                 height: '100px',
@@ -238,11 +270,11 @@ const NewHomepage = () => {
             />
           </div>
           
-          {/* Mail Icon */}
+          {/* Question Mark Icon */}
           <div className="flex items-center justify-center p-6 sm:p-8 md:p-10 lg:p-12">
             <img 
-              src="/mail.svg" 
-              alt="Mail" 
+              src="/question-mark.svg" 
+              alt="Question Mark" 
               style={{ 
                 width: '100px', 
                 height: '100px',
@@ -253,11 +285,11 @@ const NewHomepage = () => {
             />
           </div>
           
-          {/* Meet Icon */}
+          {/* Donation Icon */}
           <div className="flex items-center justify-center p-6 sm:p-8 md:p-10 lg:p-12">
             <img 
-              src="/Meet.svg" 
-              alt="Meet" 
+              src="/donation-icon.svg" 
+              alt="Donation" 
               style={{ 
                 width: '100px', 
                 height: '100px',
