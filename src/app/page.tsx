@@ -1,3 +1,4 @@
+
 "use client";
 import { useRef, useLayoutEffect, useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
@@ -341,7 +342,10 @@ const NewHomepage = () => {
           </div>
           
           {/* Question Mark Icon */}
-          <div className="flex items-center justify-center p-6 sm:p-8 md:p-10 lg:p-12">
+          <div 
+            className="flex items-center justify-center p-6 sm:p-8 md:p-10 lg:p-12 cursor-pointer transition-all duration-300 hover:scale-110 active:scale-95"
+            onClick={() => router.push('/ask-question')}
+          >
             <img 
               src="/question-mark.svg" 
               alt="Question Mark" 
