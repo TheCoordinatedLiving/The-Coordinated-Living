@@ -1,5 +1,6 @@
 "use client";
 import { useRef, useLayoutEffect, useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import Image from "next/image";
 import { gsap } from 'gsap';
 import Lottie from 'lottie-react';
@@ -126,9 +127,17 @@ const WelcomeScreen = ({ onEnterClick }: { onEnterClick: () => void }) => {
 
 // New Homepage Component
 const NewHomepage = () => {
+  const router = useRouter();
   const homepageRef = useRef<HTMLDivElement>(null);
   const statusBarRef = useRef<HTMLDivElement>(null);
   const iconsRef = useRef<HTMLDivElement>(null);
+
+  const handleJoinChannelClick = () => {
+    // Only navigate on mobile view (screen width < 768px)
+    if (window.innerWidth < 768) {
+      router.push('/join-channel');
+    }
+  };
 
   useEffect(() => {
     if (homepageRef.current && statusBarRef.current && iconsRef.current) {
@@ -216,10 +225,32 @@ const NewHomepage = () => {
           </div>
         </div>
         
-        {/* Right widgets placeholder */}
+        {/* Right widgets */}
         <div className="flex flex-col justify-end h-40 sm:h-48 md:h-52 lg:h-56">
-          {/* Activity widget placeholder */}
-          <div className="w-44 h-18 sm:w-52 sm:h-20 md:w-56 md:h-22 lg:w-60 lg:h-24 rounded-[26px] mb-2 backdrop-blur-[16px]" style={{ backgroundColor: 'rgba(23, 23, 26, 0.3)' }}></div>
+          {/* WhatsApp Channel Widget */}
+          <div 
+            className="w-44 h-18 sm:w-52 sm:h-20 md:w-56 md:h-22 lg:w-60 lg:h-24 rounded-[26px] mb-2 backdrop-blur-[16px] flex items-center px-3 sm:px-4 md:px-5 cursor-pointer transition-all duration-300 hover:scale-105 active:scale-95" 
+            style={{ backgroundColor: 'rgba(23, 23, 26, 0.3)' }}
+            onClick={handleJoinChannelClick}
+          >
+            {/* WhatsApp Logo */}
+            <div className="flex-shrink-0 mr-3 sm:mr-4">
+              <img 
+                src="/WhatsApp-logo.svg" 
+                alt="WhatsApp" 
+                className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16"
+              />
+            </div>
+            {/* Text Content */}
+            <div className="flex flex-col justify-center" style={{ color: 'rgba(255, 255, 255, 0.88)' }}>
+              <div className="text-xs sm:text-sm md:text-base font-medium leading-tight">
+                Join Our
+              </div>
+              <div className="text-xs sm:text-sm md:text-base font-medium leading-tight">
+                Channel
+              </div>
+            </div>
+          </div>
           {/* Watch widget placeholder */}
           <div className="w-44 h-18 sm:w-52 sm:h-20 md:w-56 md:h-22 lg:w-60 lg:h-24 rounded-[26px] backdrop-blur-[16px]" style={{ backgroundColor: 'rgba(23, 23, 26, 0.3)' }}></div>
         </div>
@@ -391,6 +422,7 @@ const NewHomepage = () => {
 // };
 
 const Page = () => {
+  const router = useRouter();
   const [isLoaded, setIsLoaded] = useState(false);
   const [experienceVisible, setExperienceVisible] = useState(false);
   const [laptopZoomed, setLaptopZoomed] = useState(false);
