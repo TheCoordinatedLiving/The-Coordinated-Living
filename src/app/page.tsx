@@ -7,6 +7,7 @@ import Lottie from 'lottie-react';
 import PostTemplate from '../components/PostTemplate';
 import { generatePDFFromPostData, generatePostPDF } from '../lib/pdfGenerator';
 import FullTermsContent from '../components/FullTermsContent';
+import AskAQuestion from './windows/AskAQuestion';
 
 const Loader = () => {
   const logoRef = useRef(null);
@@ -458,6 +459,7 @@ const Page = () => {
   const [currentPostBottomSheetIndex, setCurrentPostBottomSheetIndex] = useState(0);
   const [showFullPostBottomSheet, setShowFullPostBottomSheet] = useState(false);
   const [currentFullPostIndex, setCurrentFullPostIndex] = useState(0);
+  const [showAskAQuestion, setShowAskAQuestion] = useState(false);
   const [showHomepage, setShowHomepage] = useState(false);
   
   // Check for skipLoader parameter on mount
@@ -1547,6 +1549,8 @@ const Page = () => {
                         setShowGuidesModal(true);
                       } else if (activeMobileItem === 'POST') {
                         setShowPostBottomSheet(true);
+                      } else if (activeMobileItem === 'ASK ME A QUESTION') {
+                        setShowAskAQuestion(true);
                       }
                     }}
                   >
@@ -5371,6 +5375,11 @@ const Page = () => {
             <span className="font-medium">{toastMessage}</span>
           </div>
         </div>
+      )}
+
+      {/* AskAQuestion Modal */}
+      {showAskAQuestion && (
+        <AskAQuestion onClose={() => setShowAskAQuestion(false)} />
       )}
 
     </div>
