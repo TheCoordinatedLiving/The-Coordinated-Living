@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Lottie from 'lottie-react';
-import clickAnimation from '/public/click-animation.json';
+import clickAnimation from '../../../public/click-animation.json';
 
 export default function PostMobilePage() {
   const router = useRouter();
