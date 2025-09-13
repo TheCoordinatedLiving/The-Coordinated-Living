@@ -110,7 +110,7 @@ export default function JoinChannelPage() {
               />
             </div>
             <div className="flex-1">
-              <h3 className="text-white text-lg font-bold mb-2">What You'll Get</h3>
+              <h3 className="text-white text-lg font-bold mb-2">What You&apos;ll Get</h3>
               <p className="text-white text-sm opacity-90 leading-relaxed">
                 Weekly encouragement, prayer prompts, and resources to help you grow in Christ.
               </p>
