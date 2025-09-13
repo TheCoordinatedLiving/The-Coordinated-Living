@@ -13,7 +13,7 @@ export default function JoinChannelPage() {
   }, []);
 
   const handleClose = () => {
-    router.back();
+    router.push('/?skipLoader=true');
   };
 
   return (
@@ -45,7 +45,7 @@ export default function JoinChannelPage() {
       </button>
       
       {/* Main Content */}
-      <div className="flex flex-col items-center justify-center min-h-screen px-6 pt-20">
+      <div className="flex flex-col items-center justify-start min-h-screen px-6 pt-16">
         {/* Circular Logo */}
         <div 
           className="w-24 h-24 rounded-full flex items-center justify-center mb-8"

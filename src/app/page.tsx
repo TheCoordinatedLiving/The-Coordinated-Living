@@ -139,6 +139,13 @@ const NewHomepage = () => {
     }
   };
 
+  const handlePostWidgetClick = () => {
+    // Only navigate on mobile view (screen width < 768px)
+    if (window.innerWidth < 768) {
+      router.push('/post-mobile');
+    }
+  };
+
   useEffect(() => {
     if (homepageRef.current && statusBarRef.current && iconsRef.current) {
       // Set initial states
@@ -265,7 +272,11 @@ const NewHomepage = () => {
       <div ref={iconsRef} className="absolute bottom-12 left-0 right-0 flex flex-col justify-center items-center">
         
         {/* Widget Card */}
-        <div className="w-full max-w-xs mx-auto mb-4 px-4 py-3 rounded-[20px] flex items-center justify-between -mt-8" style={{ backgroundColor: '#D0B3D6', height: '140px' }}>
+        <div 
+          className="w-full max-w-xs mx-auto mb-4 px-4 py-3 rounded-[20px] flex items-center justify-between -mt-8 cursor-pointer transition-all duration-300 hover:scale-105 active:scale-95" 
+          style={{ backgroundColor: '#D0B3D6', height: '140px' }}
+          onClick={handlePostWidgetClick}
+        >
           {/* Left side content */}
           <div className="flex flex-col justify-between h-full">
             {/* Top left - Title and description */}
@@ -423,6 +434,7 @@ const NewHomepage = () => {
 
 const Page = () => {
   const [isLoaded, setIsLoaded] = useState(false);
+  const [skipLoader, setSkipLoader] = useState(false);
   const [experienceVisible, setExperienceVisible] = useState(false);
   const [laptopZoomed, setLaptopZoomed] = useState(false);
   const [showLesleyLetter, setShowLesleyLetter] = useState(false);
@@ -447,6 +459,21 @@ const Page = () => {
   const [showFullPostBottomSheet, setShowFullPostBottomSheet] = useState(false);
   const [currentFullPostIndex, setCurrentFullPostIndex] = useState(0);
   const [showHomepage, setShowHomepage] = useState(false);
+  
+  // Check for skipLoader parameter on mount
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('skipLoader') === 'true') {
+      setSkipLoader(true);
+      setIsLoaded(true);
+      // Show homepage directly on mobile
+      if (window.innerWidth < 1280) {
+        setShowHomepage(true);
+      } else {
+        setExperienceVisible(true);
+      }
+    }
+  }, []);
   
   const handleCloseExpandedEmailModal = () => {
     // Animate expanded email modal out with ease
@@ -1148,14 +1175,14 @@ const Page = () => {
   }, [experienceVisible]);
 
   useEffect(() => {
-    // Don't start the loader timer if coming from Windows
-    if (fromWindows) return;
+    // Don't start the loader timer if coming from Windows or skipping loader
+    if (fromWindows || skipLoader) return;
     
     const timer = setTimeout(() => {
       setIsLoaded(true);
     }, 2000);
     return () => clearTimeout(timer);
-  }, [fromWindows]);
+  }, [fromWindows, skipLoader]);
 
   // Preload guide images to prevent flashing
   useEffect(() => {
