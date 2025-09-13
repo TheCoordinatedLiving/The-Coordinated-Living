@@ -199,29 +199,29 @@ const NewHomepage = () => {
       </div>
 
       {/* Top Widgets */}
-      <div className="absolute top-16 left-0 right-0 flex justify-between items-end px-2">
+      <div className="absolute top-16 left-0 right-0 flex justify-between items-end px-2 sm:px-1 md:px-0">
         {/* Left Date Widget */}
-        <div className="w-32 h-36 rounded-[26px] flex flex-col p-4" style={{ backgroundColor: 'rgba(0, 0, 0, 0.7)' }}>
+        <div className="w-40 h-40 sm:w-48 sm:h-48 md:w-52 md:h-52 lg:w-56 lg:h-56 rounded-[26px] flex flex-col p-4 sm:p-5 md:p-6" style={{ backgroundColor: 'rgba(0, 0, 0, 0.7)' }}>
           {/* Month and Year */}
-          <div className="text-white text-xs font-bold uppercase">
+          <div className="text-white text-xs sm:text-sm md:text-base font-bold uppercase">
             {new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' }).toUpperCase()}
           </div>
           
           {/* Date and Day */}
           <div className="flex items-end justify-start mt-2">
-            <span className="text-white text-6xl font-bold">{new Date().getDate()}</span>
-            <span className="text-white text-xs font-bold ml-2 mb-2">
+            <span className="text-white text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-bold">{new Date().getDate()}</span>
+            <span className="text-white text-xs sm:text-sm md:text-base font-bold ml-2 mb-2">
               {new Date().toLocaleDateString('en-US', { weekday: 'short' }).toUpperCase()}
             </span>
           </div>
         </div>
         
         {/* Right widgets placeholder */}
-        <div className="flex flex-col justify-end h-36">
+        <div className="flex flex-col justify-end h-40 sm:h-48 md:h-52 lg:h-56">
           {/* Activity widget placeholder */}
-          <div className="w-40 h-16 rounded-[26px] mb-2 backdrop-blur-[16px]" style={{ backgroundColor: 'rgba(23, 23, 26, 0.3)' }}></div>
+          <div className="w-44 h-18 sm:w-52 sm:h-20 md:w-56 md:h-22 lg:w-60 lg:h-24 rounded-[26px] mb-2 backdrop-blur-[16px]" style={{ backgroundColor: 'rgba(23, 23, 26, 0.3)' }}></div>
           {/* Watch widget placeholder */}
-          <div className="w-40 h-16 rounded-[26px] backdrop-blur-[16px]" style={{ backgroundColor: 'rgba(23, 23, 26, 0.3)' }}></div>
+          <div className="w-44 h-18 sm:w-52 sm:h-20 md:w-56 md:h-22 lg:w-60 lg:h-24 rounded-[26px] backdrop-blur-[16px]" style={{ backgroundColor: 'rgba(23, 23, 26, 0.3)' }}></div>
         </div>
       </div>
 
