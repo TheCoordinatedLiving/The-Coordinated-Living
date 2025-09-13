@@ -199,7 +199,7 @@ const NewHomepage = () => {
       </div>
 
       {/* Top Widgets */}
-      <div className="absolute top-16 left-0 right-0 flex justify-between items-end px-2 sm:px-1 md:px-0">
+      <div className="absolute top-16 left-0 right-0 flex justify-center items-end px-2 sm:px-1 md:px-0 gap-2 sm:gap-1 md:gap-0">
         {/* Left Date Widget */}
         <div className="w-40 h-40 sm:w-48 sm:h-48 md:w-52 md:h-52 lg:w-56 lg:h-56 rounded-[26px] flex flex-col p-4 sm:p-5 md:p-6" style={{ backgroundColor: 'rgba(0, 0, 0, 0.7)' }}>
           {/* Month and Year */}
