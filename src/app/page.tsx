@@ -207,7 +207,7 @@ const NewHomepage = () => {
       <div ref={iconsRef} className="absolute bottom-12 left-0 right-0 flex flex-col justify-center items-center">
         
         {/* Widget Card */}
-        <div className="w-full max-w-xs mx-auto mb-4 px-4 py-3 rounded-[20px] flex items-center justify-between" style={{ backgroundColor: '#D0B3D6', height: '140px' }}>
+        <div className="w-full max-w-xs mx-auto mb-4 px-4 py-3 rounded-[20px] flex items-center justify-between -mt-8" style={{ backgroundColor: '#D0B3D6', height: '140px' }}>
           {/* Left side content */}
           <div className="flex flex-col justify-between h-full">
             {/* Top left - Title and description */}
