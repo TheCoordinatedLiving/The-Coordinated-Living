@@ -1,5 +1,6 @@
 "use client";
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 
 const AboutMePage = () => {
   const router = useRouter();
@@ -22,9 +23,11 @@ const AboutMePage = () => {
 
       {/* Logo */}
       <div className="absolute top-20 left-4">
-        <img 
+        <Image 
           src="/new-post-logo-modal.svg" 
           alt="The Coordinated Living Logo" 
+          width={128}
+          height={128}
           className="w-32 h-auto"
         />
       </div>
@@ -40,11 +43,11 @@ const AboutMePage = () => {
             {/* Letter Body */}
             <div className="text-sm leading-relaxed space-y-6">
               <p>
-                "Have you ever felt caught in a cycle of desires, wondering if there's more to life than this constant pull? In a world where truth often feels twisted, you're not alone.
+                &ldquo;Have you ever felt caught in a cycle of desires, wondering if there&apos;s more to life than this constant pull? In a world where truth often feels twisted, you&apos;re not alone.
               </p>
               
               <p>
-                My name is Lesley, and like you, I've navigated these challenging times through my journey and calling. I'm now honored to serve you by sharing the Word of God. I welcome you to this space, a place where we seek 'the coordinated living' - aligning our lives with God's Word and His purpose. Our goal is to be the sheep of His pasture, finding guidance, nourishment, and belonging within His fold.
+                My name is Lesley, and like you, I&apos;ve navigated these challenging times through my journey and calling. I&apos;m now honored to serve you by sharing the Word of God. I welcome you to this space, a place where we seek &apos;the coordinated living&apos; - aligning our lives with God&apos;s Word and His purpose. Our goal is to be the sheep of His pasture, finding guidance, nourishment, and belonging within His fold.
               </p>
               
               <p>
@@ -52,7 +55,7 @@ const AboutMePage = () => {
               </p>
               
               <p>
-                I look forward to serving you through the tasks assigned to me. You're loved, cared for, and provided for. I invite you to explore the resources here and join our community as we learn and grow together in His grace."
+                I look forward to serving you through the tasks assigned to me. You&apos;re loved, cared for, and provided for. I invite you to explore the resources here and join our community as we learn and grow together in His grace.&rdquo;
               </p>
             </div>
             
