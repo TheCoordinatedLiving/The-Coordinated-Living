@@ -133,17 +133,21 @@ const NewHomepage = () => {
   const homepageRef = useRef<HTMLDivElement>(null);
   const statusBarRef = useRef<HTMLDivElement>(null);
   const iconsRef = useRef<HTMLDivElement>(null);
+  
+  // Terms modal state
+  const [showTermsModal, setShowTermsModal] = useState(false);
+  
 
   const handleJoinChannelClick = () => {
-    // Only navigate on mobile view (screen width < 768px)
-    if (window.innerWidth < 768) {
+    // Only navigate on mobile view (screen width < 1280px)
+    if (window.innerWidth < 1280) {
       router.push('/join-channel');
     }
   };
 
   const handlePostWidgetClick = () => {
-    // Only navigate on mobile view (screen width < 768px)
-    if (window.innerWidth < 768) {
+    // Only navigate on mobile view (screen width < 1280px)
+    if (window.innerWidth < 1280) {
       router.push('/post-mobile');
     }
   };
@@ -260,15 +264,34 @@ const NewHomepage = () => {
               </div>
             </div>
           </div>
-          {/* Watch widget placeholder */}
-          <div className="w-44 h-18 sm:w-52 sm:h-20 md:w-56 md:h-22 lg:w-60 lg:h-24 rounded-[26px] backdrop-blur-[16px]" style={{ backgroundColor: 'rgba(23, 23, 26, 0.3)' }}></div>
+          {/* Terms and Conditions Widget */}
+          <div 
+            className="w-44 h-18 sm:w-52 sm:h-20 md:w-56 md:h-22 lg:w-60 lg:h-24 rounded-[26px] mb-2 backdrop-blur-[16px] flex items-center px-3 sm:px-4 md:px-5 cursor-pointer" 
+            style={{ backgroundColor: 'rgba(23, 23, 26, 0.3)' }}
+            onClick={() => router.push('/terms-mobile')}
+          >
+            {/* Terms Check Icon */}
+            <div className="flex-shrink-0 mr-3 sm:mr-4">
+              <img 
+                src="/terms-check.svg" 
+                alt="Terms and Conditions" 
+                className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16"
+              />
+            </div>
+            
+            {/* Terms and Conditions Text */}
+            <div className="flex flex-col justify-center" style={{ color: 'rgba(255, 255, 255, 0.88)' }}>
+              <div className="text-xs sm:text-sm md:text-base font-medium leading-tight">
+                Terms and
+              </div>
+              <div className="text-xs sm:text-sm md:text-base font-medium leading-tight">
+                Conditions
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* Main Content Area - Empty for now */}
-      <div className="absolute top-40 left-0 right-0 bottom-24 flex items-center justify-center">
-        {/* Empty space for future content */}
-      </div>
 
       {/* App Icons Rows */}
       <div ref={iconsRef} className="absolute bottom-12 left-0 right-0 flex flex-col justify-center items-center">
@@ -416,6 +439,60 @@ const NewHomepage = () => {
           </div>
         </div>
       </div>
+
+      {/* Terms and Conditions Modal */}
+      {showTermsModal && (
+        <div className="fixed inset-0 z-[99999] flex items-center justify-center p-4">
+          {/* Backdrop */}
+          <div
+            className="absolute inset-0 bg-black bg-opacity-80 backdrop-blur-sm"
+            onClick={() => setShowTermsModal(false)}
+          />
+          
+          {/* Modal Content */}
+          <div className="relative z-10 bg-white bg-opacity-10 backdrop-blur-md rounded-2xl max-w-4xl max-h-[80vh] overflow-hidden border border-white border-opacity-20">
+            {/* Header */}
+            <div className="px-6 py-4 border-b border-white border-opacity-20 flex justify-between items-center">
+              <h2 className="text-xl font-bold text-white">TERMS AND CONDITIONS</h2>
+              <button
+                onClick={() => setShowTermsModal(false)}
+                className="text-white hover:text-gray-200 transition-colors duration-200"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            
+            {/* Content */}
+            <div className="px-6 py-4 max-h-[60vh] overflow-y-auto">
+              <div className="text-white text-sm leading-relaxed space-y-4">
+                <p>
+                  <strong>Welcome to The Coordinated Living!</strong>
+                </p>
+                <p>
+                  These terms and conditions outline the rules and regulations for the use of the Website, located at{' '}
+                  <a href="https://thecoordinatedliving.com/" className="underline font-bold text-white" target="_blank" rel="noopener noreferrer">
+                    https://thecoordinatedliving.com/
+                  </a>
+                </p>
+                <p>
+                  The Terms and Conditions on this webpage, as may without notice, be amended from time to time, shall apply to all our services directly or indirectly (through our authorized agents and sub-agents) made available online, any mobile device, by email or by telephone, as well as any other electronic media.
+                </p>
+                <p>
+                  By accessing, browsing and using our website or any of our platform (hereafter collectively referred to as the "website") and/or by completing a booking, you recognize and agree to have read, understood and agreed to the terms and conditions, including the privacy statement as set out below. You must NOT use this website if you disagree with any of the Terms and Conditions as stated below.
+                </p>
+                <p>
+                  The pages, content and set-up of these pages, and the services provided on these pages and through the website are owned, operated and provide by THE COORDINATE LIVING (hereinafter referred to as IKOORDINATE) and are provided for your personal, non-commercial use only, subject to the terms and conditions set out below.
+                </p>
+                <p>
+                  IKOORDINATE reserves the right to modify all information, including Terms and Conditions, as well as all other features at any time without giving you prior notice. Your use of this website following any modifications constitutes your agreement to follow and be bound by the Terms and Conditions as modified.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
@@ -469,9 +546,11 @@ const Page = () => {
   const [showAskAQuestion, setShowAskAQuestion] = useState(false);
   const [showHomepage, setShowHomepage] = useState(false);
   
-  // Check for skipLoader parameter on mount
+  
+  // Check for skipLoader parameter on mount and handle mobile navigation
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
+    
     if (urlParams.get('skipLoader') === 'true') {
       setSkipLoader(true);
       setIsLoaded(true);
@@ -480,6 +559,13 @@ const Page = () => {
         setShowHomepage(true);
       } else {
         setExperienceVisible(true);
+      }
+    } else {
+      // If no skipLoader parameter, check if we're on mobile and should show homepage
+      // This handles cases where user navigates back from other pages
+      if (window.innerWidth < 1280) {
+        setShowHomepage(true);
+        setIsLoaded(true);
       }
     }
   }, []);

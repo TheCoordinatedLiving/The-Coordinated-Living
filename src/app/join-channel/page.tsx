@@ -2,6 +2,10 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import Lottie from 'lottie-react';
+import infoJoinChannelAnimation from '/public/info-join-channgel.json';
+import linkJoinChannelAnimation from '/public/link-join-channel.json';
+import loveJoinAnimation from '/public/love-join.json';
 
 export default function JoinChannelPage() {
   const router = useRouter();
@@ -68,11 +72,12 @@ export default function JoinChannelPage() {
         <div className="w-full max-w-md space-y-6">
           {/* About the Channel */}
           <div className="flex items-center space-x-4">
-            <div className="flex-shrink-0 w-8 h-8 flex items-center justify-center">
-              <img 
-                src="/about-channel-whatsapp.svg" 
-                alt="About Channel" 
-                className="w-6 h-6"
+            <div className="flex-shrink-0 w-12 h-12 flex items-center justify-center">
+              <Lottie 
+                animationData={infoJoinChannelAnimation}
+                loop={true}
+                autoplay={true}
+                style={{ width: 40, height: 40 }}
               />
             </div>
             <div className="flex-1">
@@ -85,11 +90,12 @@ export default function JoinChannelPage() {
 
           {/* How to Join */}
           <div className="flex items-center space-x-4">
-            <div className="flex-shrink-0 w-8 h-8 flex items-center justify-center">
-              <img 
-                src="/how-to-join.svg" 
-                alt="How to Join" 
-                className="w-6 h-6"
+            <div className="flex-shrink-0 w-12 h-12 flex items-center justify-center">
+              <Lottie 
+                animationData={linkJoinChannelAnimation}
+                loop={true}
+                autoplay={true}
+                style={{ width: 40, height: 40 }}
               />
             </div>
             <div className="flex-1">
@@ -102,11 +108,12 @@ export default function JoinChannelPage() {
 
           {/* What You'll Get */}
           <div className="flex items-center space-x-4">
-            <div className="flex-shrink-0 w-8 h-8 flex items-center justify-center">
-              <img 
-                src="/what-youll-get.svg" 
-                alt="What You'll Get" 
-                className="w-6 h-6"
+            <div className="flex-shrink-0 w-12 h-12 flex items-center justify-center">
+              <Lottie 
+                animationData={loveJoinAnimation}
+                loop={true}
+                autoplay={true}
+                style={{ width: 40, height: 40 }}
               />
             </div>
             <div className="flex-1">
