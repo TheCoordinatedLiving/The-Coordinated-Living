@@ -312,7 +312,10 @@ const NewHomepage = () => {
         {/* Bottom Row - 4 Original Icons */}
         <div className="flex justify-between items-center w-full px-8 sm:px-12 md:px-16 lg:px-20">
           {/* Ask Me Question Icon */}
-          <div className="flex items-center justify-center p-6 sm:p-8 md:p-10 lg:p-12">
+          <div 
+            className="flex items-center justify-center p-6 sm:p-8 md:p-10 lg:p-12 cursor-pointer transition-all duration-300 hover:scale-110 active:scale-95"
+            onClick={() => router.push('/about-me')}
+          >
             <img 
               src="/ask-me-question-mobile.svg" 
               alt="Ask Me Question" 
