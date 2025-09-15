@@ -10,7 +10,7 @@ const AboutMePage = () => {
   };
 
   return (
-    <div className="min-h-screen" style={{ backgroundColor: '#2481C2' }}>
+    <div className="min-h-screen" style={{ backgroundColor: '#2F4C6C' }}>
       {/* Close Button */}
       <button 
         onClick={handleClose}

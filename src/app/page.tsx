@@ -304,6 +304,15 @@ const NewHomepage = ({
               {new Date().toLocaleDateString('en-US', { weekday: 'short' }).toUpperCase()}
             </span>
           </div>
+          
+          {/* Timestamp */}
+          <div className="text-white text-sm sm:text-base font-bold mt-auto">
+            {new Date().toLocaleTimeString('en-US', { 
+              hour: '2-digit', 
+              minute: '2-digit',
+              hour12: true 
+            })}
+          </div>
         </div>
         
         {/* Right widgets */}
@@ -313,11 +322,8 @@ const NewHomepage = ({
             className="w-44 h-18 sm:w-52 sm:h-20 md:w-56 md:h-22 lg:w-60 lg:h-24 rounded-[26px] mb-2 backdrop-blur-[16px] flex items-center px-3 sm:px-4 md:px-5 cursor-pointer transition-all duration-300 hover:scale-105 active:scale-95" 
             style={{ backgroundColor: 'rgba(23, 23, 26, 0.3)' }}
             onClick={() => {
-              // Navigate to Pour Into My Cup section on mobile
-              if (window.innerWidth < 1280) {
-                setActiveMobileItem('POUR INTO MY CUP');
-                setCurrentMobileIndex(mobileItems.indexOf('POUR INTO MY CUP'));
-              }
+              // Navigate to donation page
+              router.push('/donation-mobile');
             }}
           >
             {/* Pour Into My Cup Icon */}
@@ -599,7 +605,6 @@ const NewHomepage = ({
 
 const Page = () => {
   const [isLoaded, setIsLoaded] = useState(false);
-  const [skipLoader, setSkipLoader] = useState(false);
   const [experienceVisible, setExperienceVisible] = useState(false);
   const [laptopZoomed, setLaptopZoomed] = useState(false);
   const [showLesleyLetter, setShowLesleyLetter] = useState(false);
@@ -628,22 +633,35 @@ const Page = () => {
   const [homepageVisible, setHomepageVisible] = useState(false);
   
   
-  // Check for skipLoader parameter on mount
+  // Handle skipLoader parameter for smooth navigation from mobile pages
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
+    const skipLoader = urlParams.get('skipLoader');
     
-    if (urlParams.get('skipLoader') === 'true') {
-      setSkipLoader(true);
-      setIsLoaded(true);
-      // Show homepage directly on mobile, experience on desktop
+    if (skipLoader === 'true') {
+      // Skip loader and welcome screen, go directly to homepage on mobile
       if (window.innerWidth < 1280) {
         setShowHomepage(true);
-        setHomepageVisible(true); // Show immediately for skipLoader
+        setHomepageVisible(true);
+        setIsLoaded(true);
+        // Clean up the URL parameter
+        window.history.replaceState({}, '', '/');
       } else {
+        // On desktop, skip to experience directly
+        setIsLoaded(true);
         setExperienceVisible(true);
+        // Smoothly slide the curtain up to reveal experience
+        if (curtainRef.current) {
+          gsap.to(curtainRef.current, {
+            y: '-100%',
+            duration: 1.2,
+            ease: 'power3.inOut'
+          });
+        }
+        // Clean up the URL parameter
+        window.history.replaceState({}, '', '/');
       }
     }
-    // All other users (including mobile) will go through the normal loader -> welcome -> experience flow
   }, []);
 
   // Handle navigation back to homepage from other pages
@@ -1362,14 +1380,14 @@ const Page = () => {
   }, [experienceVisible]);
 
   useEffect(() => {
-    // Don't start the loader timer if coming from Windows or skipping loader
-    if (fromWindows || skipLoader) return;
+    // Don't start the loader timer if coming from Windows
+    if (fromWindows) return;
     
     const timer = setTimeout(() => {
       setIsLoaded(true);
     }, 2000);
     return () => clearTimeout(timer);
-  }, [fromWindows, skipLoader]);
+  }, [fromWindows]);
 
   // Preload guide images to prevent flashing
   useEffect(() => {

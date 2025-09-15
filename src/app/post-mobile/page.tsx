@@ -143,7 +143,7 @@ export default function PostMobilePage() {
       className={`min-h-screen transition-all duration-500 ease-in-out ${
         isVisible ? 'opacity-100' : 'opacity-0'
       }`}
-      style={{ backgroundColor: '#2481C2' }}
+      style={{ backgroundColor: '#2F4C6C' }}
       onClick={handlePageClick}
     >
       {/* Close Button */}
@@ -232,7 +232,7 @@ export default function PostMobilePage() {
           <div 
             ref={bottomSheetRef}
             className="relative w-full rounded-t-3xl p-8 h-[98vh] overflow-y-auto" 
-            style={{ backgroundColor: '#2481C2' }}
+            style={{ backgroundColor: '#2F4C6C' }}
           >
             {/* Handle */}
             <div className="flex justify-center mb-4">
@@ -309,7 +309,7 @@ export default function PostMobilePage() {
                 <div className="flex justify-center">
                   <button 
                     onClick={handleReadPost}
-                    className="bg-white text-[#2481C2] px-20 py-3 rounded-full text-sm font-medium hover:bg-opacity-90 transition-all duration-200"
+                    className="bg-white text-[#2F4C6C] px-20 py-3 rounded-full text-sm font-medium hover:bg-opacity-90 transition-all duration-200"
                   >
                     Read This Post
                   </button>
@@ -325,7 +325,7 @@ export default function PostMobilePage() {
         <div 
           ref={fullPostRef}
           className="fixed inset-0 z-50 min-h-screen overflow-y-auto"
-          style={{ backgroundColor: '#2481C2' }}
+          style={{ backgroundColor: '#2F4C6C' }}
         >
           {/* Close Button */}
           <button

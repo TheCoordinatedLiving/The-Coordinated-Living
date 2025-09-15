@@ -172,7 +172,7 @@ const GuidesMobilePage = () => {
           
           {/* Content */}
           <p className="text-white text-base leading-relaxed mb-8" style={{ fontFamily: 'Roboto, sans-serif' }}>
-            Explore these resources to experience His abounding grace as you navigate specific scenes of life and grow in faith.
+            Seeking guidance on specific areas or situations in life? Our downloadable resources are helpful guides designed to equip you with practical steps and biblical principles. Explore these resources to experience His abounding grace as you navigate specific scenes of life and grow in faith.
           </p>
           
           {/* Button */}
