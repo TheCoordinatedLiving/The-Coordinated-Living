@@ -99,7 +99,7 @@ const DonationMobilePage = () => {
         </p>
 
         {/* Donation button */}
-        <div className="flex justify-center mt-auto">
+        <div className="flex justify-center mt-6">
           <button
             onClick={handleDonate}
             className="w-full max-w-xs py-4 px-8 rounded-full font-medium text-base transition-all duration-200 hover:scale-105 active:scale-95 shadow-lg"

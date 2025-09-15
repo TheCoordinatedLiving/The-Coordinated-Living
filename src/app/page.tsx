@@ -137,14 +137,8 @@ const NewHomepage = () => {
   // Terms modal state
   const [showTermsModal, setShowTermsModal] = useState(false);
   
-  // Background switching state
-  const [currentBackgroundIndex, setCurrentBackgroundIndex] = useState(0);
-  const [nextBackgroundIndex, setNextBackgroundIndex] = useState(1);
-  const [isTransitioning, setIsTransitioning] = useState(false);
-  const backgrounds = [
-    '/homepage-new-background.png',
-    '/homepage-background-2.png'
-  ];
+  // Static background
+  const backgroundImage = '/homepage-new-background.png';
   
 
   const handleJoinChannelClick = () => {
@@ -192,91 +186,37 @@ const NewHomepage = () => {
     }
   }, []);
 
-  // Background switching effect with smooth crossfade
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if (!isTransitioning) {
-        setIsTransitioning(true);
-        
-        // Start crossfade transition
-        const nextIndex = currentBackgroundIndex === backgrounds.length - 1 ? 0 : currentBackgroundIndex + 1;
-        setNextBackgroundIndex(nextIndex);
-        
-        // Create smooth crossfade using GSAP
-        const tl = gsap.timeline({
-          onComplete: () => {
-            setCurrentBackgroundIndex(nextIndex);
-            setIsTransitioning(false);
-            // Reset next background opacity for next transition
-            gsap.set('.background-next', { opacity: 0 });
-          }
-        });
-        
-        // Fade in the next background over 2 seconds
-        tl.to('.background-next', {
-          opacity: 1,
-          duration: 2,
-          ease: 'power2.inOut'
-        });
-      }
-    }, 10000); // Switch every 10 seconds
-
-    return () => clearInterval(interval);
-  }, [currentBackgroundIndex, backgrounds.length, isTransitioning]);
-
   return (
     <div 
       ref={homepageRef}
       className="fixed inset-0 z-40 w-screen overflow-hidden"
       style={{ height: '100dvh' }}
     >
-      {/* Current Background */}
+      {/* Static Background */}
       <div 
         className="absolute inset-0"
         style={{
-          backgroundImage: `url(${backgrounds[currentBackgroundIndex]})`,
+          backgroundImage: `url(${backgroundImage})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat'
-        }}
-      />
-      
-      {/* Next Background for Crossfade */}
-      <div 
-        className="background-next absolute inset-0"
-        style={{
-          backgroundImage: `url(${backgrounds[nextBackgroundIndex]})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-          opacity: 0
         }}
       />
       {/* TCL Status Bar - Same as lockscreen */}
       <div ref={statusBarRef} className="absolute top-0 left-0 right-0 z-10 flex justify-between items-center px-6 pt-3 pb-2">
         {/* Left Status - TCL Text and Icons */}
         <div className="flex items-center space-x-2">
-          <div className="text-white text-sm font-bold">
-            TCL
-          </div>
           <Image 
-            src="/left-status.svg" 
-            alt="Left Status Icons" 
-            width={40} 
-            height={16}
-            className="h-4 w-auto"
+            src="/left-top-logo-mobile.svg" 
+            alt="TCL Logo" 
+            width={12} 
+            height={8}
+            className="h-2 w-auto"
           />
         </div>
         
         {/* Right Status Icons */}
         <div className="flex items-center space-x-2">
-          <Image 
-            src="/status-icons.svg" 
-            alt="Status Icons" 
-            width={80} 
-            height={16}
-            className="h-4 w-auto"
-          />
         </div>
       </div>
 
@@ -302,7 +242,7 @@ const NewHomepage = () => {
             {new Date().toLocaleTimeString('en-US', { 
               hour: '2-digit', 
               minute: '2-digit',
-              hour12: true 
+              hour12: false 
             })}
           </div>
         </div>
