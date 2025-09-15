@@ -2,15 +2,23 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import Lottie from 'lottie-react';
 
 
 export default function PostMobilePage() {
   const router = useRouter();
   const [isVisible, setIsVisible] = useState(false);
+  const [animationData, setAnimationData] = useState(null);
 
   useEffect(() => {
     // Trigger animation on mount
     setIsVisible(true);
+    
+    // Fetch the lottie animation data
+    fetch('/new-click-mobile.json')
+      .then(response => response.json())
+      .then(data => setAnimationData(data))
+      .catch(error => console.error('Error loading animation:', error));
   }, []);
 
   const handleClose = () => {
@@ -78,6 +86,18 @@ export default function PostMobilePage() {
               When we align ourselves with God&apos;s purpose for our lives, we find a peace that surpasses all understanding. This isn&apos;t about perfection – it&apos;s about walking in the identity He has given us, trusting that He has equipped us for every good work.
             </p>
           </div>
+        </div>
+        
+        {/* Lottie Animation */}
+        <div className="flex justify-center mt-8">
+          {animationData && (
+            <Lottie
+              animationData={animationData}
+              loop={true}
+              autoplay={true}
+              style={{ width: 80, height: 80 }}
+            />
+          )}
         </div>
       </div>
     </div>
