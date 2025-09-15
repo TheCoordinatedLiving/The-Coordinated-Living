@@ -2,8 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import Lottie from 'lottie-react';
-import clickAnimation from '../../../public/click-animation.json';
+
 
 export default function PostMobilePage() {
   const router = useRouter();
@@ -79,16 +78,6 @@ export default function PostMobilePage() {
               When we align ourselves with God&apos;s purpose for our lives, we find a peace that surpasses all understanding. This isn&apos;t about perfection – it&apos;s about walking in the identity He has given us, trusting that He has equipped us for every good work.
             </p>
           </div>
-        </div>
-        
-        {/* Click Animation */}
-        <div className="flex justify-center mt-8">
-          <Lottie
-            animationData={clickAnimation}
-            loop={true}
-            autoplay={true}
-            style={{ width: 60, height: 60 }}
-          />
         </div>
       </div>
     </div>

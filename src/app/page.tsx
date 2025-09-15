@@ -545,29 +545,41 @@ const Page = () => {
   const [currentFullPostIndex, setCurrentFullPostIndex] = useState(0);
   const [showAskAQuestion, setShowAskAQuestion] = useState(false);
   const [showHomepage, setShowHomepage] = useState(false);
+  const [homepageVisible, setHomepageVisible] = useState(false);
   
   
-  // Check for skipLoader parameter on mount and handle mobile navigation
+  // Check for skipLoader parameter on mount
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     
     if (urlParams.get('skipLoader') === 'true') {
       setSkipLoader(true);
       setIsLoaded(true);
-      // Show homepage directly on mobile
+      // Show homepage directly on mobile, experience on desktop
       if (window.innerWidth < 1280) {
         setShowHomepage(true);
+        setHomepageVisible(true); // Show immediately for skipLoader
       } else {
         setExperienceVisible(true);
       }
-    } else {
-      // If no skipLoader parameter, check if we're on mobile and should show homepage
-      // This handles cases where user navigates back from other pages
-      if (window.innerWidth < 1280) {
+    }
+    // All other users (including mobile) will go through the normal loader -> welcome -> experience flow
+  }, []);
+
+  // Handle navigation back to homepage from other pages
+  useEffect(() => {
+    const handlePopState = () => {
+      // When user navigates back to homepage, show it directly on mobile
+      if (window.location.pathname === '/' && window.innerWidth < 1280) {
         setShowHomepage(true);
+        setHomepageVisible(true); // Show immediately when navigating back
         setIsLoaded(true);
       }
-    }
+    };
+
+    window.addEventListener('popstate', handlePopState);
+
+    return () => window.removeEventListener('popstate', handlePopState);
   }, []);
   
   const handleCloseExpandedEmailModal = () => {
@@ -1398,6 +1410,12 @@ const Page = () => {
     console.log('ENTER EXPERIENCE button clicked!');
     if (!pageRef.current) return;
     
+    // Show homepage immediately for mobile but keep it invisible initially
+    if (window.innerWidth < 1280) {
+      setShowHomepage(true);
+      setHomepageVisible(false); // Keep invisible initially
+    }
+    
     // Trigger blur effect immediately when button is clicked
     setShowBlurEffect(true);
     setTimeout(() => {
@@ -1429,21 +1447,23 @@ const Page = () => {
         duration: 0.6,
         ease: 'power3.inOut'
       }, "<")
-      // Show experience page on desktop, homepage on mobile
-      .add(() => {
-        console.log('Showing experience page or homepage');
-        // Check if we're on mobile (screen width < 1280px)
-        if (window.innerWidth < 1280) {
-          setShowHomepage(true);
-        } else {
-          setExperienceVisible(true);
-        }
-      })
-      // Now slide the entire curtain (main page) up to reveal experience/homepage
+      // Enhanced curtain animation - smoother for mobile
       .to(curtainRef.current, {
         y: '-100%',
-        duration: 1.2,
-        ease: 'power3.inOut'
+        duration: window.innerWidth < 1280 ? 1.5 : 1.2, // Longer duration for mobile
+        ease: window.innerWidth < 1280 ? 'power2.inOut' : 'power3.inOut', // Smoother easing for mobile
+        onStart: () => {
+          console.log('Curtain animation started');
+        },
+        onComplete: () => {
+          // Show experience page on desktop, homepage on mobile AFTER curtain animation completes
+          console.log('Curtain animation complete - showing experience page or homepage');
+          if (window.innerWidth < 1280) {
+            setHomepageVisible(true);
+          } else {
+            setExperienceVisible(true);
+          }
+        }
       }, "-=0.2");
   };
 
@@ -1476,6 +1496,12 @@ const Page = () => {
 
   useLayoutEffect(() => {
     console.log('Main useLayoutEffect - isLoaded:', isLoaded, 'fromWindows:', fromWindows);
+    
+    // Initialize curtain position
+    if (curtainRef.current) {
+      gsap.set(curtainRef.current, { y: 0, opacity: 1 });
+    }
+    
     if (isLoaded && pageRef.current && !fromWindows) {
       const loader = pageRef.current.querySelector('.loader-container');
       const welcome = pageRef.current.querySelector('.welcome-container');
@@ -1609,7 +1635,13 @@ const Page = () => {
       
       {/* New Homepage - Mobile Only */}
       {showHomepage && (
-        <div className="xl:hidden">
+        <div 
+          className="xl:hidden"
+          style={{ 
+            opacity: homepageVisible ? 1 : 0,
+            transition: 'opacity 0.3s ease-in-out'
+          }}
+        >
           <NewHomepage />
         </div>
       )}
@@ -5010,7 +5042,7 @@ const Page = () => {
       {/* Curtain (main page) that slides up */}
       <div
         ref={curtainRef}
-        className="fixed inset-0 w-screen h-screen"
+        className="fixed inset-0 w-screen h-screen overflow-hidden"
         style={{ zIndex: 10 }}
       >
         <Loader />
