@@ -12,7 +12,7 @@ export default function TermsMobilePage() {
   return (
     <div 
       className="min-h-screen w-full p-4"
-      style={{ backgroundColor: '#2481C2' }}
+      style={{ backgroundColor: '#2F4C6C' }}
     >
       {/* Header with Close Button */}
       <div className="flex items-start justify-start mb-8">

@@ -29,8 +29,8 @@ const WindowsLockScreen = () => {
     <div className="windows-lock-screen absolute inset-0">
       <Image
         src="/windows/lockscreen.png"
-        layout="fill"
-        objectFit="cover"
+        fill
+        style={{ objectFit: 'cover' }}
         alt="Windows Lockscreen Wallpaper"
         className="z-0"
       />
@@ -83,8 +83,8 @@ const WindowsHomeScreen = () => {
         
         <Image
         src="/windows/homewall.png"
-        layout="fill"
-        objectFit="cover"
+        fill
+        style={{ objectFit: 'cover' }}
         alt="Windows Home Screen Wallpaper"
         />
 

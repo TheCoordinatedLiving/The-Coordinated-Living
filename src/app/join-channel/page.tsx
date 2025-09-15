@@ -113,7 +113,7 @@ export default function JoinChannelPage() {
             <div className="flex-1">
               <h3 className="text-white text-lg font-bold mb-2">About the Channel</h3>
               <p className="text-white text-sm opacity-90 leading-relaxed">
-                Join our WhatsApp channel for uplifting, faith-based guidance.
+                Join our Paid WhatsApp channel for in-depth exploration of God's Word and its application to the complexities of life.
               </p>
             </div>
           </div>
@@ -133,7 +133,7 @@ export default function JoinChannelPage() {
             <div className="flex-1">
               <h3 className="text-white text-lg font-bold mb-2">How to Join</h3>
               <p className="text-white text-sm opacity-90 leading-relaxed">
-                Tap the button below and follow the prompt to subscribe. You can leave anytime.
+                Tap the button below and follow the prompt to subscribe.
               </p>
             </div>
           </div>
@@ -153,7 +153,7 @@ export default function JoinChannelPage() {
             <div className="flex-1">
               <h3 className="text-white text-lg font-bold mb-2">What You&apos;ll Get</h3>
               <p className="text-white text-sm opacity-90 leading-relaxed">
-                Weekly encouragement, prayer prompts, and resources to help you grow in Christ.
+                Weekly encouragement, prayer prompts, and video resources to help cultivate an intimate relationship with the Lord.
               </p>
             </div>
           </div>
@@ -162,8 +162,8 @@ export default function JoinChannelPage() {
         {/* Join Our Channel Button */}
         <div className="w-full max-w-md mt-8">
           <button
-            className="w-full py-4 px-6 rounded-full text-white font-bold text-lg transition-all duration-200 hover:opacity-90 active:scale-95"
-            style={{ backgroundColor: '#2481C2' }}
+            className="w-full py-4 px-6 rounded-full font-bold text-lg transition-all duration-200 hover:opacity-90 active:scale-95"
+            style={{ backgroundColor: '#FFFFFF', color: '#2F4C6C' }}
             onClick={() => {
               // Add WhatsApp link functionality here
               console.log('Join channel clicked');

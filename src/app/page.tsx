@@ -128,7 +128,15 @@ const WelcomeScreen = ({ onEnterClick }: { onEnterClick: () => void }) => {
 };
 
 // New Homepage Component
-const NewHomepage = () => {
+const NewHomepage = ({ 
+  setActiveMobileItem, 
+  setCurrentMobileIndex, 
+  mobileItems 
+}: { 
+  setActiveMobileItem: (item: string) => void;
+  setCurrentMobileIndex: (index: number) => void;
+  mobileItems: string[];
+}) => {
   const router = useRouter();
   const homepageRef = useRef<HTMLDivElement>(null);
   const statusBarRef = useRef<HTMLDivElement>(null);
@@ -136,6 +144,15 @@ const NewHomepage = () => {
   
   // Terms modal state
   const [showTermsModal, setShowTermsModal] = useState(false);
+  
+  // Background switching state
+  const [currentBackgroundIndex, setCurrentBackgroundIndex] = useState(0);
+  const [nextBackgroundIndex, setNextBackgroundIndex] = useState(1);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const backgrounds = [
+    '/homepage-new-background.png',
+    '/homepage-background-2.png'
+  ];
   
 
   const handleJoinChannelClick = () => {
@@ -183,15 +200,66 @@ const NewHomepage = () => {
     }
   }, []);
 
+  // Background switching effect with smooth crossfade
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (!isTransitioning) {
+        setIsTransitioning(true);
+        
+        // Start crossfade transition
+        const nextIndex = currentBackgroundIndex === backgrounds.length - 1 ? 0 : currentBackgroundIndex + 1;
+        setNextBackgroundIndex(nextIndex);
+        
+        // Create smooth crossfade using GSAP
+        const tl = gsap.timeline({
+          onComplete: () => {
+            setCurrentBackgroundIndex(nextIndex);
+            setIsTransitioning(false);
+            // Reset next background opacity for next transition
+            gsap.set('.background-next', { opacity: 0 });
+          }
+        });
+        
+        // Fade in the next background over 2 seconds
+        tl.to('.background-next', {
+          opacity: 1,
+          duration: 2,
+          ease: 'power2.inOut'
+        });
+      }
+    }, 10000); // Switch every 10 seconds
+
+    return () => clearInterval(interval);
+  }, [currentBackgroundIndex, backgrounds.length, isTransitioning]);
+
   return (
     <div 
       ref={homepageRef}
       className="fixed inset-0 z-40 w-screen overflow-hidden"
-      style={{
-        height: '100dvh',
-        backgroundColor: '#2F4C6C'
-      }}
+      style={{ height: '100dvh' }}
     >
+      {/* Current Background */}
+      <div 
+        className="absolute inset-0"
+        style={{
+          backgroundImage: `url(${backgrounds[currentBackgroundIndex]})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat'
+        }}
+      />
+      
+      {/* Next Background for Crossfade */}
+      <div 
+        className="background-next absolute inset-0"
+        style={{
+          backgroundImage: `url(${backgrounds[nextBackgroundIndex]})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          opacity: 0
+        }}
+      />
       {/* TCL Status Bar - Same as lockscreen */}
       <div ref={statusBarRef} className="absolute top-0 left-0 right-0 z-10 flex justify-between items-center px-6 pt-3 pb-2">
         {/* Left Status - TCL Text and Icons */}
@@ -240,27 +308,33 @@ const NewHomepage = () => {
         
         {/* Right widgets */}
         <div className="flex flex-col justify-end h-40 sm:h-48 md:h-52 lg:h-56">
-          {/* WhatsApp Channel Widget */}
+          {/* Pour Into My Cup Widget */}
           <div 
             className="w-44 h-18 sm:w-52 sm:h-20 md:w-56 md:h-22 lg:w-60 lg:h-24 rounded-[26px] mb-2 backdrop-blur-[16px] flex items-center px-3 sm:px-4 md:px-5 cursor-pointer transition-all duration-300 hover:scale-105 active:scale-95" 
             style={{ backgroundColor: 'rgba(23, 23, 26, 0.3)' }}
-            onClick={handleJoinChannelClick}
+            onClick={() => {
+              // Navigate to Pour Into My Cup section on mobile
+              if (window.innerWidth < 1280) {
+                setActiveMobileItem('POUR INTO MY CUP');
+                setCurrentMobileIndex(mobileItems.indexOf('POUR INTO MY CUP'));
+              }
+            }}
           >
-            {/* WhatsApp Logo */}
+            {/* Pour Into My Cup Icon */}
             <div className="flex-shrink-0 mr-3 sm:mr-4">
               <img 
-                src="/WhatsApp-logo.svg" 
-                alt="WhatsApp" 
-                className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16"
+                src="/donation-widget.svg" 
+                alt="Pour Into My Cup" 
+                className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12"
               />
             </div>
             {/* Text Content */}
             <div className="flex flex-col justify-center" style={{ color: 'rgba(255, 255, 255, 0.88)' }}>
               <div className="text-xs sm:text-sm md:text-base font-medium leading-tight">
-                Join Our
+                Pour Into
               </div>
               <div className="text-xs sm:text-sm md:text-base font-medium leading-tight">
-                Channel
+                My Cup
               </div>
             </div>
           </div>
@@ -389,7 +463,10 @@ const NewHomepage = () => {
           </div>
           
           {/* Donation Icon */}
-          <div className="flex items-center justify-center p-6 sm:p-8 md:p-10 lg:p-12">
+          <div 
+            className="flex items-center justify-center p-6 sm:p-8 md:p-10 lg:p-12 cursor-pointer transition-all duration-300 hover:scale-110 active:scale-95"
+            onClick={handleJoinChannelClick}
+          >
             <img 
               src="/donation-icon.svg" 
               alt="Donation" 
@@ -1645,7 +1722,11 @@ const Page = () => {
             transition: 'opacity 0.3s ease-in-out'
           }}
         >
-          <NewHomepage />
+          <NewHomepage 
+            setActiveMobileItem={setActiveMobileItem}
+            setCurrentMobileIndex={setCurrentMobileIndex}
+            mobileItems={mobileItems}
+          />
         </div>
       )}
       

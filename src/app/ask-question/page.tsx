@@ -29,7 +29,7 @@ const AskQuestionPage = () => {
   };
 
   return (
-    <div className="min-h-screen" style={{ backgroundColor: '#2481C2' }}>
+    <div className="min-h-screen" style={{ backgroundColor: '#2F4C6C' }}>
       <button 
         onClick={handleClose}
         className="absolute top-8 left-4 w-8 h-8 flex items-center justify-center text-white hover:bg-white hover:bg-opacity-20 rounded-full transition-colors"
@@ -98,7 +98,7 @@ const AskQuestionPage = () => {
             <button
               type="submit"
               className="w-full bg-white py-4 px-6 rounded-full font-semibold hover:bg-gray-100 transition-colors"
-              style={{ color: '#2481C2' }}
+              style={{ color: '#2F4C6C' }}
             >
               Send Message
             </button>

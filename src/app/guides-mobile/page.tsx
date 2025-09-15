@@ -136,7 +136,7 @@ const GuidesMobilePage = () => {
     <div 
       ref={pageRef}
       className="min-h-screen w-full flex flex-col"
-      style={{ backgroundColor: '#2481C2' }}
+      style={{ backgroundColor: '#2F4C6C' }}
     >
       {/* Header with Close Button */}
       <div className="flex items-center justify-between p-4 pt-8">
@@ -179,7 +179,7 @@ const GuidesMobilePage = () => {
           <div className="mt-auto">
             <button 
               onClick={() => setShowBottomSheet(true)}
-              className="w-full bg-white text-[#2481C2] font-semibold py-4 px-6 rounded-full transition-all duration-200 hover:bg-opacity-90 active:scale-95"
+              className="w-full bg-white text-[#2F4C6C] font-semibold py-4 px-6 rounded-full transition-all duration-200 hover:bg-opacity-90 active:scale-95"
             >
               View Our Guides
             </button>
@@ -201,7 +201,7 @@ const GuidesMobilePage = () => {
           <div 
             ref={bottomSheetRef}
             className="relative w-full rounded-t-3xl p-8 h-[98vh] overflow-y-auto" 
-            style={{ backgroundColor: '#2481C2' }}
+            style={{ backgroundColor: '#2F4C6C' }}
           >
             {/* Handle */}
             <div className="flex justify-center mb-4">
@@ -276,7 +276,7 @@ const GuidesMobilePage = () => {
                 
                 {/* Download Button - Centered */}
                 <div className="flex justify-center">
-                  <button className="bg-white text-[#2481C2] px-20 py-3 rounded-full text-sm font-medium hover:bg-opacity-90 transition-all duration-200">
+                  <button className="bg-white text-[#2F4C6C] px-20 py-3 rounded-full text-sm font-medium hover:bg-opacity-90 transition-all duration-200">
                     Download This Guide
                   </button>
                 </div>
