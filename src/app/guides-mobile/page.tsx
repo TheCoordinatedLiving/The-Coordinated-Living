@@ -62,7 +62,7 @@ const GuidesMobilePage = () => {
     const touch = e.touches[0];
     const startX = touch.clientX;
     
-    const handleTouchEnd = (e: React.TouchEvent) => {
+    const handleTouchEnd = (e: TouchEvent) => {
       const touch = e.changedTouches[0];
       const endX = touch.clientX;
       const diffX = startX - endX;
