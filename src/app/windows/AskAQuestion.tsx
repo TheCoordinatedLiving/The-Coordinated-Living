@@ -5,9 +5,10 @@ import { gsap } from 'gsap';
 
 interface AskAQuestionProps {
   onClose: () => void;
+  isOnTop?: boolean;
 }
 
-const AskAQuestion = ({ onClose }: AskAQuestionProps) => {
+const AskAQuestion = ({ onClose, isOnTop = false }: AskAQuestionProps) => {
   const windowRef = useRef<HTMLDivElement>(null);
   const [userEmail, setUserEmail] = useState('');
   const [subject, setSubject] = useState('');
@@ -108,7 +109,7 @@ const AskAQuestion = ({ onClose }: AskAQuestionProps) => {
   };
 
   return (
-    <div ref={windowRef} className="absolute inset-x-0 top-0 bottom-16 bg-black/30 flex items-center justify-center z-50 opacity-0">
+    <div ref={windowRef} className={`absolute inset-x-0 top-0 bottom-16 bg-black/30 flex items-center justify-center ${isOnTop ? 'z-[60]' : 'z-[50]'} opacity-0`}>
       <div className="w-[85vw] h-[85vh] max-w-[1600px] bg-white rounded-lg shadow-2xl flex flex-col">
         {/* Browser Chrome */}
         <div className="bg-[#F1F3F4] rounded-t-lg">
@@ -324,7 +325,7 @@ const AskAQuestion = ({ onClose }: AskAQuestionProps) => {
 
       {/* Success Modal */}
       {showSuccessModal && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-[60]">
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-[70]">
           <div className="bg-white rounded-lg p-8 max-w-md mx-4 text-center shadow-2xl">
             <div className="mb-4">
               <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">

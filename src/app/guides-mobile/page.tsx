@@ -3,6 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
+import Image from 'next/image';
 
 const GuidesMobilePage = () => {
   const router = useRouter();
@@ -230,17 +231,20 @@ const GuidesMobilePage = () => {
                 {/* Image Card */}
                 <div className="mb-4 relative" onTouchStart={handleTouchStart}>
                   <div className="aspect-[4/5] rounded-xl overflow-hidden">
-                    <img 
+                    <Image 
                       src="/guides-bottomsheet.png" 
                       alt="Guide Card" 
-                      className="w-full h-full object-cover"
+                      fill
+                      className="object-cover"
                     />
                     
                     {/* Logo - Top Left */}
                     <div className="absolute top-4 left-4">
-                      <img 
+                      <Image 
                         src="/guide-bottom-logo.svg" 
                         alt="Logo" 
+                        width={64}
+                        height={64}
                         className="w-16 h-16"
                       />
                     </div>

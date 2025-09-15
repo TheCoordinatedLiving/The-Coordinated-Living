@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Lottie from 'lottie-react';
+import Image from 'next/image';
 
 export default function JoinChannelPage() {
   const router = useRouter();
@@ -83,9 +84,11 @@ export default function JoinChannelPage() {
           className="w-24 h-24 rounded-full flex items-center justify-center mb-8"
           style={{ backgroundColor: '#2481C2' }}
         >
-          <img 
+          <Image 
             src="/join-channel-mobile-logo.svg" 
             alt="Channel Logo" 
+            width={64}
+            height={64}
             className="w-16 h-16 animate-spin"
             style={{ animationDuration: '3s' }}
           />
@@ -113,7 +116,7 @@ export default function JoinChannelPage() {
             <div className="flex-1">
               <h3 className="text-white text-lg font-bold mb-2">About the Channel</h3>
               <p className="text-white text-sm opacity-90 leading-relaxed">
-                Join our Paid WhatsApp channel for in-depth exploration of God's Word and its application to the complexities of life.
+                Join our Paid WhatsApp channel for in-depth exploration of God&apos;s Word and its application to the complexities of life.
               </p>
             </div>
           </div>

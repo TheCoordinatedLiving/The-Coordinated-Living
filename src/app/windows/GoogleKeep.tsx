@@ -7,9 +7,10 @@ import BooksContent from './BooksContent';
 
 interface GoogleKeepProps {
   onClose: () => void;
+  isOnTop?: boolean;
 }
 
-const GoogleKeep = ({ onClose }: GoogleKeepProps) => {
+const GoogleKeep = ({ onClose, isOnTop = false }: GoogleKeepProps) => {
   const windowRef = useRef<HTMLDivElement>(null);
   const [activeTab, setActiveTab] = useState('Posts');
 
@@ -32,7 +33,7 @@ const GoogleKeep = ({ onClose }: GoogleKeepProps) => {
   };
 
   return (
-    <div ref={windowRef} className="absolute inset-x-0 top-0 bottom-16 bg-black/30 flex items-center justify-center z-50 opacity-0">
+    <div ref={windowRef} className={`absolute inset-x-0 top-0 bottom-16 bg-black/30 flex items-center justify-center ${isOnTop ? 'z-[60]' : 'z-[50]'} opacity-0`}>
       <div className="w-[85vw] h-[85vh] max-w-[1600px] bg-white rounded-lg flex flex-col">
         {/* Browser Chrome */}
         <div className="bg-white rounded-t-lg">

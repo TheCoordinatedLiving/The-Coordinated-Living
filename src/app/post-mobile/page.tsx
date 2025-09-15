@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import Lottie from 'lottie-react';
 import { gsap } from 'gsap';
 import { getAllPosts, Post } from '@/lib/posts';
+import Image from 'next/image';
 
 
 export default function PostMobilePage() {
@@ -172,9 +173,11 @@ export default function PostMobilePage() {
       
       {/* Logo */}
       <div className="absolute top-28 left-6">
-        <img 
+        <Image 
           src="/new-post-logo-modal.svg" 
           alt="The Coordinated Living" 
+          width={128}
+          height={128}
           className="w-32 h-auto"
         />
       </div>
@@ -261,17 +264,20 @@ export default function PostMobilePage() {
                 {/* Image Card */}
                 <div className="mb-4 relative" onTouchStart={handleTouchStart} onClick={handleReadPost}>
                   <div className="aspect-[4/5] rounded-xl overflow-hidden cursor-pointer">
-                    <img 
+                    <Image 
                       src="/guides-bottomsheet.png" 
                       alt="Post Card" 
-                      className="w-full h-full object-cover"
+                      fill
+                      className="object-cover"
                     />
                     
                     {/* Logo - Top Left */}
                     <div className="absolute top-4 left-4">
-                      <img 
+                      <Image 
                         src="/guide-bottom-logo.svg" 
                         alt="Logo" 
+                        width={64}
+                        height={64}
                         className="w-16 h-16"
                       />
                     </div>

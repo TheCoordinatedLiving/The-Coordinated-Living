@@ -29,8 +29,8 @@ const WindowsLockScreen = () => {
     <div className="windows-lock-screen absolute inset-0">
       <Image
         src="/windows/lockscreen.png"
-        fill
-        style={{ objectFit: 'cover' }}
+        layout="fill"
+        objectFit="cover"
         alt="Windows Lockscreen Wallpaper"
         className="z-0"
       />
@@ -61,10 +61,39 @@ const WindowsHomeScreen = () => {
   const [isKeepOpen, setIsKeepOpen] = useState(false);
   const [isAboutMeOpen, setIsAboutMeOpen] = useState(false);
   const [isTermsOpen, setIsTermsOpen] = useState(false);
+  const [lastOpenedModal, setLastOpenedModal] = useState<string | null>(null);
 
-  const openQuestionWindow = () => setIsQuestionWindowOpen(true);
-  const closeQuestionWindow = () => setIsQuestionWindowOpen(false);
-  const toggleKeep = () => setIsKeepOpen(!isKeepOpen);
+  const openQuestionWindow = () => {
+    setIsQuestionWindowOpen(true);
+    setLastOpenedModal('question');
+  };
+  const closeQuestionWindow = () => {
+    console.log('Closing Ask Question modal');
+    setIsQuestionWindowOpen(false);
+    // If this was the last opened modal, clear the tracking
+    if (lastOpenedModal === 'question') {
+      setLastOpenedModal(null);
+    }
+  };
+  const openResourcesWindow = () => {
+    setIsKeepOpen(true);
+    setLastOpenedModal('resources');
+  };
+  const closeResourcesWindow = () => {
+    console.log('Closing Resources modal');
+    setIsKeepOpen(false);
+    // If this was the last opened modal, clear the tracking
+    if (lastOpenedModal === 'resources') {
+      setLastOpenedModal(null);
+    }
+  };
+  const toggleKeep = () => {
+    if (isKeepOpen) {
+      closeResourcesWindow();
+    } else {
+      openResourcesWindow();
+    }
+  };
   
   const handleAboutMeClick = () => {
     setIsAboutMeOpen(true);
@@ -83,8 +112,8 @@ const WindowsHomeScreen = () => {
         
         <Image
         src="/windows/homewall.png"
-        fill
-        style={{ objectFit: 'cover' }}
+        layout="fill"
+        objectFit="cover"
         alt="Windows Home Screen Wallpaper"
         />
 
@@ -159,8 +188,8 @@ const WindowsHomeScreen = () => {
         </div>
 
         <GlassTaskbar onAskQuestionClick={openQuestionWindow} onResourcesClick={toggleKeep} />
-        {isQuestionWindowOpen && <AskAQuestion onClose={closeQuestionWindow} />}
-        {isKeepOpen && <GoogleKeep onClose={toggleKeep} />}
+        {isQuestionWindowOpen && <AskAQuestion onClose={closeQuestionWindow} isOnTop={lastOpenedModal === 'question'} />}
+        {isKeepOpen && <GoogleKeep onClose={closeResourcesWindow} isOnTop={lastOpenedModal === 'resources'} />}
         {isAboutMeOpen && <AboutMeWindow onClose={handleCloseAboutMe} />}
         {isTermsOpen && <TermsWindow onClose={() => setIsTermsOpen(false)} />}
     </div>

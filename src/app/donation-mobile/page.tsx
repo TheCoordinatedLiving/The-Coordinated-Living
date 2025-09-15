@@ -31,7 +31,8 @@ const DonationMobilePage = () => {
         duration: 0.4,
         ease: 'power3.in',
         onComplete: () => {
-          router.back();
+          // Navigate to homepage with skipLoader parameter to bypass loader and welcome screen
+          router.push('/?skipLoader=true');
         }
       });
     }

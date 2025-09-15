@@ -128,15 +128,7 @@ const WelcomeScreen = ({ onEnterClick }: { onEnterClick: () => void }) => {
 };
 
 // New Homepage Component
-const NewHomepage = ({ 
-  setActiveMobileItem, 
-  setCurrentMobileIndex, 
-  mobileItems 
-}: { 
-  setActiveMobileItem: (item: string) => void;
-  setCurrentMobileIndex: (index: number) => void;
-  mobileItems: string[];
-}) => {
+const NewHomepage = () => {
   const router = useRouter();
   const homepageRef = useRef<HTMLDivElement>(null);
   const statusBarRef = useRef<HTMLDivElement>(null);
@@ -328,9 +320,11 @@ const NewHomepage = ({
           >
             {/* Pour Into My Cup Icon */}
             <div className="flex-shrink-0 mr-3 sm:mr-4">
-              <img 
+              <Image 
                 src="/donation-widget.svg" 
                 alt="Pour Into My Cup" 
+                width={48}
+                height={48}
                 className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12"
               />
             </div>
@@ -352,9 +346,11 @@ const NewHomepage = ({
           >
             {/* Terms Check Icon */}
             <div className="flex-shrink-0 mr-3 sm:mr-4">
-              <img 
+              <Image 
                 src="/terms-check.svg" 
                 alt="Terms and Conditions" 
+                width={64}
+                height={64}
                 className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16"
               />
             </div>
@@ -399,9 +395,11 @@ const NewHomepage = ({
           
           {/* Right side - Icon */}
           <div className="flex items-center justify-center">
-            <img 
+            <Image 
               src="/post-widget-icon.svg" 
               alt="Posts Icon" 
+              width={96}
+              height={96}
               className="w-24 h-24"
             />
           </div>
@@ -419,12 +417,12 @@ const NewHomepage = ({
             className="flex items-center justify-center p-6 sm:p-8 md:p-10 lg:p-12 cursor-pointer transition-all duration-300 hover:scale-110 active:scale-95"
             onClick={() => router.push('/about-me')}
           >
-            <img 
+            <Image 
               src="/ask-me-question-mobile.svg" 
               alt="Ask Me Question" 
+              width={100}
+              height={100}
               style={{ 
-                width: '100px', 
-                height: '100px',
                 transform: 'scale(1.8)',
                 transformOrigin: 'center'
               }}
@@ -437,12 +435,12 @@ const NewHomepage = ({
             className="flex items-center justify-center p-6 sm:p-8 md:p-10 lg:p-12 cursor-pointer transition-all duration-300 hover:scale-110 active:scale-95"
             onClick={() => router.push('/guides-mobile')}
           >
-            <img 
+            <Image 
               src="/guides-icon.svg" 
               alt="Guides" 
+              width={100}
+              height={100}
               style={{ 
-                width: '100px', 
-                height: '100px',
                 transform: 'scale(1.8)',
                 transformOrigin: 'center'
               }}
@@ -455,12 +453,12 @@ const NewHomepage = ({
             className="flex items-center justify-center p-6 sm:p-8 md:p-10 lg:p-12 cursor-pointer transition-all duration-300 hover:scale-110 active:scale-95"
             onClick={() => router.push('/ask-question')}
           >
-            <img 
+            <Image 
               src="/question-mark.svg" 
               alt="Question Mark" 
+              width={100}
+              height={100}
               style={{ 
-                width: '100px', 
-                height: '100px',
                 transform: 'scale(1.8)',
                 transformOrigin: 'center'
               }}
@@ -473,12 +471,12 @@ const NewHomepage = ({
             className="flex items-center justify-center p-6 sm:p-8 md:p-10 lg:p-12 cursor-pointer transition-all duration-300 hover:scale-110 active:scale-95"
             onClick={handleJoinChannelClick}
           >
-            <img 
+            <Image 
               src="/donation-icon.svg" 
               alt="Donation" 
+              width={100}
+              height={100}
               style={{ 
-                width: '100px', 
-                height: '100px',
                 transform: 'scale(1.8)',
                 transformOrigin: 'center'
               }}
@@ -1740,11 +1738,7 @@ const Page = () => {
             transition: 'opacity 0.3s ease-in-out'
           }}
         >
-          <NewHomepage 
-            setActiveMobileItem={setActiveMobileItem}
-            setCurrentMobileIndex={setCurrentMobileIndex}
-            mobileItems={mobileItems}
-          />
+          <NewHomepage />
         </div>
       )}
       
@@ -3215,12 +3209,11 @@ const Page = () => {
                 console.log('Polaroid collage clicked!');
               }}
             >
-              <img
+              <Image
                 src="/Polaroid-collage.svg"
                 alt="Polaroid Collage"
+                fill
                 style={{
-                  width: '100%',
-                  height: '100%',
                   objectFit: 'contain',
                 }}
               />
