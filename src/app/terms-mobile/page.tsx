@@ -6,7 +6,7 @@ export default function TermsMobilePage() {
   const router = useRouter();
 
   const handleClose = () => {
-    router.push('/');
+    router.push('/?skipLoader=true');
   };
 
   return (

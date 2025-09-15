@@ -40,7 +40,7 @@ const AskQuestionPage = () => {
       </button>
       
       <div className="pt-20 px-4">
-        <h1 className="text-2xl font-bold text-white text-left mb-8">Ask Me A Question</h1>
+        <h1 className="text-2xl font-bold text-white text-left mb-8" style={{ fontFamily: 'Amita, cursive' }}>Ask Me A Question</h1>
         
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* To Field */}
