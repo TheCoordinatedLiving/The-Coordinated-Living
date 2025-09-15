@@ -3,15 +3,43 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Lottie from 'lottie-react';
-import infoJoinChannelAnimation from '/public/info-join-channgel.json';
-import linkJoinChannelAnimation from '/public/link-join-channel.json';
-import loveJoinAnimation from '/public/love-join.json';
 
 export default function JoinChannelPage() {
   const router = useRouter();
   const [isVisible, setIsVisible] = useState(false);
+  const [animations, setAnimations] = useState({
+    infoJoinChannel: null,
+    linkJoinChannel: null,
+    loveJoin: null
+  });
 
   useEffect(() => {
+    // Load Lottie animations
+    const loadAnimations = async () => {
+      try {
+        const [infoResponse, linkResponse, loveResponse] = await Promise.all([
+          fetch('/info-join-channgel.json'),
+          fetch('/link-join-channel.json'),
+          fetch('/love-join.json')
+        ]);
+
+        const [infoData, linkData, loveData] = await Promise.all([
+          infoResponse.json(),
+          linkResponse.json(),
+          loveResponse.json()
+        ]);
+
+        setAnimations({
+          infoJoinChannel: infoData,
+          linkJoinChannel: linkData,
+          loveJoin: loveData
+        });
+      } catch (error) {
+        console.error('Error loading animations:', error);
+      }
+    };
+
+    loadAnimations();
     // Trigger animation on mount
     setIsVisible(true);
   }, []);
@@ -73,12 +101,14 @@ export default function JoinChannelPage() {
           {/* About the Channel */}
           <div className="flex items-center space-x-4">
             <div className="flex-shrink-0 w-12 h-12 flex items-center justify-center">
-              <Lottie 
-                animationData={infoJoinChannelAnimation}
-                loop={true}
-                autoplay={true}
-                style={{ width: 40, height: 40 }}
-              />
+              {animations.infoJoinChannel && (
+                <Lottie 
+                  animationData={animations.infoJoinChannel}
+                  loop={true}
+                  autoplay={true}
+                  style={{ width: 40, height: 40 }}
+                />
+              )}
             </div>
             <div className="flex-1">
               <h3 className="text-white text-lg font-bold mb-2">About the Channel</h3>
@@ -91,12 +121,14 @@ export default function JoinChannelPage() {
           {/* How to Join */}
           <div className="flex items-center space-x-4">
             <div className="flex-shrink-0 w-12 h-12 flex items-center justify-center">
-              <Lottie 
-                animationData={linkJoinChannelAnimation}
-                loop={true}
-                autoplay={true}
-                style={{ width: 40, height: 40 }}
-              />
+              {animations.linkJoinChannel && (
+                <Lottie 
+                  animationData={animations.linkJoinChannel}
+                  loop={true}
+                  autoplay={true}
+                  style={{ width: 40, height: 40 }}
+                />
+              )}
             </div>
             <div className="flex-1">
               <h3 className="text-white text-lg font-bold mb-2">How to Join</h3>
@@ -109,12 +141,14 @@ export default function JoinChannelPage() {
           {/* What You'll Get */}
           <div className="flex items-center space-x-4">
             <div className="flex-shrink-0 w-12 h-12 flex items-center justify-center">
-              <Lottie 
-                animationData={loveJoinAnimation}
-                loop={true}
-                autoplay={true}
-                style={{ width: 40, height: 40 }}
-              />
+              {animations.loveJoin && (
+                <Lottie 
+                  animationData={animations.loveJoin}
+                  loop={true}
+                  autoplay={true}
+                  style={{ width: 40, height: 40 }}
+                />
+              )}
             </div>
             <div className="flex-1">
               <h3 className="text-white text-lg font-bold mb-2">What You&apos;ll Get</h3>
