@@ -7,6 +7,8 @@ import { gsap } from 'gsap';
 const GuidesMobilePage = () => {
   const router = useRouter();
   const pageRef = useRef<HTMLDivElement>(null);
+  const bottomSheetRef = useRef<HTMLDivElement>(null);
+  const backdropRef = useRef<HTMLDivElement>(null);
   const [showBottomSheet, setShowBottomSheet] = useState(false);
   const [currentGuideIndex, setCurrentGuideIndex] = useState(0);
   
@@ -33,6 +35,12 @@ const GuidesMobilePage = () => {
     }
   }, []);
 
+  useEffect(() => {
+    if (showBottomSheet) {
+      showBottomSheetAnimation();
+    }
+  }, [showBottomSheet]);
+
   const handleClose = () => {
     if (pageRef.current) {
       gsap.to(pageRef.current, {
@@ -46,6 +54,49 @@ const GuidesMobilePage = () => {
       });
     } else {
       router.push('/?skipLoader=true');
+    }
+  };
+
+  const showBottomSheetAnimation = () => {
+    if (bottomSheetRef.current && backdropRef.current) {
+      // Set initial state
+      gsap.set(bottomSheetRef.current, { y: '100%' });
+      gsap.set(backdropRef.current, { opacity: 0 });
+      
+      // Animate in
+      gsap.to(backdropRef.current, {
+        opacity: 1,
+        duration: 0.3,
+        ease: 'power2.out'
+      });
+      
+      gsap.to(bottomSheetRef.current, {
+        y: 0,
+        duration: 0.4,
+        ease: 'power3.out'
+      });
+    }
+  };
+
+  const hideBottomSheetAnimation = () => {
+    if (bottomSheetRef.current && backdropRef.current) {
+      // Animate out
+      gsap.to(backdropRef.current, {
+        opacity: 0,
+        duration: 0.2,
+        ease: 'power2.in'
+      });
+      
+      gsap.to(bottomSheetRef.current, {
+        y: '100%',
+        duration: 0.3,
+        ease: 'power3.in',
+        onComplete: () => {
+          setShowBottomSheet(false);
+        }
+      });
+    } else {
+      setShowBottomSheet(false);
     }
   };
 
@@ -141,20 +192,28 @@ const GuidesMobilePage = () => {
         <div className="fixed inset-0 z-50 flex items-end">
           {/* Backdrop */}
           <div 
+            ref={backdropRef}
             className="absolute inset-0 bg-black bg-opacity-20"
-            onClick={() => setShowBottomSheet(false)}
+            onClick={hideBottomSheetAnimation}
           />
           
           {/* Bottom Sheet Content */}
-          <div className="relative w-full rounded-t-3xl p-8 h-[98vh] overflow-y-auto" style={{ backgroundColor: '#2481C2' }}>
+          <div 
+            ref={bottomSheetRef}
+            className="relative w-full rounded-t-3xl p-8 h-[98vh] overflow-y-auto" 
+            style={{ backgroundColor: '#2481C2' }}
+          >
             {/* Handle */}
             <div className="flex justify-center mb-4">
-              <div className="w-12 h-1 bg-white bg-opacity-50 rounded-full"></div>
+              <button 
+                onClick={hideBottomSheetAnimation}
+                className="w-12 h-1 bg-white bg-opacity-50 rounded-full hover:bg-opacity-75 transition-all duration-200"
+              ></button>
             </div>
             
             {/* Close Button */}
             <button
-              onClick={() => setShowBottomSheet(false)}
+              onClick={hideBottomSheetAnimation}
               className="absolute top-4 right-4 p-2"
             >
               <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
