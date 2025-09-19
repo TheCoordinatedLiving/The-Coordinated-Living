@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { fetchPosts, fetchPostById } from '@/lib/airtable';
+import { fetchPosts, fetchPostById, AirtablePost } from '@/lib/airtable';
 
 // Cache for posts data (5 minutes)
-let postsCache: any[] | null = null;
+let postsCache: AirtablePost[] | null = null;
 let cacheTimestamp: number = 0;
 const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
 

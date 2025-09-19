@@ -1,6 +1,8 @@
 // Centralized post data management
 // Now fetches from Airtable API with fallback to hardcoded data
 
+import { AirtablePost } from './airtable';
+
 export interface Post {
   id: string;
   title: string;
@@ -55,8 +57,8 @@ export const getAllPosts = async (): Promise<Post[]> => {
     
     const airtablePosts = await response.json();
     
-    // Transform Airtable data to our Post interface
-    return airtablePosts.map((post: any) => ({
+        // Transform Airtable data to our Post interface
+        return airtablePosts.map((post: AirtablePost) => ({
       id: post.id,
       title: post.fields['Title'] || '',
       leftContent: post.fields['Left Content'] || '',

@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import PostTemplate from '../../components/PostTemplate';
-import { getAllPosts, Post as ApiPost } from '../../lib/posts';
+import { getAllPosts } from '../../lib/posts';
 
 interface Post {
   id: number;

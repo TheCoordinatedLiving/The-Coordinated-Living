@@ -563,7 +563,7 @@ const Page = () => {
         const apiPosts = await getAllPosts();
         
         // Transform API posts to component format
-        const transformedPosts = apiPosts.map((apiPost, index) => ({
+        const transformedPosts = apiPosts.map((apiPost) => ({
           title: apiPost.title,
           leftContent: (
             <>

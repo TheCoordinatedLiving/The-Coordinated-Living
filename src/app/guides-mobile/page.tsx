@@ -14,13 +14,11 @@ const GuidesMobilePage = () => {
   const [showBottomSheet, setShowBottomSheet] = useState(false);
   const [currentGuideIndex, setCurrentGuideIndex] = useState(0);
   const [guides, setGuides] = useState<Guide[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
 
   // Fetch guides from Airtable
   useEffect(() => {
     const fetchGuides = async () => {
       try {
-        setLoading(true);
         const apiGuides = await getAllGuides();
         setGuides(apiGuides);
       } catch (error) {
@@ -32,8 +30,6 @@ const GuidesMobilePage = () => {
           { id: '3', title: 'Guide 3', description: 'Brief description of the third guide content and what it covers' },
           { id: '4', title: 'Guide 4', description: 'Brief description of the fourth guide content and what it covers' },
         ]);
-      } finally {
-        setLoading(false);
       }
     };
 

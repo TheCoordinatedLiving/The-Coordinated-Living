@@ -1,6 +1,8 @@
 // Centralized guides data management
 // Now fetches from Airtable API with fallback to hardcoded data
 
+import { AirtableGuide } from './airtable';
+
 export interface Guide {
   id: string;
   title: string;
@@ -51,8 +53,8 @@ export const getAllGuides = async (): Promise<Guide[]> => {
     
     const airtableGuides = await response.json();
     
-    // Transform Airtable data to our Guide interface
-    return airtableGuides.map((guide: any) => ({
+        // Transform Airtable data to our Guide interface
+        return airtableGuides.map((guide: AirtableGuide) => ({
       id: guide.id,
       title: guide.fields['Title'] || '',
       description: guide.fields['Description'] || '',

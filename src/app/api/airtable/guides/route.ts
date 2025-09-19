@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { fetchGuides, fetchGuideById } from '@/lib/airtable';
+import { fetchGuides, fetchGuideById, AirtableGuide } from '@/lib/airtable';
 
 // Cache for guides data (5 minutes)
-let guidesCache: any[] | null = null;
+let guidesCache: AirtableGuide[] | null = null;
 let cacheTimestamp: number = 0;
 const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
 
