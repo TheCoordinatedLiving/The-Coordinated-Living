@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
+import { getAllGuides, Guide } from '../../lib/guides';
 
 const BookCard = ({ image, title, description }: { image: string, title: string, description: string }) => (
   <div className="text-center flex flex-col items-center group cursor-pointer hover:scale-105 transition-transform duration-200">
@@ -36,13 +37,40 @@ const BookCard = ({ image, title, description }: { image: string, title: string,
 
 const BooksContent = () => {
   const [searchQuery, setSearchQuery] = useState('');
+  const [guides, setGuides] = useState<Guide[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
-  const books = [
-    { image: '/keep/book1.svg', title: 'Coming Soon', description: 'Coming Soon' },
-    { image: '/keep/book2.svg', title: 'Coming Soon', description: 'Coming Soon' },
-    { image: '/keep/book3.svg', title: 'Coming Soon', description: 'Coming Soon' },
-    { image: '/keep/book4.svg', title: 'Coming Soon', description: 'Coming Soon' },
-  ];
+  // Fetch guides from Airtable on component mount
+  useEffect(() => {
+    const fetchGuides = async () => {
+      try {
+        setLoading(true);
+        const apiGuides = await getAllGuides();
+        setGuides(apiGuides);
+      } catch (error) {
+        console.error('Error fetching guides:', error);
+        // Fallback to hardcoded guides
+        setGuides([
+          { id: '1', title: 'Guide 1', description: 'Brief description of the first guide content and what it covers' },
+          { id: '2', title: 'Guide 2', description: 'Brief description of the second guide content and what it covers' },
+          { id: '3', title: 'Guide 3', description: 'Brief description of the third guide content and what it covers' },
+          { id: '4', title: 'Guide 4', description: 'Brief description of the fourth guide content and what it covers' },
+        ]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchGuides();
+  }, []);
+
+  // Transform guides to book format for display
+  const books = guides.map((guide, index) => ({
+    image: `/keep/book${(index % 4) + 1}.svg`, // Cycle through available book images
+    title: guide.title,
+    description: guide.description,
+    downloadUrl: guide.downloadUrl
+  }));
 
   // Filter books based on search query
   const filteredBooks = books.filter(book => 
@@ -76,12 +104,21 @@ const BooksContent = () => {
         </div>
       </div>
       
+      {/* Loading State */}
+      {loading && (
+        <div className="flex items-center justify-center h-64">
+          <div className="text-gray-500">Loading guides...</div>
+        </div>
+      )}
+      
       {/* Books Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
-        {filteredBooks.map((book, index) => (
-          <BookCard key={index} image={book.image} title={book.title} description={book.description} />
-        ))}
-      </div>
+      {!loading && (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+          {filteredBooks.map((book, index) => (
+            <BookCard key={index} image={book.image} title={book.title} description={book.description} />
+          ))}
+        </div>
+      )}
     </div>
   );
 };

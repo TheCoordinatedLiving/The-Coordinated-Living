@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import Image from "next/image";
 import { gsap } from 'gsap';
 import Lottie from 'lottie-react';
+import { getAllPosts } from '@/lib/posts';
 import PostTemplate from '../components/PostTemplate';
 import { generatePDFFromPostData, generatePostPDF } from '../lib/pdfGenerator';
 import FullTermsContent from '../components/FullTermsContent';
@@ -554,6 +555,46 @@ const Page = () => {
   useEffect(() => {
     console.log('showPostModal changed to:', showPostModal);
   }, [showPostModal]);
+
+  // Fetch posts from Airtable
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const apiPosts = await getAllPosts();
+        
+        // Transform API posts to component format
+        const transformedPosts = apiPosts.map((apiPost, index) => ({
+          title: apiPost.title,
+          leftContent: (
+            <>
+              <p className="text-base leading-relaxed" style={{ color: "#000000" }}>
+                {apiPost.leftContent}
+              </p>
+            </>
+          ),
+          rightContent: (
+            <>
+              <p className="text-base leading-relaxed" style={{ color: "#000000" }}>
+                {apiPost.rightContent}
+              </p>
+            </>
+          ),
+          bottomRightContent: (
+            <p className="text-base leading-relaxed" style={{ color: "#000000" }}>
+              {apiPost.bottomRightContent}
+            </p>
+          )
+        }));
+        
+        setPosts(transformedPosts);
+      } catch (error) {
+        console.error('Error fetching posts:', error);
+        // Keep fallback posts if Airtable fails
+      }
+    };
+
+    fetchPosts();
+  }, []);
   const [currentPostIndex, setCurrentPostIndex] = useState(0);
   const [fromWindows, setFromWindows] = useState(false);
   const [showFumaaModal, setShowFumaaModal] = useState(false);
@@ -1009,8 +1050,8 @@ const Page = () => {
     }
   }, [showTermsModal, isClosingTermsModal]);
 
-  // Sample posts data
-  const posts = [
+  // Posts state for dynamic content
+  const [posts, setPosts] = useState([
     {
       title: "POST TITLE HERE",
       leftContent: (
@@ -1095,7 +1136,7 @@ const Page = () => {
         </p>
       )
     }
-  ];
+  ]);
 
   // Navigation functions
   const handlePreviousPost = () => {

@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import Image from 'next/image';
+import { getAllGuides, Guide } from '../../lib/guides';
 
 const GuidesMobilePage = () => {
   const router = useRouter();
@@ -12,14 +13,32 @@ const GuidesMobilePage = () => {
   const backdropRef = useRef<HTMLDivElement>(null);
   const [showBottomSheet, setShowBottomSheet] = useState(false);
   const [currentGuideIndex, setCurrentGuideIndex] = useState(0);
-  
-  // Guide data
-  const guides = [
-    { id: 1, title: "Guide 1", description: "Brief description of the first guide content and what it covers" },
-    { id: 2, title: "Guide 2", description: "Brief description of the second guide content and what it covers" },
-    { id: 3, title: "Guide 3", description: "Brief description of the third guide content and what it covers" },
-    { id: 4, title: "Guide 4", description: "Brief description of the fourth guide content and what it covers" }
-  ];
+  const [guides, setGuides] = useState<Guide[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+
+  // Fetch guides from Airtable
+  useEffect(() => {
+    const fetchGuides = async () => {
+      try {
+        setLoading(true);
+        const apiGuides = await getAllGuides();
+        setGuides(apiGuides);
+      } catch (error) {
+        console.error('Error fetching guides:', error);
+        // Fallback to hardcoded guides
+        setGuides([
+          { id: '1', title: 'Guide 1', description: 'Brief description of the first guide content and what it covers' },
+          { id: '2', title: 'Guide 2', description: 'Brief description of the second guide content and what it covers' },
+          { id: '3', title: 'Guide 3', description: 'Brief description of the third guide content and what it covers' },
+          { id: '4', title: 'Guide 4', description: 'Brief description of the fourth guide content and what it covers' },
+        ]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchGuides();
+  }, []);
 
   useEffect(() => {
     if (pageRef.current) {

@@ -1,5 +1,6 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import PostTemplate from '../../components/PostTemplate';
+import { getAllPosts, Post as ApiPost } from '../../lib/posts';
 
 interface Post {
   id: number;
@@ -204,9 +205,51 @@ const PostsContent = () => {
   const [showShareOptions, setShowShareOptions] = useState<boolean>(false);
   const [toastMessage, setToastMessage] = useState<string>('');
   const [showToast, setShowToast] = useState<boolean>(false);
+  const [posts, setPosts] = useState<Post[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
   const postTemplateRef = useRef<HTMLDivElement>(null);
 
-  const posts: Post[] = [
+  // Fetch posts from Airtable on component mount
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        setLoading(true);
+        const apiPosts = await getAllPosts();
+        
+        // Transform API posts to component format
+        const transformedPosts: Post[] = apiPosts.map((apiPost, index) => ({
+          id: parseInt(apiPost.id) || index + 1, // Fallback to index if parsing fails
+          title: apiPost.title,
+          leftContent: (
+            <>
+              <p className="text-base leading-relaxed" style={{ color: "#000000" }}>
+                {apiPost.leftContent}
+              </p>
+            </>
+          ),
+          rightContent: (
+            <>
+              <p className="text-base leading-relaxed" style={{ color: "#000000" }}>
+                {apiPost.rightContent}
+              </p>
+            </>
+          ),
+          bottomRightContent: (
+            <>
+              <p className="text-base leading-relaxed" style={{ color: "#000000" }}>
+                {apiPost.bottomRightContent}
+              </p>
+            </>
+          ),
+          x: 20 + (index % 3) * 280,
+          y: 20 + Math.floor(index / 3) * 200
+        }));
+        
+        setPosts(transformedPosts);
+      } catch (error) {
+        console.error('Error fetching posts:', error);
+        // Fallback to hardcoded posts
+        setPosts([
     { 
       id: 1, 
       title: 'A THOUSAND TIMES I FAILED', 
@@ -321,7 +364,14 @@ const PostsContent = () => {
       x: 280, 
       y: 200 
     },
-  ];
+        ]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPosts();
+  }, []);
 
   // Filter posts based on search query
   const filteredPosts = posts.filter(post => {
@@ -488,12 +538,21 @@ const PostsContent = () => {
         </div>
       </div>
       
+      {/* Loading State */}
+      {loading && (
+        <div className="flex items-center justify-center h-64">
+          <div className="text-gray-500">Loading posts...</div>
+        </div>
+      )}
+      
       {/* Static Cards Area */}
-      <div className="relative h-[500px] w-full">
-        {filteredPosts.map((post) => (
-          <PostCard key={post.id} post={post} onClick={() => handleCardClick(post)} />
-        ))}
-      </div>
+      {!loading && (
+        <div className="relative h-[500px] w-full">
+          {filteredPosts.map((post) => (
+            <PostCard key={post.id} post={post} onClick={() => handleCardClick(post)} />
+          ))}
+        </div>
+      )}
 
       {/* Modal */}
       <PostModal 

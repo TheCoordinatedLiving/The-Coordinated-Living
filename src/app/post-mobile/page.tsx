@@ -16,15 +16,14 @@ export default function PostMobilePage() {
   const [currentPostIndex, setCurrentPostIndex] = useState(0);
   const [showFullPost, setShowFullPost] = useState(false);
   const [selectedPost, setSelectedPost] = useState<Post | null>(null);
+  const [posts, setPosts] = useState<Post[]>([]);
+  const [loading, setLoading] = useState(true);
   
   // Refs for animations
   const pageRef = useRef<HTMLDivElement>(null);
   const bottomSheetRef = useRef<HTMLDivElement>(null);
   const backdropRef = useRef<HTMLDivElement>(null);
   const fullPostRef = useRef<HTMLDivElement>(null);
-  
-  // Get actual posts data
-  const posts = getAllPosts();
 
   useEffect(() => {
     // Trigger animation on mount
@@ -35,6 +34,25 @@ export default function PostMobilePage() {
       .then(response => response.json())
       .then(data => setAnimationData(data))
       .catch(error => console.error('Error loading animation:', error));
+  }, []);
+
+  // Fetch posts from Airtable
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        setLoading(true);
+        const apiPosts = await getAllPosts();
+        setPosts(apiPosts);
+      } catch (error) {
+        console.error('Error fetching posts:', error);
+        // Fallback to empty array if Airtable fails
+        setPosts([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPosts();
   }, []);
 
   useEffect(() => {
@@ -127,16 +145,27 @@ export default function PostMobilePage() {
   };
 
   const handleReadPost = () => {
-    const currentPost = posts[currentPostIndex];
-    setSelectedPost(currentPost);
-    setShowFullPost(true);
-    setShowBottomSheet(false);
+    if (posts.length > 0 && posts[currentPostIndex]) {
+      const currentPost = posts[currentPostIndex];
+      setSelectedPost(currentPost);
+      setShowFullPost(true);
+      setShowBottomSheet(false);
+    }
   };
 
   const handleCloseFullPost = () => {
     setShowFullPost(false);
     setSelectedPost(null);
   };
+
+  // Show loading state if posts are not loaded yet
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-900 via-blue-800 to-indigo-900 flex flex-col items-center justify-center">
+        <div className="text-white text-lg">Loading posts...</div>
+      </div>
+    );
+  }
 
   return (
     <div 
@@ -285,10 +314,10 @@ export default function PostMobilePage() {
                     {/* Title and Description - Bottom Left */}
                     <div className="absolute bottom-4 left-4 right-4">
                       <h3 className="text-white text-lg font-semibold mb-2" style={{ fontFamily: 'Amita, cursive' }}>
-                        {posts[currentPostIndex].title}
+                        {posts.length > 0 && posts[currentPostIndex] ? posts[currentPostIndex].title : 'Loading...'}
                       </h3>
                       <p className="text-white text-sm opacity-90" style={{ fontFamily: 'Roboto, sans-serif' }}>
-                        {posts[currentPostIndex].leftContent.substring(0, 100)}...
+                        {posts.length > 0 && posts[currentPostIndex] ? posts[currentPostIndex].leftContent.substring(0, 100) + '...' : 'Loading content...'}
                       </p>
                     </div>
                   </div>

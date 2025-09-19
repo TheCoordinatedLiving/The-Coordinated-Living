@@ -1,5 +1,5 @@
 // Centralized post data management
-// In a real application, this would come from a database
+// Now fetches from Airtable API with fallback to hardcoded data
 
 export interface Post {
   id: string;
@@ -9,7 +9,8 @@ export interface Post {
   bottomRightContent: string;
 }
 
-export const getAllPosts = (): Post[] => [
+// Fallback data in case Airtable is unavailable
+const fallbackPosts: Post[] = [
   {
     id: '1',
     title: 'A THOUSAND TIMES I FAILED',
@@ -38,20 +39,80 @@ export const getAllPosts = (): Post[] => [
     rightContent: 'Thank you for your kindness!',
     bottomRightContent: 'Your support makes a difference in keeping this platform running and sharing these messages of hope and encouragement.'
   }
-  // To add more posts, simply add them here:
-  // {
-  //   id: '5',
-  //   title: 'NEW POST TITLE',
-  //   leftContent: 'Left content for new post...',
-  //   rightContent: 'Right content for new post...',
-  //   bottomRightContent: 'Bottom right content for new post...'
-  // },
 ];
 
-export const getPostById = (id: string): Post | undefined => {
-  return getAllPosts().find(post => post.id === id);
+// Fetch posts from Airtable API
+export const getAllPosts = async (): Promise<Post[]> => {
+  try {
+    const baseUrl = typeof window !== 'undefined' ? '' : process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3001';
+    const response = await fetch(`${baseUrl}/api/airtable/posts`, {
+      next: { revalidate: 300 } // Cache for 5 minutes
+    });
+    
+    if (!response.ok) {
+      throw new Error('Failed to fetch posts');
+    }
+    
+    const airtablePosts = await response.json();
+    
+    // Transform Airtable data to our Post interface
+    return airtablePosts.map((post: any) => ({
+      id: post.id,
+      title: post.fields['Title'] || '',
+      leftContent: post.fields['Left Content'] || '',
+      rightContent: post.fields['Right Content'] || '',
+      bottomRightContent: post.fields['Bottom Right Content'] || ''
+    }));
+  } catch (error) {
+    console.error('Error fetching posts from Airtable:', error);
+    // Return fallback data
+    return fallbackPosts;
+  }
 };
 
-export const getPostsCount = (): number => {
-  return getAllPosts().length;
+// Get a specific post by ID
+export const getPostById = async (id: string): Promise<Post | undefined> => {
+  try {
+    const baseUrl = typeof window !== 'undefined' ? '' : process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3001';
+    const response = await fetch(`${baseUrl}/api/airtable/posts?id=${id}`, {
+      next: { revalidate: 300 } // Cache for 5 minutes
+    });
+    
+    if (!response.ok) {
+      throw new Error('Failed to fetch post');
+    }
+    
+    const airtablePost = await response.json();
+    
+    return {
+      id: airtablePost.id,
+      title: airtablePost.fields['Title'] || '',
+      leftContent: airtablePost.fields['Left Content'] || '',
+      rightContent: airtablePost.fields['Right Content'] || '',
+      bottomRightContent: airtablePost.fields['Bottom Right Content'] || ''
+    };
+  } catch (error) {
+    console.error('Error fetching post from Airtable:', error);
+    // Return from fallback data
+    return fallbackPosts.find(post => post.id === id);
+  }
+};
+
+// Get posts count
+export const getPostsCount = async (): Promise<number> => {
+  const posts = await getAllPosts();
+  return posts.length;
+};
+
+// Synchronous version for backward compatibility (uses fallback data)
+export const getAllPostsSync = (): Post[] => {
+  return fallbackPosts;
+};
+
+export const getPostByIdSync = (id: string): Post | undefined => {
+  return fallbackPosts.find(post => post.id === id);
+};
+
+export const getPostsCountSync = (): number => {
+  return fallbackPosts.length;
 }; 
