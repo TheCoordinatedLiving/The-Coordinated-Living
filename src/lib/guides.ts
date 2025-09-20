@@ -90,8 +90,8 @@ export const getGuideById = async (id: string): Promise<Guide | undefined> => {
       id: airtableGuide.id,
       title: airtableGuide.fields['Title'] || '',
       description: airtableGuide.fields['Description'] || '',
-      content: airtableGuide.fields['Content'] || '',
-      downloadUrl: airtableGuide.fields['Download URL'] || ''
+      downloadUrl: airtableGuide.fields['Download URL'] || '',
+      coverImage: airtableGuide.fields['Book Cover']?.[0]?.url || ''
     };
   } catch (error) {
     console.error('Error fetching guide from Airtable:', error);
