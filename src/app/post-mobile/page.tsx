@@ -275,7 +275,7 @@ export default function PostMobilePage() {
             {/* Bottom Sheet */}
             <div 
               ref={bottomSheetRef}
-              className="fixed bottom-0 left-0 right-0 rounded-t-3xl p-6 z-50 max-h-[80vh] overflow-y-auto"
+              className="fixed bottom-0 left-0 right-0 rounded-t-3xl p-6 z-50 max-h-[85vh] overflow-y-auto"
               style={{ backgroundColor: '#2F4C6C' }}
             >
               <div className="text-center">
@@ -399,7 +399,7 @@ export default function PostMobilePage() {
           {/* Bottom Sheet Content */}
           <div 
             ref={bottomSheetRef}
-            className="relative w-full rounded-t-3xl p-8 h-[98vh] overflow-y-auto" 
+            className="relative w-full rounded-t-3xl p-8 max-h-[90vh] overflow-y-auto flex flex-col" 
             style={{ backgroundColor: '#2F4C6C' }}
           >
             {/* Handle */}
@@ -427,7 +427,7 @@ export default function PostMobilePage() {
             </button>
             
             {/* Content */}
-            <div className="pt-4">
+            <div className="pt-4 flex-1 overflow-y-auto">
               <h2 className="text-xl font-semibold text-white mb-6" style={{ fontFamily: 'Amita, cursive' }}>Posts</h2>
               
               {posts.length > 0 ? (

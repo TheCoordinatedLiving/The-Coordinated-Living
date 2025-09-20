@@ -4375,10 +4375,10 @@ const Page = () => {
           
           {/* Bottom Sheet */}
           <div 
-            className="absolute bottom-0 left-0 right-0 rounded-t-3xl shadow-2xl post-bottom-sheet"
+            className="absolute bottom-0 left-0 right-0 rounded-t-3xl shadow-2xl post-bottom-sheet flex flex-col"
             style={{ 
               maxHeight: '90vh',
-              minHeight: '80vh',
+              minHeight: '75vh',
               backgroundColor: '#2f4c6c'
             }}
           >
@@ -4407,7 +4407,7 @@ const Page = () => {
             </div>
             
             {/* Swipeable Posts Container */}
-            <div className="pb-6">
+            <div className="pb-6 flex-1 overflow-y-auto">
               {/* Cards Container with Single Active Card */}
               <div 
                 className="mb-6 relative overflow-hidden" 
