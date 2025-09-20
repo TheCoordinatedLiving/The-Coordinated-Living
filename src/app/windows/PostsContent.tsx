@@ -39,7 +39,7 @@ const PostCard = ({ post, onClick }: { post: Post; onClick: () => void }) => {
   return (
     <div 
       style={{ position: 'absolute', top: post.y, left: post.x }}
-      className="bg-white border border-gray-200 rounded-lg p-4 h-40 w-64 flex flex-col justify-between shadow-md hover:shadow-lg transition-shadow duration-200 cursor-pointer"
+      className="bg-white border border-gray-200 rounded-2xl p-4 h-40 w-64 flex flex-col justify-between shadow-md hover:shadow-lg transition-shadow duration-200 cursor-pointer"
       onClick={onClick}
     >
       <div>
@@ -136,7 +136,7 @@ const PostModal = ({
 
         <div className="relative z-10 w-full xl:max-w-2xl">
           <div 
-            className="bg-white rounded-lg shadow-2xl overflow-hidden post-modal-content post-modal-container"
+            className="bg-white rounded-2xl shadow-2xl overflow-hidden post-modal-content post-modal-container"
             ref={postTemplateRef}
           >
             <PostTemplate
@@ -541,16 +541,37 @@ const PostsContent = () => {
       {/* Loading State */}
       {loading && (
         <div className="flex items-center justify-center h-64">
-          <div className="text-gray-500">Loading posts...</div>
+          <div className="flex flex-col items-center space-y-4">
+            {/* Elegant loading spinner */}
+            <div className="relative">
+              <div className="w-12 h-12 border-4 border-gray-200 border-t-blue-600 rounded-full animate-spin"></div>
+            </div>
+            {/* Subtle loading text */}
+            <div className="text-gray-600 text-sm font-medium">Loading posts...</div>
+          </div>
         </div>
       )}
       
       {/* Static Cards Area */}
       {!loading && (
         <div className="relative h-[500px] w-full">
-          {filteredPosts.map((post) => (
-            <PostCard key={post.id} post={post} onClick={() => handleCardClick(post)} />
-          ))}
+          {filteredPosts.length > 0 ? (
+            filteredPosts.map((post) => (
+              <PostCard key={post.id} post={post} onClick={() => handleCardClick(post)} />
+            ))
+          ) : (
+            <div className="flex items-center justify-center h-full">
+              <div className="text-center">
+                <div className="mb-4">
+                  <svg className="w-16 h-16 mx-auto text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  </svg>
+                </div>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">No Posts Available</h3>
+                <p className="text-gray-600">Check back later for new content!</p>
+              </div>
+            </div>
+          )}
         </div>
       )}
 

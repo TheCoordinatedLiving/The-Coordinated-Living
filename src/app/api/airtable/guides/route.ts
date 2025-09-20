@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { fetchGuides, fetchGuideById, AirtableGuide } from '@/lib/airtable';
 
+export const dynamic = 'force-dynamic';
+
 // Cache for guides data (5 minutes)
 let guidesCache: AirtableGuide[] | null = null;
 let cacheTimestamp: number = 0;

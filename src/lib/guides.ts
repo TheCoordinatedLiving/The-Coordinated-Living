@@ -7,8 +7,8 @@ export interface Guide {
   id: string;
   title: string;
   description: string;
-  content?: string;
   downloadUrl?: string;
+  coverImage?: string; // New field for book cover image
 }
 
 // Fallback data in case Airtable is unavailable
@@ -17,25 +17,29 @@ const fallbackGuides: Guide[] = [
     id: '1',
     title: 'Guide 1',
     description: 'Brief description of the first guide content and what it covers',
-    content: 'Detailed content for Guide 1...',
+    downloadUrl: 'https://example.com/guide1.pdf',
+    coverImage: '/placeholder-book-cover.jpg'
   },
   {
     id: '2',
     title: 'Guide 2',
     description: 'Brief description of the second guide content and what it covers',
-    content: 'Detailed content for Guide 2...',
+    downloadUrl: 'https://example.com/guide2.pdf',
+    coverImage: '/placeholder-book-cover.jpg'
   },
   {
     id: '3',
     title: 'Guide 3',
     description: 'Brief description of the third guide content and what it covers',
-    content: 'Detailed content for Guide 3...',
+    downloadUrl: 'https://example.com/guide3.pdf',
+    coverImage: '/placeholder-book-cover.jpg'
   },
   {
     id: '4',
     title: 'Guide 4',
     description: 'Brief description of the fourth guide content and what it covers',
-    content: 'Detailed content for Guide 4...',
+    downloadUrl: 'https://example.com/guide4.pdf',
+    coverImage: '/placeholder-book-cover.jpg'
   }
 ];
 
@@ -58,8 +62,8 @@ export const getAllGuides = async (): Promise<Guide[]> => {
       id: guide.id,
       title: guide.fields['Title'] || '',
       description: guide.fields['Description'] || '',
-      content: guide.fields['Content'] || '',
-      downloadUrl: guide.fields['Download URL'] || ''
+      downloadUrl: guide.fields['Download URL'] || '',
+      coverImage: guide.fields['Book Cover']?.[0]?.url || '' // Extract URL from first attachment
     }));
   } catch (error) {
     console.error('Error fetching guides from Airtable:', error);

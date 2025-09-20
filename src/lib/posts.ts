@@ -57,8 +57,8 @@ export const getAllPosts = async (): Promise<Post[]> => {
     
     const airtablePosts = await response.json();
     
-        // Transform Airtable data to our Post interface
-        return airtablePosts.map((post: AirtablePost) => ({
+    // Transform Airtable data to our Post interface
+    return airtablePosts.map((post: AirtablePost) => ({
       id: post.id,
       title: post.fields['Title'] || '',
       leftContent: post.fields['Left Content'] || '',

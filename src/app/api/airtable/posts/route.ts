@@ -1,10 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { fetchPosts, fetchPostById, AirtablePost } from '@/lib/airtable';
 
-// Cache for posts data (5 minutes)
+export const dynamic = 'force-dynamic';
+
+// Cache for posts data (30 seconds for testing)
 let postsCache: AirtablePost[] | null = null;
 let cacheTimestamp: number = 0;
-const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
+const CACHE_DURATION = 30 * 1000; // 30 seconds
 
 export async function GET(request: NextRequest) {
   try {

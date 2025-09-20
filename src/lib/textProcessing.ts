@@ -87,4 +87,57 @@ export const processTextContent = (text: string): React.ReactNode[] => {
   });
   
   return finalElements;
+};
+
+// Content parsing function for single content field
+export interface ParsedContent {
+  leftContent: string;
+  rightContent: string;
+  bottomRightContent: string;
+}
+
+export const parseContentByParagraphs = (content: string): ParsedContent => {
+  if (!content || content.trim() === '') {
+    return {
+      leftContent: '',
+      rightContent: '',
+      bottomRightContent: ''
+    };
+  }
+
+  // Split content by double line breaks (paragraphs)
+  const paragraphs = content
+    .split(/\n\s*\n/)
+    .map(p => p.trim())
+    .filter(p => p.length > 0);
+
+  // Default values
+  let leftContent = '';
+  let rightContent = '';
+  let bottomRightContent = '';
+
+  // Assign paragraphs based on position
+  if (paragraphs.length >= 1) {
+    leftContent = paragraphs[0];
+  }
+  
+  if (paragraphs.length >= 2) {
+    rightContent = paragraphs[1];
+  }
+  
+  if (paragraphs.length >= 3) {
+    bottomRightContent = paragraphs[2];
+  }
+
+  // If there are more than 3 paragraphs, combine the extra ones into bottom right
+  if (paragraphs.length > 3) {
+    const extraParagraphs = paragraphs.slice(3);
+    bottomRightContent += '\n\n' + extraParagraphs.join('\n\n');
+  }
+
+  return {
+    leftContent,
+    rightContent,
+    bottomRightContent
+  };
 }; 

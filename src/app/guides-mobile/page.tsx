@@ -14,11 +14,13 @@ const GuidesMobilePage = () => {
   const [showBottomSheet, setShowBottomSheet] = useState(false);
   const [currentGuideIndex, setCurrentGuideIndex] = useState(0);
   const [guides, setGuides] = useState<Guide[]>([]);
+  const [loading, setLoading] = useState(true);
 
   // Fetch guides from Airtable
   useEffect(() => {
     const fetchGuides = async () => {
       try {
+        setLoading(true);
         const apiGuides = await getAllGuides();
         setGuides(apiGuides);
       } catch (error) {
@@ -30,6 +32,8 @@ const GuidesMobilePage = () => {
           { id: '3', title: 'Guide 3', description: 'Brief description of the third guide content and what it covers' },
           { id: '4', title: 'Guide 4', description: 'Brief description of the fourth guide content and what it covers' },
         ]);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -194,17 +198,22 @@ const GuidesMobilePage = () => {
           {/* Button */}
           <div className="mt-auto">
             <button 
-              onClick={() => setShowBottomSheet(true)}
-              className="w-full bg-white text-[#2F4C6C] font-semibold py-4 px-6 rounded-full transition-all duration-200 hover:bg-opacity-90 active:scale-95"
+              onClick={() => !loading && guides.length > 0 && setShowBottomSheet(true)}
+              disabled={loading || guides.length === 0}
+              className={`w-full font-semibold py-4 px-6 rounded-full transition-all duration-200 ${
+                loading || guides.length === 0
+                  ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                  : 'bg-white text-[#2F4C6C] hover:bg-opacity-90 active:scale-95'
+              }`}
             >
-              View Our Guides
+              {loading ? 'Loading Guides...' : 'View Our Guides'}
             </button>
           </div>
         </div>
       </div>
 
       {/* Bottom Sheet */}
-      {showBottomSheet && (
+      {showBottomSheet && guides.length > 0 && (
         <div className="fixed inset-0 z-50 flex items-end">
           {/* Backdrop */}
           <div 
@@ -241,16 +250,17 @@ const GuidesMobilePage = () => {
             <div className="pt-4">
               <h2 className="text-xl font-semibold text-white mb-6" style={{ fontFamily: 'Amita, cursive' }}>Available Guides</h2>
               
-              {/* Guide Card */}
-              <div className="mb-6">
+              {guides.length > 0 ? (
+                /* Guide Card */
+                <div className="mb-6">
                 {/* Image Card */}
                 <div className="mb-4 relative" onTouchStart={handleTouchStart}>
-                  <div className="aspect-[4/5] rounded-xl overflow-hidden">
+                  <div className="aspect-[4/5] rounded-2xl overflow-hidden" style={{ borderRadius: '16px' }}>
                     <Image 
-                      src="/guides-bottomsheet.png" 
+                      src={guides.length > 0 && guides[currentGuideIndex]?.coverImage || "/guides-bottomsheet.png"} 
                       alt="Guide Card" 
                       fill
-                      className="object-cover"
+                      className="object-cover rounded-2xl"
                     />
                     
                     {/* Logo - Top Left */}
@@ -267,10 +277,10 @@ const GuidesMobilePage = () => {
                     {/* Title and Description - Bottom Left */}
                     <div className="absolute bottom-4 left-4 right-4">
                       <h3 className="text-white text-lg font-semibold mb-2" style={{ fontFamily: 'Amita, cursive' }}>
-                        {guides[currentGuideIndex].title}
+                        {guides.length > 0 && guides[currentGuideIndex] ? guides[currentGuideIndex].title : 'Loading...'}
                       </h3>
                       <p className="text-white text-sm opacity-90" style={{ fontFamily: 'Roboto, sans-serif' }}>
-                        {guides[currentGuideIndex].description}
+                        {guides.length > 0 && guides[currentGuideIndex] ? guides[currentGuideIndex].description : 'Loading guide description...'}
                       </p>
                     </div>
                   </div>
@@ -295,11 +305,32 @@ const GuidesMobilePage = () => {
                 
                 {/* Download Button - Centered */}
                 <div className="flex justify-center">
-                  <button className="bg-white text-[#2F4C6C] px-20 py-3 rounded-full text-sm font-medium hover:bg-opacity-90 transition-all duration-200">
+                  <button 
+                    className="bg-white text-[#2F4C6C] px-20 py-3 rounded-full text-sm font-medium hover:bg-opacity-90 transition-all duration-200"
+                    onClick={() => {
+                      if (guides.length > 0 && guides[currentGuideIndex]?.downloadUrl) {
+                        window.open(guides[currentGuideIndex].downloadUrl, '_blank');
+                      } else {
+                        console.log('No download URL available');
+                      }
+                    }}
+                  >
                     Download This Guide
                   </button>
                 </div>
               </div>
+              ) : (
+                /* Empty State */
+                <div className="text-center py-12">
+                  <div className="mb-4">
+                    <svg className="w-16 h-16 mx-auto text-white opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                    </svg>
+                  </div>
+                  <h3 className="text-lg font-semibold text-white mb-2" style={{ fontFamily: 'Amita, cursive' }}>No Guides Available</h3>
+                  <p className="text-white opacity-75" style={{ fontFamily: 'Roboto, sans-serif' }}>Check back later for new guides!</p>
+                </div>
+              )}
             </div>
           </div>
         </div>

@@ -2,14 +2,14 @@ import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { getAllGuides, Guide } from '../../lib/guides';
 
-const BookCard = ({ image, title, description }: { image: string, title: string, description: string }) => (
+const BookCard = ({ image, title, description, downloadUrl }: { image: string, title: string, description: string, downloadUrl?: string }) => (
   <div className="text-center flex flex-col items-center group cursor-pointer hover:scale-105 transition-transform duration-200">
     <div className="w-40 h-56 relative mb-4">
       <Image 
         src={image} 
         alt={title} 
         fill
-        className="rounded-md object-cover"
+        className="rounded-2xl object-cover"
         sizes="160px"
       />
     </div>
@@ -26,8 +26,11 @@ const BookCard = ({ image, title, description }: { image: string, title: string,
       }}
       onClick={(e) => {
         e.stopPropagation();
-        console.log(`Downloading ${title}`);
-        // Add download functionality here
+        if (downloadUrl) {
+          window.open(downloadUrl, '_blank');
+        } else {
+          console.log(`No download URL for ${title}`);
+        }
       }}
     >
       Download
@@ -66,7 +69,7 @@ const BooksContent = () => {
 
   // Transform guides to book format for display
   const books = guides.map((guide, index) => ({
-    image: `/keep/book${(index % 4) + 1}.svg`, // Cycle through available book images
+    image: guide.coverImage || `/keep/book${(index % 4) + 1}.svg`, // Use cover image from Airtable or fallback
     title: guide.title,
     description: guide.description,
     downloadUrl: guide.downloadUrl
@@ -114,9 +117,23 @@ const BooksContent = () => {
       {/* Books Grid */}
       {!loading && (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
-          {filteredBooks.map((book, index) => (
-            <BookCard key={index} image={book.image} title={book.title} description={book.description} />
-          ))}
+          {filteredBooks.length > 0 ? (
+            filteredBooks.map((book, index) => (
+              <BookCard key={index} image={book.image} title={book.title} description={book.description} downloadUrl={book.downloadUrl} />
+            ))
+          ) : (
+            <div className="col-span-full flex items-center justify-center h-64">
+              <div className="text-center">
+                <div className="mb-4">
+                  <svg className="w-16 h-16 mx-auto text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                  </svg>
+                </div>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">No Guides Available</h3>
+                <p className="text-gray-600">Check back later for new guides!</p>
+              </div>
+            </div>
+          )}
         </div>
       )}
     </div>

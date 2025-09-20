@@ -137,6 +137,22 @@ const NewHomepage = () => {
   
   // Terms modal state
   const [showTermsModal, setShowTermsModal] = useState(false);
+  const [postsCount, setPostsCount] = useState(0);
+  
+  // Fetch posts count from Airtable
+  useEffect(() => {
+    const fetchPostsCount = async () => {
+      try {
+        const apiPosts = await getAllPosts();
+        setPostsCount(apiPosts.length);
+      } catch (error) {
+        console.error('Error fetching posts count:', error);
+        setPostsCount(0);
+      }
+    };
+
+    fetchPostsCount();
+  }, []);
   
   // Static background
   const backgroundImage = '/homepage-new-background.png';
@@ -329,7 +345,7 @@ const NewHomepage = () => {
             
             {/* Bottom left - Count */}
             <div className="flex items-baseline">
-              <span className="text-black font-bold text-3xl">4</span>
+              <span className="text-black font-bold text-3xl">{postsCount}</span>
               <span className="text-black text-sm ml-2">Posts Available</span>
             </div>
           </div>
@@ -559,6 +575,7 @@ const Page = () => {
   // Fetch posts from Airtable
   useEffect(() => {
     const fetchPosts = async () => {
+      setPostsLoading(true);
       try {
         const apiPosts = await getAllPosts();
         
@@ -590,6 +607,8 @@ const Page = () => {
       } catch (error) {
         console.error('Error fetching posts:', error);
         // Keep fallback posts if Airtable fails
+      } finally {
+        setPostsLoading(false);
       }
     };
 
@@ -1051,7 +1070,16 @@ const Page = () => {
   }, [showTermsModal, isClosingTermsModal]);
 
   // Posts state for dynamic content
-  const [posts, setPosts] = useState([
+  const [posts, setPosts] = useState<Array<{
+    title: string;
+    leftContent: React.ReactNode;
+    rightContent: React.ReactNode;
+    bottomRightContent: React.ReactNode;
+  }>>([]);
+  const [postsLoading, setPostsLoading] = useState(true);
+  
+  // Temporary posts array for initial state
+  const tempPosts = [
     {
       title: "POST TITLE HERE",
       leftContent: (
@@ -1134,9 +1162,9 @@ const Page = () => {
         <p className="text-base leading-relaxed" style={{ color: "#000000" }}>
           As we practice stillness, we discover that God&apos;s presence is our greatest treasure. In Him we find rest for our souls, peace for our minds, and strength for our journey.
         </p>
-      )
+      ),
     }
-  ]);
+  ];
 
   // Navigation functions
   const handlePreviousPost = () => {
@@ -2974,7 +3002,9 @@ const Page = () => {
               }}
               onClick={() => {
                 console.log('New post design clicked!');
-                setShowPostModal(true);
+                if (!postsLoading && posts.length > 0) {
+                  setShowPostModal(true);
+                }
               }}
             >
               {/* Circular Logo */}
@@ -4946,14 +4976,38 @@ const Page = () => {
                 className="bg-white rounded-lg shadow-2xl overflow-hidden post-modal-content post-modal-container"
                 ref={postTemplateRef}
               >
-                <PostTemplate
-                  title={posts[currentPostIndex].title}
-                  currentPage={currentPostIndex + 1}
-                  totalPages={posts.length}
-                  leftContent={posts[currentPostIndex].leftContent}
-                  rightContent={posts[currentPostIndex].rightContent}
-                  bottomRightContent={posts[currentPostIndex].bottomRightContent}
-                />
+                {postsLoading ? (
+                  <div className="p-16 text-center">
+                    <div className="flex flex-col items-center space-y-6">
+                      {/* Elegant loading spinner */}
+                      <div className="relative">
+                        <div className="w-16 h-16 border-4 border-gray-200 border-t-blue-600 rounded-full animate-spin"></div>
+                      </div>
+                      {/* Subtle loading text */}
+                      <div className="text-gray-600 text-lg font-medium">Loading posts...</div>
+                      <div className="text-gray-500 text-sm">Please wait while we fetch the latest content</div>
+                    </div>
+                  </div>
+                ) : posts.length > 0 ? (
+                  <PostTemplate
+                    title={posts[currentPostIndex].title}
+                    currentPage={currentPostIndex + 1}
+                    totalPages={posts.length}
+                    leftContent={posts[currentPostIndex].leftContent}
+                    rightContent={posts[currentPostIndex].rightContent}
+                    bottomRightContent={posts[currentPostIndex].bottomRightContent}
+                  />
+                ) : (
+                  <div className="p-8 text-center">
+                    <div className="mb-4">
+                      <svg className="w-16 h-16 mx-auto text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                      </svg>
+                    </div>
+                    <h3 className="text-lg font-semibold text-gray-900 mb-2">No Posts Available</h3>
+                    <p className="text-gray-600">Check back later for new content!</p>
+                  </div>
+                )}
               </div>
               
               
