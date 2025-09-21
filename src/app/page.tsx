@@ -4837,7 +4837,7 @@ const Page = () => {
           </button>
           
           {/* Post Template Content */}
-          <div className="absolute inset-0 flex items-center justify-center p-4 xl:p-16 pt-24 xl:pt-16">
+          <div className="absolute inset-0 flex items-center justify-center p-4 xl:p-16 pt-24 xl:pt-16 xl:overflow-y-auto">
             {/* Left Navigation Button */}
             {currentPostIndex > 0 && (
               <button

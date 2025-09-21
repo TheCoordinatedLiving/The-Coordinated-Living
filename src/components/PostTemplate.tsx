@@ -21,8 +21,17 @@ export default function PostTemplate({
   const displayTitle = title;
 
   return (
-    <div className="bg-white relative xl:scale-100 scale-90">
-      {/* Watermark in the center */}
+    <>
+      <style jsx>{`
+        .post-template-scroll::-webkit-scrollbar {
+          display: none;
+        }
+      `}</style>
+      <div className="bg-white relative xl:scale-100 scale-90 xl:max-h-[80vh] xl:overflow-y-auto xl:overflow-x-hidden post-template-scroll" style={{
+        scrollbarWidth: 'none', /* Firefox */
+        msOverflowStyle: 'none', /* Internet Explorer 10+ */
+      }}>
+        {/* Watermark in the center */}
       <div className="absolute inset-0 flex items-center justify-center opacity-10 pointer-events-none z-0">
         <Image
           src="/watermark.svg"
@@ -40,7 +49,7 @@ export default function PostTemplate({
             <div className="w-2 h-2 rotate-45 border-2" style={{ borderColor: "#000000" }}></div>
             <div className="w-48 h-px" style={{ backgroundColor: "#000000" }}></div>
           </div>
-          <span className="text-base xl:text-base text-sm font-medium" style={{ color: "#000000" }}>
+          <span className="text-sm xl:text-base font-medium" style={{ color: "#000000" }}>
             {currentPage}/{totalPages}
           </span>
           <div className="flex items-center space-x-3">
@@ -144,5 +153,6 @@ export default function PostTemplate({
         </div>
       </div>
     </div>
+    </>
   );
 } 

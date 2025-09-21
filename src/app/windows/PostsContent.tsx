@@ -107,7 +107,7 @@ const PostModal = ({
       </button>
       
       {/* Modal content - centered */}
-      <div className="absolute inset-0 flex items-center justify-center p-8">
+      <div className="absolute inset-0 flex items-center justify-center p-8 xl:overflow-y-auto">
         {/* Left chevron navigation */}
         <button
           onClick={onPrevious}
