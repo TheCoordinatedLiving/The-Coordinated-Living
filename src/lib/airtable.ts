@@ -76,8 +76,8 @@ export const fetchAirtableRecords = async <T>(
         sort: options.sort || [],
         maxRecords: options.maxRecords || 100,
       })
-      .eachPage((pageRecords: Airtable.Records<any>, fetchNextPage: () => void) => {
-        pageRecords.forEach((record: Airtable.Record<any>) => {
+      .eachPage((pageRecords, fetchNextPage) => {
+        pageRecords.forEach((record) => {
           records.push({
             id: record.id,
             fields: record.fields,
