@@ -8,9 +8,17 @@ if (!apiKey || !baseId) {
   console.warn('Airtable API key or Base ID not found in environment variables');
 }
 
-const base = new Airtable({
-  apiKey: apiKey || '',
-}).base(baseId || '');
+// Lazy initialization of Airtable base
+let base: any = null;
+
+const getAirtableBase = () => {
+  if (!base && apiKey && baseId) {
+    base = new Airtable({
+      apiKey: apiKey,
+    }).base(baseId);
+  }
+  return base;
+};
 
 // Types for our Airtable records
 export interface AirtablePost {
@@ -55,16 +63,21 @@ export const fetchAirtableRecords = async <T>(
   } = {}
 ): Promise<T[]> => {
   try {
+    const airtableBase = getAirtableBase();
+    if (!airtableBase) {
+      throw new Error('Airtable not configured - missing API key or Base ID');
+    }
+
     const records: T[] = [];
     
-    await base(tableName)
+    await airtableBase(tableName)
       .select({
         filterByFormula: options.filterByFormula || '',
         sort: options.sort || [],
         maxRecords: options.maxRecords || 100,
       })
-      .eachPage((pageRecords, fetchNextPage) => {
-        pageRecords.forEach((record) => {
+      .eachPage((pageRecords: any[], fetchNextPage: () => void) => {
+        pageRecords.forEach((record: any) => {
           records.push({
             id: record.id,
             fields: record.fields,
@@ -159,7 +172,12 @@ export const fetchGuides = async (): Promise<AirtableGuide[]> => {
 
 export const fetchPostById = async (id: string): Promise<AirtablePost | null> => {
   try {
-    const record = await base('Posts').find(id);
+    const airtableBase = getAirtableBase();
+    if (!airtableBase) {
+      throw new Error('Airtable not configured - missing API key or Base ID');
+    }
+
+    const record = await airtableBase('Posts').find(id);
     const post = {
       id: record.id,
       fields: record.fields,
@@ -178,7 +196,12 @@ export const fetchPostById = async (id: string): Promise<AirtablePost | null> =>
 
 export const fetchGuideById = async (id: string): Promise<AirtableGuide | null> => {
   try {
-    const record = await base('Guides').find(id);
+    const airtableBase = getAirtableBase();
+    if (!airtableBase) {
+      throw new Error('Airtable not configured - missing API key or Base ID');
+    }
+
+    const record = await airtableBase('Guides').find(id);
     const guide = {
       id: record.id,
       fields: record.fields,
