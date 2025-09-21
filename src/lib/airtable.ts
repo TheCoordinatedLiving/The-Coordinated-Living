@@ -9,7 +9,7 @@ if (!apiKey || !baseId) {
 }
 
 // Lazy initialization of Airtable base
-let base: any = null;
+let base: Airtable.Base | null = null;
 
 const getAirtableBase = () => {
   if (!base && apiKey && baseId) {
@@ -76,8 +76,8 @@ export const fetchAirtableRecords = async <T>(
         sort: options.sort || [],
         maxRecords: options.maxRecords || 100,
       })
-      .eachPage((pageRecords: any[], fetchNextPage: () => void) => {
-        pageRecords.forEach((record: any) => {
+      .eachPage((pageRecords: Airtable.Records<any>, fetchNextPage: () => void) => {
+        pageRecords.forEach((record: Airtable.Record<any>) => {
           records.push({
             id: record.id,
             fields: record.fields,
