@@ -97,43 +97,27 @@ export default function PostTemplate({
             </div>
           </div>
 
-          {/* Two-column text content */}
-          <div className="hidden xl:grid grid-cols-1 xl:grid-cols-2 gap-4 xl:gap-6 mb-0.5 xl:mb-2" style={{ fontFamily: 'Roboto, sans-serif' }}>
-            <div className="space-y-1 xl:space-y-3">
+          {/* Two-column layout with image positioned in left column */}
+          <div className="hidden xl:grid grid-cols-1 xl:grid-cols-2 gap-4 xl:gap-2 mb-0.5 xl:mb-0" style={{ fontFamily: 'Roboto, sans-serif' }}>
+            <div className="space-y-1 xl:space-y-1">
               {leftContent}
+              {/* Circular image positioned after left content */}
+              <div className="flex justify-center mt-4">
+                <div className="w-48 h-48 rounded-full overflow-hidden">
+                  <Image
+                    src="/new-post-template-image.jpg"
+                    alt="Post template image"
+                    width={256}
+                    height={256}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              </div>
             </div>
-            <div className="space-y-1 xl:space-y-3">
+            <div className="space-y-1 xl:space-y-1">
               {rightContent}
-            </div>
-          </div>
-
-          {/* Bottom section with coffee image and text */}
-          <div className="hidden xl:grid grid-cols-1 xl:grid-cols-2 gap-4 xl:gap-6">
-            <div className="hidden xl:flex justify-center">
-              <div className="w-48 h-48 rounded-full overflow-hidden">
-                <Image
-                  src="/new-post-template-image.jpg"
-                  alt="Post template image"
-                  width={256}
-                  height={256}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-            </div>
-            <div className="xl:col-span-1 col-span-1 pt-0.5 xl:pt-2 relative" style={{ fontFamily: 'Roboto, sans-serif' }}>
-              {/* Watermark background */}
-              <div className="absolute inset-0 flex items-end justify-end opacity-20 pointer-events-none">
-                <Image
-                  src="/watermark.svg"
-                  alt="Watermark"
-                  width={120}
-                  height={120}
-                  className="w-24 h-24"
-                  style={{ opacity: 0.3 }}
-                />
-              </div>
-              {/* Content on top */}
-              <div className="relative z-10">
+              {/* Bottom right content flows directly from right content */}
+              <div className="mt-2 xl:mt-3">
                 {bottomRightContent}
               </div>
             </div>
