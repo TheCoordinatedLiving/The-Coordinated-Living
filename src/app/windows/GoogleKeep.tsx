@@ -59,13 +59,13 @@ const GoogleKeep = ({ onClose, isOnTop = false }: GoogleKeepProps) => {
         {/* Page Content */}
         <div className="flex-1 flex flex-col overflow-hidden rounded-b-lg bg-white">
           {/* Keep Banner */}
-          <div>
+          <div className="flex-shrink-0">
             <Image src="/keep/keep-banner.svg" width={1150} height={48} alt="Google Keep banner" className="w-full h-auto" />
           </div>
 
-          <div className="flex-1 flex">
+          <div className="flex-1 flex min-h-0">
             {/* Side Navigation */}
-            <div className="w-64 relative">
+            <div className="w-64 relative flex-shrink-0">
               <Image src="/keep/side-nav.svg" layout="fill" objectFit="cover" alt="Side navigation background" />
               <nav className="relative z-10 pt-4 flex flex-col" style={{ gap: '13px' }}>
                 <NavItem 
@@ -96,7 +96,7 @@ const GoogleKeep = ({ onClose, isOnTop = false }: GoogleKeepProps) => {
             </div>
             
             {/* Rest of the content area */}
-            <div className="flex-1 bg-white">
+            <div className="flex-1 bg-white overflow-hidden">
                {activeTab === 'Posts' && <PostsContent />}
                {activeTab === 'Books' && <BooksContent />}
                {activeTab === 'Archive' && <div className="w-full h-full flex items-center justify-center"><p className="text-gray-500">NO ARCHIVED POSTS OR GUIDES</p></div>}

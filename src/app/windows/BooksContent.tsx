@@ -116,7 +116,7 @@ const BooksContent = () => {
       
       {/* Books Grid */}
       {!loading && (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 pb-8">
           {filteredBooks.length > 0 ? (
             filteredBooks.map((book, index) => (
               <BookCard key={index} image={book.image} title={book.title} description={book.description} downloadUrl={book.downloadUrl} />

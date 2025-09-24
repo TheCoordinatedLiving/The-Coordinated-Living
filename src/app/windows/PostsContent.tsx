@@ -510,7 +510,7 @@ const PostsContent = () => {
   };
 
   return (
-    <div className="p-8 w-full h-full overflow-hidden bg-gray-50">
+    <div className="p-8 w-full h-full overflow-y-auto bg-gray-50">
       {/* Header Section */}
       <div className="flex justify-between items-start mb-8">
         <div className="max-w-xl">
@@ -554,7 +554,7 @@ const PostsContent = () => {
       
       {/* Static Cards Area */}
       {!loading && (
-        <div className="relative h-[500px] w-full">
+        <div className="relative min-h-[500px] w-full">
           {filteredPosts.length > 0 ? (
             filteredPosts.map((post) => (
               <PostCard key={post.id} post={post} onClick={() => handleCardClick(post)} />
