@@ -1,13 +1,6 @@
 "use client";
 import PostTemplate from '@/components/PostTemplate';
-
-interface Post {
-  id: string;
-  title: string;
-  leftContent: string;
-  rightContent: string;
-  bottomRightContent: string;
-}
+import { Post } from '@/lib/posts';
 
 interface PostPageClientProps {
   post: Post;
