@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import Image from "next/image";
 import { gsap } from 'gsap';
 import Lottie from 'lottie-react';
-import { getAllPosts } from '@/lib/posts';
+import { getAllPosts, Post } from '@/lib/posts';
 import PostTemplate from '../components/PostTemplate';
 import { generatePDFFromPostData, generatePostPDF } from '../lib/pdfGenerator';
 import FullTermsContent from '../components/FullTermsContent';
@@ -579,31 +579,8 @@ const Page = () => {
       try {
         const apiPosts = await getAllPosts();
         
-        // Transform API posts to component format
-        const transformedPosts = apiPosts.map((apiPost) => ({
-          title: apiPost.title,
-          leftContent: (
-            <>
-              <p className="text-base leading-relaxed" style={{ color: "#000000" }}>
-                {apiPost.leftContent}
-              </p>
-            </>
-          ),
-          rightContent: (
-            <>
-              <p className="text-base leading-relaxed" style={{ color: "#000000" }}>
-                {apiPost.rightContent}
-              </p>
-            </>
-          ),
-          bottomRightContent: (
-            <p className="text-base leading-relaxed" style={{ color: "#000000" }}>
-              {apiPost.bottomRightContent}
-            </p>
-          )
-        }));
-        
-        setPosts(transformedPosts);
+        // Use the posts directly from getAllPosts (already transformed)
+        setPosts(apiPosts);
       } catch (error) {
         console.error('Error fetching posts:', error);
         // Keep fallback posts if Airtable fails
@@ -1070,12 +1047,7 @@ const Page = () => {
   }, [showTermsModal, isClosingTermsModal]);
 
   // Posts state for dynamic content
-  const [posts, setPosts] = useState<Array<{
-    title: string;
-    leftContent: React.ReactNode;
-    rightContent: React.ReactNode;
-    bottomRightContent: React.ReactNode;
-  }>>([]);
+  const [posts, setPosts] = useState<Post[]>([]);
   const [postsLoading, setPostsLoading] = useState(true);
   
 
@@ -4714,8 +4686,16 @@ const Page = () => {
               >
                 {/* Post Content */}
                 <div className="space-y-4 text-base leading-relaxed">
-                  {posts[currentFullPostIndex].leftContent}
-                  {posts[currentFullPostIndex].rightContent}
+                  {posts[currentFullPostIndex].content ? (
+                    // Use new content field if available
+                    <p>{posts[currentFullPostIndex].content}</p>
+                  ) : (
+                    // Fallback to legacy fields
+                    <>
+                      <p>{posts[currentFullPostIndex].leftContent}</p>
+                      <p>{posts[currentFullPostIndex].rightContent}</p>
+                    </>
+                  )}
                 </div>
               </div>
             </div>
@@ -4886,7 +4866,7 @@ const Page = () => {
 
             <div className="relative z-10 w-full xl:max-w-2xl">
               <div 
-                className="bg-white rounded-lg shadow-2xl overflow-hidden post-modal-content post-modal-container"
+                className="post-modal-content post-modal-container"
                 ref={postTemplateRef}
               >
                 {postsLoading ? (
@@ -4904,16 +4884,15 @@ const Page = () => {
                 ) : posts.length > 0 ? (
                   <PostTemplate
                     title={posts[currentPostIndex].title}
+                    content={posts[currentPostIndex].content}
+                    images={posts[currentPostIndex].images}
                     currentPage={currentPostIndex + 1}
                     totalPages={posts.length}
-                    leftContent={posts[currentPostIndex].leftContent}
-                    rightContent={posts[currentPostIndex].rightContent}
-                    bottomRightContent={posts[currentPostIndex].bottomRightContent}
                   />
                 ) : (
                   <div className="p-8 text-center">
                     <div className="mb-4">
-                      <svg className="w-16 h-16 mx-auto text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-16 h-16 mx-auto text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">x
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                       </svg>
                     </div>

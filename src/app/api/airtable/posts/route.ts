@@ -31,6 +31,11 @@ export async function GET(request: NextRequest) {
     // Fetch fresh data from Airtable
     const posts = await fetchPosts();
     
+    // Debug: Log field names from first post
+    if (posts.length > 0) {
+      console.log('Available fields:', Object.keys(posts[0].fields));
+    }
+    
     // Update cache
     postsCache = posts;
     cacheTimestamp = now;

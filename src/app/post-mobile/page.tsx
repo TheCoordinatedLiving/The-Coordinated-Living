@@ -554,10 +554,18 @@ export default function PostMobilePage() {
               
               {/* Content */}
               <div className="text-white text-base leading-relaxed" style={{ fontFamily: 'Roboto, sans-serif' }}>
-                <div className="space-y-0">
-                  <p>{selectedPost.leftContent}</p>
-                  <p className="mt-2">{selectedPost.rightContent}</p>
-                  <p className="mt-2">{selectedPost.bottomRightContent}</p>
+                <div className="space-y-4">
+                  {selectedPost.content ? (
+                    // Use new content field if available
+                    <p>{selectedPost.content}</p>
+                  ) : (
+                    // Fallback to legacy fields
+                    <>
+                      <p>{selectedPost.leftContent}</p>
+                      <p>{selectedPost.rightContent}</p>
+                      <p>{selectedPost.bottomRightContent}</p>
+                    </>
+                  )}
                 </div>
               </div>
             </div>

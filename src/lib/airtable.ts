@@ -25,9 +25,21 @@ export interface AirtablePost {
   id: string;
   fields: {
     'Title': string;
-    'Left Content': string;
-    'Right Content': string;
-    'Bottom Right Content': string;
+    'Content': string; // Main content for right column
+    'Image 1'?: Array<{
+      id: string;
+      url: string;
+      filename: string;
+      size: number;
+      type: string;
+    }>; // First image attachment field
+    'Image 2'?: Array<{
+      id: string;
+      url: string;
+      filename: string;
+      size: number;
+      type: string;
+    }>; // Second image attachment field
     'Published'?: boolean;
     'Order'?: number;
     'Created Date'?: string;

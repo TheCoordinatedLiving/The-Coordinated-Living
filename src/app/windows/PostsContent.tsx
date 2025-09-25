@@ -136,16 +136,15 @@ const PostModal = ({
 
         <div className="relative z-10 w-full xl:max-w-2xl">
           <div 
-            className="bg-white rounded-2xl shadow-2xl overflow-hidden post-modal-content post-modal-container"
+            className="post-modal-content post-modal-container"
             ref={postTemplateRef}
           >
             <PostTemplate
               title={post.title}
+              content={post.content}
+              images={post.images}
               currentPage={currentIndex + 1}
               totalPages={totalPosts}
-              leftContent={post.leftContent}
-              rightContent={post.rightContent}
-              bottomRightContent={post.bottomRightContent}
             />
           </div>
         </div>
@@ -220,27 +219,12 @@ const PostsContent = () => {
         const transformedPosts: Post[] = apiPosts.map((apiPost, index) => ({
           id: parseInt(apiPost.id) || index + 1, // Fallback to index if parsing fails
           title: apiPost.title,
-          leftContent: (
-            <>
-              <p className="text-base leading-relaxed" style={{ color: "#000000" }}>
-                {apiPost.leftContent}
-              </p>
-            </>
-          ),
-          rightContent: (
-            <>
-              <p className="text-base leading-relaxed" style={{ color: "#000000" }}>
-                {apiPost.rightContent}
-              </p>
-            </>
-          ),
-          bottomRightContent: (
-            <>
-              <p className="text-base leading-relaxed" style={{ color: "#000000" }}>
-                {apiPost.bottomRightContent}
-              </p>
-            </>
-          ),
+          content: apiPost.content,
+          images: apiPost.images,
+          // Legacy fields for backward compatibility
+          leftContent: apiPost.leftContent,
+          rightContent: apiPost.rightContent,
+          bottomRightContent: apiPost.bottomRightContent,
           x: 20 + (index % 3) * 280,
           y: 20 + Math.floor(index / 3) * 200
         }));

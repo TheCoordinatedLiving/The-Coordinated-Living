@@ -32,9 +32,8 @@ export default function PostPageClient({ post }: PostPageClientProps) {
         <div className="bg-white rounded-lg shadow-xl overflow-hidden">
           <PostTemplate
             title={post.title}
-            leftContent={<p className="text-base leading-relaxed text-black">{post.leftContent}</p>}
-            rightContent={<p className="text-base leading-relaxed text-black">{post.rightContent}</p>}
-            bottomRightContent={<p className="text-base leading-relaxed text-black">{post.bottomRightContent}</p>}
+            content={post.content}
+            images={post.images}
           />
         </div>
         

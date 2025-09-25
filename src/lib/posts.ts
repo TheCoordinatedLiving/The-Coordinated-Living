@@ -6,9 +6,15 @@ import { AirtablePost } from './airtable';
 export interface Post {
   id: string;
   title: string;
-  leftContent: string;
-  rightContent: string;
-  bottomRightContent: string;
+  content: string; // Main content for right column
+  images: Array<{
+    src: string;
+    alt: string;
+  }>; // Array of 2 images for left column
+  // Legacy fields for backward compatibility
+  leftContent?: string;
+  rightContent?: string;
+  bottomRightContent?: string;
 }
 
 // Fallback data in case Airtable is unavailable
@@ -58,13 +64,33 @@ export const getAllPosts = async (): Promise<Post[]> => {
     const airtablePosts = await response.json();
     
     // Transform Airtable data to our Post interface
-    return airtablePosts.map((post: AirtablePost) => ({
-      id: post.id,
-      title: post.fields['Title'] || '',
-      leftContent: post.fields['Left Content'] || '',
-      rightContent: post.fields['Right Content'] || '',
-      bottomRightContent: post.fields['Bottom Right Content'] || ''
-    }));
+    return airtablePosts.map((post: AirtablePost) => {
+      // Combine Image 1 and Image 2 into images array
+      const images = [];
+      if (post.fields['Image 1'] && post.fields['Image 1'].length > 0) {
+        images.push({
+          src: post.fields['Image 1'][0].url,
+          alt: 'Post image 1'
+        });
+      }
+      if (post.fields['Image 2'] && post.fields['Image 2'].length > 0) {
+        images.push({
+          src: post.fields['Image 2'][0].url,
+          alt: 'Post image 2'
+        });
+      }
+
+      return {
+        id: post.id,
+        title: post.fields['Title'] || '',
+        content: post.fields['Content'] || '',
+        images: images,
+        // Legacy fields for backward compatibility
+        leftContent: post.fields['Left Content'] || '',
+        rightContent: post.fields['Right Content'] || '',
+        bottomRightContent: post.fields['Bottom Right Content'] || ''
+      };
+    });
   } catch (error) {
     console.error('Error fetching posts from Airtable:', error);
     // Return fallback data
@@ -86,9 +112,27 @@ export const getPostById = async (id: string): Promise<Post | undefined> => {
     
     const airtablePost = await response.json();
     
+    // Combine Image 1 and Image 2 into images array
+    const images = [];
+    if (airtablePost.fields['Image 1'] && airtablePost.fields['Image 1'].length > 0) {
+      images.push({
+        src: airtablePost.fields['Image 1'][0].url,
+        alt: 'Post image 1'
+      });
+    }
+    if (airtablePost.fields['Image 2'] && airtablePost.fields['Image 2'].length > 0) {
+      images.push({
+        src: airtablePost.fields['Image 2'][0].url,
+        alt: 'Post image 2'
+      });
+    }
+
     return {
       id: airtablePost.id,
       title: airtablePost.fields['Title'] || '',
+      content: airtablePost.fields['Content'] || '',
+      images: images,
+      // Legacy fields for backward compatibility
       leftContent: airtablePost.fields['Left Content'] || '',
       rightContent: airtablePost.fields['Right Content'] || '',
       bottomRightContent: airtablePost.fields['Bottom Right Content'] || ''
