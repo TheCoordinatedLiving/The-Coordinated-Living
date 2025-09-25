@@ -60,7 +60,7 @@ const fallbackPosts: Post[] = [
 // Fetch posts from Airtable API
 export const getAllPosts = async (): Promise<Post[]> => {
   try {
-    const baseUrl = typeof window !== 'undefined' ? '' : process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3001';
+    const baseUrl = typeof window !== 'undefined' ? '' : process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
     const response = await fetch(`${baseUrl}/api/airtable/posts`, {
       next: { revalidate: 300 } // Cache for 5 minutes
     });
@@ -88,10 +88,22 @@ export const getAllPosts = async (): Promise<Post[]> => {
         });
       }
 
+      // Use the main Content field, with fallback to legacy fields
+      let content = post.fields['Content'] || '';
+      
+      // If no main content, combine legacy fields
+      if (!content) {
+        const parts = [];
+        if (post.fields['Left Content']) parts.push(post.fields['Left Content']);
+        if (post.fields['Right Content']) parts.push(post.fields['Right Content']);
+        if (post.fields['Bottom Right Content']) parts.push(post.fields['Bottom Right Content']);
+        content = parts.join('\n\n');
+      }
+
       return {
         id: post.id,
         title: post.fields['Title'] || '',
-        content: post.fields['Content'] || '',
+        content: content,
         images: images,
         // Legacy fields for backward compatibility
         leftContent: post.fields['Left Content'] || '',
@@ -109,7 +121,7 @@ export const getAllPosts = async (): Promise<Post[]> => {
 // Get a specific post by ID
 export const getPostById = async (id: string): Promise<Post | undefined> => {
   try {
-    const baseUrl = typeof window !== 'undefined' ? '' : process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3001';
+    const baseUrl = typeof window !== 'undefined' ? '' : process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
     const response = await fetch(`${baseUrl}/api/airtable/posts?id=${id}`, {
       next: { revalidate: 300 } // Cache for 5 minutes
     });
@@ -119,6 +131,11 @@ export const getPostById = async (id: string): Promise<Post | undefined> => {
     }
     
     const airtablePost = await response.json();
+    
+    // Check if we got an error response
+    if (airtablePost.error) {
+      throw new Error(airtablePost.error);
+    }
     
     // Combine Image 1 and Image 2 into images array
     const images = [];
@@ -135,10 +152,22 @@ export const getPostById = async (id: string): Promise<Post | undefined> => {
       });
     }
 
+    // Use the main Content field, with fallback to legacy fields
+    let content = airtablePost.fields['Content'] || '';
+    
+    // If no main content, combine legacy fields
+    if (!content) {
+      const parts = [];
+      if (airtablePost.fields['Left Content']) parts.push(airtablePost.fields['Left Content']);
+      if (airtablePost.fields['Right Content']) parts.push(airtablePost.fields['Right Content']);
+      if (airtablePost.fields['Bottom Right Content']) parts.push(airtablePost.fields['Bottom Right Content']);
+      content = parts.join('\n\n');
+    }
+
     return {
       id: airtablePost.id,
       title: airtablePost.fields['Title'] || '',
-      content: airtablePost.fields['Content'] || '',
+      content: content,
       images: images,
       // Legacy fields for backward compatibility
       leftContent: airtablePost.fields['Left Content'] || '',
