@@ -20,12 +20,15 @@ export async function GET(request: NextRequest) {
       console.log('API: Post found:', post ? 'Yes' : 'No');
       if (post) {
         console.log('API: Post title:', post.fields['Title']);
-      }
-      if (!post) {
+        return NextResponse.json(post);
+      } else {
         console.log('API: Post not found, returning 404');
-        return NextResponse.json({ error: 'Post not found' }, { status: 404 });
+        return NextResponse.json({ 
+          error: 'Post not found', 
+          id: id,
+          message: 'The post either does not exist or is not published'
+        }, { status: 404 });
       }
-      return NextResponse.json(post);
     }
 
     // Check cache first
