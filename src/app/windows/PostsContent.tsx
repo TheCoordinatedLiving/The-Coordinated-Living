@@ -317,82 +317,11 @@ const PostsContent = () => {
   };
 
   const handleShare = async (type: 'link' | 'pdf') => {
-    if (selectedPost && !isSharing) {
-      setIsSharing(true);
-      
-      if (type === 'link') {
-        // Generate shareable link
-        const shareUrl = `${window.location.origin}/post/${selectedPost.id}`;
-        
-        try {
-          await navigator.share({
-            title: selectedPost.title,
-            text: `Check out this post: ${selectedPost.title}`,
-            url: shareUrl,
-          });
-        } catch {
-          // Fallback to clipboard copy
-          try {
-            // Ensure document is focused
-            document.body.focus();
-            
-            // Try modern clipboard API first
-            if (navigator.clipboard && navigator.clipboard.writeText) {
-              await navigator.clipboard.writeText(shareUrl);
-              setToastMessage('Link copied to clipboard!');
-              setShowToast(true);
-              setTimeout(() => setShowToast(false), 3000);
-            } else {
-              // Fallback for older browsers
-              const textArea = document.createElement('textarea');
-              textArea.value = shareUrl;
-              textArea.style.position = 'fixed';
-              textArea.style.left = '-999999px';
-              textArea.style.top = '-999999px';
-              document.body.appendChild(textArea);
-              textArea.focus();
-              textArea.select();
-              document.execCommand('copy');
-              document.body.removeChild(textArea);
-              setToastMessage('Link copied to clipboard!');
-              setShowToast(true);
-              setTimeout(() => setShowToast(false), 3000);
-            }
-          } catch (clipboardError) {
-            console.error('Failed to copy to clipboard:', clipboardError);
-            // Still show success message even if clipboard fails
-            setToastMessage('Link ready to share!');
-            setShowToast(true);
-            setTimeout(() => setShowToast(false), 3000);
-          }
-        }
-      } else if (type === 'pdf') {
-        // Use the new content field for sharing, with fallback to legacy fields
-        let shareText = selectedPost.title;
-        
-        if (selectedPost.content) {
-          shareText += `\n\n${selectedPost.content}`;
-        } else {
-          // Fallback to legacy fields if content is not available
-          const leftText = selectedPost.leftContent || '';
-          const rightText = selectedPost.rightContent || '';
-          const bottomText = selectedPost.bottomRightContent || '';
-          shareText += `\n\n${leftText}\n\n${rightText}\n\n${bottomText}`;
-        }
-        try {
-          await navigator.clipboard.writeText(shareText);
-          setToastMessage('Post content copied to clipboard!');
-          setShowToast(true);
-          setTimeout(() => setShowToast(false), 3000);
-        } catch {
-          setToastMessage('Unable to copy content. Please copy manually.');
-          setShowToast(true);
-          setTimeout(() => setShowToast(false), 3000);
-        }
-      }
-      
-      setIsSharing(false);
-    }
+    // Share functionality is temporarily disabled
+    setToastMessage('You will start sharing our posts soon');
+    setShowToast(true);
+    setTimeout(() => setShowToast(false), 3000);
+    return;
   };
 
   return (

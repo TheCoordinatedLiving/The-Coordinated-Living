@@ -1079,97 +1079,11 @@ const Page = () => {
 
   // Share function
   const handleShare = async (type: 'link' | 'pdf') => {
-    const postId = posts[currentPostIndex].id; // Use actual post ID from Airtable
-    const postTitle = posts[currentPostIndex].title;
-    
-    if (type === 'link') {
-      // Generate shareable link
-      const shareUrl = `${window.location.origin}/post/${postId}`;
-      
-      try {
-        await navigator.share({
-          title: postTitle,
-          text: `Check out this post: ${postTitle}`,
-          url: shareUrl,
-        });
-      } catch {
-        // Fallback to clipboard copy
-        try {
-          // Ensure document is focused
-          document.body.focus();
-          
-          // Try modern clipboard API first
-          if (navigator.clipboard && navigator.clipboard.writeText) {
-            await navigator.clipboard.writeText(shareUrl);
-            setToastMessage('Link copied to clipboard!');
-            setShowToast(true);
-            setTimeout(() => setShowToast(false), 3000);
-          } else {
-            // Fallback for older browsers
-            const textArea = document.createElement('textarea');
-            textArea.value = shareUrl;
-            textArea.style.position = 'fixed';
-            textArea.style.left = '-999999px';
-            textArea.style.top = '-999999px';
-            document.body.appendChild(textArea);
-            textArea.focus();
-            textArea.select();
-            document.execCommand('copy');
-            document.body.removeChild(textArea);
-            setToastMessage('Link copied to clipboard!');
-            setShowToast(true);
-            setTimeout(() => setShowToast(false), 3000);
-          }
-        } catch (clipboardError) {
-          console.error('Failed to copy to clipboard:', clipboardError);
-          // Still show success message even if clipboard fails
-          setToastMessage('Link ready to share!');
-          setShowToast(true);
-          setTimeout(() => setShowToast(false), 3000);
-        }
-      }
-    } else if (type === 'pdf') {
-      // Generate PDF from the actual rendered PostTemplate
-      if (postTemplateRef.current) {
-        const success = await generatePostPDF(postTemplateRef.current, posts[currentPostIndex].title);
-        
-        if (success) {
-          // PDF generated successfully
-        }
-      } else {
-        // Fallback to data-based generation
-        const currentPost = posts[currentPostIndex];
-        
-        // Extract text content from React nodes
-        const extractText = (node: React.ReactNode): string => {
-          if (typeof node === 'string') return node;
-          if (typeof node === 'number') return node.toString();
-          if (Array.isArray(node)) return node.map(extractText).join(' ');
-          if (node && typeof node === 'object' && 'props' in node) {
-            const props = node as { props: { children?: React.ReactNode } };
-            return extractText(props.props.children);
-          }
-          return '';
-        };
-
-        const leftContent = extractText(currentPost.leftContent);
-        const rightContent = extractText(currentPost.rightContent);
-        const bottomRightContent = extractText(currentPost.bottomRightContent);
-
-        const success = await generatePDFFromPostData(
-          currentPost.title,
-          leftContent,
-          rightContent,
-          bottomRightContent,
-          currentPostIndex + 1,
-          posts.length
-        );
-
-        if (success) {
-          // PDF generated successfully
-        }
-      }
-    }
+    // Share functionality is temporarily disabled
+    setToastMessage('You will start sharing our posts soon');
+    setShowToast(true);
+    setTimeout(() => setShowToast(false), 3000);
+    return;
   };
 
   const pageRef = useRef<HTMLDivElement>(null);
