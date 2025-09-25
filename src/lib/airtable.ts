@@ -193,31 +193,17 @@ export const fetchPostById = async (id: string): Promise<AirtablePost | null> =>
       throw new Error('Airtable not configured - missing API key or Base ID');
     }
 
-    console.log('fetchPostById: Looking for post with ID:', id);
     const record = await airtableBase('Posts').find(id);
     const post = {
       id: record.id,
       fields: record.fields,
     } as AirtablePost;
     
-    console.log('fetchPostById: Found post:', {
-      id: post.id,
-      title: post.fields['Title'],
-      published: post.fields['Published'],
-      allFields: Object.keys(post.fields)
-    });
-    
     // Only return if published
     if (post.fields['Published']) {
-      console.log('fetchPostById: Post is published, returning it');
       return post;
     }
     
-    // Log detailed information about why the post is not being returned
-    console.log('fetchPostById: Post is not published, returning null');
-    console.log('fetchPostById: Published field value:', post.fields['Published']);
-    console.log('fetchPostById: Published field type:', typeof post.fields['Published']);
-    console.log('fetchPostById: All available fields:', Object.keys(post.fields));
     return null;
   } catch (error) {
     console.error(`Error fetching post with id ${id}:`, error);

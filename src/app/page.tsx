@@ -1082,12 +1082,6 @@ const Page = () => {
     const postId = posts[currentPostIndex].id; // Use actual post ID from Airtable
     const postTitle = posts[currentPostIndex].title;
     
-    // Debug: Log the post being shared
-    console.log('handleShare: Current post index:', currentPostIndex);
-    console.log('handleShare: Post ID being shared:', postId);
-    console.log('handleShare: Post title:', postTitle);
-    console.log('handleShare: All posts:', posts.map(p => ({ id: p.id, title: p.title })));
-    
     if (type === 'link') {
       // Generate shareable link
       const shareUrl = `${window.location.origin}/post/${postId}`;
