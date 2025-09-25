@@ -11,8 +11,6 @@ interface PostTemplateProps {
   leftContent?: React.ReactNode;
   rightContent?: React.ReactNode;
   bottomRightContent?: React.ReactNode;
-  currentPage?: number;
-  totalPages?: number;
 }
 
 export default function PostTemplate({
@@ -21,9 +19,7 @@ export default function PostTemplate({
   images = [],
   leftContent,
   rightContent,
-  bottomRightContent,
-  currentPage = 1,
-  totalPages = 1
+  bottomRightContent
 }: PostTemplateProps) {
   return (
     <>

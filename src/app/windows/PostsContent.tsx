@@ -143,8 +143,6 @@ const PostModal = ({
               title={post.title}
               content={post.content}
               images={post.images}
-              currentPage={currentIndex + 1}
-              totalPages={totalPosts}
             />
           </div>
         </div>

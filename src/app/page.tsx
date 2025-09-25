@@ -4886,8 +4886,6 @@ const Page = () => {
                     title={posts[currentPostIndex].title}
                     content={posts[currentPostIndex].content}
                     images={posts[currentPostIndex].images}
-                    currentPage={currentPostIndex + 1}
-                    totalPages={posts.length}
                   />
                 ) : (
                   <div className="p-8 text-center">
