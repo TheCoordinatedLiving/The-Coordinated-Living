@@ -7,7 +7,6 @@ import { gsap } from 'gsap';
 import Lottie from 'lottie-react';
 import { getAllPosts, Post } from '@/lib/posts';
 import PostTemplate from '../components/PostTemplate';
-import { generatePDFFromPostData, generatePostPDF } from '../lib/pdfGenerator';
 import FullTermsContent from '../components/FullTermsContent';
 import AskAQuestion from './windows/AskAQuestion';
 
@@ -1078,7 +1077,7 @@ const Page = () => {
 
 
   // Share function
-  const handleShare = async (type: 'link' | 'pdf') => {
+  const handleShare = async () => {
     // Share functionality is temporarily disabled
     setToastMessage('You will start sharing our posts soon');
     setShowToast(true);
@@ -4872,7 +4871,7 @@ const Page = () => {
               <div className="py-1">
                 <button
                   onClick={() => {
-                    handleShare('link');
+                    handleShare();
                     setShowShareOptions(false);
                   }}
                   className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"

@@ -62,7 +62,7 @@ const PostModal = ({
   onClose: () => void;
   onPrevious: () => void;
   onNext: () => void;
-  onShare: (type: 'link' | 'pdf') => void;
+  onShare: () => void;
   currentIndex: number;
   totalPosts: number;
   isSharing: boolean;
@@ -159,7 +159,7 @@ const PostModal = ({
               <div className="py-1">
                 <button
                   onClick={() => {
-                    onShare('link');
+                    onShare();
                     setShowShareOptions(false);
                   }}
                   className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
@@ -182,7 +182,7 @@ const PostsContent = () => {
   const [selectedPost, setSelectedPost] = useState<PostWithPosition | null>(null);
   const [currentPostIndex, setCurrentPostIndex] = useState<number>(0);
   const [searchQuery, setSearchQuery] = useState('');
-  const [isSharing, setIsSharing] = useState<boolean>(false);
+  const [isSharing] = useState<boolean>(false);
   const [showShareOptions, setShowShareOptions] = useState<boolean>(false);
   const [toastMessage, setToastMessage] = useState<string>('');
   const [showToast, setShowToast] = useState<boolean>(false);
@@ -316,7 +316,7 @@ const PostsContent = () => {
     }
   };
 
-  const handleShare = async (type: 'link' | 'pdf') => {
+  const handleShare = async () => {
     // Share functionality is temporarily disabled
     setToastMessage('You will start sharing our posts soon');
     setShowToast(true);
