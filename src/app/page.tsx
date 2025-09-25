@@ -1079,7 +1079,7 @@ const Page = () => {
 
   // Share function
   const handleShare = async (type: 'link' | 'pdf') => {
-    const postId = (currentPostIndex + 1).toString();
+    const postId = posts[currentPostIndex].id; // Use actual post ID from Airtable
     const postTitle = posts[currentPostIndex].title;
     
     if (type === 'link') {
