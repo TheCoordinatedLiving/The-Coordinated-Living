@@ -15,8 +15,14 @@ export async function GET(request: NextRequest) {
 
     // If requesting a specific post by ID
     if (id) {
+      console.log('API: Fetching post with ID:', id);
       const post = await fetchPostById(id);
+      console.log('API: Post found:', post ? 'Yes' : 'No');
+      if (post) {
+        console.log('API: Post title:', post.fields['Title']);
+      }
       if (!post) {
+        console.log('API: Post not found, returning 404');
         return NextResponse.json({ error: 'Post not found' }, { status: 404 });
       }
       return NextResponse.json(post);

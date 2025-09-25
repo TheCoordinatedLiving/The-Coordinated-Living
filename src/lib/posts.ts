@@ -121,19 +121,29 @@ export const getAllPosts = async (): Promise<Post[]> => {
 // Get a specific post by ID
 export const getPostById = async (id: string): Promise<Post | undefined> => {
   try {
+    console.log('getPostById: Fetching post with ID:', id);
     const baseUrl = typeof window !== 'undefined' ? '' : process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
-    const response = await fetch(`${baseUrl}/api/airtable/posts?id=${id}`, {
+    const apiUrl = `${baseUrl}/api/airtable/posts?id=${id}`;
+    console.log('getPostById: API URL:', apiUrl);
+    
+    const response = await fetch(apiUrl, {
       next: { revalidate: 300 } // Cache for 5 minutes
     });
     
+    console.log('getPostById: Response status:', response.status);
+    
     if (!response.ok) {
+      const errorText = await response.text();
+      console.log('getPostById: Error response:', errorText);
       throw new Error('Failed to fetch post');
     }
     
     const airtablePost = await response.json();
+    console.log('getPostById: Received post data:', airtablePost);
     
     // Check if we got an error response
     if (airtablePost.error) {
+      console.log('getPostById: API returned error:', airtablePost.error);
       throw new Error(airtablePost.error);
     }
     
@@ -177,7 +187,13 @@ export const getPostById = async (id: string): Promise<Post | undefined> => {
   } catch (error) {
     console.error('Error fetching post from Airtable:', error);
     // Return from fallback data
-    return fallbackPosts.find(post => post.id === id);
+    const fallbackPost = fallbackPosts.find(post => post.id === id);
+    if (fallbackPost) {
+      console.log('getPostById: Using fallback post for ID:', id);
+    } else {
+      console.log('getPostById: No fallback post found for ID:', id);
+    }
+    return fallbackPost;
   }
 };
 
