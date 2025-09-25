@@ -68,22 +68,22 @@ export default function PostTemplate({
               {/* Images Section - 2 images stacked vertically - Fixed position */}
               <div className="absolute bottom-4 xl:bottom-6 left-3 xl:left-5 right-3 xl:right-5 space-y-4 xl:space-y-6">
                 {images && images.length > 0 ? images.slice(0, 2).map((image, index) => (
-                  <div key={index} className={index === 0 ? "w-full" : "w-32 xl:w-36 mx-auto"}>
+                  <div key={index} className="w-40 xl:w-44 mx-auto">
                     <Image
                       src={image.src}
                       alt={image.alt}
                       width={300}
                       height={200}
-                      className={`object-cover ${index === 0 ? 'w-full h-56 xl:h-60 rounded-full' : 'w-32 xl:w-36 h-32 xl:h-36 rounded-full'}`}
+                      className="object-cover w-40 xl:w-44 h-40 xl:h-44 rounded-full"
                     />
                   </div>
                 )) : (
                   // Placeholder images for development
                   <>
-                    <div className="w-full h-56 xl:h-60 bg-gray-300 flex items-center justify-center text-gray-600 rounded-full">
+                    <div className="w-40 xl:w-44 h-40 xl:h-44 bg-gray-300 flex items-center justify-center text-gray-600 rounded-full mx-auto">
                       <span className="text-sm">Image 1</span>
                     </div>
-                    <div className="w-32 xl:w-36 h-32 xl:h-36 bg-gray-300 flex items-center justify-center text-gray-600 rounded-full mx-auto">
+                    <div className="w-40 xl:w-44 h-40 xl:h-44 bg-gray-300 flex items-center justify-center text-gray-600 rounded-full mx-auto">
                       <span className="text-sm">Image 2</span>
                     </div>
                   </>
