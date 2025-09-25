@@ -21,6 +21,8 @@ export default function PostTemplate({
   rightContent,
   bottomRightContent
 }: PostTemplateProps) {
+  // Debug: Log the images data
+  console.log('PostTemplate images:', images);
   return (
     <>
       <style jsx>{`
@@ -67,17 +69,24 @@ export default function PostTemplate({
 
               {/* Images Section - 2 images stacked vertically - Fixed position */}
               <div className="absolute bottom-4 xl:bottom-6 left-3 xl:left-5 right-3 xl:right-5 space-y-4 xl:space-y-6">
-                {images && images.length > 0 ? images.slice(0, 2).map((image, index) => (
-                  <div key={index} className="w-40 xl:w-44 mx-auto">
-                    <Image
-                      src={image.src}
-                      alt={image.alt}
-                      width={300}
-                      height={200}
-                      className="object-cover w-40 xl:w-44 h-40 xl:h-44 rounded-full"
-                    />
-                  </div>
-                )) : (
+                {images && images.length > 0 && images[0]?.src ? (
+                  images.slice(0, 2).map((image, index) => (
+                    <div key={index} className="w-40 xl:w-44 mx-auto">
+                      <Image
+                        src={image.src}
+                        alt={image.alt || `Post image ${index + 1}`}
+                        width={300}
+                        height={200}
+                        className="object-cover w-40 xl:w-44 h-40 xl:h-44 rounded-full"
+                        onError={(e) => {
+                          console.error('Image failed to load:', image.src);
+                          // Hide the broken image
+                          e.currentTarget.style.display = 'none';
+                        }}
+                      />
+                    </div>
+                  ))
+                ) : (
                   // Placeholder images for development
                   <>
                     <div className="w-40 xl:w-44 h-40 xl:h-44 bg-gray-300 flex items-center justify-center text-gray-600 rounded-full mx-auto">
