@@ -1,13 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
 import PostTemplate from '../../components/PostTemplate';
-import { getAllPosts } from '../../lib/posts';
+import { getAllPosts, Post } from '../../lib/posts';
 
-interface Post {
-  id: number;
-  title: string;
-  leftContent: React.ReactNode;
-  rightContent: React.ReactNode;
-  bottomRightContent: React.ReactNode;
+// Extended Post interface for this component (includes positioning)
+interface PostWithPosition extends Post {
   x: number;
   y: number;
 }
@@ -19,22 +15,22 @@ const truncateText = (text: string, wordCount: number): string => {
   return words.slice(0, wordCount).join(' ') + ' -';
 };
 
-const PostCard = ({ post, onClick }: { post: Post; onClick: () => void }) => {
+const PostCard = ({ post, onClick }: { post: PostWithPosition; onClick: () => void }) => {
   const truncatedTitle = truncateText(post.title, 3);
   
-  // Extract text from React nodes for preview
-  const extractText = (node: React.ReactNode): string => {
-    if (typeof node === 'string') return node;
-    if (typeof node === 'number') return node.toString();
-    if (Array.isArray(node)) return node.map(extractText).join(' ');
-    if (node && typeof node === 'object' && 'props' in node) {
-      const props = node as { props: { children?: React.ReactNode } };
-      return extractText(props.props.children);
+  // Use the new content field for preview, with fallback to legacy fields
+  const getPreviewText = (): string => {
+    if (post.content) {
+      return post.content.substring(0, 100) + '...';
     }
-    return '';
+    // Fallback to legacy fields if content is not available
+    const leftText = post.leftContent || '';
+    const rightText = post.rightContent || '';
+    const combinedText = leftText + ' ' + rightText;
+    return combinedText.substring(0, 100) + '...';
   };
   
-  const previewText = extractText(post.leftContent).substring(0, 100) + '...';
+  const previewText = getPreviewText();
 
   return (
     <div 
@@ -195,14 +191,14 @@ const PostModal = ({
 };
 
 const PostsContent = () => {
-  const [selectedPost, setSelectedPost] = useState<Post | null>(null);
+  const [selectedPost, setSelectedPost] = useState<PostWithPosition | null>(null);
   const [currentPostIndex, setCurrentPostIndex] = useState<number>(0);
   const [searchQuery, setSearchQuery] = useState('');
   const [isSharing, setIsSharing] = useState<boolean>(false);
   const [showShareOptions, setShowShareOptions] = useState<boolean>(false);
   const [toastMessage, setToastMessage] = useState<string>('');
   const [showToast, setShowToast] = useState<boolean>(false);
-  const [posts, setPosts] = useState<Post[]>([]);
+  const [posts, setPosts] = useState<PostWithPosition[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const postTemplateRef = useRef<HTMLDivElement>(null);
 
@@ -214,8 +210,8 @@ const PostsContent = () => {
         const apiPosts = await getAllPosts();
         
         // Transform API posts to component format
-        const transformedPosts: Post[] = apiPosts.map((apiPost, index) => ({
-          id: parseInt(apiPost.id) || index + 1, // Fallback to index if parsing fails
+        const transformedPosts: PostWithPosition[] = apiPosts.map((apiPost, index) => ({
+          id: apiPost.id, // Keep as string
           title: apiPost.title,
           content: apiPost.content,
           images: apiPost.images,
@@ -232,120 +228,50 @@ const PostsContent = () => {
         console.error('Error fetching posts:', error);
         // Fallback to hardcoded posts
         setPosts([
-    { 
-      id: 1, 
-      title: 'A THOUSAND TIMES I FAILED', 
-      leftContent: (
-        <>
-          <p className="text-base leading-relaxed" style={{ color: "#000000" }}>
-            &quot;A thousand times I failed, still your mercy remains, should I stumble out here still I&apos;m caught in your grace.&quot; This Hillsong lyric has always echoed in my heart, and its truth resonates even stronger today.
-          </p>
-          <p className="text-base leading-relaxed" style={{ color: "#000000" }}>
-            For years, I pursued other paths, pouring tireless effort into fields he hadn&apos;t called me to, only to find no lasting fruit. That rollercoaster of emotions, the unpleasant experiences, the endless accusations and judgments thrown around – they&apos;re hallmarks of a mind out of alignment.
-          </p>
-        </>
-      ),
-      rightContent: (
-        <>
-          <p className="text-base leading-relaxed" style={{ color: "#000000" }}>
-            Want to know the root cause? It&apos;s simply a lack of trust in the Father. No matter how you rationalize it, we constantly try to force a fit where there isn&apos;t one.
-          </p>
-          <p className="text-base leading-relaxed" style={{ color: "#000000" }}>
-            But in Christ, we step into the true identity the Father created for us. This identity comes with specific tasks, assignments, and responsibilities, all of which we are perfectly equipped for. It&apos;s there we discover an unexplainable peace, joy, and confidence.
-          </p>
-        </>
-      ),
-      bottomRightContent: (
-        <p className="text-base leading-relaxed" style={{ color: "#000000" }}>
-          When we align ourselves with God&apos;s purpose for our lives, we find a peace that surpasses all understanding. This isn&apos;t about perfection – it&apos;s about walking in the identity He has given us, trusting that He has equipped us for every good work.
-        </p>
-      ),
-      x: 0, 
-      y: 0 
-    },
-    { 
-      id: 2, 
-      title: 'IN ALL THINGS GOD WORKS', 
-      leftContent: (
-        <>
-          <p className="text-base leading-relaxed" style={{ color: "#000000" }}>
-            &quot;In all things God works for the good of those who love him.&quot; This promise from Romans 8:28 has been my anchor through many storms. When life seems chaotic and uncertain, this truth reminds me that God is always at work.
-          </p>
-          <p className="text-base leading-relaxed" style={{ color: "#000000" }}>
-            Too often we try to control every aspect of our lives, forgetting that we serve a God who sees the bigger picture. Our limited perspective can&apos;t comprehend the intricate ways He weaves our experiences together for His glory and our good.
-          </p>
-        </>
-      ),
-      rightContent: (
-        <>
-          <p className="text-base leading-relaxed" style={{ color: "#000000" }}>
-            Trusting God doesn&apos;t mean we become passive or indifferent to our circumstances. Instead, it means we actively seek His will while resting in His sovereignty. We pray, we work, we serve, but we do so with open hands.
-          </p>
-          <p className="text-base leading-relaxed" style={{ color: "#000000" }}>
-            The peace that comes from this kind of trust is unlike anything the world can offer. It&apos;s not dependent on circumstances, but on the unchanging character of our Heavenly Father who loves us beyond measure.
-          </p>
-        </>
-      ),
-      bottomRightContent: (
-        <p className="text-base leading-relaxed" style={{ color: "#000000" }}>
-          As we learn to trust God more deeply, we begin to see His hand in every detail of our lives. What once seemed like random events become part of a beautiful tapestry He&apos;s weaving for our good and His glory.
-        </p>
-      ),
-      x: 280, 
-      y: 0 
-    },
-    { 
-      id: 3, 
-      title: 'BE STILL AND KNOW', 
-      leftContent: (
-        <>
-          <p className="text-base leading-relaxed" style={{ color: "#000000" }}>
-            &quot;Be still and know that I am God.&quot; These words from Psalm 46:10 have become increasingly precious to me in our fast-paced world. In the midst of constant noise and endless demands, God calls us to stillness.
-          </p>
-          <p className="text-base leading-relaxed" style={{ color: "#000000" }}>
-            Stillness isn&apos;t just about physical quiet, though that&apos;s important. It&apos;s about quieting our hearts and minds before the Lord, allowing His peace to wash over us and His voice to be heard above the chaos.
-          </p>
-        </>
-      ),
-      rightContent: (
-        <>
-          <p className="text-base leading-relaxed" style={{ color: "#000000" }}>
-            In those moments of stillness, we remember who God is and who we are in Him. We&apos;re reminded that He is sovereign, He is good, and He is working all things together for our good.
-          </p>
-          <p className="text-base leading-relaxed" style={{ color: "#000000" }}>
-            The world tells us to hustle, to strive, to never stop moving. But God invites us to rest in Him, to find our strength in quietness and trust. This is the counter-cultural way of the Kingdom.
-          </p>
-        </>
-      ),
-      bottomRightContent: (
-        <p className="text-base leading-relaxed" style={{ color: "#000000" }}>
-          As we practice stillness, we discover that God&apos;s presence is our greatest treasure. In Him we find rest for our souls, peace for our minds, and strength for our journey.
-        </p>
-      ),
-      x: 0, 
-      y: 200 
-    },
-    { 
-      id: 4, 
-      title: 'A CHEERFUL GIFT', 
-      leftContent: (
-        <p className="text-base leading-relaxed" style={{ color: "#000000" }}>
-          Having my cuppa on my table is one sure comfort as I get work done. Your support would be a lovely way to keep it full every time I sit at my desk, and it genuinely helps me sustainably run this platform.
-        </p>
-      ),
-      rightContent: (
-        <p className="text-base leading-relaxed" style={{ color: "#000000" }}>
-          Thank you for your kindness! Your generosity helps me continue creating content that encourages and uplifts others in their faith journey.
-        </p>
-      ),
-      bottomRightContent: (
-        <p className="text-base leading-relaxed" style={{ color: "#000000" }}>
-          Every contribution, no matter the size, makes a difference in keeping this platform running and accessible to all who need encouragement.
-        </p>
-      ),
-      x: 280, 
-      y: 200 
-    },
+          { 
+            id: '1', 
+            title: 'A THOUSAND TIMES I FAILED', 
+            content: '"A thousand times I failed, still your mercy remains, should I stumble out here still I\'m caught in your grace." This Hillsong lyric has always echoed in my heart, and its truth resonates even stronger today. For years, I pursued other paths, pouring tireless effort into fields he hadn\'t called me to, only to find no lasting fruit. That rollercoaster of emotions, the unpleasant experiences, the endless accusations and judgments thrown around – they\'re hallmarks of a mind out of alignment. Want to know the root cause? It\'s simply a lack of trust in the Father. No matter how you rationalize it, we constantly try to force a fit where there isn\'t one. But in Christ, we step into the true identity the Father created for us. This identity comes with specific tasks, assignments, and responsibilities, all of which we are perfectly equipped for. It\'s there we discover an unexplainable peace, joy, and confidence. When we align ourselves with God\'s purpose for our lives, we find a peace that surpasses all understanding. This isn\'t about perfection – it\'s about walking in the identity He has given us, trusting that He has equipped us for every good work.',
+            images: [],
+            leftContent: '',
+            rightContent: '',
+            bottomRightContent: '',
+            x: 0, 
+            y: 0 
+          },
+          { 
+            id: '2', 
+            title: 'IN ALL THINGS GOD WORKS', 
+            content: '"In all things God works for the good of those who love him." This promise from Romans 8:28 has been my anchor through many storms. When life seems chaotic and uncertain, this truth reminds me that God is always at work. Too often we try to control every aspect of our lives, forgetting that we serve a God who sees the bigger picture. Our limited perspective can\'t comprehend the intricate ways He weaves our experiences together for His glory and our good. Trusting God doesn\'t mean we become passive or indifferent to our circumstances. Instead, it means we actively seek His will while resting in His sovereignty. We pray, we work, we serve, but we do so with open hands. The peace that comes from this kind of trust is unlike anything the world can offer. It\'s not dependent on circumstances, but on the unchanging character of our Heavenly Father who loves us beyond measure. As we learn to trust God more deeply, we begin to see His hand in every detail of our lives. What once seemed like random events become part of a beautiful tapestry He\'s weaving for our good and His glory.',
+            images: [],
+            leftContent: '',
+            rightContent: '',
+            bottomRightContent: '',
+            x: 280, 
+            y: 0 
+          },
+          { 
+            id: '3', 
+            title: 'BE STILL AND KNOW', 
+            content: '"Be still and know that I am God." These words from Psalm 46:10 have become increasingly precious to me in our fast-paced world. In the midst of constant noise and endless demands, God calls us to stillness. Stillness isn\'t just about physical quiet, though that\'s important. It\'s about quieting our hearts and minds before the Lord, allowing His peace to wash over us and His voice to be heard above the chaos. In those moments of stillness, we remember who God is and who we are in Him. We\'re reminded that He is sovereign, He is good, and He is working all things together for our good. The world tells us to hustle, to strive, to never stop moving. But God invites us to rest in Him, to find our strength in quietness and trust. This is the counter-cultural way of the Kingdom. As we practice stillness, we discover that God\'s presence is our greatest treasure. In Him we find rest for our souls, peace for our minds, and strength for our journey.',
+            images: [],
+            leftContent: '',
+            rightContent: '',
+            bottomRightContent: '',
+            x: 0, 
+            y: 200 
+          },
+          { 
+            id: '4', 
+            title: 'A CHEERFUL GIFT', 
+            content: 'Having my cuppa on my table is one sure comfort as I get work done. Your support would be a lovely way to keep it full every time I sit at my desk, and it genuinely helps me sustainably run this platform. Thank you for your kindness! Your generosity helps me continue creating content that encourages and uplifts others in their faith journey. Every contribution, no matter the size, makes a difference in keeping this platform running and accessible to all who need encouragement.',
+            images: [],
+            leftContent: '',
+            rightContent: '',
+            bottomRightContent: '',
+            x: 280, 
+            y: 200 
+          }
         ]);
       } finally {
         setLoading(false);
@@ -359,21 +285,16 @@ const PostsContent = () => {
   const filteredPosts = posts.filter(post => {
     const titleMatch = post.title.toLowerCase().includes(searchQuery.toLowerCase());
     
-    // Extract text from React nodes for search
-    const extractText = (node: React.ReactNode): string => {
-      if (typeof node === 'string') return node;
-      if (typeof node === 'number') return node.toString();
-      if (Array.isArray(node)) return node.map(extractText).join(' ');
-      if (node && typeof node === 'object' && 'props' in node) {
-        const props = node as { props: { children?: React.ReactNode } };
-        return extractText(props.props.children);
-      }
-      return '';
-    };
+    // Search in the new content field first, with fallback to legacy fields
+    if (post.content) {
+      const contentMatch = post.content.toLowerCase().includes(searchQuery.toLowerCase());
+      return titleMatch || contentMatch;
+    }
     
-    const leftContentText = extractText(post.leftContent).toLowerCase();
-    const rightContentText = extractText(post.rightContent).toLowerCase();
-    const bottomContentText = extractText(post.bottomRightContent).toLowerCase();
+    // Fallback to legacy fields if content is not available
+    const leftContentText = (post.leftContent || '').toLowerCase();
+    const rightContentText = (post.rightContent || '').toLowerCase();
+    const bottomContentText = (post.bottomRightContent || '').toLowerCase();
     
     return titleMatch || 
            leftContentText.includes(searchQuery.toLowerCase()) ||
@@ -381,7 +302,7 @@ const PostsContent = () => {
            bottomContentText.includes(searchQuery.toLowerCase());
   });
 
-  const handleCardClick = (post: Post) => {
+  const handleCardClick = (post: PostWithPosition) => {
     const postIndex = filteredPosts.findIndex(p => p.id === post.id);
     setCurrentPostIndex(postIndex);
     setSelectedPost(post);
@@ -458,23 +379,18 @@ const PostsContent = () => {
           }
         }
       } else if (type === 'pdf') {
-        // Extract text from React nodes for PDF content
-        const extractText = (node: React.ReactNode): string => {
-          if (typeof node === 'string') return node;
-          if (typeof node === 'number') return node.toString();
-          if (Array.isArray(node)) return node.map(extractText).join(' ');
-          if (node && typeof node === 'object' && 'props' in node) {
-            const props = node as { props: { children?: React.ReactNode } };
-            return extractText(props.props.children);
-          }
-          return '';
-        };
+        // Use the new content field for sharing, with fallback to legacy fields
+        let shareText = selectedPost.title;
         
-        const leftText = extractText(selectedPost.leftContent);
-        const rightText = extractText(selectedPost.rightContent);
-        const bottomText = extractText(selectedPost.bottomRightContent);
-        
-        const shareText = `${selectedPost.title}\n\n${leftText}\n\n${rightText}\n\n${bottomText}`;
+        if (selectedPost.content) {
+          shareText += `\n\n${selectedPost.content}`;
+        } else {
+          // Fallback to legacy fields if content is not available
+          const leftText = selectedPost.leftContent || '';
+          const rightText = selectedPost.rightContent || '';
+          const bottomText = selectedPost.bottomRightContent || '';
+          shareText += `\n\n${leftText}\n\n${rightText}\n\n${bottomText}`;
+        }
         try {
           await navigator.clipboard.writeText(shareText);
           setToastMessage('Post content copied to clipboard!');

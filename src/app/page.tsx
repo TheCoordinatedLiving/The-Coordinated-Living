@@ -567,6 +567,11 @@ const Page = () => {
   const [showVideos, setShowVideos] = useState(false);
   const [showPostModal, setShowPostModal] = useState(false);
   
+  // Posts state for dynamic content
+  const [posts, setPosts] = useState<Post[]>([]);
+  const [postsLoading, setPostsLoading] = useState(true);
+  const [currentPostIndex, setCurrentPostIndex] = useState(0);
+  
   // Debug: Log when showPostModal changes
   useEffect(() => {
     console.log('showPostModal changed to:', showPostModal);
@@ -591,7 +596,13 @@ const Page = () => {
 
     fetchPosts();
   }, []);
-  const [currentPostIndex, setCurrentPostIndex] = useState(0);
+
+  // Reset currentPostIndex when posts are loaded
+  useEffect(() => {
+    if (posts.length > 0) {
+      setCurrentPostIndex(0);
+    }
+  }, [posts]);
   const [fromWindows, setFromWindows] = useState(false);
   const [showFumaaModal, setShowFumaaModal] = useState(false);
   const [showBlurEffect, setShowBlurEffect] = useState(false);
@@ -1045,11 +1056,6 @@ const Page = () => {
       }
     }
   }, [showTermsModal, isClosingTermsModal]);
-
-  // Posts state for dynamic content
-  const [posts, setPosts] = useState<Post[]>([]);
-  const [postsLoading, setPostsLoading] = useState(true);
-  
 
   // Navigation functions
   const handlePreviousPost = () => {
@@ -2887,7 +2893,7 @@ const Page = () => {
               }}
               onClick={() => {
                 console.log('New post design clicked!');
-                if (!postsLoading && posts.length > 0) {
+                if (!postsLoading) {
                   setShowPostModal(true);
                 }
               }}
@@ -4890,12 +4896,12 @@ const Page = () => {
                 ) : (
                   <div className="p-8 text-center">
                     <div className="mb-4">
-                      <svg className="w-16 h-16 mx-auto text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">x
+                      <svg className="w-16 h-16 mx-auto text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">x
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                       </svg>
                     </div>
-                    <h3 className="text-lg font-semibold text-gray-900 mb-2">No Posts Available</h3>
-                    <p className="text-gray-600">Check back later for new content!</p>
+                    <h3 className="text-lg font-semibold text-white mb-2">No Posts Available</h3>
+                    <p className="text-white">Check back later for new content!</p>
                   </div>
                 )}
               </div>

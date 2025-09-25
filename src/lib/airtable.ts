@@ -43,6 +43,10 @@ export interface AirtablePost {
     'Published'?: boolean;
     'Order'?: number;
     'Created Date'?: string;
+    // Legacy fields for backward compatibility
+    'Left Content'?: string;
+    'Right Content'?: string;
+    'Bottom Right Content'?: string;
   };
 }
 
