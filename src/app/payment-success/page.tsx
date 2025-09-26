@@ -228,7 +228,7 @@ function PaymentSuccessContent() {
           {/* Important Notice */}
           <div className="mt-8">
             <p className={`${roboto.className} text-white text-sm font-bold text-center leading-relaxed`}>
-              Please do not share this link with others as it violates our community rules. This link is exclusively for your personal use.
+              Please do not share this link with others as it violates our community rules. This link is exclusively for your paid members.
             </p>
           </div>
         </div>
