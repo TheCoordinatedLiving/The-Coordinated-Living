@@ -42,7 +42,7 @@ export async function POST(request: NextRequest) {
         email: email,
         amount: amount, // Amount in kobo
         currency: 'GHS',
-        callback_url: `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/payment-success`,
+        callback_url: `${process.env.NEXT_PUBLIC_BASE_URL || 'https://coordinated-living.vercel.app'}/payment-success`,
         metadata: {
           custom_fields: [
             {
