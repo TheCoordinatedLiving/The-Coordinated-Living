@@ -1516,7 +1516,7 @@ const Page = () => {
                         width={200}
                         height={60}
                         className="cursor-pointer hover:opacity-80 transition-opacity"
-                        onClick={() => console.log('Join Channel clicked!')}
+                        onClick={() => window.location.href = '/join-channel'}
                       />
                     </div>
 

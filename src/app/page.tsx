@@ -558,6 +558,7 @@ const NewHomepage = () => {
 // };
 
 const Page = () => {
+  const router = useRouter();
   const [isLoaded, setIsLoaded] = useState(false);
   const [experienceVisible, setExperienceVisible] = useState(false);
   const [laptopZoomed, setLaptopZoomed] = useState(false);
@@ -1872,10 +1873,7 @@ const Page = () => {
                                 <button 
                                   className="flex items-center space-x-3 px-8 py-3 bg-white hover:bg-gray-100 font-bold rounded-full transition-colors duration-200 shadow-lg"
                                   style={{ color: '#2F4C6C' }}
-                                  onClick={() => {
-                                    // Add WhatsApp link functionality here
-                                    window.open('https://wa.me/your-whatsapp-number', '_blank');
-                                  }}
+                                  onClick={() => router.push('/join-channel')}
                                 >
                                   <Image
                                     src="/whatsapp-mobile.svg"
@@ -3568,7 +3566,7 @@ const Page = () => {
                         width={200}
                         height={60}
                         className="cursor-pointer hover:opacity-80 transition-opacity"
-                        onClick={() => console.log('Join Channel clicked!')}
+                        onClick={() => router.push('/join-channel')}
                       />
                     </div>
 

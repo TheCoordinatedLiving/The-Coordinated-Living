@@ -4,15 +4,30 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Lottie from 'lottie-react';
 import Image from 'next/image';
+import EmailInputModal from '@/components/EmailInputModal';
+import Toast from '@/components/Toast';
 
 export default function JoinChannelPage() {
   const router = useRouter();
   const [isVisible, setIsVisible] = useState(false);
+  const [showEmailModal, setShowEmailModal] = useState(false);
+  const [toast, setToast] = useState<{
+    message: string;
+    type: 'success' | 'error';
+    isVisible: boolean;
+  }>({
+    message: '',
+    type: 'success',
+    isVisible: false
+  });
   const [animations, setAnimations] = useState({
     infoJoinChannel: null,
     linkJoinChannel: null,
     loveJoin: null
   });
+
+  // Payment configuration
+  const PAYMENT_AMOUNT = 100; // 100 GHS
 
   useEffect(() => {
     // Load Lottie animations
@@ -47,6 +62,51 @@ export default function JoinChannelPage() {
 
   const handleClose = () => {
     router.push('/?skipLoader=true');
+  };
+
+  const handleJoinChannelClick = () => {
+    setShowEmailModal(true);
+  };
+
+  const handleEmailSubmit = async (email: string) => {
+    try {
+      // Call our API endpoint to initialize Paystack transaction
+      const response = await fetch('/api/paystack/initialize', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: email,
+          amount: (PAYMENT_AMOUNT * 100).toString() // Convert to kobo
+        }),
+      });
+
+      const data = await response.json();
+
+      if (data.status && data.data.authorization_url) {
+        // Redirect to Paystack checkout
+        window.location.href = data.data.authorization_url;
+      } else {
+        throw new Error(data.message || 'Failed to initialize payment');
+      }
+    } catch (error) {
+      console.error('Payment initialization error:', error);
+      const errorMessage = error instanceof Error ? error.message : 'Failed to initialize payment. Please try again.';
+      setToast({
+        message: errorMessage,
+        type: 'error',
+        isVisible: true
+      });
+    }
+  };
+
+  const handleEmailModalClose = () => {
+    setShowEmailModal(false);
+  };
+
+  const closeToast = () => {
+    setToast(prev => ({ ...prev, isVisible: false }));
   };
 
   return (
@@ -167,17 +227,30 @@ export default function JoinChannelPage() {
           <button
             className="w-full py-4 px-6 rounded-full font-bold text-lg transition-all duration-200 hover:opacity-90 active:scale-95"
             style={{ backgroundColor: '#FFFFFF', color: '#2F4C6C' }}
-            onClick={() => {
-              // Add WhatsApp link functionality here
-              console.log('Join channel clicked');
-            }}
+            onClick={handleJoinChannelClick}
           >
-            Join Our Channel
+            Join Our Channel - GHS {PAYMENT_AMOUNT}
           </button>
         </div>
         
         {/* Page content will be added here */}
       </div>
+
+      {/* Email Input Modal */}
+      <EmailInputModal
+        isOpen={showEmailModal}
+        onClose={handleEmailModalClose}
+        onEmailSubmit={handleEmailSubmit}
+        amount={PAYMENT_AMOUNT}
+      />
+
+      {/* Toast */}
+      <Toast
+        message={toast.message}
+        type={toast.type}
+        isVisible={toast.isVisible}
+        onClose={closeToast}
+      />
     </div>
   );
 }
