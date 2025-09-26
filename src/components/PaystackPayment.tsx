@@ -11,9 +11,7 @@ interface PaystackPaymentProps {
 
 export default function PaystackPayment({
   amount,
-  email,
-  onSuccess: _onSuccess,
-  onClose: _onClose
+  email
 }: PaystackPaymentProps) {
   const [isLoading, setIsLoading] = useState(false);
 
