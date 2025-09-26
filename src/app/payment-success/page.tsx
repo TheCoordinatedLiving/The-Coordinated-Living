@@ -92,7 +92,7 @@ export default function PaymentSuccessPage() {
           </div>
           <h2 className="text-2xl font-bold text-gray-900 mb-2">Payment Failed</h2>
           <p className="text-gray-600 mb-6">
-            We couldn't verify your payment. Please try again or contact support if the issue persists.
+            We couldn&apos;t verify your payment. Please try again or contact support if the issue persists.
           </p>
           <button
             onClick={handleClose}
@@ -144,7 +144,7 @@ export default function PaymentSuccessPage() {
         <div className="text-center mb-8">
           <h2 className="text-2xl font-semibold text-gray-800 mb-3">Welcome to Coordinated Living!</h2>
           <p className="text-gray-600 leading-relaxed">
-            Thank you for joining our community. You're now part of an exclusive group dedicated to 
+            Thank you for joining our community. You&apos;re now part of an exclusive group dedicated to 
             coordinated living and meaningful connections.
           </p>
         </div>

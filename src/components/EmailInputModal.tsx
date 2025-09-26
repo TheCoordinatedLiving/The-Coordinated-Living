@@ -44,7 +44,7 @@ export default function EmailInputModal({
     
     try {
       await onEmailSubmit(email);
-    } catch (err) {
+    } catch {
       setToast({
         message: 'Failed to process email. Please try again.',
         type: 'error',
@@ -124,7 +124,7 @@ export default function EmailInputModal({
         {/* Additional Info */}
         <div className="mt-8 p-4 rounded-full text-center" style={{ backgroundColor: '#2F4C6C' }}>
           <p className="text-sm" style={{ color: '#FFFFFF' }}>
-            <strong>Note:</strong> You will be redirected to Paystack's secure payment page to complete your transaction.
+            <strong>Note:</strong> You will be redirected to Paystack&apos;s secure payment page to complete your transaction.
           </p>
         </div>
       </div>

@@ -5,15 +5,15 @@ import { useState } from 'react';
 interface PaystackPaymentProps {
   amount: number;
   email: string;
-  onSuccess: (reference: any) => void;
+  onSuccess: (reference: string) => void;
   onClose: () => void;
 }
 
 export default function PaystackPayment({
   amount,
   email,
-  onSuccess,
-  onClose
+  onSuccess: _onSuccess,
+  onClose: _onClose
 }: PaystackPaymentProps) {
   const [isLoading, setIsLoading] = useState(false);
 
