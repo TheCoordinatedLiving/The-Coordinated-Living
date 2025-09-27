@@ -30,7 +30,7 @@ function PaymentSuccessContent() {
   const [paymentStatus, setPaymentStatus] = useState<'verifying' | 'success' | 'failed'>('verifying');
   const [paymentData, setPaymentData] = useState<PaymentData | null>(null);
   const [copied, setCopied] = useState(false);
-  const [shouldRedirect, setShouldRedirect] = useState(false);
+  const [shouldRedirect] = useState(false);
 
   // Get payment reference and type from URL parameters
   const reference = searchParams.get('reference');
@@ -100,7 +100,7 @@ function PaymentSuccessContent() {
           console.log('Full metadata:', metadata);
           console.log('Full data object:', data.data);
           
-          const paymentType = metadata?.custom_fields?.find((field: any) => 
+          const paymentType = metadata?.custom_fields?.find((field: { variable_name: string; value: string }) => 
             field.variable_name === 'payment_type'
           )?.value;
           console.log('Payment type from metadata:', paymentType);
@@ -125,9 +125,9 @@ function PaymentSuccessContent() {
           
           // Determine payment type - URL parameter is most reliable
           let type: 'donation' | 'channel' = 'channel'; // default
-          let amount = data.data.amount / 100; // Convert from kobo to GHS
-          let email = data.data.customer?.email;
-          let phoneNumber = '';
+          const amount = data.data.amount / 100; // Convert from kobo to GHS
+          const email = data.data.customer?.email;
+          const phoneNumber = '';
           
           // Determine payment type - URL parameter is the absolute priority
           console.log('🔴 NEW CODE IS RUNNING - URL Payment Type:', urlPaymentType);
@@ -322,7 +322,7 @@ function PaymentSuccessContent() {
     if (storedData) {
       try {
         return JSON.parse(storedData).amount;
-      } catch (e) {
+      } catch {
         return null;
       }
     }
@@ -414,7 +414,7 @@ function PaymentSuccessContent() {
             <p 
               className={`${roboto.className} text-white text-xs opacity-60`}
             >
-              You'll receive an email confirmation shortly.
+              You&apos;ll receive an email confirmation shortly.
             </p>
           </div>
         </div>
