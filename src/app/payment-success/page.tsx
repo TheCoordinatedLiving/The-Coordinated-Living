@@ -456,18 +456,24 @@ function PaymentSuccessContent() {
 
         {/* Welcome Message */}
         <div className="mb-8">
-          <h2 className={`${amita.className} text-4xl text-white mb-6`}>Welcome To Coordinated Living!</h2>
+          <h2 className={`${amita.className} text-4xl text-white mb-6 font-bold`}>Welcome To Coordinated Living!</h2>
           <p className={`${roboto.className} text-white text-lg leading-relaxed`}>
-            Thank you for joining our community. You&apos;re now part of an exclusive group dedicated to 
-            coordinated living and meaningful connections.
+            Welcome! You&apos;re officially part of a community dedicated to navigating life&apos;s struggles and finding purpose in Christ. I&apos;m honored to have you here. This channel is for us to walk together in faith, sharing insights and growing closer to the Lord.
           </p>
         </div>
 
-        {/* About Our Channel */}
+
+        {/* Channel Information */}
         <div className="mb-8">
-          <h3 className={`${amita.className} text-2xl text-white mb-4`}>About Our Channel</h3>
           <p className={`${roboto.className} text-white text-lg leading-relaxed`}>
-            Get exclusive Coordinated Living resources—with community discussions and support, regular updates and announcements, and access to premium guides and materials.
+            Since this is an exclusive community, please remember that the channel link is just for you. Please do not share it with others. Your support allows me to create this content, and keeping the channel private helps us honour everyone&apos;s investment.
+          </p>
+        </div>
+
+        {/* Excitement Message */}
+        <div className="mb-8 text-center">
+          <p className={`${amita.className} text-2xl text-white font-bold`}>
+            I&apos;m excited to have you here!
           </p>
         </div>
 
@@ -489,13 +495,6 @@ function PaymentSuccessContent() {
             >
               {copied ? 'Link Copied!' : 'Copy Link Instead'}
             </button>
-          </div>
-
-          {/* Important Notice */}
-          <div className="mt-8">
-            <p className={`${roboto.className} text-white text-sm font-bold text-center leading-relaxed`}>
-              Please do not share this link with others as it violates our community rules. This link is exclusively for paid members.
-            </p>
           </div>
         </div>
       </div>

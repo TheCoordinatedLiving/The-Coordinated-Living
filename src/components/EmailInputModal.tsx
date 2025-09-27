@@ -8,13 +8,15 @@ interface EmailInputModalProps {
   onClose: () => void;
   onEmailSubmit: (email: string, phoneNumber: string) => void;
   amount: number;
+  paymentType?: 'regular' | 'momo';
 }
 
 export default function EmailInputModal({
   isOpen,
   onClose,
   onEmailSubmit,
-  amount
+  amount,
+  paymentType = 'regular'
 }: EmailInputModalProps) {
   const [email, setEmail] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
@@ -34,27 +36,31 @@ export default function EmailInputModal({
     e.preventDefault();
     setError('');
     
-    // Basic email validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      setError('Please enter a valid email address');
-      return;
+    // Basic email validation (only for regular payments)
+    if (paymentType === 'regular') {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        setError('Please enter a valid email address');
+        return;
+      }
     }
 
-    // Basic phone number validation (Ghana format)
-    const phoneRegex = /^(\+233|0)[0-9]{9}$/;
+    // Basic phone number validation (supports Ghana format starting with 0 and international format starting with +)
+    const phoneRegex = /^(\+[1-9][\d]{7,14}|0[0-9]{8,9})$/;
     if (!phoneRegex.test(phoneNumber.replace(/\s/g, ''))) {
-      setError('Please enter a valid WhatsApp number (e.g., 0548838479)');
+      setError('Please enter a valid WhatsApp number');
       return;
     }
 
     setIsLoading(true);
     
     try {
-      await onEmailSubmit(email, phoneNumber);
+      // For MOMO payments, pass empty email string
+      const emailToSubmit = paymentType === 'momo' ? '' : email;
+      await onEmailSubmit(emailToSubmit, phoneNumber);
     } catch {
       setToast({
-        message: 'Failed to process email. Please try again.',
+        message: 'Failed to process payment. Please try again.',
         type: 'error',
         isVisible: true
       });
@@ -92,29 +98,36 @@ export default function EmailInputModal({
 
         {/* Header */}
         <div className="text-center mb-8">
-          <h2 className="text-2xl font-bold mb-2" style={{ fontFamily: 'Amita, cursive', color: '#2F4C6C' }}>Complete Your Payment</h2>
+          <h2 className="text-2xl font-bold mb-2" style={{ fontFamily: 'Amita, cursive', color: '#2F4C6C' }}>
+            {paymentType === 'momo' ? 'Complete Your Mobile Money Payment' : 'Complete Your Payment'}
+          </h2>
           <p className="text-gray-600">
-            Enter your email address to proceed with payment of <span className="font-bold" style={{ color: '#2F4C6C' }}>GHS {amount}</span>
+            {paymentType === 'momo' 
+              ? `Enter your WhatsApp number to proceed with Mobile Money payment of`
+              : `Enter your email address to proceed with payment of`
+            } <span className="font-bold" style={{ color: '#2F4C6C' }}>GHS {amount}</span>
           </p>
         </div>
 
         {/* Email Form */}
         <form onSubmit={handleSubmit} className="space-y-6">
-          <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-              Email Address
-            </label>
-            <input
-              type="email"
-              id="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="Enter your email address"
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-colors text-gray-900 placeholder-gray-500"
-              required
-              disabled={isLoading}
-            />
-          </div>
+          {paymentType === 'regular' && (
+            <div>
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                Email Address
+              </label>
+              <input
+                type="email"
+                id="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Enter your email address"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-colors text-gray-900 placeholder-gray-500"
+                required={paymentType === 'regular'}
+                disabled={isLoading}
+              />
+            </div>
+          )}
 
           <div>
             <label htmlFor="phoneNumber" className="block text-sm font-medium text-gray-700 mb-2">
@@ -125,7 +138,7 @@ export default function EmailInputModal({
               id="phoneNumber"
               value={phoneNumber}
               onChange={(e) => setPhoneNumber(e.target.value)}
-              placeholder="Enter your WhatsApp number (e.g., 0548838479)"
+              placeholder="Enter your WhatsApp number"
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-colors text-gray-900 placeholder-gray-500"
               required
               disabled={isLoading}
@@ -138,18 +151,21 @@ export default function EmailInputModal({
           {/* Submit Button */}
           <button
             type="submit"
-            disabled={isLoading || !email || !phoneNumber}
+            disabled={isLoading || (paymentType === 'regular' && !email) || !phoneNumber}
             className="w-full py-4 px-6 rounded-full font-bold text-lg transition-all duration-200 hover:bg-[#2F4C6C] hover:text-white active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
             style={{ backgroundColor: '#FFFFFF', color: '#2F4C6C' }}
           >
-            {isLoading ? 'Processing...' : 'Pay Now'}
+            {isLoading ? 'Processing...' : (paymentType === 'momo' ? 'Pay with Mobile Money' : 'Pay Now')}
           </button>
         </form>
 
         {/* Additional Info */}
         <div className="mt-8 p-4 rounded-full text-center" style={{ backgroundColor: '#2F4C6C' }}>
           <p className="text-sm" style={{ color: '#FFFFFF' }}>
-            <strong>Note:</strong> You will be redirected to Paystack&apos;s secure payment page to complete your transaction.
+            <strong>Note:</strong> {paymentType === 'momo' 
+              ? 'You will receive a prompt on your mobile device to complete the Mobile Money payment.'
+              : 'You will be redirected to Paystack\'s secure payment page to complete your transaction.'
+            }
           </p>
         </div>
       </div>

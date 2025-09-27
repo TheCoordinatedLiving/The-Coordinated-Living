@@ -126,10 +126,11 @@ export default function JoinChannelPage() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          email: email,
+          email: email, // This will be empty string for mobile money
           phoneNumber: phoneNumber,
           amount: (PAYMENT_AMOUNT * 100).toString(), // Convert to kobo
-          type: 'channel'
+          type: 'channel',
+          paymentType: 'momo'
         }),
       });
 
@@ -312,6 +313,7 @@ export default function JoinChannelPage() {
         onClose={handleEmailModalClose}
         onEmailSubmit={handleEmailSubmit}
         amount={PAYMENT_AMOUNT}
+        paymentType="regular"
       />
 
       {/* Mobile Money Modal */}
@@ -320,6 +322,7 @@ export default function JoinChannelPage() {
         onClose={handleMobileMoneyModalClose}
         onEmailSubmit={handleMobileMoneySubmit}
         amount={PAYMENT_AMOUNT}
+        paymentType="momo"
       />
 
       {/* Toast */}
