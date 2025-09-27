@@ -20,6 +20,7 @@ const roboto = Roboto({
 interface PaymentData {
   type: 'donation' | 'channel';
   amount?: number;
+  currency?: string;
   email?: string;
   phoneNumber?: string;
 }
@@ -31,6 +32,21 @@ function PaymentSuccessContent() {
   const [paymentData, setPaymentData] = useState<PaymentData | null>(null);
   const [copied, setCopied] = useState(false);
   const [shouldRedirect] = useState(false);
+
+  // Currency information
+  const currencyInfo = {
+    'GHS': { symbol: '₵', subunit: 100, name: 'Ghana Cedi' },
+    'NGN': { symbol: '₦', subunit: 100, name: 'Nigerian Naira' },
+    'ZAR': { symbol: 'R', subunit: 100, name: 'South African Rand' },
+    'KES': { symbol: 'KSh', subunit: 100, name: 'Kenyan Shilling' },
+    'USD': { symbol: '$', subunit: 100, name: 'US Dollar' }
+  };
+
+  // Helper function to format amount with correct currency
+  const formatAmount = (amount: number, currency: string = 'GHS') => {
+    const info = currencyInfo[currency as keyof typeof currencyInfo] || currencyInfo.GHS;
+    return `${info.symbol}${amount.toFixed(2)}`;
+  };
 
   // Get payment reference and type from URL parameters
   const reference = searchParams.get('reference');
@@ -125,7 +141,9 @@ function PaymentSuccessContent() {
           
           // Determine payment type - URL parameter is most reliable
           let type: 'donation' | 'channel' = 'channel'; // default
-          const amount = data.data.amount / 100; // Convert from kobo to GHS
+          const paystackCurrency = data.data.currency || 'GHS';
+          const paystackAmount = data.data.amount;
+          const amount = paystackAmount / 100; // Convert from smallest unit to main unit
           const email = data.data.customer?.email;
           const phoneNumber = '';
           
@@ -137,7 +155,8 @@ function PaymentSuccessContent() {
             // Create donation data if not already stored
             if (!storedDonationData) {
               const donationData = {
-                amount: data.data.amount / 100,
+                amount: amount,
+                currency: paystackCurrency,
                 email: data.data.customer?.email || '',
                 phoneNumber: ''
               };
@@ -156,6 +175,7 @@ function PaymentSuccessContent() {
           const paymentInfo = {
             type,
             amount,
+            currency: paystackCurrency,
             email,
             phoneNumber
           };
@@ -315,13 +335,22 @@ function PaymentSuccessContent() {
   console.log('Will show donation content:', isDonation);
   console.log('Will show channel content:', !isDonation);
 
-  // Get donation amount from payment data or stored data
-  const getDonationAmount = () => {
-    if (paymentData?.amount) return paymentData.amount;
+  // Get donation amount and currency from payment data or stored data
+  const getDonationData = () => {
+    if (paymentData?.amount) {
+      return {
+        amount: paymentData.amount,
+        currency: paymentData.currency || 'GHS'
+      };
+    }
     const storedData = sessionStorage.getItem('donationData') || localStorage.getItem('donationData');
     if (storedData) {
       try {
-        return JSON.parse(storedData).amount;
+        const parsed = JSON.parse(storedData);
+        return {
+          amount: parsed.amount,
+          currency: parsed.currency || 'GHS'
+        };
       } catch {
         return null;
       }
@@ -329,7 +358,8 @@ function PaymentSuccessContent() {
     return null;
   };
 
-  const donationAmount = getDonationAmount();
+  const donationData = getDonationData();
+  const donationAmount = donationData?.amount;
 
   // Render donation success content
   if (isDonation) {
@@ -375,7 +405,7 @@ function PaymentSuccessContent() {
             >
               <div className="text-center">
                 <p className={`${roboto.className} text-white text-lg font-medium mb-2`}>
-                  Donation Amount: GHS {donationAmount.toFixed(2)}
+                  Donation Amount: {donationAmount ? formatAmount(donationAmount, donationData?.currency) : 'N/A'}
                 </p>
                 <p className={`${roboto.className} text-white text-sm opacity-80`}>
                   One-time donation

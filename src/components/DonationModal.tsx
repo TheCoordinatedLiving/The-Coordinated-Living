@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 interface DonationModalProps {
   isOpen: boolean;
@@ -8,12 +8,52 @@ interface DonationModalProps {
   onSuccess: (data: { reference: string; amount: number }) => void;
 }
 
-export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
-  const [email, setEmail] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
+export default function DonationModal({ isOpen, onClose, onSuccess }: DonationModalProps) {
+  const [emailOrPhone, setEmailOrPhone] = useState('');
   const [amount, setAmount] = useState('');
+  const [currency, setCurrency] = useState('GHS');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+
+  // Paystack supported currencies (only GHS enabled for this merchant account)
+  const availableCurrencies = [
+    { code: 'GHS', symbol: '₵', name: 'Ghana Cedi', country: 'Ghana' }
+    // Note: Other currencies need to be enabled in Paystack merchant account
+    // { code: 'NGN', symbol: '₦', name: 'Nigerian Naira', country: 'Nigeria' },
+    // { code: 'ZAR', symbol: 'R', name: 'South African Rand', country: 'South Africa' },
+    // { code: 'KES', symbol: 'KSh', name: 'Kenyan Shilling', country: 'Kenya' },
+    // { code: 'USD', symbol: '$', name: 'US Dollar', country: 'International' }
+  ];
+
+  // Auto-detect currency based on user's location
+  useEffect(() => {
+    const detectCurrency = () => {
+      try {
+        // Try to detect country from browser language
+        const language = navigator.language || navigator.languages?.[0] || 'en-GH';
+        const countryCode = language.split('-')[1] || 'GH';
+        
+        const currencyMap: { [key: string]: string } = {
+          'GH': 'GHS',
+          'NG': 'NGN',
+          'ZA': 'ZAR',
+          'KE': 'KES',
+          'US': 'USD'
+        };
+        
+        const detectedCurrency = currencyMap[countryCode] || 'GHS';
+        setCurrency(detectedCurrency);
+        console.log('Detected currency:', detectedCurrency, 'from country:', countryCode);
+      } catch (error) {
+        console.log('Currency detection failed, using default GHS');
+        setCurrency('GHS');
+      }
+    };
+
+    if (isOpen) {
+      detectCurrency();
+    }
+  }, [isOpen]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -22,7 +62,7 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
 
     try {
       // Validate inputs
-      if (!email || !phoneNumber || !amount) {
+      if (!emailOrPhone || !amount) {
         throw new Error('Please fill in all required fields');
       }
 
@@ -31,16 +71,17 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
         throw new Error('Please enter a valid amount');
       }
 
-      // Email validation
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(email)) {
-        throw new Error('Please enter a valid email address');
+      if (donationAmount < 10) {
+        throw new Error('Minimum donation amount is 10 GHS');
       }
 
-      // Phone number validation (international format)
+      // Email or phone validation
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       const phoneRegex = /^[\+]?[1-9][\d]{0,15}$/;
-      if (!phoneRegex.test(phoneNumber.replace(/\s/g, ''))) {
-        throw new Error('Please enter a valid phone number');
+      const cleanInput = emailOrPhone.replace(/\s/g, '');
+      
+      if (!emailRegex.test(emailOrPhone) && !phoneRegex.test(cleanInput)) {
+        throw new Error('Please enter a valid email address or phone number');
       }
 
       // Call the normal transaction API
@@ -50,9 +91,10 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          email: email,
-          phoneNumber: phoneNumber,
-          amount: (donationAmount * 100).toString(), // Convert to kobo
+          email: emailOrPhone.includes('@') ? emailOrPhone : '',
+          phoneNumber: emailOrPhone.includes('@') ? '' : emailOrPhone,
+          amount: (donationAmount * 100).toString(), // Convert to smallest currency unit
+          currency: currency,
           type: 'donation'
         }),
       });
@@ -64,8 +106,9 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
         // Store donation data in sessionStorage for success page
         const donationData = {
           amount: donationAmount,
-          email: email,
-          phoneNumber: phoneNumber
+          currency: currency,
+          email: emailOrPhone.includes('@') ? emailOrPhone : '',
+          phoneNumber: emailOrPhone.includes('@') ? '' : emailOrPhone
         };
         console.log('Storing donation data:', donationData);
         sessionStorage.setItem('donationData', JSON.stringify(donationData));
@@ -92,9 +135,9 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
   };
 
   const handleClose = () => {
-    setEmail('');
-    setPhoneNumber('');
+    setEmailOrPhone('');
     setAmount('');
+    setCurrency('GHS');
     setError('');
     onClose();
   };
@@ -114,17 +157,8 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
         className="bg-white rounded-2xl p-6 w-full max-w-md mx-4 max-h-[90vh] overflow-y-auto"
         style={{ backgroundColor: '#2F4C6C' }}
       >
-        {/* Header */}
-        <div className="flex justify-between items-center mb-6">
-          <h2 
-            className="text-2xl font-bold"
-            style={{ 
-              fontFamily: 'Amita, cursive',
-              color: 'white'
-            }}
-          >
-            Pour Into My Cup
-          </h2>
+        {/* Close Button */}
+        <div className="flex justify-end mb-6">
           <button
             onClick={handleClose}
             className="text-white hover:opacity-80 transition-opacity"
@@ -146,50 +180,62 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
           className="text-white text-sm mb-6 leading-relaxed"
           style={{ fontFamily: 'Roboto, sans-serif' }}
         >
-          Your support helps keep this platform running and my cup full. 
-          Choose any amount that feels right for you.
+          Your support helps me sustainably run this platform. thank you for your kindness
         </p>
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          {/* Email Input */}
+          {/* Email or Phone Input */}
           <div>
             <label 
-              htmlFor="email" 
+              htmlFor="emailOrPhone" 
               className="block text-white text-sm font-medium mb-2"
               style={{ fontFamily: 'Roboto, sans-serif' }}
             >
-              Email Address *
+              Email Address or Phone Number *
             </label>
             <input
-              type="email"
-              id="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              type="text"
+              id="emailOrPhone"
+              value={emailOrPhone}
+              onChange={(e) => setEmailOrPhone(e.target.value)}
               className="w-full px-4 py-3 rounded-lg border-2 border-white text-white placeholder-gray-300 focus:ring-2 focus:ring-white focus:outline-none bg-transparent"
-              placeholder="your@email.com"
+              placeholder="enter email or phone number"
               required
             />
           </div>
 
-          {/* Phone Number Input */}
-          <div>
-            <label 
-              htmlFor="phoneNumber" 
-              className="block text-white text-sm font-medium mb-2"
-              style={{ fontFamily: 'Roboto, sans-serif' }}
-            >
-              Phone Number *
-            </label>
-            <input
-              type="tel"
-              id="phoneNumber"
-              value={phoneNumber}
-              onChange={(e) => setPhoneNumber(e.target.value)}
-              className="w-full px-4 py-3 rounded-lg border-2 border-white text-white placeholder-gray-300 focus:ring-2 focus:ring-white focus:outline-none bg-transparent"
-              placeholder="Enter phone number"
-              required
-            />
-          </div>
+          {/* Currency Selection - Hidden since only GHS is available */}
+          {availableCurrencies.length > 1 && (
+            <div>
+              <label 
+                htmlFor="currency" 
+                className="block text-white text-sm font-medium mb-2"
+                style={{ fontFamily: 'Roboto, sans-serif' }}
+              >
+                Currency *
+              </label>
+              <select
+                id="currency"
+                value={currency}
+                onChange={(e) => setCurrency(e.target.value)}
+                className="w-full px-4 py-3 rounded-lg border-2 border-white text-white focus:ring-2 focus:ring-white focus:outline-none bg-transparent"
+                style={{ 
+                  backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                  color: 'white'
+                }}
+              >
+                {availableCurrencies.map((curr) => (
+                  <option 
+                    key={curr.code} 
+                    value={curr.code}
+                    style={{ backgroundColor: '#2F4C6C', color: 'white' }}
+                  >
+                    {curr.symbol} {curr.code} - {curr.name} ({curr.country})
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
 
           {/* Amount Selection */}
           <div>
@@ -207,12 +253,21 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
                 onChange={(e) => setAmount(e.target.value)}
                 className="w-full px-4 py-3 pr-12 rounded-lg border-2 border-white text-white placeholder-gray-300 focus:ring-2 focus:ring-white focus:outline-none bg-transparent"
                 placeholder="Enter your preferred amount"
-                min="1"
+                min="10"
                 step="0.01"
                 required
               />
-              <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white text-sm pointer-events-none">GHS</span>
+              <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white text-sm pointer-events-none">
+                {availableCurrencies.find(c => c.code === currency)?.symbol || currency}
+              </span>
             </div>
+            
+            {/* Amount validation message */}
+            {amount && parseFloat(amount) < 10 && (
+              <p className="text-red-300 text-sm mt-2">
+                Please make donation 10 GHS and above
+              </p>
+            )}
           </div>
 
 
@@ -226,17 +281,13 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
           {/* Submit Button */}
           <button
             type="submit"
-            disabled={isLoading || !email || !phoneNumber || !amount}
+            disabled={isLoading || !emailOrPhone || !amount}
             className="w-full py-4 px-6 rounded-full font-bold text-lg transition-all duration-200 hover:opacity-90 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
             style={{ backgroundColor: '#FFFFFF', color: '#2F4C6C' }}
           >
-            {isLoading ? 'Processing...' : 'Donate Now'}
+            {isLoading ? 'Processing...' : 'Pour'}
           </button>
 
-          {/* Terms */}
-          <p className="text-white text-xs text-center opacity-80">
-            By donating, you agree to our terms of service.
-          </p>
         </form>
       </div>
     </div>

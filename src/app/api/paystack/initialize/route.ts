@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(request: NextRequest) {
   try {
-    const { email, phoneNumber, amount, type = 'channel', paymentType = 'regular' } = await request.json();
+    const { email, phoneNumber, amount, currency = 'GHS', type = 'channel', paymentType = 'regular' } = await request.json();
 
     // For mobile money payments, email is not required
     if (paymentType === 'momo') {
@@ -74,7 +74,7 @@ export async function POST(request: NextRequest) {
       body: JSON.stringify({
         email: paystackEmail,
         amount: amount, // Amount in kobo
-        currency: 'GHS',
+        currency: currency,
         callback_url: callbackUrl,
         metadata: {
           custom_fields: [
