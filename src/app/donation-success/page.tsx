@@ -27,7 +27,7 @@ interface DonationData {
 export default function DonationSuccessPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [donationData, setDonationData] = useState<DonationData | null>(null);
+  const [, setDonationData] = useState<DonationData | null>(null);
   const [isVerifying, setIsVerifying] = useState(true);
   const [verificationStatus, setVerificationStatus] = useState<'success' | 'failed' | 'pending'>('pending');
   const pageRef = useRef<HTMLDivElement>(null);
@@ -108,18 +108,18 @@ export default function DonationSuccessPage() {
     }
   };
 
-  const handleShare = () => {
-    const text = `I just donated to support Coordinated Living! Your support helps keep this platform running. 💙`;
-    const url = window.location.origin;
-    
-    if (navigator.share) {
-      navigator.share({ text, url });
-    } else {
-      // Fallback to copying to clipboard
-      navigator.clipboard.writeText(`${text} ${url}`);
-      alert('Donation message copied to clipboard!');
-    }
-  };
+  // const handleShare = () => {
+  //   const text = `I just donated to support Coordinated Living! Your support helps keep this platform running. 💙`;
+  //   const url = window.location.origin;
+  //   
+  //   if (navigator.share) {
+  //     navigator.share({ text, url });
+  //   } else {
+  //     // Fallback to copying to clipboard
+  //     navigator.clipboard.writeText(`${text} ${url}`);
+  //     alert('Donation message copied to clipboard!');
+  //   }
+  // };
 
   const handleSetUpAnother = () => {
     router.push('/donation-mobile');
@@ -188,7 +188,7 @@ export default function DonationSuccessPage() {
           <p 
             className={`${roboto.className} text-white text-base leading-relaxed mb-8`}
           >
-            We couldn't process your donation. Please try again or contact support if the issue persists.
+            We couldn&apos;t process your donation. Please try again or contact support if the issue persists.
           </p>
 
           <div className="space-y-3 w-full max-w-xs">

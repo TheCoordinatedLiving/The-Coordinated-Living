@@ -140,7 +140,7 @@ const NewHomepage = () => {
   const [postsCount, setPostsCount] = useState(0);
   
   // Donation modal state
-  const [isDonationModalOpen, setIsDonationModalOpen] = useState(false);
+  // const [isDonationModalOpen, setIsDonationModalOpen] = useState(false);
   
   // Fetch posts count from Airtable
   useEffect(() => {
@@ -175,13 +175,13 @@ const NewHomepage = () => {
     }
   };
 
-  const handleDonationClick = () => {
-    setIsDonationModalOpen(true);
-  };
+  // const handleDonationClick = () => {
+  //   setIsDonationModalOpen(true);
+  // };
 
-  const handleDonationModalClose = () => {
-    setIsDonationModalOpen(false);
-  };
+  // const handleDonationModalClose = () => {
+  //   setIsDonationModalOpen(false);
+  // };
 
   const handleDonationSuccess = (data: { reference: string; amount: number }) => {
     // The modal will handle the redirect to Paystack
@@ -586,7 +586,7 @@ const Page = () => {
   const [showPostModal, setShowPostModal] = useState(false);
   
   // Donation modal state
-  const [isDonationModalOpen, setIsDonationModalOpen] = useState(false);
+  // const [isDonationModalOpen, setIsDonationModalOpen] = useState(false);
   
   // Posts state for dynamic content
   const [posts, setPosts] = useState<Post[]>([]);
@@ -1562,9 +1562,9 @@ const Page = () => {
 
 
   // Donation modal handlers
-  const handleDonationModalClose = () => {
-    setIsDonationModalOpen(false);
-  };
+  // const handleDonationModalClose = () => {
+  //   setIsDonationModalOpen(false);
+  // };
 
   const handleDonationSuccess = (data: { reference: string; amount: number }) => {
     // The modal will handle the redirect to Paystack
@@ -3762,7 +3762,7 @@ const Page = () => {
                         className="cursor-pointer hover:opacity-80 transition-opacity"
                         onClick={() => {
                           console.log('Pour Into My Cup clicked!');
-                          setIsDonationModalOpen(true);
+                          // setIsDonationModalOpen(true);
                         }}
                       />
                     </div>
@@ -5468,11 +5468,11 @@ const Page = () => {
       )}
 
       {/* Donation Modal */}
-      <DonationModal
+      {/* <DonationModal
         isOpen={isDonationModalOpen}
         onClose={handleDonationModalClose}
         onSuccess={handleDonationSuccess}
-      />
+      /> */}
 
     </div>
   );

@@ -115,7 +115,7 @@ function PaymentSuccessContent() {
           console.log('Full metadata:', metadata);
           console.log('Full data object:', data.data);
           
-          const paymentType = metadata?.custom_fields?.find((field: any) => 
+          const paymentType = metadata?.custom_fields?.find((field: { variable_name: string; value: string }) => 
             field.variable_name === 'payment_type'
           )?.value;
           console.log('Payment type from metadata:', paymentType);
@@ -140,9 +140,9 @@ function PaymentSuccessContent() {
           
           // Determine payment type - URL parameter is most reliable
           let type: 'donation' | 'channel' = 'channel'; // default
-          let amount = data.data.amount / 100; // Convert from kobo to GHS
-          let email = data.data.customer?.email;
-          let phoneNumber = '';
+          const amount = data.data.amount / 100; // Convert from kobo to GHS
+          const email = data.data.customer?.email;
+          const phoneNumber = '';
           
           // Determine payment type
           if (urlPaymentType === 'donation' || storedDonationData || cameFromDonationFlag === 'true' || cameFromDonation || paymentType === 'Pour into my cup') {
@@ -311,7 +311,7 @@ function PaymentSuccessContent() {
     if (storedData) {
       try {
         return JSON.parse(storedData).amount;
-      } catch (e) {
+      } catch {
         return null;
       }
     }
