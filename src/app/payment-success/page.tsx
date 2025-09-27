@@ -30,7 +30,7 @@ function PaymentSuccessContent() {
   const [paymentStatus, setPaymentStatus] = useState<'verifying' | 'success' | 'failed'>('verifying');
   const [paymentData, setPaymentData] = useState<PaymentData | null>(null);
   const [copied, setCopied] = useState(false);
-  const [shouldRedirect] = useState(false);
+  // const [shouldRedirect] = useState(false); // TEMPORARILY DISABLED
 
   // Get payment reference and type from URL parameters
   const reference = searchParams.get('reference');
