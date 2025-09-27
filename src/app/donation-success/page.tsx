@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, Suspense } from 'react';
 import { gsap } from 'gsap';
 import { Amita, Roboto } from 'next/font/google';
 import Image from 'next/image';
@@ -24,7 +24,7 @@ interface DonationData {
   phoneNumber?: string;
 }
 
-export default function DonationSuccessPage() {
+function DonationSuccessContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [, setDonationData] = useState<DonationData | null>(null);
@@ -299,5 +299,20 @@ export default function DonationSuccessPage() {
 
       </div>
     </div>
+  );
+}
+
+export default function DonationSuccessPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen w-full flex items-center justify-center" style={{ backgroundColor: '#2F4C6C' }}>
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white mx-auto mb-4"></div>
+          <p className="text-white text-lg">Loading...</p>
+        </div>
+      </div>
+    }>
+      <DonationSuccessContent />
+    </Suspense>
   );
 }
