@@ -437,10 +437,15 @@ export default function PostMobilePage() {
                   <div className="mb-4 relative" onTouchStart={handleTouchStart} onClick={handleReadPost}>
                     <div className="aspect-[4/5] rounded-2xl overflow-hidden cursor-pointer" style={{ borderRadius: '16px' }}>
                       <Image 
-                        src="/guides-bottomsheet.png" 
-                        alt="Post Card" 
+                        src={posts[currentPostIndex]?.images?.[0]?.src || "/guides-bottomsheet.png"} 
+                        alt={posts[currentPostIndex]?.images?.[0]?.alt || "Post Card"} 
                         fill
                         className="object-cover rounded-2xl"
+                        onError={(e) => {
+                          console.error('Image failed to load:', posts[currentPostIndex]?.images?.[0]?.src);
+                          // Fallback to default image if Airtable image fails
+                          e.currentTarget.src = "/guides-bottomsheet.png";
+                        }}
                       />
                       
                       {/* Logo - Top Left */}
@@ -556,14 +561,20 @@ export default function PostMobilePage() {
               <div className="text-white text-base leading-relaxed" style={{ fontFamily: 'Roboto, sans-serif' }}>
                 <div className="space-y-4">
                   {selectedPost.content ? (
-                    // Use new content field if available
-                    <p>{selectedPost.content}</p>
+                    // Use new content field if available - split into paragraphs
+                    typeof selectedPost.content === 'string' ? (
+                      selectedPost.content.split('\n').map((paragraph, index) => (
+                        paragraph.trim() && <p key={index}>{paragraph.trim()}</p>
+                      ))
+                    ) : (
+                      <p>{selectedPost.content}</p>
+                    )
                   ) : (
                     // Fallback to legacy fields
                     <>
-                      <p>{selectedPost.leftContent}</p>
-                      <p>{selectedPost.rightContent}</p>
-                      <p>{selectedPost.bottomRightContent}</p>
+                      {selectedPost.leftContent && <p>{selectedPost.leftContent}</p>}
+                      {selectedPost.rightContent && <p>{selectedPost.rightContent}</p>}
+                      {selectedPost.bottomRightContent && <p>{selectedPost.bottomRightContent}</p>}
                     </>
                   )}
                 </div>
