@@ -19,13 +19,16 @@ Create a table called "Posts" with the following fields:
 
 | Field Name | Field Type | Description |
 |------------|------------|-------------|
-| `title` | Single line text | Post title |
-| `leftContent` | Long text | Left column content |
-| `rightContent` | Long text | Right column content |
-| `bottomRightContent` | Long text | Bottom right content |
-| `published` | Checkbox | Whether the post is published (default: checked) |
-| `order` | Number | Display order (1, 2, 3, etc.) |
-| `createdDate` | Date | When the post was created |
+| `Title` | Single line text | Post title |
+| `Content` | Long text | Main post content |
+| `Image 1` | Attachment | First image for the post |
+| `Image 2` | Attachment | Second image for the post |
+| `Published` | Checkbox | Whether the post is published (default: checked) |
+| `Order` | Number | Display order (1, 2, 3, etc.) |
+| `Created Date` | Date | When the post should be published (can be future date for scheduling) |
+| `Left Content` | Long text | Left column content (legacy) |
+| `Right Content` | Long text | Right column content (legacy) |
+| `Bottom Right Content` | Long text | Bottom right content (legacy) |
 
 ### Guides Table
 Create a table called "Guides" with the following fields:
@@ -112,7 +115,27 @@ AIRTABLE_BASE_ID=your_airtable_base_id_here
 1. **Draft Content**: Create new posts/guides in Airtable
 2. **Review**: Use the checkbox to control what's published
 3. **Order**: Use the order field to control display sequence
-4. **Publish**: Check the "published" checkbox to make content live
+4. **Schedule**: Set the "Created Date" to a future date to schedule content
+5. **Publish**: Check the "published" checkbox to make content live
+
+## Scheduled Posts
+
+The system supports scheduled posts through the `Created Date` field:
+
+### How It Works
+- **Immediate Publishing**: Leave `Created Date` empty or set to today and check `Published` to publish immediately
+- **Future Publishing**: Set `Created Date` to a future date and check `Published` to schedule for that date
+- **Automatic Release**: Posts automatically become visible when the created date arrives
+
+### Examples
+- **Today**: Set `Created Date` to today's date to publish immediately
+- **Next Week**: Set `Created Date` to next week's date to schedule for next week
+- **Specific Date**: Set `Created Date` to any future date to schedule for that specific date
+
+### Important Notes
+- Posts must have `Published` checked AND the `Created Date` must be today or in the past to be visible
+- Posts with future `Created Date` values will not appear on the website until that date
+- The system checks dates at the day level (not time), so a post scheduled for "tomorrow" will appear at midnight
 
 ## Troubleshooting
 

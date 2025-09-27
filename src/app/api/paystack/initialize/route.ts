@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(request: NextRequest) {
   try {
-    const { email, amount } = await request.json();
+    const { email, phoneNumber, amount, type = 'channel' } = await request.json();
 
     if (!email || !amount) {
       return NextResponse.json(
@@ -20,8 +20,19 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Validate phone number format (Ghana format) - only if provided
+    if (phoneNumber && phoneNumber.trim() !== '') {
+      const phoneRegex = /^(\+233|0)[0-9]{9}$/;
+      if (!phoneRegex.test(phoneNumber.replace(/\s/g, ''))) {
+        return NextResponse.json(
+          { status: false, message: 'Invalid phone number format. Please use Ghana format (e.g., 0548838479)' },
+          { status: 400 }
+        );
+      }
+    }
+
     // Get Paystack secret key from environment variables or use test key
-    const paystackSecretKey = process.env.PAYSTACK_SECRET_KEY || 'sk_test_e85988fa08e6452ebc108c7cf0f8aef6f206ca51';
+    const paystackSecretKey = process.env.PAYSTACK_SECRET_KEY ;
     
     if (!paystackSecretKey) {
       console.error('PAYSTACK_SECRET_KEY is not set in environment variables');
@@ -32,6 +43,12 @@ export async function POST(request: NextRequest) {
     }
 
     // Initialize Paystack transaction
+    const callbackUrl = type === 'donation' 
+      ? `${process.env.NEXT_PUBLIC_BASE_URL || 'https://coordinated-living.vercel.app'}/donation-success`
+      : `${process.env.NEXT_PUBLIC_BASE_URL || 'https://coordinated-living.vercel.app'}/payment-success?type=${type}`;
+    console.log('API: Generating callback URL:', callbackUrl);
+    console.log('API: Payment type:', type);
+    
     const paystackResponse = await fetch('https://api.paystack.co/transaction/initialize', {
       method: 'POST',
       headers: {
@@ -42,14 +59,19 @@ export async function POST(request: NextRequest) {
         email: email,
         amount: amount, // Amount in kobo
         currency: 'GHS',
-        callback_url: `${process.env.NEXT_PUBLIC_BASE_URL || 'https://coordinated-living.vercel.app'}/payment-success`,
+        callback_url: callbackUrl,
         metadata: {
           custom_fields: [
             {
-              display_name: "Payment For",
-              variable_name: "payment_for",
-              value: "Join Channel"
-            }
+              display_name: "Payment Type",
+              variable_name: "payment_type",
+              value: type === 'donation' ? 'Pour into my cup' : 'Join Channel'
+            },
+            ...(phoneNumber && phoneNumber.trim() !== '' ? [{
+              display_name: "Phone Number",
+              variable_name: "phone_number",
+              value: phoneNumber
+            }] : [])
           ]
         }
       }),

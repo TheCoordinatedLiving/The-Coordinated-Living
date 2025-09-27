@@ -42,7 +42,7 @@ export interface AirtablePost {
     }>; // Second image attachment field
     'Published'?: boolean;
     'Order'?: number;
-    'Created Date'?: string;
+    'Created Date'?: string; // Date when the post should be published (can be future date for scheduling)
     // Legacy fields for backward compatibility
     'Left Content'?: string;
     'Right Content'?: string;
@@ -116,8 +116,28 @@ export const fetchPosts = async (): Promise<AirtablePost[]> => {
     sort: [],
   });
   
-  // Filter to only published posts
-  const publishedPosts = allPosts.filter(post => post.fields['Published'] === true);
+  // Filter to only published posts that are ready to be shown
+  const now = new Date();
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate()); // Start of today
+  
+  const publishedPosts = allPosts.filter(post => {
+    // Must be published
+    if (post.fields['Published'] !== true) {
+      return false;
+    }
+    
+    // Check created date for scheduling
+    const createdDate = post.fields['Created Date'];
+    if (createdDate) {
+      // If there's a created date, only show if it's today or in the past
+      const created = new Date(createdDate);
+      const createdDay = new Date(created.getFullYear(), created.getMonth(), created.getDate());
+      return createdDay <= today;
+    }
+    
+    // If no created date, show the post (immediate publishing)
+    return true;
+  });
   
   // Sort manually: posts with Order first (ascending), then posts without Order
   return publishedPosts.sort((a, b) => {
@@ -199,12 +219,26 @@ export const fetchPostById = async (id: string): Promise<AirtablePost | null> =>
       fields: record.fields,
     } as AirtablePost;
     
-    // Only return if published
-    if (post.fields['Published']) {
-      return post;
+    // Check if post is published and ready to be shown
+    if (post.fields['Published'] !== true) {
+      return null;
     }
     
-    return null;
+    // Check created date for scheduling
+    const createdDate = post.fields['Created Date'];
+    if (createdDate) {
+      const now = new Date();
+      const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+      const created = new Date(createdDate);
+      const createdDay = new Date(created.getFullYear(), created.getMonth(), created.getDate());
+      
+      // Only return if created date is today or in the past
+      if (createdDay > today) {
+        return null;
+      }
+    }
+    
+    return post;
   } catch (error) {
     console.error(`Error fetching post with id ${id}:`, error);
     return null;

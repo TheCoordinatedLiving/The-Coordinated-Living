@@ -9,6 +9,7 @@ import { getAllPosts, Post } from '@/lib/posts';
 import PostTemplate from '../components/PostTemplate';
 import FullTermsContent from '../components/FullTermsContent';
 import AskAQuestion from './windows/AskAQuestion';
+import DonationModal from '../components/DonationModal';
 
 const Loader = () => {
   const logoRef = useRef(null);
@@ -138,6 +139,9 @@ const NewHomepage = () => {
   const [showTermsModal, setShowTermsModal] = useState(false);
   const [postsCount, setPostsCount] = useState(0);
   
+  // Donation modal state
+  const [isDonationModalOpen, setIsDonationModalOpen] = useState(false);
+  
   // Fetch posts count from Airtable
   useEffect(() => {
     const fetchPostsCount = async () => {
@@ -169,6 +173,20 @@ const NewHomepage = () => {
     if (window.innerWidth < 1280) {
       router.push('/post-mobile');
     }
+  };
+
+  const handleDonationClick = () => {
+    setIsDonationModalOpen(true);
+  };
+
+  const handleDonationModalClose = () => {
+    setIsDonationModalOpen(false);
+  };
+
+  const handleDonationSuccess = (data: { reference: string; amount: number }) => {
+    // The modal will handle the redirect to Paystack
+    // Success will be handled by the payment-success page
+    console.log('Donation initiated:', data);
   };
 
   useEffect(() => {
@@ -566,6 +584,9 @@ const Page = () => {
   // Remove isLetterLoaded state
   const [showVideos, setShowVideos] = useState(false);
   const [showPostModal, setShowPostModal] = useState(false);
+  
+  // Donation modal state
+  const [isDonationModalOpen, setIsDonationModalOpen] = useState(false);
   
   // Posts state for dynamic content
   const [posts, setPosts] = useState<Post[]>([]);
@@ -1539,6 +1560,17 @@ const Page = () => {
 
 
 
+
+  // Donation modal handlers
+  const handleDonationModalClose = () => {
+    setIsDonationModalOpen(false);
+  };
+
+  const handleDonationSuccess = (data: { reference: string; amount: number }) => {
+    // The modal will handle the redirect to Paystack
+    // Success will be handled by the payment-success page
+    console.log('Donation initiated:', data);
+  };
 
   return (
     <div ref={pageRef} className="relative" style={{ height: '100vh', overflow: 'hidden' }}>
@@ -3728,7 +3760,10 @@ const Page = () => {
                         width={200}
                         height={60}
                         className="cursor-pointer hover:opacity-80 transition-opacity"
-                        onClick={() => console.log('Pour Into My Cup clicked!')}
+                        onClick={() => {
+                          console.log('Pour Into My Cup clicked!');
+                          setIsDonationModalOpen(true);
+                        }}
                       />
                     </div>
 
@@ -5431,6 +5466,13 @@ const Page = () => {
       {showAskAQuestion && (
         <AskAQuestion onClose={() => setShowAskAQuestion(false)} />
       )}
+
+      {/* Donation Modal */}
+      <DonationModal
+        isOpen={isDonationModalOpen}
+        onClose={handleDonationModalClose}
+        onSuccess={handleDonationSuccess}
+      />
 
     </div>
   );

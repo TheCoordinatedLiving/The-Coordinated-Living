@@ -1,12 +1,14 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
+import DonationModal from '@/components/DonationModal';
 
 const DonationMobilePage = () => {
   const router = useRouter();
   const pageRef = useRef<HTMLDivElement>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     if (pageRef.current) {
@@ -39,9 +41,17 @@ const DonationMobilePage = () => {
   };
 
   const handleDonate = () => {
-    // Add your donation logic here
-    console.log('Donation button clicked');
-    // You can redirect to a payment processor or open a donation modal
+    setIsModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleDonationSuccess = (data: { reference: string; amount: number }) => {
+    // The modal will handle the redirect to Paystack
+    // Success will be handled by the payment-success page
+    console.log('Donation initiated:', data);
   };
 
   return (
@@ -113,6 +123,13 @@ const DonationMobilePage = () => {
           </button>
         </div>
       </div>
+
+      {/* Donation Modal */}
+      <DonationModal
+        isOpen={isModalOpen}
+        onClose={handleModalClose}
+        onSuccess={handleDonationSuccess}
+      />
     </div>
   );
 };

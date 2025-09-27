@@ -11,6 +11,7 @@ export default function JoinChannelPage() {
   const router = useRouter();
   const [isVisible, setIsVisible] = useState(false);
   const [showEmailModal, setShowEmailModal] = useState(false);
+  const [showMobileMoneyModal, setShowMobileMoneyModal] = useState(false);
   const [toast, setToast] = useState<{
     message: string;
     type: 'success' | 'error';
@@ -68,7 +69,13 @@ export default function JoinChannelPage() {
     setShowEmailModal(true);
   };
 
-  const handleEmailSubmit = async (email: string) => {
+  const handleMobileMoneyClick = () => {
+    setShowMobileMoneyModal(true);
+  };
+
+const paystackSecretKey = process.env.PAYSTACK_SECRET_KEY  || 'sk_test_e85988fa08e6452ebc108c7cf0f8aef6f206ca51';
+
+  const handleEmailSubmit = async (email: string, phoneNumber: string) => {
     try {
       // Call our API endpoint to initialize Paystack transaction
       const response = await fetch('/api/paystack/initialize', {
@@ -78,7 +85,9 @@ export default function JoinChannelPage() {
         },
         body: JSON.stringify({
           email: email,
-          amount: (PAYMENT_AMOUNT * 100).toString() // Convert to kobo
+          phoneNumber: phoneNumber,
+          amount: (PAYMENT_AMOUNT * 100).toString(), // Convert to kobo
+          type: 'channel'
         }),
       });
 
@@ -103,6 +112,44 @@ export default function JoinChannelPage() {
 
   const handleEmailModalClose = () => {
     setShowEmailModal(false);
+  };
+
+  const handleMobileMoneyModalClose = () => {
+    setShowMobileMoneyModal(false);
+  };
+
+  const handleMobileMoneySubmit = async (email: string, phoneNumber: string) => {
+    try {
+      // Call the normal transaction API with type 'channel' for mobile money
+      const response = await fetch('/api/paystack/initialize', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: email,
+          phoneNumber: phoneNumber,
+          amount: (PAYMENT_AMOUNT * 100).toString(), // Convert to kobo
+          type: 'channel'
+        }),
+      });
+
+      const data = await response.json();
+
+      if (data.status && data.data.authorization_url) {
+        // Redirect to Paystack checkout
+        window.location.href = data.data.authorization_url;
+      } else {
+        throw new Error(data.message || 'Failed to initialize payment');
+      }
+    } catch (error) {
+      console.error('Mobile money payment error:', error);
+      setToast({
+        message: error instanceof Error ? error.message : 'Failed to process payment. Please try again.',
+        type: 'error',
+        isVisible: true
+      });
+    }
   };
 
   const closeToast = () => {
@@ -229,8 +276,19 @@ export default function JoinChannelPage() {
             style={{ backgroundColor: '#FFFFFF', color: '#2F4C6C' }}
             onClick={handleJoinChannelClick}
           >
-            Join Our Channel - GHS {PAYMENT_AMOUNT}
+            GHS {PAYMENT_AMOUNT}
           </button>
+          
+          {/* Pay with Mobile Money Link */}
+          <div className="text-center mt-4">
+            <button
+              onClick={handleMobileMoneyClick}
+              className="text-white hover:text-gray-200 underline transition-colors text-sm"
+              style={{ fontFamily: 'Roboto, sans-serif' }}
+            >
+              Pay with Mobile Money
+            </button>
+          </div>
         </div>
         
         {/* Page content will be added here */}
@@ -241,6 +299,14 @@ export default function JoinChannelPage() {
         isOpen={showEmailModal}
         onClose={handleEmailModalClose}
         onEmailSubmit={handleEmailSubmit}
+        amount={PAYMENT_AMOUNT}
+      />
+
+      {/* Mobile Money Modal */}
+      <EmailInputModal
+        isOpen={showMobileMoneyModal}
+        onClose={handleMobileMoneyModalClose}
+        onEmailSubmit={handleMobileMoneySubmit}
         amount={PAYMENT_AMOUNT}
       />
 

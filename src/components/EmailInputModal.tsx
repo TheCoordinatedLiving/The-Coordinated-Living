@@ -6,7 +6,7 @@ import Toast from './Toast';
 interface EmailInputModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onEmailSubmit: (email: string) => void;
+  onEmailSubmit: (email: string, phoneNumber: string) => void;
   amount: number;
 }
 
@@ -17,6 +17,7 @@ export default function EmailInputModal({
   amount
 }: EmailInputModalProps) {
   const [email, setEmail] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const [toast, setToast] = useState<{
@@ -40,10 +41,17 @@ export default function EmailInputModal({
       return;
     }
 
+    // Basic phone number validation (Ghana format)
+    const phoneRegex = /^(\+233|0)[0-9]{9}$/;
+    if (!phoneRegex.test(phoneNumber.replace(/\s/g, ''))) {
+      setError('Please enter a valid WhatsApp number (e.g., 0548838479)');
+      return;
+    }
+
     setIsLoading(true);
     
     try {
-      await onEmailSubmit(email);
+      await onEmailSubmit(email, phoneNumber);
     } catch {
       setToast({
         message: 'Failed to process email. Please try again.',
@@ -57,6 +65,7 @@ export default function EmailInputModal({
 
   const handleClose = () => {
     setEmail('');
+    setPhoneNumber('');
     setError('');
     setToast({ message: '', type: 'success', isVisible: false });
     onClose();
@@ -105,6 +114,22 @@ export default function EmailInputModal({
               required
               disabled={isLoading}
             />
+          </div>
+
+          <div>
+            <label htmlFor="phoneNumber" className="block text-sm font-medium text-gray-700 mb-2">
+              WhatsApp Number
+            </label>
+            <input
+              type="tel"
+              id="phoneNumber"
+              value={phoneNumber}
+              onChange={(e) => setPhoneNumber(e.target.value)}
+              placeholder="Enter your WhatsApp number (e.g., 0548838479)"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-colors text-gray-900 placeholder-gray-500"
+              required
+              disabled={isLoading}
+            />
             {error && (
               <p className="mt-2 text-sm text-red-600">{error}</p>
             )}
@@ -113,7 +138,7 @@ export default function EmailInputModal({
           {/* Submit Button */}
           <button
             type="submit"
-            disabled={isLoading || !email}
+            disabled={isLoading || !email || !phoneNumber}
             className="w-full py-4 px-6 rounded-full font-bold text-lg transition-all duration-200 hover:bg-[#2F4C6C] hover:text-white active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
             style={{ backgroundColor: '#FFFFFF', color: '#2F4C6C' }}
           >

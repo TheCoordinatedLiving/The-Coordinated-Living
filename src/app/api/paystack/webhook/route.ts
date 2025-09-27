@@ -45,23 +45,66 @@ export async function POST(request: NextRequest) {
     if (event.event === 'charge.success') {
       const { data } = event;
       
+      // Check if this is a donation or channel payment
+      const paymentType = data.metadata?.payment_type || 'channel';
+      
       console.log('Payment successful:', {
         reference: data.reference,
         amount: data.amount,
         email: data.customer.email,
-        status: data.status
+        status: data.status,
+        paymentType: paymentType
       });
 
-      // Here you can add additional logic like:
-      // - Save payment record to database
-      // - Send confirmation email
-      // - Grant access to premium content
-      // - Update user subscription status
+      // Handle donation-specific logic
+      if (paymentType === 'Pour into my cup') {
+        console.log('Donation processed:', {
+          amount: data.amount,
+          email: data.customer.email,
+          reference: data.reference
+        });
 
-      // For now, we'll just log the successful payment
-      // You can extend this to save to your database or trigger other actions
+        // Here you can add donation-specific logic:
+        // - Send donation confirmation email
+        // - Update donation records
+        // - Send thank you message
+        // - Track donation analytics
+      } else {
+        // Handle channel payment logic
+        console.log('Channel payment processed:', {
+          amount: data.amount,
+          email: data.customer.email,
+          reference: data.reference
+        });
+
+        // Here you can add channel-specific logic:
+        // - Grant channel access
+        // - Send channel invitation
+        // - Update user status
+      }
       
       return NextResponse.json({ status: true, message: 'Webhook processed successfully' });
+    }
+
+
+    // Handle failed payments
+    if (event.event === 'charge.failed') {
+      const { data } = event;
+      
+      console.log('Payment failed:', {
+        reference: data.reference,
+        amount: data.amount,
+        email: data.customer.email,
+        status: data.status,
+        gateway_response: data.gateway_response
+      });
+
+      // Here you can add failed payment logic:
+      // - Send payment failure notification
+      // - Retry payment logic
+      // - Update payment status
+      
+      return NextResponse.json({ status: true, message: 'Failed payment processed' });
     }
 
     // Handle other events if needed
