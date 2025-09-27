@@ -46,13 +46,13 @@ function PaymentSuccessContent() {
   // WhatsApp channel link
   const whatsappChannelLink = process.env.NEXT_PUBLIC_WHATSAPP_CHANNEL_LINK || "https://chat.whatsapp.com/YOUR_CHANNEL_LINK";
 
-  // Handle redirect when shouldRedirect is true
+  // Handle redirect when shouldRedirect is true - ONLY for donations
   useEffect(() => {
-    if (shouldRedirect) {
+    if (shouldRedirect && urlPaymentType === 'donation') {
       console.log('Router redirect to donation-success');
       router.replace(`/donation-success?reference=${reference || trxref}`);
     }
-  }, [shouldRedirect, router, reference, trxref]);
+  }, [shouldRedirect, router, reference, trxref, urlPaymentType]);
 
   useEffect(() => {
     // Debug: Check storage immediately when component loads
