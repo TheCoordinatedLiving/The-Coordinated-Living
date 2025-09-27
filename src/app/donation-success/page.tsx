@@ -39,7 +39,7 @@ export default function DonationSuccessPage() {
         </div>
         <h1 className="text-2xl font-bold mb-4" style={{ fontFamily: 'Amita, cursive' }}>Donation Success</h1>
         <p className="text-3xl" style={{ fontFamily: 'Amita, cursive' }}>A Cheerful Gift, a Full Cup</p>
-        <p className="text-base mt-4 opacity-80 max-w-lg mx-auto">Thank you so much for your donation! You just topped up the cup on my desk and poured real fuel into this platform. Your kindness helps me keep things running sustainably—content, updates, and community support included. I'm grateful for you.</p>
+        <p className="text-base mt-4 opacity-80 max-w-lg mx-auto">Thank you so much for your donation! You just topped up the cup on my desk and poured real fuel into this platform. Your kindness helps me keep things running sustainably—content, updates, and community support included. I&apos;m grateful for you.</p>
         
         <div className="mt-8 space-y-4">
           <button 
