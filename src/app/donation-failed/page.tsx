@@ -1,10 +1,10 @@
 'use client';
 
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, Suspense } from 'react';
 import { gsap } from 'gsap';
 
-export default function DonationFailedPage() {
+function DonationFailedContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const pageRef = useRef<HTMLDivElement>(null);
@@ -177,5 +177,20 @@ export default function DonationFailedPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function DonationFailedPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen w-full flex items-center justify-center" style={{ backgroundColor: '#2F4C6C' }}>
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white mx-auto mb-4"></div>
+          <p className="text-white text-lg">Loading...</p>
+        </div>
+      </div>
+    }>
+      <DonationFailedContent />
+    </Suspense>
   );
 }
