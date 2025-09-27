@@ -9,7 +9,7 @@ import { getAllPosts, Post } from '@/lib/posts';
 import PostTemplate from '../components/PostTemplate';
 import FullTermsContent from '../components/FullTermsContent';
 import AskAQuestion from './windows/AskAQuestion';
-import DonationModal from '../components/DonationModal';
+// import DonationModal from '../components/DonationModal';
 
 const Loader = () => {
   const logoRef = useRef(null);
@@ -183,11 +183,11 @@ const NewHomepage = () => {
   //   setIsDonationModalOpen(false);
   // };
 
-  const handleDonationSuccess = (data: { reference: string; amount: number }) => {
-    // The modal will handle the redirect to Paystack
-    // Success will be handled by the payment-success page
-    console.log('Donation initiated:', data);
-  };
+  // const handleDonationSuccess = (data: { reference: string; amount: number }) => {
+  //   // The modal will handle the redirect to Paystack
+  //   // Success will be handled by the payment-success page
+  //   console.log('Donation initiated:', data);
+  // };
 
   useEffect(() => {
     if (homepageRef.current && statusBarRef.current && iconsRef.current) {
@@ -1566,11 +1566,11 @@ const Page = () => {
   //   setIsDonationModalOpen(false);
   // };
 
-  const handleDonationSuccess = (data: { reference: string; amount: number }) => {
-    // The modal will handle the redirect to Paystack
-    // Success will be handled by the payment-success page
-    console.log('Donation initiated:', data);
-  };
+  // const handleDonationSuccess = (data: { reference: string; amount: number }) => {
+  //   // The modal will handle the redirect to Paystack
+  //   // Success will be handled by the payment-success page
+  //   console.log('Donation initiated:', data);
+  // };
 
   return (
     <div ref={pageRef} className="relative" style={{ height: '100vh', overflow: 'hidden' }}>

@@ -403,7 +403,7 @@ function PaymentSuccessContent() {
             <p 
               className={`${roboto.className} text-white text-xs opacity-60`}
             >
-              You'll receive an email confirmation shortly.
+              You&apos;ll receive an email confirmation shortly.
             </p>
           </div>
         </div>
