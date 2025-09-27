@@ -14,9 +14,6 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
   const [amount, setAmount] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
-  const [customAmount, setCustomAmount] = useState(false);
-
-  const presetAmounts = [10, 25, 50, 100, 250, 500];
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -40,10 +37,10 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
         throw new Error('Please enter a valid email address');
       }
 
-      // Phone number validation (Ghana format)
-      const phoneRegex = /^(\+233|0)[0-9]{9}$/;
+      // Phone number validation (international format)
+      const phoneRegex = /^[\+]?[1-9][\d]{0,15}$/;
       if (!phoneRegex.test(phoneNumber.replace(/\s/g, ''))) {
-        throw new Error('Please enter a valid Ghana phone number (e.g., 0548838479)');
+        throw new Error('Please enter a valid phone number');
       }
 
       // Call the normal transaction API
@@ -99,7 +96,6 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
     setPhoneNumber('');
     setAmount('');
     setError('');
-    setCustomAmount(false);
     onClose();
   };
 
@@ -193,9 +189,6 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
               placeholder="Enter phone number"
               required
             />
-            <p className="text-white text-xs mt-1 opacity-70" style={{ fontFamily: 'Roboto, sans-serif' }}>
-              Enter your Ghana phone number (e.g., 0548838479 or +233548838479)
-            </p>
           </div>
 
           {/* Amount Selection */}
@@ -207,43 +200,18 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
               Donation Amount (GHS) *
             </label>
             
-            {/* Preset Amounts */}
-            <div className="grid grid-cols-3 gap-2 mb-3">
-              {presetAmounts.map((preset) => (
-                <button
-                  key={preset}
-                  type="button"
-                  onClick={() => {
-                    setAmount(preset.toString());
-                    setCustomAmount(false);
-                  }}
-                  className={`py-2 px-3 rounded-lg text-sm font-medium transition-all border-2 ${
-                    amount === preset.toString() && !customAmount
-                      ? 'text-white border-white shadow-lg scale-105'
-                      : 'bg-white bg-opacity-20 text-black border-transparent hover:bg-opacity-30 hover:border-white hover:border-opacity-50'
-                  }`}
-                  style={amount === preset.toString() && !customAmount ? { backgroundColor: '#2481C2' } : {}}
-                >
-                  {preset}
-                </button>
-              ))}
-            </div>
-
-            {/* Custom Amount */}
-            <div className="flex items-center space-x-2">
+            <div className="relative">
               <input
                 type="number"
-                value={customAmount ? amount : ''}
-                onChange={(e) => {
-                  setAmount(e.target.value);
-                  setCustomAmount(true);
-                }}
-                className="flex-1 px-4 py-3 rounded-lg border-2 border-white text-white placeholder-gray-300 focus:ring-2 focus:ring-white focus:outline-none bg-transparent"
-                placeholder="Enter custom amount"
+                value={amount}
+                onChange={(e) => setAmount(e.target.value)}
+                className="w-full px-4 py-3 pr-12 rounded-lg border-2 border-white text-white placeholder-gray-300 focus:ring-2 focus:ring-white focus:outline-none bg-transparent"
+                placeholder="Enter your preferred amount"
                 min="1"
                 step="0.01"
+                required
               />
-              <span className="text-white text-sm">GHS</span>
+              <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white text-sm pointer-events-none">GHS</span>
             </div>
           </div>
 
