@@ -139,8 +139,31 @@ export const fetchPosts = async (): Promise<AirtablePost[]> => {
     return true;
   });
   
-  // Sort manually: posts with Order first (ascending), then posts without Order
+  // Sort by Created Date (latest first) - simple date-based sorting
   return publishedPosts.sort((a, b) => {
+    const aCreatedDate = a.fields['Created Date'];
+    const bCreatedDate = b.fields['Created Date'];
+    
+    // If both have Created Date, sort by date (latest first)
+    if (aCreatedDate && bCreatedDate) {
+      const aDate = new Date(aCreatedDate);
+      const bDate = new Date(bCreatedDate);
+      const dateComparison = bDate.getTime() - aDate.getTime(); // Latest first
+      
+      if (dateComparison !== 0) {
+        return dateComparison;
+      }
+    }
+    
+    // If only one has Created Date, prioritize it
+    if (aCreatedDate && !bCreatedDate) {
+      return -1;
+    }
+    if (!aCreatedDate && bCreatedDate) {
+      return 1;
+    }
+    
+    // If dates are the same or neither has date, fall back to Order sorting
     const aOrder = a.fields['Order'];
     const bOrder = b.fields['Order'];
     
@@ -163,7 +186,7 @@ export const fetchPosts = async (): Promise<AirtablePost[]> => {
       return 1;
     }
     
-    // If neither has Order, maintain original order (by creation date)
+    // If neither has Order, maintain original order
     return 0;
   });
 };

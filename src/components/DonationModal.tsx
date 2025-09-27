@@ -242,7 +242,7 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
               className="block text-white text-sm font-medium mb-2"
               style={{ fontFamily: 'Roboto, sans-serif' }}
             >
-              Donation Amount (GHS) *
+              Amount *
             </label>
             
             <div className="relative">
@@ -250,15 +250,12 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
                 type="number"
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
-                className="w-full px-4 py-3 pr-12 rounded-lg border-2 border-white text-white placeholder-gray-300 focus:ring-2 focus:ring-white focus:outline-none bg-transparent"
+                className="w-full px-4 py-3 rounded-lg border-2 border-white text-white placeholder-gray-300 focus:ring-2 focus:ring-white focus:outline-none bg-transparent"
                 placeholder="Enter your preferred amount"
                 min="10"
                 step="0.01"
                 required
               />
-              <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white text-sm pointer-events-none">
-                {availableCurrencies.find(c => c.code === currency)?.symbol || currency}
-              </span>
             </div>
             
             {/* Amount validation message */}

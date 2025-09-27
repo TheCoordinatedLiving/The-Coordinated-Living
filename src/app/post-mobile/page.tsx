@@ -16,6 +16,7 @@ export default function PostMobilePage() {
   const [currentPostIndex, setCurrentPostIndex] = useState(0);
   const [showFullPost, setShowFullPost] = useState(false);
   const [selectedPost, setSelectedPost] = useState<Post | null>(null);
+  const [currentFullPostIndex, setCurrentFullPostIndex] = useState(0);
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
   
@@ -154,8 +155,26 @@ export default function PostMobilePage() {
     if (posts.length > 0 && posts[currentPostIndex]) {
       const currentPost = posts[currentPostIndex];
       setSelectedPost(currentPost);
+      setCurrentFullPostIndex(currentPostIndex);
       setShowFullPost(true);
       setShowBottomSheet(false);
+    }
+  };
+
+  // Navigation functions for full post view
+  const handleNextPost = () => {
+    if (posts.length > 0) {
+      const nextIndex = (currentFullPostIndex + 1) % posts.length;
+      setCurrentFullPostIndex(nextIndex);
+      setSelectedPost(posts[nextIndex]);
+    }
+  };
+
+  const handlePreviousPost = () => {
+    if (posts.length > 0) {
+      const prevIndex = (currentFullPostIndex - 1 + posts.length) % posts.length;
+      setCurrentFullPostIndex(prevIndex);
+      setSelectedPost(posts[prevIndex]);
     }
   };
 
@@ -550,7 +569,7 @@ export default function PostMobilePage() {
           </button>
           
           {/* Content */}
-          <div className="px-6 pt-16 pb-8">
+          <div className="px-6 pt-16 pb-24">
             <div className="max-w-md mx-auto">
               {/* Title */}
               <h1 className="text-white text-2xl font-semibold mb-8 leading-tight" style={{ fontFamily: 'Amita, cursive' }}>
@@ -581,6 +600,62 @@ export default function PostMobilePage() {
               </div>
             </div>
           </div>
+
+          {/* Navigation Buttons - Only show if there are multiple posts */}
+          {posts.length > 1 && (
+            <div className="fixed bottom-6 left-0 right-0 px-6 z-20">
+              <div className="max-w-md mx-auto flex justify-between items-center">
+                {/* Previous Button */}
+                <button
+                  onClick={handlePreviousPost}
+                  className="flex items-center justify-center w-12 h-12 bg-[#2F4C6C] bg-opacity-90 rounded-full hover:bg-opacity-100 transition-all duration-200 backdrop-blur-sm border-2 border-white border-opacity-30"
+                  aria-label="Previous Post"
+                >
+                  <svg 
+                    className="w-6 h-6 text-white" 
+                    fill="none" 
+                    stroke="currentColor" 
+                    viewBox="0 0 24 24"
+                  >
+                    <path 
+                      strokeLinecap="round" 
+                      strokeLinejoin="round" 
+                      strokeWidth={2} 
+                      d="M15 19l-7-7 7-7" 
+                    />
+                  </svg>
+                </button>
+
+                {/* Post Counter */}
+                <div className="flex items-center space-x-2 bg-[#2F4C6C] bg-opacity-90 rounded-full px-4 py-2 backdrop-blur-sm border-2 border-white border-opacity-30">
+                  <span className="text-white text-sm font-medium">
+                    {currentFullPostIndex + 1} of {posts.length}
+                  </span>
+                </div>
+
+                {/* Next Button */}
+                <button
+                  onClick={handleNextPost}
+                  className="flex items-center justify-center w-12 h-12 bg-[#2F4C6C] bg-opacity-90 rounded-full hover:bg-opacity-100 transition-all duration-200 backdrop-blur-sm border-2 border-white border-opacity-30"
+                  aria-label="Next Post"
+                >
+                  <svg 
+                    className="w-6 h-6 text-white" 
+                    fill="none" 
+                    stroke="currentColor" 
+                    viewBox="0 0 24 24"
+                  >
+                    <path 
+                      strokeLinecap="round" 
+                      strokeLinejoin="round" 
+                      strokeWidth={2} 
+                      d="M9 5l7 7-7 7" 
+                    />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       )}
     </div>
