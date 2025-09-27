@@ -140,7 +140,7 @@ const NewHomepage = () => {
   const [postsCount, setPostsCount] = useState(0);
   
   // Donation modal state
-  const [isDonationModalOpen, setIsDonationModalOpen] = useState(false);
+  // const [isDonationModalOpen, setIsDonationModalOpen] = useState(false);
   
   // Fetch posts count from Airtable
   useEffect(() => {
@@ -175,19 +175,19 @@ const NewHomepage = () => {
     }
   };
 
-  const handleDonationClick = () => {
-    setIsDonationModalOpen(true);
-  };
+  // const handleDonationClick = () => {
+  //   setIsDonationModalOpen(true);
+  // };
 
-  const handleDonationModalClose = () => {
-    setIsDonationModalOpen(false);
-  };
+  // const handleDonationModalClose = () => {
+  //   setIsDonationModalOpen(false);
+  // };
 
-  const handleDonationSuccess = (data: { reference: string; amount: number }) => {
-    // The modal will handle the redirect to Paystack
-    // Success will be handled by the payment-success page
-    console.log('Donation initiated:', data);
-  };
+  // const handleDonationSuccess = (data: { reference: string; amount: number }) => {
+  //   // The modal will handle the redirect to Paystack
+  //   // Success will be handled by the payment-success page
+  //   console.log('Donation initiated:', data);
+  // };
 
   useEffect(() => {
     if (homepageRef.current && statusBarRef.current && iconsRef.current) {
