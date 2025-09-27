@@ -30,7 +30,7 @@ function PaymentSuccessContent() {
   const [paymentStatus, setPaymentStatus] = useState<'verifying' | 'success' | 'failed'>('verifying');
   const [paymentData, setPaymentData] = useState<PaymentData | null>(null);
   const [copied, setCopied] = useState(false);
-  // const [shouldRedirect] = useState(false); // TEMPORARILY DISABLED
+  const [shouldRedirect] = useState(false);
 
   // Get payment reference and type from URL parameters
   const reference = searchParams.get('reference');
@@ -46,16 +46,13 @@ function PaymentSuccessContent() {
   // WhatsApp channel link
   const whatsappChannelLink = process.env.NEXT_PUBLIC_WHATSAPP_CHANNEL_LINK || "https://chat.whatsapp.com/YOUR_CHANNEL_LINK";
 
-  // TEMPORARILY DISABLED: Handle redirect when shouldRedirect is true
-  // TODO: Re-enable when donation-success page is fixed
-  /*
+  // Handle redirect when shouldRedirect is true
   useEffect(() => {
     if (shouldRedirect) {
       console.log('Router redirect to donation-success');
       router.replace(`/donation-success?reference=${reference || trxref}`);
     }
   }, [shouldRedirect, router, reference, trxref]);
-  */
 
   useEffect(() => {
     // Debug: Check storage immediately when component loads
