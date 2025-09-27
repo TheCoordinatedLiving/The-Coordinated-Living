@@ -107,6 +107,42 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ status: true, message: 'Failed payment processed' });
     }
 
+    // Handle subscription events
+    if (event.event === 'subscription.create') {
+      const { data } = event;
+      
+      console.log('Subscription created:', {
+        subscription_code: data.subscription_code,
+        customer_email: data.customer.email,
+        plan_code: data.plan.plan_code,
+        status: data.status
+      });
+
+      // Here you can add subscription creation logic:
+      // - Send welcome email
+      // - Grant channel access
+      // - Update user subscription status
+      
+      return NextResponse.json({ status: true, message: 'Subscription created successfully' });
+    }
+
+    if (event.event === 'subscription.disable') {
+      const { data } = event;
+      
+      console.log('Subscription disabled:', {
+        subscription_code: data.subscription_code,
+        customer_email: data.customer.email,
+        status: data.status
+      });
+
+      // Here you can add subscription disable logic:
+      // - Revoke channel access
+      // - Send cancellation email
+      // - Update user subscription status
+      
+      return NextResponse.json({ status: true, message: 'Subscription disabled successfully' });
+    }
+
     // Handle other events if needed
     console.log('Paystack webhook event:', event.event);
     

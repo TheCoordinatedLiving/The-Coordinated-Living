@@ -42,21 +42,6 @@ function PaymentSuccessContent() {
   console.log('URL Payment Type:', urlPaymentType);
   console.log('Reference:', reference);
   console.log('Trxref:', trxref);
-  
-  // Check for donation indicators immediately
-  useEffect(() => {
-    const storedDonationData = sessionStorage.getItem('donationData') || localStorage.getItem('donationData');
-    const cameFromDonationFlag = sessionStorage.getItem('cameFromDonation') || localStorage.getItem('cameFromDonation');
-    const cameFromDonation = document.referrer.includes('donation-mobile') || 
-                           window.location.href.includes('donation') ||
-                           cameFromDonationFlag === 'true';
-    
-    // If we detect this is a donation, redirect immediately
-    if (urlPaymentType === 'donation' || storedDonationData || cameFromDonation) {
-      console.log('Immediate redirect to donation-success detected');
-      setShouldRedirect(true);
-    }
-  }, [urlPaymentType]);
 
   // WhatsApp channel link
   const whatsappChannelLink = process.env.NEXT_PUBLIC_WHATSAPP_CHANNEL_LINK || "https://chat.whatsapp.com/YOUR_CHANNEL_LINK";
@@ -115,7 +100,7 @@ function PaymentSuccessContent() {
           console.log('Full metadata:', metadata);
           console.log('Full data object:', data.data);
           
-          const paymentType = metadata?.custom_fields?.find((field: { variable_name: string; value: string }) => 
+          const paymentType = metadata?.custom_fields?.find((field: any) => 
             field.variable_name === 'payment_type'
           )?.value;
           console.log('Payment type from metadata:', paymentType);
@@ -140,13 +125,13 @@ function PaymentSuccessContent() {
           
           // Determine payment type - URL parameter is most reliable
           let type: 'donation' | 'channel' = 'channel'; // default
-          const amount = data.data.amount / 100; // Convert from kobo to GHS
-          const email = data.data.customer?.email;
-          const phoneNumber = '';
+          let amount = data.data.amount / 100; // Convert from kobo to GHS
+          let email = data.data.customer?.email;
+          let phoneNumber = '';
           
           // Determine payment type
           if (urlPaymentType === 'donation' || storedDonationData || cameFromDonationFlag === 'true' || cameFromDonation || paymentType === 'Pour into my cup') {
-            console.log('Identified as donation - redirecting to donation-success page');
+            console.log('Identified as donation - setting type to donation');
             type = 'donation';
             // Create donation data if not already stored
             if (!storedDonationData) {
@@ -157,9 +142,6 @@ function PaymentSuccessContent() {
               };
               sessionStorage.setItem('donationData', JSON.stringify(donationData));
             }
-            // Redirect to donation success page
-            setShouldRedirect(true);
-            return;
           } else {
             console.log('Identified as channel payment - setting type to channel');
             type = 'channel';
@@ -311,7 +293,7 @@ function PaymentSuccessContent() {
     if (storedData) {
       try {
         return JSON.parse(storedData).amount;
-      } catch {
+      } catch (e) {
         return null;
       }
     }
@@ -403,7 +385,7 @@ function PaymentSuccessContent() {
             <p 
               className={`${roboto.className} text-white text-xs opacity-60`}
             >
-              You&apos;ll receive an email confirmation shortly.
+              You'll receive an email confirmation shortly.
             </p>
           </div>
         </div>

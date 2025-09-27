@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useEffect, useState, useRef, Suspense } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { gsap } from 'gsap';
 import { Amita, Roboto } from 'next/font/google';
 import Image from 'next/image';
@@ -24,10 +24,10 @@ interface DonationData {
   phoneNumber?: string;
 }
 
-function DonationSuccessContent() {
+export default function DonationSuccessPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [, setDonationData] = useState<DonationData | null>(null);
+  const [donationData, setDonationData] = useState<DonationData | null>(null);
   const [isVerifying, setIsVerifying] = useState(true);
   const [verificationStatus, setVerificationStatus] = useState<'success' | 'failed' | 'pending'>('pending');
   const pageRef = useRef<HTMLDivElement>(null);
@@ -108,18 +108,18 @@ function DonationSuccessContent() {
     }
   };
 
-  // const handleShare = () => {
-  //   const text = `I just donated to support Coordinated Living! Your support helps keep this platform running. 💙`;
-  //   const url = window.location.origin;
-  //   
-  //   if (navigator.share) {
-  //     navigator.share({ text, url });
-  //   } else {
-  //     // Fallback to copying to clipboard
-  //     navigator.clipboard.writeText(`${text} ${url}`);
-  //     alert('Donation message copied to clipboard!');
-  //   }
-  // };
+  const handleShare = () => {
+    const text = `I just donated to support Coordinated Living! Your support helps keep this platform running. 💙`;
+    const url = window.location.origin;
+    
+    if (navigator.share) {
+      navigator.share({ text, url });
+    } else {
+      // Fallback to copying to clipboard
+      navigator.clipboard.writeText(`${text} ${url}`);
+      alert('Donation message copied to clipboard!');
+    }
+  };
 
   const handleSetUpAnother = () => {
     router.push('/donation-mobile');
@@ -188,7 +188,7 @@ function DonationSuccessContent() {
           <p 
             className={`${roboto.className} text-white text-base leading-relaxed mb-8`}
           >
-            We couldn&apos;t process your donation. Please try again or contact support if the issue persists.
+            We couldn't process your donation. Please try again or contact support if the issue persists.
           </p>
 
           <div className="space-y-3 w-full max-w-xs">
@@ -299,20 +299,5 @@ function DonationSuccessContent() {
 
       </div>
     </div>
-  );
-}
-
-export default function DonationSuccessPage() {
-  return (
-    <Suspense fallback={
-      <div className="min-h-screen w-full flex items-center justify-center" style={{ backgroundColor: '#2F4C6C' }}>
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white mx-auto mb-4"></div>
-          <p className="text-white text-lg">Loading...</p>
-        </div>
-      </div>
-    }>
-      <DonationSuccessContent />
-    </Suspense>
   );
 }

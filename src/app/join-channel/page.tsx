@@ -73,12 +73,12 @@ export default function JoinChannelPage() {
     setShowMobileMoneyModal(true);
   };
 
-// const paystackSecretKey = process.env.PAYSTACK_SECRET_KEY  || 'sk_test_e85988fa08e6452ebc108c7cf0f8aef6f206ca51';
+const paystackSecretKey = process.env.PAYSTACK_SECRET_KEY  || 'sk_test_e85988fa08e6452ebc108c7cf0f8aef6f206ca51';
 
   const handleEmailSubmit = async (email: string, phoneNumber: string) => {
     try {
-      // Call our API endpoint to initialize Paystack transaction
-      const response = await fetch('/api/paystack/initialize', {
+      // Call our API endpoint to initialize Paystack subscription
+      const response = await fetch('/api/paystack/subscription/initialize', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -86,8 +86,7 @@ export default function JoinChannelPage() {
         body: JSON.stringify({
           email: email,
           phoneNumber: phoneNumber,
-          amount: (PAYMENT_AMOUNT * 100).toString(), // Convert to kobo
-          type: 'channel'
+          planCode: 'PLN_mic7hyck7v0dfxk' // Your actual Paystack plan code
         }),
       });
 
@@ -97,11 +96,11 @@ export default function JoinChannelPage() {
         // Redirect to Paystack checkout
         window.location.href = data.data.authorization_url;
       } else {
-        throw new Error(data.message || 'Failed to initialize payment');
+        throw new Error(data.message || 'Failed to initialize subscription');
       }
     } catch (error) {
-      console.error('Payment initialization error:', error);
-      const errorMessage = error instanceof Error ? error.message : 'Failed to initialize payment. Please try again.';
+      console.error('Subscription initialization error:', error);
+      const errorMessage = error instanceof Error ? error.message : 'Failed to initialize subscription. Please try again.';
       setToast({
         message: errorMessage,
         type: 'error',
@@ -120,8 +119,8 @@ export default function JoinChannelPage() {
 
   const handleMobileMoneySubmit = async (email: string, phoneNumber: string) => {
     try {
-      // Call the normal transaction API with type 'channel' for mobile money
-      const response = await fetch('/api/paystack/initialize', {
+      // Call the subscription API for mobile money
+      const response = await fetch('/api/paystack/subscription/initialize', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -129,8 +128,7 @@ export default function JoinChannelPage() {
         body: JSON.stringify({
           email: email,
           phoneNumber: phoneNumber,
-          amount: (PAYMENT_AMOUNT * 100).toString(), // Convert to kobo
-          type: 'channel'
+          planCode: 'PLN_mic7hyck7v0dfxk' // Your actual Paystack plan code
         }),
       });
 
@@ -140,12 +138,12 @@ export default function JoinChannelPage() {
         // Redirect to Paystack checkout
         window.location.href = data.data.authorization_url;
       } else {
-        throw new Error(data.message || 'Failed to initialize payment');
+        throw new Error(data.message || 'Failed to initialize subscription');
       }
     } catch (error) {
-      console.error('Mobile money payment error:', error);
+      console.error('Mobile money subscription error:', error);
       setToast({
-        message: error instanceof Error ? error.message : 'Failed to process payment. Please try again.',
+        message: error instanceof Error ? error.message : 'Failed to process subscription. Please try again.',
         type: 'error',
         isVisible: true
       });

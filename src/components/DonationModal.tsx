@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { gsap } from 'gsap';
 
 interface DonationModalProps {
   isOpen: boolean;
@@ -8,7 +9,7 @@ interface DonationModalProps {
   onSuccess: (data: { reference: string; amount: number }) => void;
 }
 
-export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
+export default function DonationModal({ isOpen, onClose, onSuccess }: DonationModalProps) {
   const [email, setEmail] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [amount, setAmount] = useState('');

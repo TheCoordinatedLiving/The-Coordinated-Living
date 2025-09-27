@@ -27,7 +27,8 @@ NEXT_PUBLIC_WHATSAPP_CHANNEL_LINK=https://chat.whatsapp.com/YOUR_CHANNEL_LINK
 4. Select the following events:
    - `charge.success`
    - `charge.failed` (optional)
-   - `subscription.create` (if using subscriptions)
+   - `subscription.create` (for subscription creation)
+   - `subscription.disable` (for subscription cancellation)
 
 ### 2. Test Mode vs Live Mode
 
@@ -64,14 +65,85 @@ NEXT_PUBLIC_WHATSAPP_CHANNEL_LINK=https://chat.whatsapp.com/YOUR_CHANNEL_LINK
 - **Method**: POST
 - **Headers**: `x-paystack-signature` (automatically handled)
 
+## Subscription Setup
+
+### 1. Create Subscription Plan
+
+You can create a subscription plan using the provided script:
+
+```bash
+node scripts/create-subscription-plan.js
+```
+
+Or manually create it in your Paystack dashboard:
+1. Go to Plans in your Paystack dashboard
+2. Create a new plan with:
+   - Name: "Coordinated Living Monthly"
+   - Amount: 10000 (100 GHS in kobo)
+   - Interval: Monthly
+   - Currency: GHS
+
+### 2. Update Plan Code
+
+After creating the plan, update the `planCode` in `/src/app/join-channel/page.tsx` to match your actual plan code from Paystack.
+
+## API Endpoints
+
+### 1. Initialize Subscription
+- **Endpoint**: `/api/paystack/subscription/initialize`
+- **Method**: POST
+- **Body**: 
+  ```json
+  {
+    "email": "customer@email.com",
+    "phoneNumber": "0548838479",
+    "planCode": "PLN_your_plan_code"
+  }
+  ```
+
+### 2. Create Subscription
+- **Endpoint**: `/api/paystack/subscription/create`
+- **Method**: POST
+- **Body**: 
+  ```json
+  {
+    "email": "customer@email.com",
+    "phoneNumber": "0548838479",
+    "planCode": "PLN_your_plan_code"
+  }
+  ```
+
+### 3. Create Plan
+- **Endpoint**: `/api/paystack/plan/create`
+- **Method**: POST
+- **Body**: 
+  ```json
+  {
+    "name": "Coordinated Living Monthly",
+    "amount": "10000",
+    "interval": "monthly"
+  }
+  ```
+
 ## Payment Flow
 
+### Subscription Flow
 1. User clicks "Join Channel" button
 2. Email input modal appears
-3. User enters email and clicks "Pay Now"
-4. System calls `/api/paystack/initialize` with email and amount
+3. User enters email and phone number
+4. System calls `/api/paystack/subscription/initialize` with email, phone, and plan code
 5. User is redirected to Paystack checkout page
-6. After payment, user is redirected to `/payment-success?reference=xxx`
+6. After payment, user is redirected to `/payment-success?type=subscription`
+7. Payment success page verifies the transaction
+8. Webhook handles subscription creation
+
+### One-time Payment Flow (Donations)
+1. User clicks "Pour Into My Cup" button
+2. Donation modal appears
+3. User enters email, phone, and amount
+4. System calls `/api/paystack/initialize` with email, amount, and type='donation'
+5. User is redirected to Paystack checkout page
+6. After payment, user is redirected to `/donation-success?reference=xxx`
 7. Payment success page verifies the transaction
 8. Webhook is called by Paystack to confirm payment
 
