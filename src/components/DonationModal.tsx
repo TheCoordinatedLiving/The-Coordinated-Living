@@ -84,6 +84,21 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
         throw new Error('Please enter a valid email address or phone number');
       }
 
+      // Determine if input is email or phone and generate temp email if needed
+      const isEmail = emailOrPhone.includes('@');
+      let email = '';
+      let phoneNumber = '';
+      
+      if (isEmail) {
+        email = emailOrPhone;
+        phoneNumber = '';
+      } else {
+        // Generate temporary email for phone number
+        const cleanPhone = emailOrPhone.replace(/\s/g, '');
+        email = `temp-${cleanPhone}@coordinated-living.gh`;
+        phoneNumber = emailOrPhone;
+      }
+
       // Call the normal transaction API
       const response = await fetch('/api/paystack/initialize', {
         method: 'POST',
@@ -91,8 +106,8 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          email: emailOrPhone.includes('@') ? emailOrPhone : '',
-          phoneNumber: emailOrPhone.includes('@') ? '' : emailOrPhone,
+          email: email,
+          phoneNumber: phoneNumber,
           amount: (donationAmount * 100).toString(), // Convert to smallest currency unit
           currency: currency,
           type: 'donation'
@@ -107,8 +122,8 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
         const donationData = {
           amount: donationAmount,
           currency: currency,
-          email: emailOrPhone.includes('@') ? emailOrPhone : '',
-          phoneNumber: emailOrPhone.includes('@') ? '' : emailOrPhone
+          email: email,
+          phoneNumber: phoneNumber
         };
         console.log('Storing donation data:', donationData);
         sessionStorage.setItem('donationData', JSON.stringify(donationData));
