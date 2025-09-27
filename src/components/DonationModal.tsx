@@ -76,7 +76,8 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
 
       // Email or phone validation
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      const phoneRegex = /^[\+]?[1-9][\d]{0,15}$/;
+      // Updated phone regex to handle Ghanaian numbers: +233, 233, 0548838479, etc.
+      const phoneRegex = /^[\+]?[0-9][\d]{7,14}$/;
       const cleanInput = emailOrPhone.replace(/\s/g, '');
       
       if (!emailRegex.test(emailOrPhone) && !phoneRegex.test(cleanInput)) {
