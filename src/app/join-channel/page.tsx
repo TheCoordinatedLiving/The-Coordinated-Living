@@ -119,8 +119,8 @@ const paystackSecretKey = process.env.PAYSTACK_SECRET_KEY  || 'sk_test_e85988fa0
 
   const handleMobileMoneySubmit = async (email: string, phoneNumber: string) => {
     try {
-      // Call the subscription API for mobile money
-      const response = await fetch('/api/paystack/subscription/initialize', {
+      // Call the normal transaction API for mobile money (supports MoMo)
+      const response = await fetch('/api/paystack/initialize', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -128,22 +128,36 @@ const paystackSecretKey = process.env.PAYSTACK_SECRET_KEY  || 'sk_test_e85988fa0
         body: JSON.stringify({
           email: email,
           phoneNumber: phoneNumber,
-          planCode: 'PLN_mic7hyck7v0dfxk' // Your actual Paystack plan code
+          amount: (PAYMENT_AMOUNT * 100).toString(), // Convert to kobo
+          type: 'channel'
         }),
       });
 
       const data = await response.json();
 
       if (data.status && data.data.authorization_url) {
+        // Store channel payment data for success page
+        const channelData = {
+          amount: PAYMENT_AMOUNT,
+          email: email,
+          phoneNumber: phoneNumber
+        };
+        sessionStorage.setItem('channelData', JSON.stringify(channelData));
+        sessionStorage.setItem('cameFromChannel', 'true');
+        
+        // Also store in localStorage as backup
+        localStorage.setItem('channelData', JSON.stringify(channelData));
+        localStorage.setItem('cameFromChannel', 'true');
+        
         // Redirect to Paystack checkout
         window.location.href = data.data.authorization_url;
       } else {
-        throw new Error(data.message || 'Failed to initialize subscription');
+        throw new Error(data.message || 'Failed to initialize payment');
       }
     } catch (error) {
-      console.error('Mobile money subscription error:', error);
+      console.error('Mobile money payment error:', error);
       setToast({
-        message: error instanceof Error ? error.message : 'Failed to process subscription. Please try again.',
+        message: error instanceof Error ? error.message : 'Failed to process payment. Please try again.',
         type: 'error',
         isVisible: true
       });

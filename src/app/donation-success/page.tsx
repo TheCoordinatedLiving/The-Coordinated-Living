@@ -5,6 +5,7 @@ import { useEffect, useState, useRef } from 'react';
 import { gsap } from 'gsap';
 import { Amita, Roboto } from 'next/font/google';
 import Image from 'next/image';
+import DonationModal from '@/components/DonationModal';
 
 const amita = Amita({
   weight: ['400', '700'],
@@ -30,6 +31,7 @@ export default function DonationSuccessPage() {
   const [donationData, setDonationData] = useState<DonationData | null>(null);
   const [isVerifying, setIsVerifying] = useState(true);
   const [verificationStatus, setVerificationStatus] = useState<'success' | 'failed' | 'pending'>('pending');
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const pageRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -122,7 +124,17 @@ export default function DonationSuccessPage() {
   };
 
   const handleSetUpAnother = () => {
-    router.push('/donation-mobile');
+    setIsModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleDonationSuccess = (data: { reference: string; amount: number }) => {
+    // The modal will handle the redirect to Paystack
+    // Success will be handled by the payment-success page
+    console.log('Donation initiated:', data);
   };
 
   if (isVerifying) {
@@ -298,6 +310,13 @@ export default function DonationSuccessPage() {
         </div>
 
       </div>
+
+      {/* Donation Modal */}
+      <DonationModal
+        isOpen={isModalOpen}
+        onClose={handleModalClose}
+        onSuccess={handleDonationSuccess}
+      />
     </div>
   );
 }

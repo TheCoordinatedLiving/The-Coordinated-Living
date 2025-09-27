@@ -105,21 +105,33 @@ function PaymentSuccessContent() {
           )?.value;
           console.log('Payment type from metadata:', paymentType);
           
-          // Check sessionStorage and localStorage for donation data as fallback
+          // Check sessionStorage and localStorage for donation and channel data as fallback
           const storedDonationData = sessionStorage.getItem('donationData') || localStorage.getItem('donationData');
+          const storedChannelData = sessionStorage.getItem('channelData') || localStorage.getItem('channelData');
           const cameFromDonationFlag = sessionStorage.getItem('cameFromDonation') || localStorage.getItem('cameFromDonation');
+          const cameFromChannelFlag = sessionStorage.getItem('cameFromChannel') || localStorage.getItem('cameFromChannel');
           console.log('Stored donation data (session):', sessionStorage.getItem('donationData'));
           console.log('Stored donation data (local):', localStorage.getItem('donationData'));
           console.log('Stored donation data (final):', storedDonationData);
+          console.log('Stored channel data (session):', sessionStorage.getItem('channelData'));
+          console.log('Stored channel data (local):', localStorage.getItem('channelData'));
+          console.log('Stored channel data (final):', storedChannelData);
           console.log('Came from donation flag (session):', sessionStorage.getItem('cameFromDonation'));
           console.log('Came from donation flag (local):', localStorage.getItem('cameFromDonation'));
           console.log('Came from donation flag (final):', cameFromDonationFlag);
+          console.log('Came from channel flag (session):', sessionStorage.getItem('cameFromChannel'));
+          console.log('Came from channel flag (local):', localStorage.getItem('cameFromChannel'));
+          console.log('Came from channel flag (final):', cameFromChannelFlag);
           
           // Also check if we came from donation-mobile page (additional fallback)
           const cameFromDonation = document.referrer.includes('donation-mobile') || 
                                  window.location.href.includes('donation') ||
                                  cameFromDonationFlag === 'true';
+          const cameFromChannel = document.referrer.includes('join-channel') || 
+                                 window.location.href.includes('join-channel') ||
+                                 cameFromChannelFlag === 'true';
           console.log('Came from donation:', cameFromDonation);
+          console.log('Came from channel:', cameFromChannel);
           console.log('Referrer:', document.referrer);
           console.log('URL:', window.location.href);
           
@@ -142,8 +154,20 @@ function PaymentSuccessContent() {
               };
               sessionStorage.setItem('donationData', JSON.stringify(donationData));
             }
-          } else {
+          } else if (urlPaymentType === 'channel' || storedChannelData || cameFromChannelFlag === 'true' || cameFromChannel) {
             console.log('Identified as channel payment - setting type to channel');
+            type = 'channel';
+            // Create channel data if not already stored
+            if (!storedChannelData) {
+              const channelData = {
+                amount: data.data.amount / 100,
+                email: data.data.customer?.email || '',
+                phoneNumber: ''
+              };
+              sessionStorage.setItem('channelData', JSON.stringify(channelData));
+            }
+          } else {
+            console.log('Defaulting to channel payment - setting type to channel');
             type = 'channel';
           }
           
