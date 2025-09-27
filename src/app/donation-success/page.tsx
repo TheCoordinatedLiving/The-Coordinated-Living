@@ -1,6 +1,8 @@
 // TEMPORARY DONATION SUCCESS PAGE
 // TODO: Fix the original donation-success page with proper Suspense boundary
 
+'use client';
+
 export default function DonationSuccessPage() {
   return (
     <div className="min-h-screen w-full flex items-center justify-center" style={{ backgroundColor: '#2F4C6C' }}>
