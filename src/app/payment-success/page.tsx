@@ -17,20 +17,76 @@ const roboto = Roboto({
   display: 'swap',
 });
 
+interface PaymentData {
+  type: 'donation' | 'channel';
+  amount?: number;
+  email?: string;
+  phoneNumber?: string;
+}
+
 function PaymentSuccessContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [paymentStatus, setPaymentStatus] = useState<'verifying' | 'success' | 'failed'>('verifying');
+  const [paymentData, setPaymentData] = useState<PaymentData | null>(null);
   const [copied, setCopied] = useState(false);
+  const [shouldRedirect, setShouldRedirect] = useState(false);
 
-  // Get payment reference from URL parameters
+  // Get payment reference and type from URL parameters
   const reference = searchParams.get('reference');
   const trxref = searchParams.get('trxref');
+  const urlPaymentType = searchParams.get('type');
+
+  // IMMEDIATE REDIRECT CHECK - if it's a donation, redirect immediately before any rendering
+  console.log('=== PAYMENT SUCCESS COMPONENT LOADED ===');
+  console.log('URL Payment Type:', urlPaymentType);
+  console.log('Reference:', reference);
+  console.log('Trxref:', trxref);
+  
+  // Check for donation indicators immediately
+  useEffect(() => {
+    const storedDonationData = sessionStorage.getItem('donationData') || localStorage.getItem('donationData');
+    const cameFromDonationFlag = sessionStorage.getItem('cameFromDonation') || localStorage.getItem('cameFromDonation');
+    const cameFromDonation = document.referrer.includes('donation-mobile') || 
+                           window.location.href.includes('donation') ||
+                           cameFromDonationFlag === 'true';
+    
+    // If we detect this is a donation, redirect immediately
+    if (urlPaymentType === 'donation' || storedDonationData || cameFromDonation) {
+      console.log('Immediate redirect to donation-success detected');
+      setShouldRedirect(true);
+    }
+  }, [urlPaymentType]);
 
   // WhatsApp channel link
   const whatsappChannelLink = process.env.NEXT_PUBLIC_WHATSAPP_CHANNEL_LINK || "https://chat.whatsapp.com/YOUR_CHANNEL_LINK";
 
+  // Handle redirect when shouldRedirect is true
   useEffect(() => {
+    if (shouldRedirect) {
+      console.log('Router redirect to donation-success');
+      router.replace(`/donation-success?reference=${reference || trxref}`);
+    }
+  }, [shouldRedirect, router, reference, trxref]);
+
+  useEffect(() => {
+    // Debug: Check storage immediately when component loads
+    console.log('=== PAYMENT SUCCESS PAGE LOADED ===');
+    console.log('URL Payment Type:', urlPaymentType);
+    console.log('SessionStorage on load:', {
+      donationData: sessionStorage.getItem('donationData'),
+      cameFromDonation: sessionStorage.getItem('cameFromDonation'),
+      allKeys: Object.keys(sessionStorage)
+    });
+    console.log('LocalStorage on load:', {
+      donationData: localStorage.getItem('donationData'),
+      cameFromDonation: localStorage.getItem('cameFromDonation'),
+      allKeys: Object.keys(localStorage)
+    });
+    console.log('Document referrer:', document.referrer);
+    console.log('Current URL:', window.location.href);
+    console.log('URL params:', { reference, trxref, urlPaymentType });
+    
     const verifyPayment = async () => {
       if (!reference && !trxref) {
         setPaymentStatus('failed');
@@ -53,6 +109,70 @@ function PaymentSuccessContent() {
 
         if (data.status && data.data.status === 'success') {
           setPaymentStatus('success');
+          
+          // Extract payment type from metadata
+          const metadata = data.data.metadata;
+          console.log('Full metadata:', metadata);
+          console.log('Full data object:', data.data);
+          
+          const paymentType = metadata?.custom_fields?.find((field: any) => 
+            field.variable_name === 'payment_type'
+          )?.value;
+          console.log('Payment type from metadata:', paymentType);
+          
+          // Check sessionStorage and localStorage for donation data as fallback
+          const storedDonationData = sessionStorage.getItem('donationData') || localStorage.getItem('donationData');
+          const cameFromDonationFlag = sessionStorage.getItem('cameFromDonation') || localStorage.getItem('cameFromDonation');
+          console.log('Stored donation data (session):', sessionStorage.getItem('donationData'));
+          console.log('Stored donation data (local):', localStorage.getItem('donationData'));
+          console.log('Stored donation data (final):', storedDonationData);
+          console.log('Came from donation flag (session):', sessionStorage.getItem('cameFromDonation'));
+          console.log('Came from donation flag (local):', localStorage.getItem('cameFromDonation'));
+          console.log('Came from donation flag (final):', cameFromDonationFlag);
+          
+          // Also check if we came from donation-mobile page (additional fallback)
+          const cameFromDonation = document.referrer.includes('donation-mobile') || 
+                                 window.location.href.includes('donation') ||
+                                 cameFromDonationFlag === 'true';
+          console.log('Came from donation:', cameFromDonation);
+          console.log('Referrer:', document.referrer);
+          console.log('URL:', window.location.href);
+          
+          // Determine payment type - URL parameter is most reliable
+          let type: 'donation' | 'channel' = 'channel'; // default
+          let amount = data.data.amount / 100; // Convert from kobo to GHS
+          let email = data.data.customer?.email;
+          let phoneNumber = '';
+          
+          // Determine payment type
+          if (urlPaymentType === 'donation' || storedDonationData || cameFromDonationFlag === 'true' || cameFromDonation || paymentType === 'Pour into my cup') {
+            console.log('Identified as donation - redirecting to donation-success page');
+            type = 'donation';
+            // Create donation data if not already stored
+            if (!storedDonationData) {
+              const donationData = {
+                amount: data.data.amount / 100,
+                email: data.data.customer?.email || '',
+                phoneNumber: ''
+              };
+              sessionStorage.setItem('donationData', JSON.stringify(donationData));
+            }
+            // Redirect to donation success page
+            setShouldRedirect(true);
+            return;
+          } else {
+            console.log('Identified as channel payment - setting type to channel');
+            type = 'channel';
+          }
+          
+          const paymentInfo = {
+            type,
+            amount,
+            email,
+            phoneNumber
+          };
+          
+          setPaymentData(paymentInfo);
         } else {
           setPaymentStatus('failed');
         }
@@ -63,7 +183,7 @@ function PaymentSuccessContent() {
     };
 
     verifyPayment();
-  }, [reference, trxref]);
+  }, [reference, trxref, urlPaymentType, router]);
 
   const copyToClipboard = async () => {
     try {
@@ -81,6 +201,24 @@ function PaymentSuccessContent() {
 
   const handleClose = () => {
     router.push('/?skipLoader=true');
+  };
+
+
+  const handleShare = () => {
+    const text = `I just donated to support Coordinated Living! Your support helps keep this platform running. 💙`;
+    const url = window.location.origin;
+    
+    if (navigator.share) {
+      navigator.share({ text, url });
+    } else {
+      // Fallback to copying to clipboard
+      navigator.clipboard.writeText(`${text} ${url}`);
+      alert('Donation message copied to clipboard!');
+    }
+  };
+
+  const handleSetUpAnother = () => {
+    router.push('/donation-mobile');
   };
 
   if (paymentStatus === 'verifying') {
@@ -158,6 +296,122 @@ function PaymentSuccessContent() {
     );
   }
 
+  // Debug: Log payment data to see what we're getting
+  console.log('Payment Data:', paymentData);
+  console.log('Payment Type:', paymentData?.type);
+  console.log('URL Payment Type:', urlPaymentType);
+
+  // Determine if this is a donation based on URL parameter or payment data
+  const isDonation = urlPaymentType === 'donation' || paymentData?.type === 'donation';
+
+  // Get donation amount from payment data or stored data
+  const getDonationAmount = () => {
+    if (paymentData?.amount) return paymentData.amount;
+    const storedData = sessionStorage.getItem('donationData') || localStorage.getItem('donationData');
+    if (storedData) {
+      try {
+        return JSON.parse(storedData).amount;
+      } catch (e) {
+        return null;
+      }
+    }
+    return null;
+  };
+
+  const donationAmount = getDonationAmount();
+
+  // Render donation success content
+  if (isDonation) {
+    return (
+      <div className="min-h-screen flex items-center justify-center p-4" style={{ backgroundColor: '#2F4C6C' }}>
+        <div className="max-w-lg w-full mx-4 text-center">
+          {/* Close Button */}
+          <button
+            onClick={handleClose}
+            className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center hover:bg-white/10 rounded-full transition-colors"
+          >
+            <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+
+          {/* Success Icon */}
+          <div className="flex justify-center mb-6">
+            <div className="w-20 h-20 bg-green-500 bg-opacity-20 rounded-full flex items-center justify-center">
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z"
+                  stroke="white"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </div>
+          </div>
+
+          {/* Title */}
+          <h1 
+            className={`${amita.className} text-3xl font-bold text-center mb-4 leading-tight text-white`}
+          >
+            Thank You!<br />My Cup is Full
+          </h1>
+
+          {/* Donation Details */}
+          {donationAmount && (
+            <div 
+              className="bg-white bg-opacity-10 rounded-2xl p-6 mb-6"
+            >
+              <div className="text-center">
+                <p className={`${roboto.className} text-white text-lg font-medium mb-2`}>
+                  Donation Amount: GHS {donationAmount.toFixed(2)}
+                </p>
+                <p className={`${roboto.className} text-white text-sm opacity-80`}>
+                  One-time donation
+                </p>
+              </div>
+            </div>
+          )}
+
+          {/* Thank You Message */}
+          <p 
+            className={`${roboto.className} text-white text-base leading-relaxed text-center mb-8`}
+          >
+            Your generous support helps keep this platform running and my cup full. 
+            Every donation makes a real difference in maintaining this space for our community.
+          </p>
+
+          {/* Action Buttons */}
+          <div className="space-y-3">
+            <button
+              onClick={handleShare}
+              className="w-full py-4 px-6 rounded-full font-medium text-base transition-all duration-200 hover:scale-105 active:scale-95 bg-white"
+            >
+              <span className={`${roboto.className} font-medium text-lg`} style={{ color: '#2F4C6C' }}>Share Your Support</span>
+            </button>
+            
+            <button
+              onClick={handleSetUpAnother}
+              className="w-full py-3 px-6 rounded-full font-medium text-base transition-all duration-200 hover:opacity-80 border-2 border-white text-white"
+            >
+              <span className={`${roboto.className} font-medium text-base`}>Set Up Another Donation</span>
+            </button>
+          </div>
+
+          {/* Additional Info */}
+          <div className="mt-8 text-center">
+            <p 
+              className={`${roboto.className} text-white text-xs opacity-60`}
+            >
+              You'll receive an email confirmation shortly.
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Render channel success content (default)
   return (
     <div className="min-h-screen flex items-center justify-center p-4" style={{ backgroundColor: '#2F4C6C' }}>
       <div className="max-w-lg w-full mx-4 text-center">
@@ -215,6 +469,7 @@ function PaymentSuccessContent() {
             <span className={`${roboto.className} font-medium text-lg`} style={{ color: '#2F4C6C' }}>Join Channel Now</span>
           </button>
           
+          
           {/* Alternative: Copy Link */}
           <div className="mb-6">
             <button
@@ -228,7 +483,7 @@ function PaymentSuccessContent() {
           {/* Important Notice */}
           <div className="mt-8">
             <p className={`${roboto.className} text-white text-sm font-bold text-center leading-relaxed`}>
-              Please do not share this link with others as it violates our community rules. This link is exclusively for your paid members.
+              Please do not share this link with others as it violates our community rules. This link is exclusively for paid members.
             </p>
           </div>
         </div>
