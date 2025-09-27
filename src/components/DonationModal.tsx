@@ -5,10 +5,9 @@ import { useState, useEffect } from 'react';
 interface DonationModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSuccess: (data: { reference: string; amount: number }) => void;
 }
 
-export default function DonationModal({ isOpen, onClose, onSuccess }: DonationModalProps) {
+export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
   const [emailOrPhone, setEmailOrPhone] = useState('');
   const [amount, setAmount] = useState('');
   const [currency, setCurrency] = useState('GHS');
@@ -44,7 +43,7 @@ export default function DonationModal({ isOpen, onClose, onSuccess }: DonationMo
         const detectedCurrency = currencyMap[countryCode] || 'GHS';
         setCurrency(detectedCurrency);
         console.log('Detected currency:', detectedCurrency, 'from country:', countryCode);
-      } catch (error) {
+      } catch {
         console.log('Currency detection failed, using default GHS');
         setCurrency('GHS');
       }

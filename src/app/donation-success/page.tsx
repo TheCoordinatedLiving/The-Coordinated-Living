@@ -20,11 +20,6 @@ export default function DonationSuccessPage() {
     router.push('/');
   };
 
-  const handleDonationSuccess = (data: { reference: string; amount: number }) => {
-    setIsDonationModalOpen(false);
-    // Redirect to payment success page
-    router.push(`/payment-success?reference=${data.reference}&amount=${data.amount}`);
-  };
   return (
     <div className="min-h-screen w-full flex items-center justify-center" style={{ backgroundColor: '#2F4C6C' }}>
       <div className="text-center text-white">
@@ -60,7 +55,6 @@ export default function DonationSuccessPage() {
       <DonationModal 
         isOpen={isDonationModalOpen}
         onClose={() => setIsDonationModalOpen(false)}
-        onSuccess={handleDonationSuccess}
       />
     </div>
   );

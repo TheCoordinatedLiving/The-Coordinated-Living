@@ -1566,11 +1566,6 @@ const Page = () => {
     setIsDonationModalOpen(false);
   };
 
-  const handleDonationSuccess = (data: { reference: string; amount: number }) => {
-    // The modal will handle the redirect to Paystack
-    // Success will be handled by the payment-success page
-    console.log('Donation initiated:', data);
-  };
 
   return (
     <div ref={pageRef} className="relative" style={{ height: '100vh', overflow: 'hidden' }}>
@@ -5471,7 +5466,6 @@ const Page = () => {
       <DonationModal
         isOpen={isDonationModalOpen}
         onClose={handleDonationModalClose}
-        onSuccess={handleDonationSuccess}
       />
 
     </div>
