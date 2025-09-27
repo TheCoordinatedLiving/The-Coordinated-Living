@@ -456,9 +456,8 @@ function PaymentSuccessContent() {
 
         {/* Welcome Message */}
         <div className="mb-8">
-          <h2 className={`${amita.className} text-4xl text-white mb-6 font-bold`}>Welcome To Coordinated Living!</h2>
-          <p className={`${roboto.className} text-white text-lg leading-relaxed`}>
-            Welcome! You&apos;re officially part of a community dedicated to navigating life&apos;s struggles and finding purpose in Christ. I&apos;m honored to have you here. This channel is for us to walk together in faith, sharing insights and growing closer to the Lord.
+          <p className={`text-white text-lg leading-relaxed`}>
+            <span className={`${amita.className} font-bold`}>Welcome!</span> <span className={`${roboto.className}`}>You&apos;re officially part of a community dedicated to navigating life&apos;s struggles and finding purpose in Christ. I&apos;m honored to have you here. This channel is for us to walk together in faith, sharing insights and growing closer to the Lord.</span>
           </p>
         </div>
 
