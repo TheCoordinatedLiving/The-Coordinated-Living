@@ -108,7 +108,7 @@ export default async function SpiritualGrowthPage() {
                 Finding Purpose & Fulfillment
               </h3>
               <p className="text-gray-600 text-sm">
-                Discover your calling and find fulfillment in life's journey
+                Discover your calling and find fulfillment in life&apos;s journey
               </p>
             </Link>
             
@@ -120,7 +120,7 @@ export default async function SpiritualGrowthPage() {
                 Life Transitions & Change
               </h3>
               <p className="text-gray-600 text-sm">
-                Navigate life's challenges and embrace positive change
+                Navigate life&apos;s challenges and embrace positive change
               </p>
             </Link>
             

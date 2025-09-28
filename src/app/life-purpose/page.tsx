@@ -42,7 +42,7 @@ export default async function LifePurposePage() {
             Finding Purpose & Fulfillment in Life
           </h1>
           <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-            Discover how to find purpose in life's challenges, achieve true fulfillment, and live a meaningful life. 
+            Discover how to find purpose in life&apos;s challenges, achieve true fulfillment, and live a meaningful life. 
             Explore our collection of posts designed to help you discover your calling and live with intention.
           </p>
         </div>
@@ -120,7 +120,7 @@ export default async function LifePurposePage() {
                 Life Transitions & Change
               </h3>
               <p className="text-gray-600 text-sm">
-                Navigate life's challenges and embrace positive change
+                Navigate life&apos;s challenges and embrace positive change
               </p>
             </Link>
             

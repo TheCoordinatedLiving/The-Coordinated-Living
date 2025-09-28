@@ -42,8 +42,8 @@ export default async function LifeTransitionsPage() {
             Life Transitions & Change
           </h1>
           <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-            Learn how to navigate life's struggles, embrace changing scenes of life, and break generational cycles through faith. 
-            Find strength, guidance, and hope for life's most challenging transitions.
+            Learn how to navigate life&apos;s struggles, embrace changing scenes of life, and break generational cycles through faith. 
+            Find strength, guidance, and hope for life&apos;s most challenging transitions.
           </p>
         </div>
 
