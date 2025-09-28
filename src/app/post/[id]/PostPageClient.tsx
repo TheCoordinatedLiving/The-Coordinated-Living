@@ -1,12 +1,65 @@
 "use client";
 import PostTemplate from '@/components/PostTemplate';
 import { Post } from '@/lib/posts';
+import { useEffect } from 'react';
 
 interface PostPageClientProps {
   post: Post;
 }
 
 export default function PostPageClient({ post }: PostPageClientProps) {
+  // Add structured data for SEO without changing content
+  useEffect(() => {
+    const structuredData = {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": post.title,
+      "description": post.content ? post.content.substring(0, 160) : "Christian living and spiritual growth content",
+      "author": {
+        "@type": "Organization",
+        "name": "The Coordinated Living",
+        "url": "https://coordinated-living.vercel.app"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "The Coordinated Living",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://coordinated-living.vercel.app/coordinated.webp"
+        }
+      },
+      "datePublished": new Date().toISOString(),
+      "dateModified": new Date().toISOString(),
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": `https://coordinated-living.vercel.app/post/${post.id}`
+      },
+      "keywords": [
+        "Christian living",
+        "spiritual growth", 
+        "finding purpose",
+        "life fulfillment",
+        "daily reflections",
+        "faith-based guidance"
+      ],
+      "articleSection": "Christian Living",
+      "inLanguage": "en-US"
+    };
+
+    // Add structured data to head
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.text = JSON.stringify(structuredData);
+    document.head.appendChild(script);
+
+    return () => {
+      // Cleanup
+      if (document.head.contains(script)) {
+        document.head.removeChild(script);
+      }
+    };
+  }, [post]);
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-8">
       <div className="max-w-4xl mx-auto px-4">
