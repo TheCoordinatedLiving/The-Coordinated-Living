@@ -211,9 +211,8 @@ export default function PostMobilePage() {
   // Handle scroll detection for navigation arrows
   useEffect(() => {
     const handleScroll = () => {
-      if (fullPostRef.current && fullPostContentRef.current) {
+      if (fullPostRef.current) {
         const container = fullPostRef.current;
-        const content = fullPostContentRef.current;
         
         // Check if user has scrolled to the bottom (with some tolerance)
         const scrollTop = container.scrollTop;
