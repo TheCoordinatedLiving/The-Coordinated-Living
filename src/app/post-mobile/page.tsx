@@ -19,12 +19,14 @@ export default function PostMobilePage() {
   const [currentFullPostIndex, setCurrentFullPostIndex] = useState(0);
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
+  const [showNavigationArrows, setShowNavigationArrows] = useState(false);
   
   // Refs for animations
   const pageRef = useRef<HTMLDivElement>(null);
   const bottomSheetRef = useRef<HTMLDivElement>(null);
   const backdropRef = useRef<HTMLDivElement>(null);
   const fullPostRef = useRef<HTMLDivElement>(null);
+  const fullPostContentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     // Trigger animation on mount
@@ -167,6 +169,17 @@ export default function PostMobilePage() {
       const nextIndex = (currentFullPostIndex + 1) % posts.length;
       setCurrentFullPostIndex(nextIndex);
       setSelectedPost(posts[nextIndex]);
+      
+      // Smooth scroll to top
+      if (fullPostRef.current) {
+        fullPostRef.current.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      }
+      
+      // Hide navigation arrows initially for new post
+      setShowNavigationArrows(false);
     }
   };
 
@@ -175,13 +188,55 @@ export default function PostMobilePage() {
       const prevIndex = (currentFullPostIndex - 1 + posts.length) % posts.length;
       setCurrentFullPostIndex(prevIndex);
       setSelectedPost(posts[prevIndex]);
+      
+      // Smooth scroll to top
+      if (fullPostRef.current) {
+        fullPostRef.current.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      }
+      
+      // Hide navigation arrows initially for new post
+      setShowNavigationArrows(false);
     }
   };
 
   const handleCloseFullPost = () => {
     setShowFullPost(false);
     setSelectedPost(null);
+    setShowNavigationArrows(false);
   };
+
+  // Handle scroll detection for navigation arrows
+  useEffect(() => {
+    const handleScroll = () => {
+      if (fullPostRef.current && fullPostContentRef.current) {
+        const container = fullPostRef.current;
+        const content = fullPostContentRef.current;
+        
+        // Check if user has scrolled to the bottom (with some tolerance)
+        const scrollTop = container.scrollTop;
+        const scrollHeight = container.scrollHeight;
+        const clientHeight = container.clientHeight;
+        const isAtBottom = scrollTop + clientHeight >= scrollHeight - 50; // 50px tolerance
+        
+        setShowNavigationArrows(isAtBottom);
+      }
+    };
+
+    if (showFullPost && fullPostRef.current) {
+      const container = fullPostRef.current;
+      container.addEventListener('scroll', handleScroll);
+      
+      // Check initial scroll position
+      handleScroll();
+      
+      return () => {
+        container.removeEventListener('scroll', handleScroll);
+      };
+    }
+  }, [showFullPost, selectedPost]);
 
   // Show loading state if posts are not loaded yet
   if (loading) {
@@ -569,7 +624,7 @@ export default function PostMobilePage() {
           </button>
           
           {/* Content */}
-          <div className="px-6 pt-16 pb-24">
+          <div className="px-6 pt-16 pb-32" ref={fullPostContentRef}>
             <div className="max-w-md mx-auto">
               {/* Title */}
               <h1 className="text-white text-2xl font-semibold mb-8 leading-tight" style={{ fontFamily: 'Amita, cursive' }}>
@@ -601,9 +656,15 @@ export default function PostMobilePage() {
             </div>
           </div>
 
-          {/* Navigation Buttons - Only show if there are multiple posts */}
+          {/* Navigation Buttons - Only show if there are multiple posts and user has scrolled to bottom */}
           {posts.length > 1 && (
-            <div className="fixed bottom-6 left-0 right-0 px-6 z-20">
+            <div 
+              className={`fixed bottom-6 left-0 right-0 px-6 z-20 transition-all duration-500 ease-in-out ${
+                showNavigationArrows 
+                  ? 'opacity-100 translate-y-0' 
+                  : 'opacity-0 translate-y-4 pointer-events-none'
+              }`}
+            >
               <div className="max-w-md mx-auto flex justify-between items-center">
                 {/* Previous Button */}
                 <button
