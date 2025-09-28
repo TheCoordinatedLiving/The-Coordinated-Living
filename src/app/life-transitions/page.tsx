@@ -120,7 +120,7 @@ export default async function LifeTransitionsPage() {
                 Finding Purpose & Fulfillment
               </h3>
               <p className="text-gray-600 text-sm">
-                Discover your calling and find fulfillment in life's journey
+                Discover your calling and find fulfillment in life&apos;s journey
               </p>
             </Link>
             
