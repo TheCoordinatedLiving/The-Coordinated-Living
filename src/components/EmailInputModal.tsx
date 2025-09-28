@@ -46,7 +46,7 @@ export default function EmailInputModal({
     }
 
     // Basic phone number validation (supports Ghana format starting with 0 and international format starting with +)
-    const phoneRegex = /^(\+[1-9][\d]{7,14}|0[0-9]{8,9})$/;
+    const phoneRegex = /^(\+\d{7,15}|0\d{8,9})$/;
     if (!phoneRegex.test(phoneNumber.replace(/\s/g, ''))) {
       setError('Please enter a valid WhatsApp number');
       return;
