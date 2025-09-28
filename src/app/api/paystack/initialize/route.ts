@@ -4,6 +4,15 @@ export async function POST(request: NextRequest) {
   try {
     const { email, phoneNumber, amount, currency = 'GHS', type = 'channel', paymentType = 'regular' } = await request.json();
 
+    // Validate currency - only GHS is supported by this merchant account
+    if (currency !== 'GHS') {
+      console.error('Unsupported currency:', currency);
+      return NextResponse.json(
+        { status: false, message: 'Only GHS currency is supported by this merchant account' },
+        { status: 400 }
+      );
+    }
+
     // For mobile money payments, email is not required
     if (paymentType === 'momo') {
       if (!phoneNumber || !amount) {

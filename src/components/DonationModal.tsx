@@ -24,33 +24,11 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
     // { code: 'USD', symbol: '$', name: 'US Dollar', country: 'International' }
   ];
 
-  // Auto-detect currency based on user's location
+  // Set currency to GHS only (only supported currency for this merchant account)
   useEffect(() => {
-    const detectCurrency = () => {
-      try {
-        // Try to detect country from browser language
-        const language = navigator.language || navigator.languages?.[0] || 'en-GH';
-        const countryCode = language.split('-')[1] || 'GH';
-        
-        const currencyMap: { [key: string]: string } = {
-          'GH': 'GHS',
-          'NG': 'NGN',
-          'ZA': 'ZAR',
-          'KE': 'KES',
-          'US': 'USD'
-        };
-        
-        const detectedCurrency = currencyMap[countryCode] || 'GHS';
-        setCurrency(detectedCurrency);
-        console.log('Detected currency:', detectedCurrency, 'from country:', countryCode);
-      } catch {
-        console.log('Currency detection failed, using default GHS');
-        setCurrency('GHS');
-      }
-    };
-
     if (isOpen) {
-      detectCurrency();
+      setCurrency('GHS');
+      console.log('Currency set to GHS (only supported currency for this merchant account)');
     }
   }, [isOpen]);
 
