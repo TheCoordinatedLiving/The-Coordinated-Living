@@ -196,8 +196,6 @@ const PostsContent = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [isSharing] = useState<boolean>(false);
   const [showShareOptions, setShowShareOptions] = useState<boolean>(false);
-  const [toastMessage, setToastMessage] = useState<string>('');
-  const [showToast, setShowToast] = useState<boolean>(false);
   const [posts, setPosts] = useState<PostWithPosition[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const postTemplateRef = useRef<HTMLDivElement>(null);
@@ -410,12 +408,6 @@ const PostsContent = () => {
         postTemplateRef={postTemplateRef}
       />
 
-      {/* Toast notification */}
-      {showToast && (
-        <div className="fixed top-4 right-4 z-[10000] bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg">
-          {toastMessage}
-        </div>
-      )}
     </div>
   );
 };
