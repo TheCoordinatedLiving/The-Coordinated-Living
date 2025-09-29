@@ -4,13 +4,13 @@ import PostTemplate from '@/components/PostTemplate';
 import Link from 'next/link';
 
 interface SharePageProps {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
 export default async function SharePage({ params }: SharePageProps) {
-  const { id } = params;
+  const { id } = await params;
   
   try {
     const posts = await getAllPosts();
@@ -88,7 +88,7 @@ export default async function SharePage({ params }: SharePageProps) {
 
 // Generate metadata for SEO
 export async function generateMetadata({ params }: SharePageProps) {
-  const { id } = params;
+  const { id } = await params;
   
   try {
     const posts = await getAllPosts();
