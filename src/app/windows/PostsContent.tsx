@@ -70,6 +70,20 @@ const PostModal = ({
 }) => {
   if (!post) return null;
 
+  // Share function - Copy URL to clipboard
+  const handleShare = async () => {
+    const shareUrl = `${window.location.origin}/share/${post.id}`;
+    
+    try {
+      await navigator.clipboard.writeText(shareUrl);
+      // Note: Toast notification would need to be passed as prop or handled differently
+      console.log('Share link copied to clipboard!');
+    } catch {
+      // Final fallback: show the URL
+      console.log(`Share this link: ${shareUrl}`);
+    }
+  };
+
   return (
     <div className="fixed inset-0 z-50">
       {/* Glass background blur */}
