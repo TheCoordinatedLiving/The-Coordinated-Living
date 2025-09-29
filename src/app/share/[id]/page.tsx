@@ -108,12 +108,45 @@ export async function generateMetadata({ params }: SharePageProps) {
         title: `${post.title} - A Gift of Grace`,
         description: `Someone has shared this inspiring message with you.`,
         type: 'article',
+        images: [
+          {
+            url: '/coordinated-new.webp',
+            width: 1200,
+            height: 630,
+            alt: 'Coordinated Living - A Gift of Grace',
+          },
+        ],
+      },
+      twitter: {
+        card: 'summary_large_image',
+        title: `${post.title} - A Gift of Grace`,
+        description: `Someone has shared this inspiring message with you.`,
+        images: ['/coordinated-new.webp'],
       },
     };
   } catch {
     return {
       title: 'A Gift of Grace - Coordinated Living',
       description: 'Discover inspiring content and biblical insights.',
+      openGraph: {
+        title: 'A Gift of Grace - Coordinated Living',
+        description: 'Discover inspiring content and biblical insights.',
+        type: 'article',
+        images: [
+          {
+            url: '/coordinated-new.webp',
+            width: 1200,
+            height: 630,
+            alt: 'Coordinated Living - A Gift of Grace',
+          },
+        ],
+      },
+      twitter: {
+        card: 'summary_large_image',
+        title: 'A Gift of Grace - Coordinated Living',
+        description: 'Discover inspiring content and biblical insights.',
+        images: ['/coordinated-new.webp'],
+      },
     };
   }
 }
