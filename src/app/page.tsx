@@ -1098,14 +1098,32 @@ const Page = () => {
 
 
 
-  // Share function
+  // Share function - Native sharing
   const handleShare = async () => {
-    // Share functionality is temporarily disabled
-    setToastMessage('You will start sharing our posts soon');
-    setShowToast(true);
-    setTimeout(() => setShowToast(false), 3000);
-    return;
+    if (!posts[currentPostIndex]) {
+      setToastMessage('No post to share');
+      setShowToast(true);
+      setTimeout(() => setShowToast(false), 3000);
+      return;
+    }
+
+    const post = posts[currentPostIndex];
+    const shareUrl = `${window.location.origin}/share/${post.id}`;
+    
+    // Copy to clipboard
+    try {
+      await navigator.clipboard.writeText(shareUrl);
+      setToastMessage('Share link copied to clipboard!');
+      setShowToast(true);
+      setTimeout(() => setShowToast(false), 3000);
+    } catch (error) {
+      // Final fallback: show the URL
+      setToastMessage(`Share this link: ${shareUrl}`);
+      setShowToast(true);
+      setTimeout(() => setShowToast(false), 5000);
+    }
   };
+
 
   const pageRef = useRef<HTMLDivElement>(null);
   const curtainRef = useRef<HTMLDivElement>(null);

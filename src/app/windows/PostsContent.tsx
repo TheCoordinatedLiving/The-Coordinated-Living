@@ -51,7 +51,7 @@ const PostModal = ({
   onClose, 
   onPrevious, 
   onNext, 
-  onShare, 
+  onShare,
   currentIndex, 
   totalPosts,
   showShareOptions,
@@ -159,13 +159,13 @@ const PostModal = ({
               <div className="py-1">
                 <button
                   onClick={() => {
-                    onShare();
+                    handleShare();
                     setShowShareOptions(false);
                   }}
                   className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                 >
                   <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z" />
                   </svg>
                   Share as Link
                 </button>
@@ -316,13 +316,31 @@ const PostsContent = () => {
     }
   };
 
+  // Share function - Native sharing
   const handleShare = async () => {
-    // Share functionality is temporarily disabled
-    setToastMessage('You will start sharing our posts soon');
-    setShowToast(true);
-    setTimeout(() => setShowToast(false), 3000);
-    return;
+    if (!selectedPost) {
+      setToastMessage('No post to share');
+      setShowToast(true);
+      setTimeout(() => setShowToast(false), 3000);
+      return;
+    }
+
+    const shareUrl = `${window.location.origin}/share/${selectedPost.id}`;
+    
+    // Copy to clipboard
+    try {
+      await navigator.clipboard.writeText(shareUrl);
+      setToastMessage('Share link copied to clipboard!');
+      setShowToast(true);
+      setTimeout(() => setShowToast(false), 3000);
+    } catch (error) {
+      // Final fallback: show the URL
+      setToastMessage(`Share this link: ${shareUrl}`);
+      setShowToast(true);
+      setTimeout(() => setShowToast(false), 5000);
+    }
   };
+
 
   return (
     <div className="p-8 w-full h-full overflow-y-auto bg-gray-50">
@@ -415,4 +433,4 @@ const PostsContent = () => {
   );
 };
 
-export default PostsContent; 
+export default PostsContent;

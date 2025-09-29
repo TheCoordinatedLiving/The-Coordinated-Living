@@ -20,6 +20,8 @@ export default function PostMobilePage() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
   const [showNavigationArrows, setShowNavigationArrows] = useState(false);
+  const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
   
   // Refs for animations
   const pageRef = useRef<HTMLDivElement>(null);
@@ -206,6 +208,30 @@ export default function PostMobilePage() {
     setShowFullPost(false);
     setSelectedPost(null);
     setShowNavigationArrows(false);
+  };
+
+  // Share function - Copy URL to clipboard
+  const handleShare = async () => {
+    if (!selectedPost) {
+      setToastMessage('No post to share');
+      setShowToast(true);
+      setTimeout(() => setShowToast(false), 3000);
+      return;
+    }
+
+    const shareUrl = `${window.location.origin}/share/${selectedPost.id}`;
+    
+    try {
+      await navigator.clipboard.writeText(shareUrl);
+      setToastMessage('Share link copied to clipboard!');
+      setShowToast(true);
+      setTimeout(() => setShowToast(false), 3000);
+    } catch (error) {
+      // Final fallback: show the URL
+      setToastMessage(`Share this link: ${shareUrl}`);
+      setShowToast(true);
+      setTimeout(() => setShowToast(false), 5000);
+    }
   };
 
   // Handle scroll detection for navigation arrows
@@ -601,26 +627,50 @@ export default function PostMobilePage() {
           className="fixed inset-0 z-50 min-h-screen overflow-y-auto"
           style={{ backgroundColor: '#2F4C6C' }}
         >
-          {/* Close Button */}
-          <button
-            onClick={handleCloseFullPost}
-            className="absolute top-6 right-6 z-10 w-10 h-10 flex items-center justify-center hover:opacity-70 transition-opacity duration-200"
-            aria-label="Close"
-          >
-            <svg 
-              className="w-6 h-6 text-white" 
-              fill="none" 
-              stroke="currentColor" 
-              viewBox="0 0 24 24"
+          {/* Top Right Buttons */}
+          <div className="absolute top-6 right-6 z-10 flex items-center space-x-3">
+            {/* Share Button */}
+            <button
+              onClick={handleShare}
+              className="w-10 h-10 flex items-center justify-center hover:opacity-70 transition-opacity duration-200"
+              aria-label="Share"
             >
-              <path 
-                strokeLinecap="round" 
-                strokeLinejoin="round" 
-                strokeWidth={2} 
-                d="M6 18L18 6M6 6l12 12" 
-              />
-            </svg>
-          </button>
+              <svg 
+                className="w-6 h-6 text-white" 
+                fill="none" 
+                stroke="currentColor" 
+                viewBox="0 0 24 24"
+              >
+                <path 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round" 
+                  strokeWidth={2} 
+                  d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" 
+                />
+              </svg>
+            </button>
+            
+            {/* Close Button */}
+            <button
+              onClick={handleCloseFullPost}
+              className="w-10 h-10 flex items-center justify-center hover:opacity-70 transition-opacity duration-200"
+              aria-label="Close"
+            >
+              <svg 
+                className="w-6 h-6 text-white" 
+                fill="none" 
+                stroke="currentColor" 
+                viewBox="0 0 24 24"
+              >
+                <path 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round" 
+                  strokeWidth={2} 
+                  d="M6 18L18 6M6 6l12 12" 
+                />
+              </svg>
+            </button>
+          </div>
           
           {/* Content */}
           <div className="px-6 pt-16 pb-32" ref={fullPostContentRef}>
@@ -716,6 +766,13 @@ export default function PostMobilePage() {
               </div>
             </div>
           )}
+        </div>
+      )}
+
+      {/* Toast notification */}
+      {showToast && (
+        <div className="fixed top-4 right-4 z-[10000] bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg">
+          {toastMessage}
         </div>
       )}
     </div>

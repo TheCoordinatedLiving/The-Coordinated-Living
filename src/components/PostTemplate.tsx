@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image"
 
 interface PostTemplateProps {
@@ -41,8 +43,8 @@ export default function PostTemplate({
               className="xl:col-span-1 p-3 xl:p-5 flex flex-col items-center justify-start relative"
               style={{ backgroundColor: "#2F4C6C" }}
             >
-              {/* Logo Section - post-template-logo.svg */}
-              <div className="mb-6 xl:mb-8 flex justify-center">
+              {/* Logo Section - post-template-logo.svg - Desktop only */}
+              <div className="mb-6 xl:mb-8 flex justify-center hidden xl:flex">
                 <div className="w-12 h-12 xl:w-16 xl:h-16 relative">
                   <Image
                     src="/post-template-logo.svg"
@@ -54,8 +56,8 @@ export default function PostTemplate({
                 </div>
               </div>
 
-              {/* Title Section - "PERSONAL" */}
-              <div className="mb-8 xl:mb-12 text-center">
+              {/* Title Section - "PERSONAL" - Desktop only */}
+              <div className="mb-8 xl:mb-12 text-center hidden xl:block">
                 <h1 
                   className="text-lg xl:text-2xl font-bold leading-tight text-white"
                   style={{ 
@@ -67,8 +69,8 @@ export default function PostTemplate({
                 </h1>
               </div>
 
-              {/* Images Section - 2 images stacked vertically - Fixed position */}
-              <div className="absolute bottom-4 xl:bottom-6 left-3 xl:left-5 right-3 xl:right-5 space-y-4 xl:space-y-6">
+              {/* Images Section - 2 images stacked vertically - Fixed position - Desktop only */}
+              <div className="absolute bottom-4 xl:bottom-6 left-3 xl:left-5 right-3 xl:right-5 space-y-4 xl:space-y-6 hidden xl:block">
                 {images && images.length > 0 && images[0]?.src ? (
                   images.slice(0, 2).map((image, index) => (
                     <div key={index} className="w-40 xl:w-44 mx-auto">
@@ -97,6 +99,35 @@ export default function PostTemplate({
                     </div>
                   </>
                 )}
+              </div>
+
+              {/* Mobile View - Logo and Title */}
+              <div className="xl:hidden flex flex-col items-center justify-center h-full">
+                {/* Logo Section */}
+                <div className="mb-6 flex justify-center">
+                  <div className="w-16 h-16 relative">
+                    <Image
+                      src="/post-template-logo.svg"
+                      alt="Post Template Logo"
+                      width={64}
+                      height={64}
+                      className="w-full h-full"
+                    />
+                  </div>
+                </div>
+
+                {/* Title Section */}
+                <div className="text-center">
+                  <h1 
+                    className="text-xl font-bold leading-tight text-white"
+                    style={{ 
+                      fontFamily: 'Amita, serif', 
+                      letterSpacing: '1px'
+                    }}
+                  >
+                    {title || "PERSONAL"}
+                  </h1>
+                </div>
               </div>
             </div>
 
