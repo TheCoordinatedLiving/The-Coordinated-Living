@@ -110,7 +110,7 @@ export async function generateMetadata({ params }: SharePageProps) {
         type: 'article',
       },
     };
-  } catch (error) {
+  } catch {
     return {
       title: 'A Gift of Grace - Coordinated Living',
       description: 'Discover inspiring content and biblical insights.',

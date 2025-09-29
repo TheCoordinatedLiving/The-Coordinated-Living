@@ -226,7 +226,7 @@ export default function PostMobilePage() {
       setToastMessage('Share link copied to clipboard!');
       setShowToast(true);
       setTimeout(() => setShowToast(false), 3000);
-    } catch (error) {
+    } catch {
       // Final fallback: show the URL
       setToastMessage(`Share this link: ${shareUrl}`);
       setShowToast(true);

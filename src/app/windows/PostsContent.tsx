@@ -51,7 +51,6 @@ const PostModal = ({
   onClose, 
   onPrevious, 
   onNext, 
-  onShare,
   currentIndex, 
   totalPosts,
   showShareOptions,
@@ -62,7 +61,6 @@ const PostModal = ({
   onClose: () => void;
   onPrevious: () => void;
   onNext: () => void;
-  onShare: () => void;
   currentIndex: number;
   totalPosts: number;
   isSharing: boolean;
@@ -333,7 +331,7 @@ const PostsContent = () => {
       setToastMessage('Share link copied to clipboard!');
       setShowToast(true);
       setTimeout(() => setShowToast(false), 3000);
-    } catch (error) {
+    } catch {
       // Final fallback: show the URL
       setToastMessage(`Share this link: ${shareUrl}`);
       setShowToast(true);
