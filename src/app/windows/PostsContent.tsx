@@ -328,30 +328,6 @@ const PostsContent = () => {
     }
   };
 
-  // Share function - Native sharing
-  const handleShare = async () => {
-    if (!selectedPost) {
-      setToastMessage('No post to share');
-      setShowToast(true);
-      setTimeout(() => setShowToast(false), 3000);
-      return;
-    }
-
-    const shareUrl = `${window.location.origin}/share/${selectedPost.id}`;
-    
-    // Copy to clipboard
-    try {
-      await navigator.clipboard.writeText(shareUrl);
-      setToastMessage('Share link copied to clipboard!');
-      setShowToast(true);
-      setTimeout(() => setShowToast(false), 3000);
-    } catch {
-      // Final fallback: show the URL
-      setToastMessage(`Share this link: ${shareUrl}`);
-      setShowToast(true);
-      setTimeout(() => setShowToast(false), 5000);
-    }
-  };
 
 
   return (
