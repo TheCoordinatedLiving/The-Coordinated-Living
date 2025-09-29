@@ -426,7 +426,6 @@ const PostsContent = () => {
         onClose={handleCloseModal}
         onPrevious={handlePreviousPost}
         onNext={handleNextPost}
-        onShare={handleShare}
         currentIndex={currentPostIndex}
         totalPosts={filteredPosts.length}
         isSharing={isSharing}
