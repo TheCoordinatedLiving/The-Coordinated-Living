@@ -2,6 +2,13 @@
 
 import { useEffect } from 'react';
 
+// Interface for vendor-prefixed CSS properties
+interface ExtendedCSSStyleDeclaration extends CSSStyleDeclaration {
+  webkitUserSelect?: string;
+  mozUserSelect?: string;
+  msUserSelect?: string;
+}
+
 export default function SharedPostProtection() {
   useEffect(() => {
     // Prevent right-click context menu
@@ -64,10 +71,11 @@ export default function SharedPostProtection() {
     document.addEventListener('selectstart', handleSelectStart);
 
     // Disable text selection globally
-    document.body.style.userSelect = 'none';
-    (document.body.style as any).webkitUserSelect = 'none';
-    (document.body.style as any).mozUserSelect = 'none';
-    (document.body.style as any).msUserSelect = 'none';
+    const bodyStyle = document.body.style as ExtendedCSSStyleDeclaration;
+    bodyStyle.userSelect = 'none';
+    bodyStyle.webkitUserSelect = 'none';
+    bodyStyle.mozUserSelect = 'none';
+    bodyStyle.msUserSelect = 'none';
 
     // Cleanup function
     return () => {
@@ -77,10 +85,11 @@ export default function SharedPostProtection() {
       document.removeEventListener('selectstart', handleSelectStart);
       
       // Re-enable text selection
-      document.body.style.userSelect = '';
-      (document.body.style as any).webkitUserSelect = '';
-      (document.body.style as any).mozUserSelect = '';
-      (document.body.style as any).msUserSelect = '';
+      const bodyStyle = document.body.style as ExtendedCSSStyleDeclaration;
+      bodyStyle.userSelect = '';
+      bodyStyle.webkitUserSelect = '';
+      bodyStyle.mozUserSelect = '';
+      bodyStyle.msUserSelect = '';
     };
   }, []);
 
