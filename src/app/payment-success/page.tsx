@@ -479,10 +479,6 @@ function PaymentSuccessContent() {
           </div>
         </div>
 
-        {/* Payment Successful Text */}
-        <div className="mb-8">
-          <h1 className={`${amita.className} text-2xl text-white mb-6`}>Payment Successful</h1>
-        </div>
 
         {/* Welcome Message */}
         <div className="mb-8">

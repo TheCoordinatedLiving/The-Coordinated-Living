@@ -173,7 +173,7 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
           className="text-white text-sm mb-6 leading-relaxed"
           style={{ fontFamily: 'Roboto, sans-serif' }}
         >
-          Your support helps me sustainably run this platform. thank you for your kindness
+          Your support helps me sustainably run this platform. Thank you for your kindness
         </p>
 
         <form onSubmit={handleSubmit} className="space-y-4">

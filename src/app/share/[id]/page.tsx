@@ -29,10 +29,10 @@ export default async function SharePage({ params }: SharePageProps) {
           {/* Header */}
           <div className="text-center mb-8">
             <h1 className="text-4xl font-bold text-gray-800 mb-3" style={{ fontFamily: 'Amita, serif' }}>
-              A Gift of Grace
+              I saw this and thought of you
             </h1>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
-              Someone has shared this inspiring message with you
+              I hope it brings you encouragement
             </p>
           </div>
 
@@ -107,34 +107,34 @@ export async function generateMetadata({ params }: SharePageProps) {
     }
 
     return {
-      title: `${post.title} - A Gift of Grace | Coordinated Living`,
-      description: `Someone has shared this inspiring message with you. Discover more blessings at Coordinated Living.`,
+      title: `${post.title} - I saw this and thought of you | Coordinated Living`,
+      description: `I hope it brings you encouragement. Discover more blessings at Coordinated Living.`,
       openGraph: {
-        title: `${post.title} - A Gift of Grace`,
-        description: `Someone has shared this inspiring message with you.`,
+        title: `${post.title} - I saw this and thought of you`,
+        description: `I hope it brings you encouragement.`,
         type: 'article',
         images: [
           {
             url: '/coordinated-new.webp',
             width: 1200,
             height: 630,
-            alt: 'Coordinated Living - A Gift of Grace',
+            alt: 'Coordinated Living - I saw this and thought of you',
           },
         ],
       },
       twitter: {
         card: 'summary_large_image',
-        title: `${post.title} - A Gift of Grace`,
-        description: `Someone has shared this inspiring message with you.`,
+        title: `${post.title} - I saw this and thought of you`,
+        description: `I hope it brings you encouragement.`,
         images: ['/coordinated-new.webp'],
       },
     };
   } catch {
     return {
-      title: 'A Gift of Grace - Coordinated Living',
+      title: 'I saw this and thought of you - Coordinated Living',
       description: 'Discover inspiring content and biblical insights.',
       openGraph: {
-        title: 'A Gift of Grace - Coordinated Living',
+        title: 'I saw this and thought of you - Coordinated Living',
         description: 'Discover inspiring content and biblical insights.',
         type: 'article',
         images: [
@@ -142,13 +142,13 @@ export async function generateMetadata({ params }: SharePageProps) {
             url: '/coordinated-new.webp',
             width: 1200,
             height: 630,
-            alt: 'Coordinated Living - A Gift of Grace',
+            alt: 'Coordinated Living - I saw this and thought of you',
           },
         ],
       },
       twitter: {
         card: 'summary_large_image',
-        title: 'A Gift of Grace - Coordinated Living',
+        title: 'I saw this and thought of you - Coordinated Living',
         description: 'Discover inspiring content and biblical insights.',
         images: ['/coordinated-new.webp'],
       },
