@@ -66,9 +66,9 @@ export default function SharedPostProtection() {
     // Disable text selection globally
     document.body.style.userSelect = 'none';
     // Use bracket notation to access vendor-prefixed properties
-    (document.body.style as Record<string, string>)['-webkit-user-select'] = 'none';
-    (document.body.style as Record<string, string>)['-moz-user-select'] = 'none';
-    (document.body.style as Record<string, string>)['-ms-user-select'] = 'none';
+    (document.body.style as unknown as Record<string, string>)['-webkit-user-select'] = 'none';
+    (document.body.style as unknown as Record<string, string>)['-moz-user-select'] = 'none';
+    (document.body.style as unknown as Record<string, string>)['-ms-user-select'] = 'none';
 
     // Cleanup function
     return () => {
@@ -80,9 +80,9 @@ export default function SharedPostProtection() {
       // Re-enable text selection
       document.body.style.userSelect = '';
       // Use bracket notation to access vendor-prefixed properties
-      (document.body.style as Record<string, string>)['-webkit-user-select'] = '';
-      (document.body.style as Record<string, string>)['-moz-user-select'] = '';
-      (document.body.style as Record<string, string>)['-ms-user-select'] = '';
+      (document.body.style as unknown as Record<string, string>)['-webkit-user-select'] = '';
+      (document.body.style as unknown as Record<string, string>)['-moz-user-select'] = '';
+      (document.body.style as unknown as Record<string, string>)['-ms-user-select'] = '';
     };
   }, []);
 
