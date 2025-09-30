@@ -2,13 +2,6 @@
 
 import { useEffect } from 'react';
 
-// Interface for vendor-prefixed CSS properties
-interface ExtendedCSSStyleDeclaration extends CSSStyleDeclaration {
-  webkitUserSelect?: string;
-  mozUserSelect?: string;
-  msUserSelect?: string;
-}
-
 export default function SharedPostProtection() {
   useEffect(() => {
     // Prevent right-click context menu
@@ -71,11 +64,11 @@ export default function SharedPostProtection() {
     document.addEventListener('selectstart', handleSelectStart);
 
     // Disable text selection globally
-    const bodyStyle = document.body.style as ExtendedCSSStyleDeclaration;
-    bodyStyle.userSelect = 'none';
-    bodyStyle.webkitUserSelect = 'none';
-    bodyStyle.mozUserSelect = 'none';
-    bodyStyle.msUserSelect = 'none';
+    document.body.style.userSelect = 'none';
+    // Use bracket notation to access vendor-prefixed properties
+    (document.body.style as Record<string, string>)['-webkit-user-select'] = 'none';
+    (document.body.style as Record<string, string>)['-moz-user-select'] = 'none';
+    (document.body.style as Record<string, string>)['-ms-user-select'] = 'none';
 
     // Cleanup function
     return () => {
@@ -85,11 +78,11 @@ export default function SharedPostProtection() {
       document.removeEventListener('selectstart', handleSelectStart);
       
       // Re-enable text selection
-      const bodyStyle = document.body.style as ExtendedCSSStyleDeclaration;
-      bodyStyle.userSelect = '';
-      bodyStyle.webkitUserSelect = '';
-      bodyStyle.mozUserSelect = '';
-      bodyStyle.msUserSelect = '';
+      document.body.style.userSelect = '';
+      // Use bracket notation to access vendor-prefixed properties
+      (document.body.style as Record<string, string>)['-webkit-user-select'] = '';
+      (document.body.style as Record<string, string>)['-moz-user-select'] = '';
+      (document.body.style as Record<string, string>)['-ms-user-select'] = '';
     };
   }, []);
 
