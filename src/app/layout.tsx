@@ -53,7 +53,7 @@ export const metadata: Metadata = {
     siteName: "The Coordinated Living",
     images: [
       {
-        url: "/coordinated.webp",
+        url: "/coordinated-new.webp",
         width: 1200,
         height: 630,
         alt: "The Coordinated Living - Christian Living & Spiritual Growth",
@@ -64,7 +64,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "The Coordinated Living - Christian Living & Spiritual Growth",
     description: "Discover guides for Christian living, spiritual growth, and finding purpose in life. Daily reflections, faith-based guidance, and inspiration for your spiritual journey.",
-    images: ["/coordinated.webp"],
+    images: ["/coordinated-new.webp"],
   },
   robots: {
     index: true,
@@ -91,7 +91,7 @@ export default function RootLayout({
     <html lang="en">
       <head>
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="preload" href="/coordinated.webp" as="image" type="image/webp" />
+        <link rel="preload" href="/coordinated-new.webp" as="image" type="image/webp" />
         <link rel="icon" href="/coordinated.ico" />
       </head>
       <body className={`${manrope.className} ${roboto.variable} ${amita.variable}`}>{children}</body>
