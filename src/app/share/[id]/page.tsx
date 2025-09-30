@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
 import { getAllPosts } from '@/lib/posts';
 import PostTemplate from '@/components/PostTemplate';
+import SharedPostProtection from '@/components/SharedPostProtection';
 import Link from 'next/link';
 
 interface SharePageProps {
@@ -21,8 +22,10 @@ export default async function SharePage({ params }: SharePageProps) {
     }
 
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center p-4 pt-16">
-        <div className="w-full max-w-4xl">
+      <>
+        <SharedPostProtection />
+        <div className="min-h-screen bg-white flex items-center justify-center p-4 pt-16">
+          <div className="w-full max-w-4xl">
           {/* Header */}
           <div className="text-center mb-8">
             <h1 className="text-4xl font-bold text-gray-800 mb-3" style={{ fontFamily: 'Amita, serif' }}>
@@ -39,6 +42,7 @@ export default async function SharePage({ params }: SharePageProps) {
               title={post.title}
               content={post.content}
               images={post.images}
+              isShared={true}
             />
           </div>
 
@@ -78,7 +82,8 @@ export default async function SharePage({ params }: SharePageProps) {
             </div>
           </div>
         </div>
-      </div>
+        </div>
+      </>
     );
   } catch (error) {
     console.error('Error fetching post:', error);

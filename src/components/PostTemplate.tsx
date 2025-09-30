@@ -13,6 +13,8 @@ interface PostTemplateProps {
   leftContent?: React.ReactNode;
   rightContent?: React.ReactNode;
   bottomRightContent?: React.ReactNode;
+  // Content protection for shared posts
+  isShared?: boolean;
 }
 
 export default function PostTemplate({
@@ -21,7 +23,8 @@ export default function PostTemplate({
   images = [],
   leftContent,
   rightContent,
-  bottomRightContent
+  bottomRightContent,
+  isShared = false
 }: PostTemplateProps) {
   // Debug: Log the images data
   console.log('PostTemplate images:', images);
@@ -31,10 +34,72 @@ export default function PostTemplate({
         .post-template-scroll::-webkit-scrollbar {
           display: none;
         }
+        
+        /* Content protection styles for shared posts */
+        .content-protected {
+          -webkit-user-select: none !important;
+          -moz-user-select: none !important;
+          -ms-user-select: none !important;
+          user-select: none !important;
+          -webkit-touch-callout: none !important;
+          -webkit-tap-highlight-color: transparent !important;
+        }
+        
+        .content-protected * {
+          -webkit-user-select: none !important;
+          -moz-user-select: none !important;
+          -ms-user-select: none !important;
+          user-select: none !important;
+          -webkit-touch-callout: none !important;
+        }
+        
+        .content-protected::selection {
+          background: transparent !important;
+        }
+        
+        .content-protected::-moz-selection {
+          background: transparent !important;
+        }
+        
+        /* Prevent drag and drop */
+        .content-protected {
+          -webkit-user-drag: none !important;
+          -khtml-user-drag: none !important;
+          -moz-user-drag: none !important;
+          -o-user-drag: none !important;
+          user-drag: none !important;
+        }
+        
+        /* Disable image dragging */
+        .content-protected img {
+          -webkit-user-drag: none !important;
+          -khtml-user-drag: none !important;
+          -moz-user-drag: none !important;
+          -o-user-drag: none !important;
+          user-drag: none !important;
+          pointer-events: none !important;
+        }
       `}</style>
       
       {/* Main container - transparent background */}
-      <div className="relative xl:scale-100 scale-90">
+      <div 
+        className={`relative xl:scale-100 scale-90 ${isShared ? 'content-protected' : ''}`}
+        onContextMenu={isShared ? (e: React.MouseEvent) => e.preventDefault() : undefined}
+        onDragStart={isShared ? (e: React.DragEvent) => e.preventDefault() : undefined}
+        onMouseDown={isShared ? (e: React.MouseEvent) => e.preventDefault() : undefined}
+        onKeyDown={isShared ? (e: React.KeyboardEvent) => {
+          // Prevent common copy shortcuts
+          if ((e.ctrlKey || e.metaKey) && (e.key === 'c' || e.key === 'a' || e.key === 'x' || e.key === 'v')) {
+            e.preventDefault();
+          }
+          // Prevent F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U
+          if (e.key === 'F12' || 
+              ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === 'I' || e.key === 'J')) ||
+              ((e.ctrlKey || e.metaKey) && e.key === 'u')) {
+            e.preventDefault();
+          }
+        } : undefined}
+      >
         <div className="w-full mx-auto px-0 xl:px-6 py-0.5 xl:py-2 relative z-10">
           {/* Two-column layout - Left column smaller, right column larger */}
           <div className="grid grid-cols-1 xl:grid-cols-3 gap-0 xl:gap-0 h-[600px] xl:h-[700px] rounded-lg overflow-hidden shadow-lg">
@@ -44,7 +109,7 @@ export default function PostTemplate({
               style={{ backgroundColor: "#2F4C6C" }}
             >
               {/* Logo Section - post-template-logo.svg - Desktop only */}
-              <div className="mb-6 xl:mb-8 flex justify-center hidden xl:flex">
+              <div className="mb-6 xl:mb-8 hidden xl:flex justify-center">
                 <div className="w-12 h-12 xl:w-16 xl:h-16 relative">
                   <Image
                     src="/post-template-logo.svg"
