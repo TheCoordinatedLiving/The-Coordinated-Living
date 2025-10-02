@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import nodemailer from 'nodemailer';
+import { Resend } from 'resend';
 
 export async function POST(request: NextRequest) {
   if (request.method !== 'POST') {
@@ -8,6 +8,9 @@ export async function POST(request: NextRequest) {
 
   try {
     const { userEmail, subject, message } = await request.json();
+    console.log('userEmail', userEmail);
+    console.log('subject', subject);
+    console.log('message', message);
 
     // Validate required fields
     if (!userEmail || !subject || !message) {
@@ -27,53 +30,27 @@ export async function POST(request: NextRequest) {
     }
 
     // Check if environment variables are set
-    if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
-      console.error('Missing email environment variables');
+    if (!process.env.RESEND_API_KEY) {
+      console.error('Missing RESEND_API_KEY environment variable');
       return NextResponse.json(
         { error: 'Email configuration error' },
         { status: 500 }
       );
     }
 
-    console.log('Creating email transporter...');
-    const transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
-      },
-      debug: true, // Enable debug output
-      logger: true, // Log to console
-    });
+    const resend = new Resend(process.env.RESEND_API_KEY);
 
-    // Verify transporter configuration
-    try {
-      await transporter.verify();
-      console.log('Email transporter verified successfully');
-    } catch (verifyError) {
-      console.error('Email transporter verification failed:', verifyError);
-      return NextResponse.json(
-        { error: 'Email service configuration error' },
-        { status: 500 }
-      );
-    }
+    const fromAddress = 'send@thecoordinatedliving.com'
 
-    const mailOptions = {
-      from: `"Ask Me A Question" <${process.env.EMAIL_USER}>`,
-      to: 'letstalk@thecoordinatedliving.com',
+
+    console.log('Sending email via Resend...');
+    const { data, error } = await resend.emails.send({
+      from: fromAddress,
+      to: 'ohenegyan159@gmail.com',
       replyTo: userEmail,
+    
       subject: subject || 'New Message from Ask Me A Question',
-      text: `
-New message from Ask Me A Question:
-
-From: ${userEmail}
-Subject: ${subject}
-Message:
-${message}
-
----
-This message was sent from the Coordinated Living website.
-      `,
+      text: `New message from Ask Me A Question:\n\nFrom: ${userEmail}\nSubject: ${subject}\nMessage:\n${message}\n\n---\nThis message was sent from the Coordinated Living website.`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <h2 style="color: #5C3262;">New Message from Ask Me A Question</h2>
@@ -81,7 +58,7 @@ This message was sent from the Coordinated Living website.
             <p><strong>From:</strong> ${userEmail}</p>
             <p><strong>Subject:</strong> ${subject}</p>
             <p><strong>Message:</strong></p>
-            <div style="background-color: white; padding: 15px; border-radius: 5px; border-left: 4px solid #5C3262;">
+            <div style="background-color: white; padding: 15px; border-radius: 5px; border-left: 4px solid #5C3262; white-space: pre-wrap;">
               ${message.replace(/\n/g, '<br>')}
             </div>
           </div>
@@ -91,20 +68,20 @@ This message was sent from the Coordinated Living website.
           </p>
         </div>
       `,
-    };
+    });
 
-    console.log('Sending email...');
-    console.log('From:', mailOptions.from);
-    console.log('To:', mailOptions.to);
-    console.log('Subject:', mailOptions.subject);
+    if (error) {
+      console.error('Resend send error:', error);
+      return NextResponse.json(
+        { success: false, error: (error as any)?.message || 'Failed to send email' },
+        { status: 500 }
+      );
+    }
 
-    const result = await transporter.sendMail(mailOptions);
-    console.log('Email sent successfully:', result.messageId);
-
-    return NextResponse.json({ 
-      success: true, 
+    return NextResponse.json({
+      success: true,
       message: 'Email sent successfully',
-      messageId: result.messageId 
+      messageId: data?.id,
     });
   } catch (error) {
     console.error('Email error:', error);
