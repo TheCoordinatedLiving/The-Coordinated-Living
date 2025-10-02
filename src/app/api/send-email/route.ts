@@ -73,7 +73,7 @@ export async function POST(request: NextRequest) {
     if (error) {
       console.error('Resend send error:', error);
       return NextResponse.json(
-        { success: false, error: (error as any)?.message || 'Failed to send email' },
+        { success: false, error: (error as Error)?.message || 'Failed to send email' },
         { status: 500 }
       );
     }

@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import Image from 'next/image';
 
 interface ComingSoonModalProps {
   isOpen: boolean;
@@ -74,7 +73,7 @@ export default function ComingSoonModal({ isOpen, onClose, featureName }: Coming
 
           {/* Description */}
           <p className="text-gray-600 mb-6 leading-relaxed">
-            {featureName} is currently being prepared for launch. We're working hard to bring you this amazing feature very soon!
+            {featureName} is currently being prepared for launch. We&apos;re working hard to bring you this amazing feature very soon!
           </p>
 
           {/* Feature-specific message */}
@@ -86,7 +85,7 @@ export default function ComingSoonModal({ isOpen, onClose, featureName }: Coming
           
           {featureName === 'Join Our Channels' && (
             <p className="text-sm text-gray-500 mb-6">
-              We're setting up our exclusive WhatsApp channels. You'll be able to join our community soon!
+              We&apos;re setting up our exclusive WhatsApp channels. You&apos;ll be able to join our community soon!
             </p>
           )}
 

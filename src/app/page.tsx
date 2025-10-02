@@ -597,7 +597,6 @@ const NewHomepage = () => {
 // };
 
 const Page = () => {
-  const router = useRouter();
   const [isLoaded, setIsLoaded] = useState(false);
   const [experienceVisible, setExperienceVisible] = useState(false);
   const [laptopZoomed, setLaptopZoomed] = useState(false);
