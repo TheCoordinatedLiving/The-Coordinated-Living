@@ -46,7 +46,7 @@ const fallbackGuides: Guide[] = [
 // Fetch guides from Airtable API
 export const getAllGuides = async (): Promise<Guide[]> => {
   try {
-    const baseUrl = typeof window !== 'undefined' ? '' : process.env.NEXT_PUBLIC_BASE_URL || 'https://coordinated-living.vercel.app';
+    const baseUrl = typeof window !== 'undefined' ? '' : process.env.NEXT_PUBLIC_BASE_URL || 'https://www.thecoordinatedliving.com';
     const response = await fetch(`${baseUrl}/api/airtable/guides`, {
       next: { revalidate: 300 } // Cache for 5 minutes
     });
@@ -75,7 +75,7 @@ export const getAllGuides = async (): Promise<Guide[]> => {
 // Get a specific guide by ID
 export const getGuideById = async (id: string): Promise<Guide | undefined> => {
   try {
-    const baseUrl = typeof window !== 'undefined' ? '' : process.env.NEXT_PUBLIC_BASE_URL || 'https://coordinated-living.vercel.app';
+    const baseUrl = typeof window !== 'undefined' ? '' : process.env.NEXT_PUBLIC_BASE_URL || 'https://www.thecoordinatedliving.com';
     const response = await fetch(`${baseUrl}/api/airtable/guides?id=${id}`, {
       next: { revalidate: 300 } // Cache for 5 minutes
     });

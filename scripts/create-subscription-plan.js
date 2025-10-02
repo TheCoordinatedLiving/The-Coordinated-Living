@@ -14,7 +14,7 @@ async function createSubscriptionPlan() {
       send_invoices: true,
       send_sms: true,
       hosted_page: false,
-      redirect_url: `${process.env.NEXT_PUBLIC_BASE_URL || 'https://coordinated-living.vercel.app'}/payment-success?type=subscription`
+      redirect_url: `${process.env.NEXT_PUBLIC_BASE_URL || 'https://www.thecoordinatedliving.com'}/payment-success?type=subscription`
     };
 
     console.log('Creating subscription plan with data:', planData);

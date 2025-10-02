@@ -60,7 +60,7 @@ const fallbackPosts: Post[] = [
 // Fetch posts from Airtable API
 export const getAllPosts = async (): Promise<Post[]> => {
   try {
-    const baseUrl = typeof window !== 'undefined' ? '' : process.env.NEXT_PUBLIC_BASE_URL || 'https://coordinated-living.vercel.app';
+    const baseUrl = typeof window !== 'undefined' ? '' : process.env.NEXT_PUBLIC_BASE_URL || 'https://www.thecoordinatedliving.com';
     const response = await fetch(`${baseUrl}/api/airtable/posts`, {
       next: { revalidate: 300 } // Cache for 5 minutes
     });
@@ -121,7 +121,7 @@ export const getAllPosts = async (): Promise<Post[]> => {
 // Get a specific post by ID
 export const getPostById = async (id: string): Promise<Post | undefined> => {
   try {
-    const baseUrl = typeof window !== 'undefined' ? '' : process.env.NEXT_PUBLIC_BASE_URL || 'https://coordinated-living.vercel.app';
+    const baseUrl = typeof window !== 'undefined' ? '' : process.env.NEXT_PUBLIC_BASE_URL || 'https://www.thecoordinatedliving.com';
     const response = await fetch(`${baseUrl}/api/airtable/posts?id=${id}`, {
       next: { revalidate: 300 } // Cache for 5 minutes
     });
