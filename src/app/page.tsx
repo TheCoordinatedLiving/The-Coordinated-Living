@@ -10,6 +10,7 @@ import PostTemplate from '../components/PostTemplate';
 import FullTermsContent from '../components/FullTermsContent';
 import AskAQuestion from './windows/AskAQuestion';
 import DonationModal from '../components/DonationModal';
+import ComingSoonModal from '../components/ComingSoonModal';
 
 const Loader = () => {
   const logoRef = useRef(null);
@@ -142,6 +143,10 @@ const NewHomepage = () => {
   // Donation modal state
   // const [isDonationModalOpen, setIsDonationModalOpen] = useState(false);
   
+  // Coming Soon modal state
+  const [showComingSoonModal, setShowComingSoonModal] = useState(false);
+  const [comingSoonFeature, setComingSoonFeature] = useState('');
+  
   // Fetch posts count from Airtable
   useEffect(() => {
     const fetchPostsCount = async () => {
@@ -161,18 +166,30 @@ const NewHomepage = () => {
   const backgroundImage = '/homepage-new-background.png';
   
 
-  const handleJoinChannelClick = () => {
-    // Only navigate on mobile view (screen width < 1280px)
-    if (window.innerWidth < 1280) {
-      router.push('/join-channel');
-    }
-  };
 
   const handlePostWidgetClick = () => {
     // Only navigate on mobile view (screen width < 1280px)
     if (window.innerWidth < 1280) {
       router.push('/post-mobile');
     }
+  };
+
+  // Coming Soon modal handlers
+  const handleJoinChannelClick = () => {
+    // Show Coming Soon modal instead of navigating
+    setComingSoonFeature('Join Our Channels');
+    setShowComingSoonModal(true);
+  };
+
+  const handlePourIntoCupClick = () => {
+    // Show Coming Soon modal instead of navigating
+    setComingSoonFeature('Pour Into My Cup');
+    setShowComingSoonModal(true);
+  };
+
+  const handleComingSoonModalClose = () => {
+    setShowComingSoonModal(false);
+    setComingSoonFeature('');
   };
 
   // const handleDonationClick = () => {
@@ -287,10 +304,7 @@ const NewHomepage = () => {
           <div 
             className="w-44 h-18 sm:w-52 sm:h-20 md:w-56 md:h-22 lg:w-60 lg:h-24 rounded-[26px] mb-2 backdrop-blur-[16px] flex items-center px-3 sm:px-4 md:px-5 cursor-pointer transition-all duration-300 hover:scale-105 active:scale-95" 
             style={{ backgroundColor: 'rgba(23, 23, 26, 0.3)' }}
-            onClick={() => {
-              // Navigate to donation page
-              router.push('/donation-mobile');
-            }}
+            onClick={handlePourIntoCupClick}
           >
             {/* Pour Into My Cup Icon */}
             <div className="flex-shrink-0 mr-3 sm:mr-4">
@@ -551,6 +565,13 @@ const NewHomepage = () => {
           </div>
         </div>
       )}
+
+      {/* Coming Soon Modal */}
+      <ComingSoonModal
+        isOpen={showComingSoonModal}
+        onClose={handleComingSoonModalClose}
+        featureName={comingSoonFeature}
+      />
     </div>
   );
 };
@@ -587,6 +608,10 @@ const Page = () => {
   
   // Donation modal state
   const [isDonationModalOpen, setIsDonationModalOpen] = useState(false);
+  
+  // Coming Soon modal state
+  const [showComingSoonModal, setShowComingSoonModal] = useState(false);
+  const [comingSoonFeature, setComingSoonFeature] = useState('');
   
   // Posts state for dynamic content
   const [posts, setPosts] = useState<Post[]>([]);
@@ -1584,6 +1609,24 @@ const Page = () => {
     setIsDonationModalOpen(false);
   };
 
+  // Coming Soon modal handlers
+  const handleJoinChannelClick = () => {
+    // Show Coming Soon modal instead of navigating
+    setComingSoonFeature('Join Our Channels');
+    setShowComingSoonModal(true);
+  };
+
+  const handlePourIntoCupClick = () => {
+    // Show Coming Soon modal instead of navigating
+    setComingSoonFeature('Pour Into My Cup');
+    setShowComingSoonModal(true);
+  };
+
+  const handleComingSoonModalClose = () => {
+    setShowComingSoonModal(false);
+    setComingSoonFeature('');
+  };
+
 
   return (
     <div ref={pageRef} className="relative" style={{ height: '100vh', overflow: 'hidden' }}>
@@ -1918,7 +1961,7 @@ const Page = () => {
                                 <button 
                                   className="flex items-center space-x-3 px-8 py-3 bg-white hover:bg-gray-100 font-bold rounded-full transition-colors duration-200 shadow-lg"
                                   style={{ color: '#2F4C6C' }}
-                                  onClick={() => router.push('/join-channel')}
+                                  onClick={handleJoinChannelClick}
                                 >
                                   <Image
                                     src="/whatsapp-mobile.svg"
@@ -1991,10 +2034,7 @@ const Page = () => {
                                 <button 
                                   className="flex items-center space-x-3 px-8 py-3 bg-white hover:bg-gray-100 font-bold rounded-full transition-colors duration-200 shadow-lg"
                                   style={{ color: '#2F4C6C' }}
-                                  onClick={() => {
-                                    // Add donation link functionality here
-                                    window.open('https://your-donation-link.com', '_blank');
-                                  }}
+                                  onClick={handlePourIntoCupClick}
                                 >
                                   <Image
                                     src="/pour-tab-mobile.svg"
@@ -3611,7 +3651,7 @@ const Page = () => {
                         width={200}
                         height={60}
                         className="cursor-pointer hover:opacity-80 transition-opacity"
-                        onClick={() => router.push('/join-channel')}
+                        onClick={handleJoinChannelClick}
                       />
                     </div>
 
@@ -3773,10 +3813,7 @@ const Page = () => {
                         width={200}
                         height={60}
                         className="cursor-pointer hover:opacity-80 transition-opacity"
-                        onClick={() => {
-                          console.log('Pour Into My Cup clicked!');
-                          setIsDonationModalOpen(true);
-                        }}
+                        onClick={handlePourIntoCupClick}
                       />
                     </div>
 
@@ -5484,6 +5521,13 @@ const Page = () => {
       <DonationModal
         isOpen={isDonationModalOpen}
         onClose={handleDonationModalClose}
+      />
+
+      {/* Coming Soon Modal */}
+      <ComingSoonModal
+        isOpen={showComingSoonModal}
+        onClose={handleComingSoonModalClose}
+        featureName={comingSoonFeature}
       />
 
     </div>
