@@ -18,21 +18,21 @@ export default function PostPageClient({ post }: PostPageClientProps) {
       "author": {
         "@type": "Organization",
         "name": "The Coordinated Living",
-        "url": "https://coordinated-living.vercel.app"
+        "url": "https://www.thecoordinatedliving.com"
       },
       "publisher": {
         "@type": "Organization",
         "name": "The Coordinated Living",
         "logo": {
           "@type": "ImageObject",
-          "url": "https://coordinated-living.vercel.app/coordinated.webp"
+          "url": "https://www.thecoordinatedliving.com/coordinated.webp"
         }
       },
       "datePublished": new Date().toISOString(),
       "dateModified": new Date().toISOString(),
       "mainEntityOfPage": {
         "@type": "WebPage",
-        "@id": `https://coordinated-living.vercel.app/post/${post.id}`
+        "@id": `https://www.thecoordinatedliving.com/post/${post.id}`
       },
       "keywords": [
         "Christian living",

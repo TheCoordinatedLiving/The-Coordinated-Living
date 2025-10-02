@@ -43,7 +43,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Initialize subscription with Paystack
-    const callbackUrl = `${process.env.NEXT_PUBLIC_BASE_URL || 'https://coordinated-living.vercel.app'}/payment-success?type=subscription`;
+    const callbackUrl = `${process.env.NEXT_PUBLIC_BASE_URL || 'https://www.thecoordinatedliving.com'}/payment-success?type=subscription`;
     
     const paystackResponse = await fetch('https://api.paystack.co/transaction/initialize', {
       method: 'POST',

@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: ['/api/', '/_next/', '/admin/'],
     },
-    sitemap: 'https://coordinated-living.vercel.app/sitemap.xml',
+    sitemap: 'https://www.thecoordinatedliving.com/sitemap.xml',
   };
 }

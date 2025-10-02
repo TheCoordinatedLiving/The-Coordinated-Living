@@ -2,7 +2,7 @@ import { MetadataRoute } from 'next';
 import { getAllPosts } from '@/lib/posts';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = 'https://coordinated-living.vercel.app';
+  const baseUrl = 'https://www.thecoordinatedliving.com';
   
   // Get all posts
   const posts = await getAllPosts();

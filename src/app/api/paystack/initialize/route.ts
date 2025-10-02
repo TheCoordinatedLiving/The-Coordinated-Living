@@ -64,8 +64,8 @@ export async function POST(request: NextRequest) {
 
     // Initialize Paystack transaction
     const callbackUrl = type === 'donation' 
-      ? `${process.env.NEXT_PUBLIC_BASE_URL || 'https://coordinated-living.vercel.app'}/donation-success`
-      : `${process.env.NEXT_PUBLIC_BASE_URL || 'https://coordinated-living.vercel.app'}/payment-success?type=${type}`;
+      ? `${process.env.NEXT_PUBLIC_BASE_URL || 'https://www.thecoordinatedliving.com'}/donation-success`
+      : `${process.env.NEXT_PUBLIC_BASE_URL || 'https://www.thecoordinatedliving.com'}/payment-success?type=${type}`;
     console.log('API: Generating callback URL:', callbackUrl);
     console.log('API: Payment type:', type);
     

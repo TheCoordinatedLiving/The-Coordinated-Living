@@ -47,7 +47,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://coordinated-living.vercel.app",
+    url: "https://www.thecoordinatedliving.com",
     title: "The Coordinated Living - Christian Living & Spiritual Growth",
     description: "Discover guides for Christian living, spiritual growth, and finding purpose in life. Daily reflections, faith-based guidance, and inspiration for your spiritual journey.",
     siteName: "The Coordinated Living",

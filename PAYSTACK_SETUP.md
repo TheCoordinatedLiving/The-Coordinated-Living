@@ -22,7 +22,7 @@ NEXT_PUBLIC_WHATSAPP_CHANNEL_LINK=https://chat.whatsapp.com/YOUR_CHANNEL_LINK
 2. Go to Settings > Webhooks
 3. Add a new webhook with the following URL:
    ```
-   https://coordinated-living.vercel.app/api/paystack/webhook
+   https://www.thecoordinatedliving.com/api/paystack/webhook
    ```
 4. Select the following events:
    - `charge.success`

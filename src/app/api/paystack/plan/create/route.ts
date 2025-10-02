@@ -40,7 +40,7 @@ export async function POST(request: NextRequest) {
         hosted_page: false,
         hosted_page_url: '',
         hosted_page_summary: '',
-        redirect_url: `${process.env.NEXT_PUBLIC_BASE_URL || 'https://coordinated-living.vercel.app'}/payment-success?type=subscription`
+        redirect_url: `${process.env.NEXT_PUBLIC_BASE_URL || 'https://www.thecoordinatedliving.com'}/payment-success?type=subscription`
       }),
     });
 
