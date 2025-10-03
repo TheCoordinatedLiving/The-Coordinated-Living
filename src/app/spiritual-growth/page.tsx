@@ -4,8 +4,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 export const metadata: Metadata = {
-  title: "Spiritual Growth & Christian Living | The Coordinated Living",
-  description: "Discover how to grow closer to God, find belonging in His fold, and build confidence in your faith. Explore our guides for Christian living and spiritual development.",
+  title: "The Coordinated Living",
+  description: "Discover reflections, guides, and insights for living with intention and purpose.",
   keywords: [
     "how to grow closer to God",
     "belonging to his fold", 
@@ -16,8 +16,8 @@ export const metadata: Metadata = {
     "relationship with God"
   ],
   openGraph: {
-    title: "Spiritual Growth & Christian Living | The Coordinated Living",
-    description: "Discover how to grow closer to God, find belonging in His fold, and build confidence in your faith. Explore our guides for Christian living and spiritual development.",
+    title: "The Coordinated Living",
+    description: "Discover reflections, guides, and insights for living with intention and purpose.",
     type: "website",
   },
 };
@@ -39,7 +39,7 @@ export default async function SpiritualGrowthPage() {
         {/* Header */}
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-gray-800 mb-4" style={{ fontFamily: 'Amita, cursive' }}>
-            Spiritual Growth & Christian Living
+            The Coordinated Living
           </h1>
           <p className="text-lg text-gray-600 max-w-3xl mx-auto">
             Discover how to grow closer to God, find belonging in His fold, and build confidence in your faith. 
@@ -124,17 +124,7 @@ export default async function SpiritualGrowthPage() {
               </p>
             </Link>
             
-            <Link 
-              href="/daily-christian-living"
-              className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow text-center"
-            >
-              <h3 className="text-lg font-semibold text-gray-800 mb-2" style={{ fontFamily: 'Amita, cursive' }}>
-                Daily Christian Living
-              </h3>
-              <p className="text-gray-600 text-sm">
-                Practical guides and daily reflections for Christian life
-              </p>
-            </Link>
+            
           </div>
         </div>
       </div>

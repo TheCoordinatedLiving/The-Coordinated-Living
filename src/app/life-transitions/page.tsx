@@ -100,17 +100,7 @@ export default async function LifeTransitionsPage() {
             Explore More Topics
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <Link 
-              href="/spiritual-growth"
-              className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow text-center"
-            >
-              <h3 className="text-lg font-semibold text-gray-800 mb-2" style={{ fontFamily: 'Amita, cursive' }}>
-                Spiritual Growth & Christian Living
-              </h3>
-              <p className="text-gray-600 text-sm">
-                Grow closer to God and strengthen your faith journey
-              </p>
-            </Link>
+            
             
             <Link 
               href="/life-purpose"
@@ -124,17 +114,7 @@ export default async function LifeTransitionsPage() {
               </p>
             </Link>
             
-            <Link 
-              href="/daily-christian-living"
-              className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow text-center"
-            >
-              <h3 className="text-lg font-semibold text-gray-800 mb-2" style={{ fontFamily: 'Amita, cursive' }}>
-                Daily Christian Living
-              </h3>
-              <p className="text-gray-600 text-sm">
-                Practical guides and daily reflections for Christian life
-              </p>
-            </Link>
+            
           </div>
         </div>
       </div>

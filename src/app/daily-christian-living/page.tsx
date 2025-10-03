@@ -4,8 +4,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 export const metadata: Metadata = {
-  title: "Daily Christian Living & Personal Reflections | The Coordinated Living",
-  description: "Explore guides for Christian living and personal daily reflections. Find practical wisdom and spiritual insights for your everyday Christian walk and personal growth.",
+  title: "The Coordinated Living",
+  description: "Explore reflections, routines, and practical wisdom for coordinated living.",
   keywords: [
     "guides for Christian living",
     "personal daily reflections",
@@ -16,8 +16,8 @@ export const metadata: Metadata = {
     "Christian walk"
   ],
   openGraph: {
-    title: "Daily Christian Living & Personal Reflections | The Coordinated Living",
-    description: "Explore guides for Christian living and personal daily reflections. Find practical wisdom and spiritual insights for your everyday Christian walk and personal growth.",
+    title: "The Coordinated Living",
+    description: "Explore reflections, routines, and practical wisdom for coordinated living.",
     type: "website",
   },
 };
@@ -39,7 +39,7 @@ export default async function DailyChristianLivingPage() {
         {/* Header */}
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-gray-800 mb-4" style={{ fontFamily: 'Amita, cursive' }}>
-            Daily Christian Living & Personal Reflections
+            The Coordinated Living
           </h1>
           <p className="text-lg text-gray-600 max-w-3xl mx-auto">
             Explore practical guides for Christian living and personal daily reflections. 
@@ -100,18 +100,6 @@ export default async function DailyChristianLivingPage() {
             Explore More Topics
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <Link 
-              href="/spiritual-growth"
-              className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow text-center"
-            >
-              <h3 className="text-lg font-semibold text-gray-800 mb-2" style={{ fontFamily: 'Amita, cursive' }}>
-                Spiritual Growth & Christian Living
-              </h3>
-              <p className="text-gray-600 text-sm">
-                Grow closer to God and strengthen your faith journey
-              </p>
-            </Link>
-            
             <Link 
               href="/life-purpose"
               className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow text-center"

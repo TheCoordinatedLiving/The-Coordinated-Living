@@ -23,8 +23,8 @@ const amita = Amita({
 });
 
 export const metadata: Metadata = {
-  title: "The Coordinated Living - Christian Living & Spiritual Growth",
-  description: "Discover guides for Christian living, spiritual growth, and finding purpose in life. Daily reflections, faith-based guidance, and inspiration for your spiritual journey.",
+  title: "THE COORDINATED LIVING",
+  description: "Welcome to a space dedicated to helping you find hope and guidance in life. Discover resources to help you build a closer relationship with the Lord, find purpose, and anchor your life in faith that provides lasting hope.",
   keywords: [
     "Christian living",
     "spiritual growth", 
@@ -48,22 +48,22 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: "https://www.thecoordinatedliving.com",
-    title: "The Coordinated Living - Christian Living & Spiritual Growth",
-    description: "Discover guides for Christian living, spiritual growth, and finding purpose in life. Daily reflections, faith-based guidance, and inspiration for your spiritual journey.",
+    title: "THE COORDINATED LIVING",
+    description: "Welcome to a space dedicated to helping you find hope and guidance in life. Discover resources to help you build a closer relationship with the Lord, find purpose, and anchor your life in faith that provides lasting hope.",
     siteName: "The Coordinated Living",
     images: [
       {
         url: "/coordinated-new.webp",
         width: 1200,
         height: 630,
-        alt: "The Coordinated Living - Christian Living & Spiritual Growth",
+        alt: "THE COORDINATED LIVING",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "The Coordinated Living - Christian Living & Spiritual Growth",
-    description: "Discover guides for Christian living, spiritual growth, and finding purpose in life. Daily reflections, faith-based guidance, and inspiration for your spiritual journey.",
+    title: "THE COORDINATED LIVING",
+    description: "Welcome to a space dedicated to helping you find hope and guidance in life. Discover resources to help you build a closer relationship with the Lord, find purpose, and anchor your life in faith that provides lasting hope.",
     images: ["/coordinated-new.webp"],
   },
   robots: {

@@ -14,7 +14,7 @@ export default function PostPageClient({ post }: PostPageClientProps) {
       "@context": "https://schema.org",
       "@type": "Article",
       "headline": post.title,
-      "description": post.content ? post.content.substring(0, 160) : "Christian living and spiritual growth content",
+      "description": post.content ? post.content.substring(0, 160) : "The Coordinated Living",
       "author": {
         "@type": "Organization",
         "name": "The Coordinated Living",
@@ -25,7 +25,7 @@ export default function PostPageClient({ post }: PostPageClientProps) {
         "name": "The Coordinated Living",
         "logo": {
           "@type": "ImageObject",
-          "url": "https://www.thecoordinatedliving.com/coordinated.webp"
+          "url": "https://www.thecoordinatedliving.com/coordinated-new.webp"
         }
       },
       "datePublished": new Date().toISOString(),
@@ -35,14 +35,12 @@ export default function PostPageClient({ post }: PostPageClientProps) {
         "@id": `https://www.thecoordinatedliving.com/post/${post.id}`
       },
       "keywords": [
-        "Christian living",
-        "spiritual growth", 
-        "finding purpose",
-        "life fulfillment",
-        "daily reflections",
-        "faith-based guidance"
+        "The Coordinated Living",
+        "purpose",
+        "fulfillment",
+        "daily reflections"
       ],
-      "articleSection": "Christian Living",
+      "articleSection": "The Coordinated Living",
       "inLanguage": "en-US"
     };
 

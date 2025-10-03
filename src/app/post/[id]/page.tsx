@@ -6,9 +6,8 @@ import { Metadata } from 'next';
 const getKeywordGroup = (title: string, content: string): string => {
   const text = `${title} ${content}`.toLowerCase();
   
-  // Spiritual Growth & Relationship with God
   if (text.includes('god') || text.includes('faith') || text.includes('prayer') || text.includes('bible') || text.includes('christian')) {
-    return 'Spiritual Growth & Christian Living';
+    return 'The Coordinated Living';
   }
   
   // Life Purpose & Fulfillment
@@ -21,12 +20,11 @@ const getKeywordGroup = (title: string, content: string): string => {
     return 'Life Transitions & Change';
   }
   
-  // Daily Christian Living
   if (text.includes('daily') || text.includes('reflection') || text.includes('guide') || text.includes('living')) {
-    return 'Daily Christian Living';
+    return 'The Coordinated Living';
   }
   
-  return 'Christian Living & Spiritual Growth';
+  return 'The Coordinated Living';
 };
 
 // Generate dynamic metadata for SEO
@@ -47,18 +45,9 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
     : `Discover insights on ${keywordGroup.toLowerCase()} through this inspiring post.`;
   
   return {
-    title: `${post.title} | ${keywordGroup} - The Coordinated Living`,
+    title: `${post.title} | THE COORDINATED LIVING`,
     description: metaDescription,
-    keywords: [
-      'Christian living',
-      'spiritual growth',
-      'finding purpose',
-      'life fulfillment',
-      'daily reflections',
-      'faith-based guidance',
-      'Christian lifestyle',
-      'spiritual development'
-    ],
+    keywords: ['The Coordinated Living', 'purpose', 'fulfillment', 'daily reflections'],
     openGraph: {
       title: `${post.title} | The Coordinated Living`,
       description: metaDescription,
