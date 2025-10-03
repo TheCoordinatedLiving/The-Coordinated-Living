@@ -146,13 +146,7 @@ export default function PostMobilePage() {
   };
 
   const handlePageClick = () => {
-    if (posts.length === 0) {
-      // Show the "No Posts Available" bottom sheet directly
-      setShowBottomSheet(true);
-    } else {
-      // Show posts bottom sheet
-      setShowBottomSheet(true);
-    }
+    // No-op: we no longer use a bottom sheet on mobile for posts
   };
 
   const handleReadPost = () => {
@@ -273,7 +267,7 @@ export default function PostMobilePage() {
   }
 
 
-  // Show landing page if no posts are available
+  // Show landing page if no posts are available - render empty state without lyric intro
   if (posts.length === 0) {
     return (
       <div 
@@ -282,14 +276,9 @@ export default function PostMobilePage() {
           isVisible ? 'opacity-100' : 'opacity-0'
         }`}
         style={{ backgroundColor: '#2F4C6C' }}
-        onClick={handlePageClick}
       >
-        {/* Close Button */}
         <button
-          onClick={(e) => {
-            e.stopPropagation();
-            handleClose();
-          }}
+          onClick={handleClose}
           className="absolute top-6 left-6 z-10 w-10 h-10 flex items-center justify-center hover:opacity-70 transition-opacity duration-200"
           aria-label="Close"
         >
@@ -307,45 +296,11 @@ export default function PostMobilePage() {
             />
           </svg>
         </button>
-        
-        {/* Logo */}
-        <div className="absolute top-28 left-6">
-          <Image 
-            src="/new-post-logo-modal.svg" 
-            alt="The Coordinated Living" 
-            width={128}
-            height={128}
-            className="w-32 h-auto"
-          />
-        </div>
-        
-        {/* Landing Page Content */}
-        <div className="px-6 pt-48 pb-8">
-          <div className="max-w-md mx-auto">
-            <div className="text-white text-sm leading-relaxed space-y-4">
-              <p>
-                &quot;A thousand times I failed, still your mercy remains, should I stumble out here still I&apos;m caught in your grace.&quot; This Hillsong lyric has always echoed in my heart, and its truth resonates even stronger today.
-              </p>
-              
-              <p>
-                For years, I pursued other paths, pouring tireless effort into fields he hadn&apos;t called me to, only to find no lasting fruit. That rollercoaster of emotions, the unpleasant experiences, the endless accusations and judgments thrown around – they&apos;re hallmarks of a mind out of alignment.
-              </p>
-              
-              <p>
-                Want to know the root cause? It&apos;s simply a lack of trust in the Father. No matter how you rationalize it, we constantly try to force a fit where there isn&apos;t one.
-              </p>
-              
-              <p>
-                But in Christ, we step into the true identity the Father created for us. This identity comes with specific tasks, assignments, and responsibilities, all of which we are perfectly equipped for. It&apos;s there we discover an unexplainable peace, joy, and confidence.
-              </p>
-              
-              <p>
-                When we align ourselves with God&apos;s purpose for our lives, we find a peace that surpasses all understanding. This isn&apos;t about perfection – it&apos;s about walking in the identity He has given us, trusting that He has equipped us for every good work.
-              </p>
-            </div>
+        <div className="px-6 pt-32 pb-8">
+          <div className="max-w-md mx-auto text-center text-white">
+            <h2 className="text-2xl font-bold mb-2" style={{ fontFamily: 'Amita, cursive' }}>No Posts Available</h2>
+            <p className="opacity-90">There are currently no published posts to display. Please check back later.</p>
           </div>
-          
-          {/* Lottie Animation - Smaller */}
           <div className="flex justify-center mt-8">
             {animationData && (
               <Lottie
@@ -357,44 +312,6 @@ export default function PostMobilePage() {
             )}
           </div>
         </div>
-        
-        {/* Bottom Sheet for No Posts */}
-        {showBottomSheet && (
-          <>
-            {/* Backdrop */}
-            <div 
-              ref={backdropRef}
-              className="fixed inset-0 bg-black bg-opacity-50 z-40"
-              onClick={(e) => {
-                e.stopPropagation();
-                hideBottomSheetAnimation();
-              }}
-            />
-            
-            {/* Bottom Sheet */}
-            <div 
-              ref={bottomSheetRef}
-              className="fixed bottom-0 left-0 right-0 rounded-t-3xl p-6 z-50 max-h-[85vh] overflow-y-auto"
-              style={{ backgroundColor: '#2F4C6C' }}
-            >
-              <div className="text-center">
-                <h2 className="text-2xl font-bold text-white mb-4">No Posts Available</h2>
-                <p className="text-white mb-6">
-                  There are currently no published posts to display. Please check back later.
-                </p>
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    hideBottomSheetAnimation();
-                  }}
-                  className="bg-white text-[#2F4C6C] px-6 py-3 rounded-full font-medium hover:bg-gray-100 transition-colors"
-                >
-                  Close
-                </button>
-              </div>
-            </div>
-          </>
-        )}
       </div>
     );
   }
@@ -433,7 +350,7 @@ export default function PostMobilePage() {
       </button>
       
       {/* Logo */}
-      <div className="absolute top-28 left-6">
+      <div className="absolute top-24 left-6">
         <Image 
           src="/new-post-logo-modal.svg" 
           alt="The Coordinated Living" 
@@ -443,182 +360,61 @@ export default function PostMobilePage() {
         />
       </div>
       
-      {/* Landing Page Content */}
-      <div className="px-6 pt-48 pb-8">
+      {/* Single Post Card - Swipeable with dots and Read button */}
+      <div className="px-6 pt-40 pb-24">
         <div className="max-w-md mx-auto">
-          <div className="text-white text-sm leading-relaxed space-y-4">
-            <p>
-              &quot;A thousand times I failed, still your mercy remains, should I stumble out here still I&apos;m caught in your grace.&quot; This Hillsong lyric has always echoed in my heart, and its truth resonates even stronger today.
-            </p>
-            
-            <p>
-              For years, I pursued other paths, pouring tireless effort into fields he hadn&apos;t called me to, only to find no lasting fruit. That rollercoaster of emotions, the unpleasant experiences, the endless accusations and judgments thrown around – they&apos;re hallmarks of a mind out of alignment.
-            </p>
-            
-            <p>
-              Want to know the root cause? It&apos;s simply a lack of trust in the Father. No matter how you rationalize it, we constantly try to force a fit where there isn&apos;t one.
-            </p>
-            
-            <p>
-              But in Christ, we step into the true identity the Father created for us. This identity comes with specific tasks, assignments, and responsibilities, all of which we are perfectly equipped for. It&apos;s there we discover an unexplainable peace, joy, and confidence.
-            </p>
-            
-            <p>
-              When we align ourselves with God&apos;s purpose for our lives, we find a peace that surpasses all understanding. This isn&apos;t about perfection – it&apos;s about walking in the identity He has given us, trusting that He has equipped us for every good work.
-            </p>
+          <h2 className="text-2xl font-semibold text-white mb-6" style={{ fontFamily: 'Amita, cursive' }}>Posts</h2>
+          {/* Image Card */}
+          <div className="mt-4 mb-4 relative" onTouchStart={handleTouchStart} onClick={(e) => { e.stopPropagation(); handleReadPost(); }}>
+            <div className="aspect-[4/5] rounded-2xl overflow-hidden cursor-pointer" style={{ borderRadius: '16px' }}>
+              <Image 
+                src={posts[currentPostIndex]?.images?.[0]?.src || "/guides-bottomsheet.png"} 
+                alt={posts[currentPostIndex]?.images?.[0]?.alt || "Post Card"} 
+                fill
+                className="object-cover rounded-2xl"
+              />
+              {/* Title and Description - Bottom Left */}
+              <div className="absolute bottom-4 left-4 right-4">
+                <h3 className="text-white text-lg font-semibold mb-2" style={{ fontFamily: 'Amita, cursive' }}>
+                  {posts[currentPostIndex]?.title || 'Loading...'}
+                </h3>
+                <p className="text-white text-sm opacity-90" style={{ fontFamily: 'Roboto, sans-serif' }}>
+                  {((posts[currentPostIndex]?.leftContent || posts[currentPostIndex]?.content) || '').slice(0, 100)}...
+                </p>
+              </div>
+            </div>
           </div>
-        </div>
-        
-        {/* Lottie Animation - Smaller */}
-        <div className="flex justify-center mt-8">
-          {animationData && (
-            <Lottie
-              animationData={animationData}
-              loop={true}
-              autoplay={true}
-              style={{ width: 80, height: 80 }}
-            />
-          )}
+
+          {/* Page Identifier Circles - Centered */}
+          <div className="flex justify-center mb-4">
+            <div className="flex space-x-2">
+              {posts.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={(e) => { e.stopPropagation(); setCurrentPostIndex(index); }}
+                  className={`w-2 h-2 rounded-full transition-all duration-200 ${
+                    index === currentPostIndex 
+                      ? 'bg-white' 
+                      : 'bg-white bg-opacity-50 hover:bg-opacity-75'
+                  }`}
+                ></button>
+              ))}
+            </div>
+          </div>
+
+          {/* Read Button - Centered */}
+          <div className="flex justify-center">
+            <button 
+              onClick={(e) => { e.stopPropagation(); handleReadPost(); }}
+              className="bg-white text-[#2F4C6C] px-20 py-3 rounded-full text-sm font-medium hover:bg-opacity-90 transition-all duration-200"
+            >
+              Read This Post
+            </button>
+          </div>
         </div>
       </div>
 
-      {/* Bottom Sheet */}
-      {showBottomSheet && (
-        <div className="fixed inset-0 z-50 flex items-end">
-          {/* Backdrop */}
-          <div 
-            ref={backdropRef}
-            className="absolute inset-0 bg-black bg-opacity-20"
-            onClick={(e) => {
-              e.stopPropagation();
-              hideBottomSheetAnimation();
-            }}
-          />
-          
-          {/* Bottom Sheet Content */}
-          <div 
-            ref={bottomSheetRef}
-            className="relative w-full rounded-t-3xl p-8 max-h-[90vh] overflow-y-auto flex flex-col" 
-            style={{ backgroundColor: '#2F4C6C' }}
-          >
-            {/* Handle */}
-            <div className="flex justify-center mb-4">
-              <button 
-                onClick={(e) => {
-                  e.stopPropagation();
-                  hideBottomSheetAnimation();
-                }}
-                className="w-12 h-1 bg-white bg-opacity-50 rounded-full hover:bg-opacity-75 transition-all duration-200"
-              ></button>
-            </div>
-            
-            {/* Close Button */}
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                hideBottomSheetAnimation();
-              }}
-              className="absolute top-4 right-4 p-2"
-            >
-              <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
-            
-            {/* Content */}
-            <div className="pt-4 flex-1 overflow-y-auto">
-              <h2 className="text-xl font-semibold text-white mb-6" style={{ fontFamily: 'Amita, cursive' }}>Posts</h2>
-              
-              {posts.length > 0 ? (
-                /* Post Card */
-                <div className="mb-6">
-                  {/* Image Card */}
-                  <div className="mb-4 relative" onTouchStart={handleTouchStart} onClick={handleReadPost}>
-                    <div className="aspect-[4/5] rounded-2xl overflow-hidden cursor-pointer" style={{ borderRadius: '16px' }}>
-                      <Image 
-                        src={posts[currentPostIndex]?.images?.[0]?.src || "/guides-bottomsheet.png"} 
-                        alt={posts[currentPostIndex]?.images?.[0]?.alt || "Post Card"} 
-                        fill
-                        className="object-cover rounded-2xl"
-                        onError={(e) => {
-                          console.error('Image failed to load:', posts[currentPostIndex]?.images?.[0]?.src);
-                          // Fallback to default image if Airtable image fails
-                          e.currentTarget.src = "/guides-bottomsheet.png";
-                        }}
-                      />
-                      
-                      {/* Logo - Top Left */}
-                      <div className="absolute top-4 left-4">
-                        <Image 
-                          src="/guide-bottom-logo.svg" 
-                          alt="Logo" 
-                          width={64}
-                          height={64}
-                          className="w-16 h-16"
-                        />
-                      </div>
-                      
-                      {/* Title and Description - Bottom Left */}
-                      <div className="absolute bottom-4 left-4 right-4">
-                        <h3 className="text-white text-lg font-semibold mb-2" style={{ fontFamily: 'Amita, cursive' }}>
-                          {posts[currentPostIndex]?.title || 'Loading...'}
-                        </h3>
-                        <p className="text-white text-sm opacity-90" style={{ fontFamily: 'Roboto, sans-serif' }}>
-                          {posts[currentPostIndex]?.leftContent?.substring(0, 100) + '...' || 'Loading content...'}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  {/* Page Identifier Circles - Centered */}
-                  <div className="flex justify-center mb-4">
-                    <div className="flex space-x-2">
-                      {posts.map((_, index) => (
-                        <button
-                          key={index}
-                          onClick={() => setCurrentPostIndex(index)}
-                          className={`w-2 h-2 rounded-full transition-all duration-200 ${
-                            index === currentPostIndex 
-                              ? 'bg-white' 
-                              : 'bg-white bg-opacity-50 hover:bg-opacity-75'
-                          }`}
-                        ></button>
-                      ))}
-                    </div>
-                  </div>
-                  
-                  {/* Read Button - Centered */}
-                  <div className="flex justify-center">
-                    <button 
-                      onClick={handleReadPost}
-                      className="bg-white text-[#2F4C6C] px-20 py-3 rounded-full text-sm font-medium hover:bg-opacity-90 transition-all duration-200"
-                    >
-                      Read This Post
-                    </button>
-                  </div>
-                </div>
-              ) : (
-                /* No Posts Available */
-                <div className="text-center text-white mb-6">
-                  <h3 className="text-lg font-semibold mb-4" style={{ fontFamily: 'Amita, cursive' }}>No Posts Available</h3>
-                  <p className="text-sm opacity-80 mb-6">
-                    There are currently no published posts to display. Please check back later.
-                  </p>
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      hideBottomSheetAnimation();
-                    }}
-                    className="bg-white text-gray-800 px-6 py-3 rounded-lg font-medium hover:bg-gray-100 transition-colors"
-                  >
-                    Close
-                  </button>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-      )}
+      {/* Bottom sheet removed in favor of full page list */}
 
       {/* Full Post View */}
       {showFullPost && selectedPost && (
