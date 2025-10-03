@@ -11,7 +11,6 @@ export default function PostMobilePage() {
   const router = useRouter();
   const [isVisible, setIsVisible] = useState(false);
   const [animationData, setAnimationData] = useState(null);
-  const [showBottomSheet, setShowBottomSheet] = useState(false);
   const [currentPostIndex, setCurrentPostIndex] = useState(0);
   const [showFullPost, setShowFullPost] = useState(false);
   const [selectedPost, setSelectedPost] = useState<Post | null>(null);
@@ -108,7 +107,6 @@ export default function PostMobilePage() {
       setSelectedPost(currentPost);
       setCurrentFullPostIndex(currentPostIndex);
       setShowFullPost(true);
-      setShowBottomSheet(false);
     }
   };
 
