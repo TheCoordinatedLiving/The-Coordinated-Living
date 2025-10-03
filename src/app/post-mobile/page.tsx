@@ -3,7 +3,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import Lottie from 'lottie-react';
-import { gsap } from 'gsap';
 import { getAllPosts, Post } from '@/lib/posts';
 import Image from 'next/image';
 
@@ -25,8 +24,7 @@ export default function PostMobilePage() {
   
   // Refs for animations
   const pageRef = useRef<HTMLDivElement>(null);
-  const bottomSheetRef = useRef<HTMLDivElement>(null);
-  const backdropRef = useRef<HTMLDivElement>(null);
+  // Removed bottom sheet; keep refs unused
   const fullPostRef = useRef<HTMLDivElement>(null);
   const fullPostContentRef = useRef<HTMLDivElement>(null);
 
@@ -60,58 +58,13 @@ export default function PostMobilePage() {
     fetchPosts();
   }, []);
 
-  useEffect(() => {
-    if (showBottomSheet) {
-      showBottomSheetAnimation();
-    }
-  }, [showBottomSheet]);
+  // Bottom sheet removed
 
   const handleClose = () => {
     router.push('/?skipLoader=true');
   };
 
-  const showBottomSheetAnimation = () => {
-    if (bottomSheetRef.current && backdropRef.current) {
-      // Set initial state
-      gsap.set(bottomSheetRef.current, { y: '100%' });
-      gsap.set(backdropRef.current, { opacity: 0 });
-      
-      // Animate in
-      gsap.to(backdropRef.current, {
-        opacity: 1,
-        duration: 0.3,
-        ease: 'power2.out'
-      });
-      
-      gsap.to(bottomSheetRef.current, {
-        y: 0,
-        duration: 0.4,
-        ease: 'power3.out'
-      });
-    }
-  };
-
-  const hideBottomSheetAnimation = () => {
-    if (bottomSheetRef.current && backdropRef.current) {
-      // Animate out
-      gsap.to(backdropRef.current, {
-        opacity: 0,
-        duration: 0.2,
-        ease: 'power2.in'
-      });
-      
-      gsap.to(bottomSheetRef.current, {
-        y: '100%',
-        duration: 0.3,
-        ease: 'power3.in',
-        onComplete: () => {
-          setShowBottomSheet(false);
-        }
-      });
-    } else {
-      setShowBottomSheet(false);
-    }
-  };
+  // Bottom sheet animations removed
 
   // Swipe handling
   const handleSwipeLeft = () => {
@@ -469,7 +422,7 @@ export default function PostMobilePage() {
           </div>
           
           {/* Content */}
-          <div className="px-6 pt-16 pb-32" ref={fullPostContentRef}>
+          <div className="px-6 pt-24 pb-32" ref={fullPostContentRef}>
             <div className="max-w-md mx-auto">
               {/* Title */}
               <h1 className="text-white text-2xl font-semibold mb-8 leading-tight" style={{ fontFamily: 'Amita, cursive' }}>
