@@ -20,6 +20,7 @@ export default function PostMobilePage() {
   const [showNavigationArrows, setShowNavigationArrows] = useState(false);
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
+  const [showBottomSheet, setShowBottomSheet] = useState(true);
   
   // Refs for animations
   const pageRef = useRef<HTMLDivElement>(null);
@@ -57,7 +58,9 @@ export default function PostMobilePage() {
     fetchPosts();
   }, []);
 
-  // Bottom sheet removed
+  // Bottom sheet helpers
+  const openBottomSheet = () => setShowBottomSheet(true);
+  const closeBottomSheet = () => setShowBottomSheet(false);
 
   const handleClose = () => {
     router.push('/?skipLoader=true');
@@ -98,7 +101,7 @@ export default function PostMobilePage() {
   };
 
   const handlePageClick = () => {
-    // No-op: we no longer use a bottom sheet on mobile for posts
+    // Keep background clicks inert while using bottom sheet
   };
 
   const handleReadPost = () => {
@@ -107,6 +110,7 @@ export default function PostMobilePage() {
       setSelectedPost(currentPost);
       setCurrentFullPostIndex(currentPostIndex);
       setShowFullPost(true);
+      closeBottomSheet();
     }
   };
 
@@ -153,6 +157,8 @@ export default function PostMobilePage() {
     setShowFullPost(false);
     setSelectedPost(null);
     setShowNavigationArrows(false);
+    // Return to bottom sheet list view
+    setShowBottomSheet(true);
   };
 
   // Share function - Copy URL to clipboard
@@ -365,7 +371,116 @@ export default function PostMobilePage() {
         </div>
       </div>
 
-      {/* Bottom sheet removed in favor of full page list */}
+      {/* Bottom Sheet with list of posts */}
+      {showBottomSheet && (
+        <div className="fixed inset-0 z-40 flex items-end">
+          {/* Backdrop */}
+          <div 
+            className="absolute inset-0 backdrop-blur-md bg-white/10"
+            onClick={() => {
+              // Navigate home directly; avoid intermediate state that reveals underlying page
+              handleClose();
+            }}
+          />
+
+          {/* Sheet */}
+          <div 
+            className="relative w-full rounded-t-3xl p-6 max-h-[92vh] overflow-y-auto"
+            style={{ backgroundColor: '#2F4C6C' }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Handle */}
+            <div className="flex justify-center mb-3">
+              <button 
+                onClick={() => {
+                  // Navigate home directly; avoid intermediate state that reveals underlying page
+                  handleClose();
+                }}
+                className="w-12 h-1 bg-white bg-opacity-50 rounded-full"
+                aria-label="Close list"
+              />
+            </div>
+
+            {/* Header */}
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-white text-2xl font-semibold" style={{ fontFamily: 'Amita, cursive' }}>Latest Posts</h2>
+              <button
+                onClick={() => {
+                  closeBottomSheet();
+                  handleClose();
+                }}
+                className="w-10 h-10 flex items-center justify-center hover:opacity-80 transition"
+                aria-label="Close"
+              >
+                <svg 
+                  className="w-6 h-6 text-white" 
+                  fill="none" 
+                  stroke="currentColor" 
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+
+            {/* Single swipeable card with Read button */}
+            <div className="max-w-md mx-auto">
+              <h3 className="text-white text-xl font-semibold mb-4" style={{ fontFamily: 'Amita, cursive' }}>Posts</h3>
+              <div 
+                className="mt-2 mb-4 relative"
+                onTouchStart={handleTouchStart}
+              >
+                <div className="aspect-[4/5] rounded-2xl overflow-hidden cursor-pointer" style={{ borderRadius: '16px' }}>
+                  <Image 
+                    src={posts[currentPostIndex]?.images?.[0]?.src || '/guides-bottomsheet.png'} 
+                    alt={posts[currentPostIndex]?.images?.[0]?.alt || 'Post Card'} 
+                    fill
+                    className="object-cover rounded-2xl"
+                  />
+                  <div className="absolute bottom-4 left-4 right-4">
+                    <h4 className="text-white text-lg font-semibold mb-2" style={{ fontFamily: 'Amita, cursive' }}>
+                      {posts[currentPostIndex]?.title || 'Loading...'}
+                    </h4>
+                    <p className="text-white text-sm opacity-90" style={{ fontFamily: 'Roboto, sans-serif' }}>
+                      {((posts[currentPostIndex]?.leftContent || posts[currentPostIndex]?.content) || '').slice(0, 100)}...
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Page dots */}
+              <div className="flex justify-center mb-4">
+                <div className="flex space-x-2">
+                  {posts.map((_, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setCurrentPostIndex(index)}
+                      className={`w-2 h-2 rounded-full transition-all duration-200 ${
+                        index === currentPostIndex 
+                          ? 'bg-white' 
+                          : 'bg-white bg-opacity-50 hover:bg-opacity-75'
+                      }`}
+                      aria-label={`Go to post ${index + 1}`}
+                    />
+                  ))}
+                </div>
+              </div>
+
+              {/* Read button */}
+              <div className="flex justify-center pb-2">
+                <button 
+                  onClick={() => {
+                    handleReadPost();
+                  }}
+                  className="bg-white text-[#2F4C6C] px-20 py-3 rounded-full text-sm font-medium hover:bg-opacity-90 transition-all duration-200"
+                >
+                  Read This Post
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Full Post View */}
       {showFullPost && selectedPost && (
