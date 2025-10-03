@@ -424,7 +424,6 @@ export default function PostMobilePage() {
 
             {/* Single swipeable card with Read button */}
             <div className="max-w-md mx-auto">
-              <h3 className="text-white text-xl font-semibold mb-4" style={{ fontFamily: 'Amita, cursive' }}>Posts</h3>
               <div 
                 className="mt-2 mb-4 relative"
                 onTouchStart={handleTouchStart}
