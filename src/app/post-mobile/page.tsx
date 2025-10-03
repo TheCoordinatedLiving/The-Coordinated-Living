@@ -59,7 +59,6 @@ export default function PostMobilePage() {
   }, []);
 
   // Bottom sheet helpers
-  const openBottomSheet = () => setShowBottomSheet(true);
   const closeBottomSheet = () => setShowBottomSheet(false);
 
   const handleClose = () => {
