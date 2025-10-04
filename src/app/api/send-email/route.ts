@@ -40,13 +40,13 @@ export async function POST(request: NextRequest) {
 
     const resend = new Resend(process.env.RESEND_API_KEY);
 
-    const fromAddress = 'send@thecoordinatedliving.com'
+    // const fromAddress = 'send@thecoordinatedliving.com'
 
 
     console.log('Sending email via Resend...');
     const { data, error } = await resend.emails.send({
-      from: fromAddress,
-      to: 'ohenegyan159@gmail.com',
+      from: 'dev@thecoordinatedliving.com',
+      to: ['letstalk@thecoordinatedliving.com'],// ['dev@thecoordinatedliving.com', 'ohenegyan159@gmail.com'] 
       replyTo: userEmail,
     
       subject: subject || 'New Message from Ask Me A Question',
