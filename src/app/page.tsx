@@ -130,7 +130,7 @@ const WelcomeScreen = ({ onEnterClick }: { onEnterClick: () => void }) => {
 };
 
 // New Homepage Component
-const NewHomepage = () => {
+const NewHomepage = ({ onPourIntoCupClick }: { onPourIntoCupClick: () => void }) => {
   const router = useRouter();
   const homepageRef = useRef<HTMLDivElement>(null);
   const statusBarRef = useRef<HTMLDivElement>(null);
@@ -139,9 +139,6 @@ const NewHomepage = () => {
   // Terms modal state
   const [showTermsModal, setShowTermsModal] = useState(false);
   const [postsCount, setPostsCount] = useState(0);
-  
-  // Donation modal state
-  const [isDonationModalOpen, setIsDonationModalOpen] = useState(false);
   
   // Coming Soon modal state
   const [showComingSoonModal, setShowComingSoonModal] = useState(false);
@@ -183,7 +180,7 @@ const NewHomepage = () => {
 
   const handlePourIntoCupClick = () => {
     // Open donation modal for actual donations
-    setIsDonationModalOpen(true);
+    onPourIntoCupClick();
   };
 
   const handleComingSoonModalClose = () => {
@@ -191,13 +188,7 @@ const NewHomepage = () => {
     setComingSoonFeature('');
   };
 
-  // const handleDonationClick = () => {
-  //   setIsDonationModalOpen(true);
-  // };
-
-  const handleDonationModalClose = () => {
-    setIsDonationModalOpen(false);
-  };
+  // Donation functionality handled in main Page component
 
   // const handleDonationSuccess = (data: { reference: string; amount: number }) => {
   //   // The modal will handle the redirect to Paystack
@@ -1638,7 +1629,7 @@ const Page = () => {
             transition: 'opacity 0.3s ease-in-out'
           }}
         >
-          <NewHomepage />
+          <NewHomepage onPourIntoCupClick={() => setIsDonationModalOpen(true)} />
         </div>
       )}
       
