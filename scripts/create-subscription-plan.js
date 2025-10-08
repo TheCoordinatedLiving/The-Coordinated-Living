@@ -1,9 +1,15 @@
 // Script to create a subscription plan in Paystack
 // Run this script to set up your subscription plan
 
-const PAYSTACK_SECRET_KEY = process.env.PAYSTACK_SECRET_KEY || 'sk_test_e85988fa08e6452ebc108c7cf0f8aef6f206ca51';
+const PAYSTACK_SECRET_KEY = process.env.PAYSTACK_SECRET_KEY;
 
 async function createSubscriptionPlan() {
+  if (!PAYSTACK_SECRET_KEY) {
+    console.error('❌ PAYSTACK_SECRET_KEY environment variable is not set');
+    console.log('Please set your Paystack secret key in your environment variables');
+    process.exit(1);
+  }
+
   try {
     const planData = {
       name: 'Coordinated Living Monthly',

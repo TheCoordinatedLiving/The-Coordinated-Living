@@ -11,8 +11,8 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Get Paystack secret key from environment variables or use test key
-    const paystackSecretKey = process.env.PAYSTACK_SECRET_KEY || 'sk_test_e85988fa08e6452ebc108c7cf0f8aef6f206ca51';
+    // Get Paystack secret key from environment variables
+    const paystackSecretKey = process.env.PAYSTACK_SECRET_KEY;
     
     if (!paystackSecretKey) {
       console.error('PAYSTACK_SECRET_KEY is not set in environment variables');

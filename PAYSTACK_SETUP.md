@@ -8,9 +8,9 @@ Add the following environment variables to your `.env.local` file:
 
 ```env
 # Paystack Configuration
-PAYSTACK_SECRET_KEY=sk_test_e85988fa08e6452ebc108c7cf0f8aef6f206ca51
-NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY=pk_test_202dc7ba07bdd0aed2c7fe9efe6f96c6a3b4ffa5
-NEXT_PUBLIC_BASE_URL=http://localhost:3000
+PAYSTACK_SECRET_KEY=sk_live_your_live_secret_key_here
+NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY=pk_live_your_live_public_key_here
+NEXT_PUBLIC_BASE_URL=https://www.thecoordinatedliving.com
 NEXT_PUBLIC_WHATSAPP_CHANNEL_LINK=https://chat.whatsapp.com/YOUR_CHANNEL_LINK
 ```
 
@@ -35,7 +35,9 @@ NEXT_PUBLIC_WHATSAPP_CHANNEL_LINK=https://chat.whatsapp.com/YOUR_CHANNEL_LINK
 - **Test Mode**: 
   - Secret Key: `sk_test_e85988fa08e6452ebc108c7cf0f8aef6f206ca51`
   - Public Key: `pk_test_202dc7ba07bdd0aed2c7fe9efe6f96c6a3b4ffa5`
-- **Live Mode**: Use live keys (sk_live_... and pk_live_...)
+- **Live Mode**: 
+  - Secret Key: `sk_live_your_live_secret_key_here`
+  - Public Key: `pk_live_your_live_public_key_here`
 
 ## API Endpoints
 

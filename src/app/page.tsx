@@ -141,7 +141,7 @@ const NewHomepage = () => {
   const [postsCount, setPostsCount] = useState(0);
   
   // Donation modal state
-  // const [isDonationModalOpen, setIsDonationModalOpen] = useState(false);
+  const [isDonationModalOpen, setIsDonationModalOpen] = useState(false);
   
   // Coming Soon modal state
   const [showComingSoonModal, setShowComingSoonModal] = useState(false);
@@ -182,9 +182,8 @@ const NewHomepage = () => {
   };
 
   const handlePourIntoCupClick = () => {
-    // Show Coming Soon modal instead of navigating
-    setComingSoonFeature('Pour Into My Cup');
-    setShowComingSoonModal(true);
+    // Open donation modal for actual donations
+    setIsDonationModalOpen(true);
   };
 
   const handleComingSoonModalClose = () => {
@@ -196,9 +195,9 @@ const NewHomepage = () => {
   //   setIsDonationModalOpen(true);
   // };
 
-  // const handleDonationModalClose = () => {
-  //   setIsDonationModalOpen(false);
-  // };
+  const handleDonationModalClose = () => {
+    setIsDonationModalOpen(false);
+  };
 
   // const handleDonationSuccess = (data: { reference: string; amount: number }) => {
   //   // The modal will handle the redirect to Paystack
@@ -607,6 +606,10 @@ const Page = () => {
   
   // Donation modal state
   const [isDonationModalOpen, setIsDonationModalOpen] = useState(false);
+  
+  const handleDonationModalClose = () => {
+    setIsDonationModalOpen(false);
+  };
   
   // Coming Soon modal state
   const [showComingSoonModal, setShowComingSoonModal] = useState(false);
@@ -1603,10 +1606,7 @@ const Page = () => {
 
 
 
-  // Donation modal handlers
-  const handleDonationModalClose = () => {
-    setIsDonationModalOpen(false);
-  };
+  // Donation modal handlers (already defined above)
 
   // Coming Soon modal handlers
   const handleJoinChannelClick = () => {
@@ -1616,9 +1616,8 @@ const Page = () => {
   };
 
   const handlePourIntoCupClick = () => {
-    // Show Coming Soon modal instead of navigating
-    setComingSoonFeature('Pour Into My Cup');
-    setShowComingSoonModal(true);
+    // Open donation modal for actual donations
+    setIsDonationModalOpen(true);
   };
 
   const handleComingSoonModalClose = () => {
