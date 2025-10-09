@@ -45,7 +45,7 @@ export async function POST(request: NextRequest) {
 
     console.log('Sending email via Resend...');
     const { data, error } = await resend.emails.send({
-      from: 'dev@thecoordinatedliving.com',
+      from: 'letstalk@thecoordinatedliving.com',
       to: ['letstalk@thecoordinatedliving.com'],// ['dev@thecoordinatedliving.com', 'ohenegyan159@gmail.com'] 
       replyTo: userEmail,
     
