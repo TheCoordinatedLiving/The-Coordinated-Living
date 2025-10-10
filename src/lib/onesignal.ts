@@ -1,5 +1,3 @@
-import { OneSignal } from 'onesignal-ngx';
-
 // OneSignal configuration
 export const ONESIGNAL_CONFIG = {
   appId: '9e0ff598-168f-4e83-979f-c6e19991d297', // Your OneSignal App ID
@@ -7,36 +5,25 @@ export const ONESIGNAL_CONFIG = {
   baseUrl: 'https://onesignal.com/api/v1'
 };
 
+// Declare OneSignal types for TypeScript
+declare global {
+  interface Window {
+    OneSignal: any;
+    OneSignalDeferred: any[];
+  }
+}
+
 // Initialize OneSignal
 export const initializeOneSignal = () => {
-  if (typeof window !== 'undefined') {
-    // Initialize OneSignal in the browser
-    OneSignal.init({
-      appId: ONESIGNAL_CONFIG.appId,
-      allowLocalhostAsSecureOrigin: true, // For development
-      autoResubscribe: true,
-      autoRegister: false, // We'll handle registration manually
-      notifyButton: {
-        enable: false, // We'll use our own UI
-      },
-      promptOptions: {
-        slidedown: {
-          enabled: true,
-          autoPrompt: false, // We'll trigger manually
-          timeDelay: 0,
-          pageViews: 0,
-          actionMessage: "We'd like to show you notifications for the latest updates.",
-          acceptButton: "Allow",
-          cancelButton: "No Thanks"
-        }
-      }
-    });
+  if (typeof window !== 'undefined' && window.OneSignal) {
+    // OneSignal is already initialized by the script in layout.tsx
+    console.log('OneSignal is available:', window.OneSignal);
   }
 };
 
 // Check if OneSignal is supported
 export const isOneSignalSupported = (): boolean => {
-  return typeof window !== 'undefined' && 'OneSignal' in window;
+  return typeof window !== 'undefined' && window.OneSignal;
 };
 
 // Subscribe user to notifications
@@ -48,10 +35,10 @@ export const subscribeToNotifications = async (): Promise<boolean> => {
 
   try {
     // Show the permission prompt
-    await OneSignal.showNativePrompt();
+    await window.OneSignal.showNativePrompt();
     
     // Get the user ID
-    const userId = await OneSignal.getUserId();
+    const userId = await window.OneSignal.getUserId();
     
     if (userId) {
       console.log('Successfully subscribed to OneSignal notifications:', userId);
@@ -73,7 +60,7 @@ export const unsubscribeFromNotifications = async (): Promise<boolean> => {
   }
 
   try {
-    await OneSignal.setSubscription(false);
+    await window.OneSignal.setSubscription(false);
     console.log('Successfully unsubscribed from OneSignal notifications');
     return true;
   } catch (error) {
@@ -89,7 +76,7 @@ export const isUserSubscribed = async (): Promise<boolean> => {
   }
 
   try {
-    const isSubscribed = await OneSignal.getSubscription();
+    const isSubscribed = await window.OneSignal.getSubscription();
     return isSubscribed;
   } catch (error) {
     console.error('Error checking OneSignal subscription status:', error);
@@ -104,7 +91,7 @@ export const getOneSignalUserId = async (): Promise<string | null> => {
   }
 
   try {
-    const userId = await OneSignal.getUserId();
+    const userId = await window.OneSignal.getUserId();
     return userId;
   } catch (error) {
     console.error('Error getting OneSignal user ID:', error);
