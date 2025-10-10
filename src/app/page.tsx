@@ -3677,13 +3677,13 @@ const Page = () => {
                       playsInline
                       className="object-contain"
                       style={{
-                        transform: 'scale(2.3)',
+                        transform: 'scale(2.0)',
                         width: '100%',
                         height: '100%',
                         objectPosition: 'center'
                       }}
                     >
-                      <source src="/join-our-channel-new.webm" type="video/webm" />
+                      <source src="/join-our-channel-new-2.webm" type="video/webm" />
                       Your browser does not support the video tag.
                     </video>
 
