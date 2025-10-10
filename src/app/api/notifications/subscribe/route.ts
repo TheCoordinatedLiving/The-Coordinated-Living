@@ -1,20 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server';
-import webpush from 'web-push';
-import { notificationStorage } from '@/lib/notificationStorage';
-
-// Configure web-push with VAPID keys
-const vapidKeys = {
-  publicKey: process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY || '',
-  privateKey: process.env.VAPID_PRIVATE_KEY || ''
-};
-
-if (vapidKeys.publicKey && vapidKeys.privateKey) {
-  webpush.setVapidDetails(
-    'mailto:letstalk@thecoordinatedliving.com',
-    vapidKeys.publicKey,
-    vapidKeys.privateKey
-  );
-}
 
 export async function POST(request: NextRequest) {
   try {
@@ -27,30 +11,20 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Validate subscription object
-    if (!subscription.endpoint || !subscription.keys) {
-      return NextResponse.json(
-        { error: 'Invalid subscription object' },
-        { status: 400 }
-      );
-    }
-
-    // Add subscription to storage
-    notificationStorage.addSubscription({
-      ...subscription,
-      subscribedAt: new Date().toISOString()
-    });
+    // OneSignal handles subscription management automatically
+    // This endpoint is kept for compatibility but OneSignal manages subscriptions
+    console.log('OneSignal subscription received:', subscription);
 
     return NextResponse.json({
       success: true,
-      message: 'Successfully subscribed to notifications',
-      subscriptionCount: notificationStorage.getSubscriptionCount()
+      message: 'Successfully subscribed to OneSignal notifications',
+      note: 'OneSignal manages subscriptions automatically'
     });
 
   } catch (error) {
-    console.error('Error subscribing to notifications:', error);
+    console.error('Error with OneSignal subscription:', error);
     return NextResponse.json(
-      { error: 'Failed to subscribe to notifications' },
+      { error: 'Failed to process subscription' },
       { status: 500 }
     );
   }
@@ -58,7 +32,8 @@ export async function POST(request: NextRequest) {
 
 export async function GET() {
   return NextResponse.json({
-    subscriptionCount: notificationStorage.getSubscriptionCount(),
-    publicKey: vapidKeys.publicKey
+    message: 'OneSignal subscription endpoint',
+    note: 'OneSignal manages subscriptions automatically',
+    appId: process.env.ONESIGNAL_APP_ID
   });
 }

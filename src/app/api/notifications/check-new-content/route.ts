@@ -1,28 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { notificationStorage } from '@/lib/notificationStorage';
-import webpush from 'web-push';
-
-// Configure web-push with VAPID keys
-webpush.setVapidDetails(
-  'mailto:your-email@example.com', // This can be any email
-  process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY!,
-  process.env.VAPID_PRIVATE_KEY!
-);
+import { sendNotification } from '@/lib/onesignal';
 
 export async function GET(request: NextRequest) {
   try {
     console.log('🔍 Checking for new content...');
-    
-    // Get all active subscriptions
-    const subscriptions = notificationStorage.getAllSubscriptions();
-    console.log(`📱 Found ${subscriptions.length} active subscriptions`);
-    
-    if (subscriptions.length === 0) {
-      return NextResponse.json({ 
-        message: 'No active subscriptions found',
-        subscriptions: 0 
-      });
-    }
 
     // Check for new posts
     const postsResponse = await fetch(`${request.nextUrl.origin}/api/airtable/posts`);
@@ -59,67 +40,22 @@ export async function GET(request: NextRequest) {
       notificationBody = `${guidesData.guides.length} new guides are ready to read!`;
     }
 
-    const payload = JSON.stringify({
-      title: notificationTitle,
-      body: notificationBody,
-      icon: '/favicon.ico',
-      badge: '/favicon.ico',
-      tag: 'new-content',
-      data: {
-        url: request.nextUrl.origin
-      },
-      actions: [
-        {
-          action: 'open',
-          title: 'Read Now'
-        }
-      ]
-    });
-
-    // Send push notifications to all subscribers
-    const results = await Promise.allSettled(
-      subscriptions.map(async (subscription) => {
-        try {
-          await webpush.sendNotification(subscription, payload);
-          console.log('✅ Push notification sent successfully');
-          return { success: true, endpoint: subscription.endpoint };
-        } catch (error: unknown) {
-          console.error('❌ Failed to send push notification:', error);
-          
-          // Remove invalid subscriptions
-          if (error && typeof error === 'object' && 'statusCode' in error) {
-            const statusCode = (error as { statusCode: number }).statusCode;
-            if (statusCode === 410 || statusCode === 404) {
-              notificationStorage.removeSubscription(subscription.endpoint);
-              console.log('🗑️ Removed invalid subscription');
-            }
-          }
-          
-          return { 
-            success: false, 
-            endpoint: subscription.endpoint, 
-            error: error instanceof Error ? error.message : 'Unknown error'
-          };
-        }
-      })
+    // Send notification via OneSignal
+    const result = await sendNotification(
+      notificationTitle,
+      notificationBody,
+      request.nextUrl.origin
     );
 
-    const successful = results.filter(r => r.status === 'fulfilled' && r.value.success).length;
-    const failed = results.length - successful;
-
-    console.log(`📊 Push notification results: ${successful} successful, ${failed} failed`);
+    console.log('✅ OneSignal notification sent:', result);
 
     return NextResponse.json({
-      message: 'Push notifications sent',
+      message: 'OneSignal notifications sent',
       notification: {
         title: notificationTitle,
         body: notificationBody
       },
-      results: {
-        total: subscriptions.length,
-        successful,
-        failed
-      },
+      result: result,
       content: {
         posts: postsData.posts?.length || 0,
         guides: guidesData.guides?.length || 0

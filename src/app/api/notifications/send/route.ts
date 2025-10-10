@@ -1,20 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import webpush from 'web-push';
-import { notificationStorage } from '@/lib/notificationStorage';
-
-// Configure web-push with VAPID keys
-const vapidKeys = {
-  publicKey: process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY || '',
-  privateKey: process.env.VAPID_PRIVATE_KEY || ''
-};
-
-if (vapidKeys.publicKey && vapidKeys.privateKey) {
-  webpush.setVapidDetails(
-    'mailto:letstalk@thecoordinatedliving.com',
-    vapidKeys.publicKey,
-    vapidKeys.privateKey
-  );
-}
+import { sendNotification } from '@/lib/onesignal';
 
 export async function POST(request: NextRequest) {
   try {
@@ -27,88 +12,33 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Default notification payload
-    const payload = JSON.stringify({
-      title: title,
-      body: body,
-      icon: '/favicon.ico',
-      badge: '/favicon.ico',
-      tag: type || 'new-content',
-      url: url || '/',
-      requireInteraction: false,
-      actions: [
-        {
-          action: 'open',
-          title: 'Read Now'
-        },
-        {
-          action: 'dismiss',
-          title: 'Dismiss'
-        }
-      ]
-    });
+    // Send notification via OneSignal
+    const result = await sendNotification(
+      title,
+      body,
+      url || 'https://www.thecoordinatedliving.com'
+    );
 
-    // Get all subscriptions
-    const subscriptions = notificationStorage.getAllSubscriptions();
-    
-    if (subscriptions.length === 0) {
-      return NextResponse.json({
-        success: true,
-        message: 'No subscribers to send notifications to',
-        stats: {
-          total: 0,
-          successful: 0,
-          failed: 0
-        }
-      });
-    }
-
-    // Send notifications to all subscribers
-    const sendPromises = subscriptions.map(async (subscription, index) => {
-      try {
-        await webpush.sendNotification(subscription, payload);
-        console.log(`Notification sent to subscription ${index + 1}`);
-        return { success: true, index };
-      } catch (error: unknown) {
-        console.error(`Failed to send notification to subscription ${index + 1}:`, error);
-        
-        // Remove invalid subscriptions
-        if (error && typeof error === 'object' && 'statusCode' in error) {
-          const statusCode = (error as { statusCode: number }).statusCode;
-          if (statusCode === 410 || statusCode === 404) {
-            notificationStorage.removeSubscription(subscription.endpoint);
-            console.log(`Removed invalid subscription ${index + 1}`);
-          }
-        }
-        
-        return { success: false, index, error: error instanceof Error ? error.message : 'Unknown error' };
-      }
-    });
-
-    const results = await Promise.allSettled(sendPromises);
-    
-    const successful = results.filter(result => 
-      result.status === 'fulfilled' && result.value.success
-    ).length;
-    
-    const failed = results.length - successful;
-
-    console.log(`Notification sending completed: ${successful} successful, ${failed} failed`);
+    console.log('OneSignal notification sent:', result);
 
     return NextResponse.json({
       success: true,
-      message: `Notifications sent to ${successful} subscribers`,
+      message: 'Notification sent via OneSignal',
       stats: {
-        total: subscriptions.length,
-        successful,
-        failed
-      }
+        total: result.recipients || 0,
+        successful: result.recipients || 0,
+        failed: 0
+      },
+      result: result
     });
 
   } catch (error: unknown) {
-    console.error('Error sending notifications:', error);
+    console.error('Error sending OneSignal notification:', error);
     return NextResponse.json(
-      { error: 'Failed to send notifications' },
+      { 
+        error: 'Failed to send OneSignal notification',
+        details: error instanceof Error ? error.message : 'Unknown error'
+      },
       { status: 500 }
     );
   }
@@ -117,50 +47,25 @@ export async function POST(request: NextRequest) {
 // Test endpoint to send a sample notification
 export async function GET() {
   try {
-    const testPayload = JSON.stringify({
-      title: 'Test Notification',
-      body: 'This is a test notification from Coordinated Living',
-      icon: '/favicon.ico',
-      badge: '/favicon.ico',
-      tag: 'test',
-      url: '/',
-      requireInteraction: false
-    });
-
-    const subscriptions = notificationStorage.getAllSubscriptions();
-    
-    if (subscriptions.length === 0) {
-      return NextResponse.json({
-        success: true,
-        message: 'No subscribers to send test notification to',
-        totalSubscriptions: 0
-      });
-    }
-
-    const sendPromises = subscriptions.map(async (subscription, index) => {
-      try {
-        await webpush.sendNotification(subscription, testPayload);
-        return { success: true, index };
-      } catch (error: unknown) {
-        return { success: false, index, error: error instanceof Error ? error.message : 'Unknown error' };
-      }
-    });
-
-    const results = await Promise.allSettled(sendPromises);
-    const successful = results.filter(result => 
-      result.status === 'fulfilled' && result.value.success
-    ).length;
+    const result = await sendNotification(
+      'Test Notification from Coordinated Living! 🎉',
+      'This is a test notification to verify OneSignal is working properly.',
+      'https://www.thecoordinatedliving.com'
+    );
 
     return NextResponse.json({
       success: true,
-      message: `Test notification sent to ${successful} subscribers`,
-      totalSubscriptions: subscriptions.length
+      message: 'Test notification sent via OneSignal',
+      result: result
     });
 
   } catch (error: unknown) {
-    console.error('Error sending test notification:', error);
+    console.error('Error sending OneSignal test notification:', error);
     return NextResponse.json(
-      { error: 'Failed to send test notification' },
+      { 
+        error: 'Failed to send OneSignal test notification',
+        details: error instanceof Error ? error.message : 'Unknown error'
+      },
       { status: 500 }
     );
   }
