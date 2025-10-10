@@ -28,7 +28,7 @@ export const initializeOneSignal = () => {
 
 // Check if OneSignal is supported
 export const isOneSignalSupported = (): boolean => {
-  return typeof window !== 'undefined' && window.OneSignal;
+  return typeof window !== 'undefined' && !!window.OneSignal;
 };
 
 // Subscribe user to notifications
