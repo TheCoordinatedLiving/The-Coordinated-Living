@@ -69,16 +69,19 @@ export async function POST(request: NextRequest) {
         await webpush.sendNotification(subscription, payload);
         console.log(`Notification sent to subscription ${index + 1}`);
         return { success: true, index };
-      } catch (error) {
+      } catch (error: unknown) {
         console.error(`Failed to send notification to subscription ${index + 1}:`, error);
         
         // Remove invalid subscriptions
-        if (error.statusCode === 410 || error.statusCode === 404) {
-          notificationStorage.removeSubscription(subscription.endpoint);
-          console.log(`Removed invalid subscription ${index + 1}`);
+        if (error && typeof error === 'object' && 'statusCode' in error) {
+          const statusCode = (error as { statusCode: number }).statusCode;
+          if (statusCode === 410 || statusCode === 404) {
+            notificationStorage.removeSubscription(subscription.endpoint);
+            console.log(`Removed invalid subscription ${index + 1}`);
+          }
         }
         
-        return { success: false, index, error: error.message };
+        return { success: false, index, error: error instanceof Error ? error.message : 'Unknown error' };
       }
     });
 
