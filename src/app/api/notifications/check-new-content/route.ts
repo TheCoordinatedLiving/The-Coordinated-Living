@@ -83,7 +83,7 @@ export async function GET(request: NextRequest) {
           await webpush.sendNotification(subscription, payload);
           console.log('✅ Push notification sent successfully');
           return { success: true, endpoint: subscription.endpoint };
-        } catch (error: any) {
+        } catch (error: unknown) {
           console.error('❌ Failed to send push notification:', error);
           
           // Remove invalid subscriptions
@@ -123,7 +123,7 @@ export async function GET(request: NextRequest) {
       }
     });
 
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('❌ Error checking for new content:', error);
     return NextResponse.json(
       { error: 'Failed to check for new content', details: error.message },

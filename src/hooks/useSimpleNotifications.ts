@@ -155,11 +155,11 @@ export const useSimpleNotifications = () => {
         permission: 'granted' 
       }));
       return true;
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('Failed to enable notifications:', err);
       setState(prev => ({
         ...prev,
-        error: err.message || 'Failed to enable notifications',
+        error: err instanceof Error ? err.message : 'Failed to enable notifications',
         isLoading: false,
         isEnabled: false
       }));

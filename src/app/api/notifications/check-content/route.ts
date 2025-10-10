@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import { fetchPosts, fetchGuides } from '@/lib/airtable';
 
 // Store the last known content state
@@ -58,8 +58,8 @@ export async function GET() {
 async function sendContentNotifications(
   newPostIds: string[], 
   newGuideIds: string[], 
-  allPosts: any[], 
-  allGuides: any[]
+  allPosts: unknown[], 
+  allGuides: unknown[]
 ) {
   try {
     // Get details of new content

@@ -663,7 +663,7 @@ const Page = () => {
   const [homepageVisible, setHomepageVisible] = useState(false);
   
   // Notification modal
-  const { showModal: showNotificationModal, closeModal: closeNotificationModal, resetModal } = useSimpleNotificationModal();
+  const { showModal: showNotificationModal, closeModal: closeNotificationModal } = useSimpleNotificationModal();
   
   // Check for new content and send notifications
   useContentNotifications();

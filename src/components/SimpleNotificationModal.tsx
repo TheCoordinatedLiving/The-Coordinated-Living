@@ -78,7 +78,7 @@ export default function SimpleNotificationModal({ isOpen, onClose }: SimpleNotif
           Stay Updated! 🔔
         </h2>
         <p className="text-sm text-gray-200 mb-6" style={{ fontFamily: 'Roboto, sans-serif' }}>
-          Get notified instantly when new posts and guides are added, even when you're not on our site!
+          Get notified instantly when new posts and guides are added, even when you&apos;re not on our site!
         </p>
 
         {error && (
@@ -97,7 +97,7 @@ export default function SimpleNotificationModal({ isOpen, onClose }: SimpleNotif
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
             </svg>
             <p className="text-green-400 text-sm font-medium">Push notifications enabled!</p>
-            <p className="text-gray-300 text-xs mt-2">You'll get instant notifications even when you're away from our site.</p>
+            <p className="text-gray-300 text-xs mt-2">You&apos;ll get instant notifications even when you&apos;re away from our site.</p>
           </div>
         ) : (
           <div className="flex flex-col space-y-3">
@@ -120,7 +120,7 @@ export default function SimpleNotificationModal({ isOpen, onClose }: SimpleNotif
 
         {!isSupported && (
           <p className="text-yellow-300 text-xs mt-4">
-            Your browser doesn't support notifications.
+            Your browser doesn&apos;t support notifications.
           </p>
         )}
       </div>

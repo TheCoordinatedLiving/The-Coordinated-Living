@@ -35,9 +35,6 @@ export default function NotificationSubscription({
     await unsubscribe();
   };
 
-  const handleTestNotification = async () => {
-    await sendTestNotification();
-  };
 
   // Don't render if not supported
   if (!isSupported) {
@@ -74,7 +71,7 @@ export default function NotificationSubscription({
 
         {showSuccess && (
           <div className="absolute top-full left-0 mt-2 px-3 py-2 bg-green-500 text-white text-sm rounded-lg shadow-lg z-10">
-            ✅ You'll now get notified of new posts!
+            ✅ You&apos;ll now get notified of new posts!
           </div>
         )}
 
@@ -112,7 +109,7 @@ export default function NotificationSubscription({
           <div className="space-y-3">
             <div className="flex items-center space-x-2 text-green-600">
               <span>✅</span>
-              <span className="text-sm font-medium">You're subscribed to notifications</span>
+              <span className="text-sm font-medium">You&apos;re subscribed to notifications</span>
             </div>
             <button
               onClick={handleUnsubscribe}

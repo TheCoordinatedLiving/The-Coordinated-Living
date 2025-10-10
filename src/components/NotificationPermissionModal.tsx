@@ -10,11 +10,9 @@ export default function NotificationPermissionModal({ isOpen, onClose }: Notific
   const {
     isSupported,
     permission,
-    isSubscribed,
     isLoading,
     error,
-    subscribe,
-    unsubscribe
+    subscribe
   } = usePushNotifications();
 
   const [showSuccess, setShowSuccess] = useState(false);
@@ -75,10 +73,10 @@ export default function NotificationPermissionModal({ isOpen, onClose }: Notific
                 </svg>
               </div>
               <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                You're all set!
+                You&apos;re all set!
               </h3>
               <p className="text-gray-600">
-                You'll now receive notifications when new posts and guides are published.
+                You&apos;ll now receive notifications when new posts and guides are published.
               </p>
             </div>
           ) : (
