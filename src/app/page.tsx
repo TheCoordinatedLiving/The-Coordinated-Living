@@ -11,8 +11,8 @@ import FullTermsContent from '../components/FullTermsContent';
 import AskAQuestion from './windows/AskAQuestion';
 import DonationModal from '../components/DonationModal';
 import ComingSoonModal from '../components/ComingSoonModal';
-import SimpleNotificationModal from '../components/SimpleNotificationModal';
-import { useSimpleNotificationModal } from '../hooks/useSimpleNotificationModal';
+// import SimpleNotificationModal from '../components/SimpleNotificationModal';
+// import { useSimpleNotificationModal } from '../hooks/useSimpleNotificationModal';
 import { useContentNotifications } from '../hooks/useContentNotifications';
 
 const Loader = () => {
@@ -663,7 +663,7 @@ const Page = () => {
   const [homepageVisible, setHomepageVisible] = useState(false);
   
   // Notification modal
-  const { showModal: showNotificationModal, closeModal: closeNotificationModal } = useSimpleNotificationModal();
+  // const { showModal: showNotificationModal, closeModal: closeNotificationModal } = useSimpleNotificationModal();
   
   // Check for new content and send notifications
   useContentNotifications();
@@ -1647,10 +1647,10 @@ const Page = () => {
           <NewHomepage onPourIntoCupClick={() => setIsDonationModalOpen(true)} />
           
           {/* Simple Notification Modal - Mobile */}
-          <SimpleNotificationModal
+          {/* <SimpleNotificationModal
             isOpen={showNotificationModal}
             onClose={closeNotificationModal}
-          />
+          /> */}
         </div>
       )}
       
@@ -3899,10 +3899,10 @@ const Page = () => {
           )}
 
           {/* Simple Notification Modal - Desktop */}
-          <SimpleNotificationModal
+          {/* <SimpleNotificationModal
             isOpen={showNotificationModal}
             onClose={closeNotificationModal}
-          />
+          /> */}
 
           </div>
         </div>
