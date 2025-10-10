@@ -8,8 +8,13 @@ export const ONESIGNAL_CONFIG = {
 // Declare OneSignal types for TypeScript
 declare global {
   interface Window {
-    OneSignal: any;
-    OneSignalDeferred: any[];
+    OneSignal: {
+      showNativePrompt(): Promise<void>;
+      getUserId(): Promise<string | null>;
+      setSubscription(enabled: boolean): Promise<void>;
+      getSubscription(): Promise<boolean>;
+    };
+    OneSignalDeferred: Array<(OneSignal: Window['OneSignal']) => Promise<void>>;
   }
 }
 
