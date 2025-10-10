@@ -17,8 +17,7 @@ export default function NotificationSubscription({
     isLoading,
     error,
     subscribe,
-    unsubscribe,
-    sendTestNotification
+    unsubscribe
   } = usePushNotifications();
 
   const [showSuccess, setShowSuccess] = useState(false);
