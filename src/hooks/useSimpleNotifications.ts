@@ -70,8 +70,10 @@ export const useSimpleNotifications = () => {
       }
       
       // Request permission - this should trigger the browser modal
+      console.log('Requesting notification permission...');
       const permission = await Notification.requestPermission();
       console.log('Notification permission result:', permission);
+      console.log('Current permission status:', Notification.permission);
 
       if (permission !== 'granted') {
         setState(prev => ({

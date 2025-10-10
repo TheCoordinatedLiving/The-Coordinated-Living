@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { useSimpleNotifications } from '@/hooks/useSimpleNotifications';
+import { useWebDevNotifications } from '@/hooks/useWebDevNotifications';
 import { gsap } from 'gsap';
 
 interface SimpleNotificationModalProps {
@@ -15,7 +15,7 @@ export default function SimpleNotificationModal({ isOpen, onClose }: SimpleNotif
     isLoading,
     error,
     enableNotifications,
-  } = useSimpleNotifications();
+  } = useWebDevNotifications();
 
   const modalRef = useRef<HTMLDivElement>(null);
   const backdropRef = useRef<HTMLDivElement>(null);
