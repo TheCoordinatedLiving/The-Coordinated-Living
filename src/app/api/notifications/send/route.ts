@@ -3,7 +3,7 @@ import { sendNotification } from '@/lib/onesignal';
 
 export async function POST(request: NextRequest) {
   try {
-    const { title, body, url, type } = await request.json();
+    const { title, body, url } = await request.json();
 
     if (!title || !body) {
       return NextResponse.json(

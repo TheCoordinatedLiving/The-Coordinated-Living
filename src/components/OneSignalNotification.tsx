@@ -19,7 +19,7 @@ export const OneSignalNotification = ({ className = '' }: OneSignalNotificationP
     sendTestNotification 
   } = useOneSignal();
   
-  const [testResult, setTestResult] = useState<any>(null);
+  const [testResult, setTestResult] = useState<{ message: string } | null>(null);
 
   const handleSubscribe = async () => {
     const success = await subscribe();
@@ -116,7 +116,7 @@ export const OneSignalNotification = ({ className = '' }: OneSignalNotificationP
           <div className="space-y-3">
             <div className="bg-green-50 border border-green-200 rounded-lg p-3">
               <p className="text-green-700 text-sm font-medium">
-                ✅ You're subscribed to notifications!
+                ✅ You&apos;re subscribed to notifications!
               </p>
             </div>
             
