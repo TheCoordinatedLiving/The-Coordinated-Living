@@ -50,8 +50,18 @@ export const useSimpleNotificationModal = () => {
 
     // Listen for welcome screen completion
     const handleWelcomeComplete = () => {
-      // Add a small delay to let the homepage/experience settle
-      setTimeout(showModalAfterWelcome, 1500); // 1.5 seconds after welcome completes
+      // Check if we're on mobile (screen width < 1280px which is xl breakpoint)
+      const isMobile = window.innerWidth < 1280;
+      
+      if (isMobile) {
+        // For mobile: show modal after 3 seconds as requested
+        console.log('📱 Mobile detected: showing modal after 3 seconds');
+        setTimeout(showModalAfterWelcome, 3000); // 3 seconds after welcome completes
+      } else {
+        // For desktop: show modal after 1.5 seconds (existing behavior)
+        console.log('🖥️ Desktop detected: showing modal after 1.5 seconds');
+        setTimeout(showModalAfterWelcome, 1500); // 1.5 seconds after welcome completes
+      }
     };
 
     // Check if we're on a page that has a welcome screen
@@ -81,7 +91,7 @@ export const useSimpleNotificationModal = () => {
         } else {
           console.log('🚫 Simple notification modal will not be shown');
         }
-      }, 2000); // 2 seconds for pages without welcome screen
+      }, 3000); // 3 seconds for pages without welcome screen (consistent with mobile timing)
 
       return () => clearTimeout(timer);
     }
