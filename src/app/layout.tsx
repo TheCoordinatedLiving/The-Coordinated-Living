@@ -93,6 +93,20 @@ export default function RootLayout({
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="preload" href="/coordinated-new.webp" as="image" type="image/webp" />
         <link rel="icon" href="/coordinated.ico" />
+        {/* OneSignal SDK */}
+        <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.OneSignalDeferred = window.OneSignalDeferred || [];
+              OneSignalDeferred.push(async function(OneSignal) {
+                await OneSignal.init({
+                  appId: "9e0ff598-168f-4e83-979f-c6e19991d297",
+                });
+              });
+            `
+          }}
+        />
       </head>
       <body className={`${manrope.className} ${roboto.variable} ${amita.variable}`}>{children}</body>
     </html>

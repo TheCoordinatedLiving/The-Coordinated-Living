@@ -23,9 +23,9 @@ NEXT_PUBLIC_WHATSAPP_CHANNEL_LINK=https://chat.whatsapp.com/YOUR_CHANNEL_LINK
 # Airtable Configuration (if using Airtable)
 # Add your Airtable API key and base ID here
 
-# Push Notifications Configuration
-NEXT_PUBLIC_VAPID_PUBLIC_KEY=BL2vQ3x-TSeGAlPqXI1Qsygeb7b4khxx7W1xJQAkXq2PwFv_v-FN0Hvw_fe3-Ot1VfuPO8ZhxDoVD8NTWK1c8m0
-VAPID_PRIVATE_KEY=jTeldqmW4l22tI-y1VYV_dYBCc1A_nszcSiD4ikz0kM
+# OneSignal Push Notifications Configuration
+ONESIGNAL_REST_API_KEY=your_onesignal_rest_api_key_here
+ONESIGNAL_APP_ID=9e0ff598-168f-4e83-979f-c6e19991d297
 ```
 
 ## Important Notes
