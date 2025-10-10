@@ -143,7 +143,7 @@ async function sendNotification({ title, body, url, type, subscriptions }: {
   body: string;
   url: string;
   type: string;
-  subscriptions: any[];
+  subscriptions: webpush.PushSubscription[];
 }) {
   try {
     const payload = JSON.stringify({
