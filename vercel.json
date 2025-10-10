@@ -1,9 +1,3 @@
 {
-  "_comment": "Cron jobs require Vercel Pro plan - using external cron service instead"
-  // "crons": [
-  //   {
-  //     "path": "/api/cron/check-content",
-  //     "schedule": "*/10 * * * *"
-  //   }
-  // ]
+  "comment": "Cron jobs require Vercel Pro plan - using external cron service instead"
 }
