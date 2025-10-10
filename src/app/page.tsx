@@ -11,6 +11,9 @@ import FullTermsContent from '../components/FullTermsContent';
 import AskAQuestion from './windows/AskAQuestion';
 import DonationModal from '../components/DonationModal';
 import ComingSoonModal from '../components/ComingSoonModal';
+import SimpleNotificationModal from '../components/SimpleNotificationModal';
+import { useSimpleNotificationModal } from '../hooks/useSimpleNotificationModal';
+import { useContentNotifications } from '../hooks/useContentNotifications';
 
 const Loader = () => {
   const logoRef = useRef(null);
@@ -343,6 +346,8 @@ const NewHomepage = ({ onPourIntoCupClick }: { onPourIntoCupClick: () => void })
               </div>
             </div>
           </div>
+
+
         </div>
       </div>
 
@@ -656,6 +661,12 @@ const Page = () => {
   const [showAskAQuestion, setShowAskAQuestion] = useState(false);
   const [showHomepage, setShowHomepage] = useState(false);
   const [homepageVisible, setHomepageVisible] = useState(false);
+  
+  // Notification modal
+  const { showModal: showNotificationModal, closeModal: closeNotificationModal, resetModal } = useSimpleNotificationModal();
+  
+  // Check for new content and send notifications
+  useContentNotifications();
   
   
   // Handle skipLoader parameter for smooth navigation from mobile pages
@@ -1430,6 +1441,10 @@ const Page = () => {
           } else {
             setExperienceVisible(true);
           }
+          
+          // Dispatch custom event to notify that welcome screen is complete
+          console.log('🎉 Dispatching welcomeScreenComplete event');
+          window.dispatchEvent(new CustomEvent('welcomeScreenComplete'));
         }
       }, "-=0.2");
   };
@@ -1630,6 +1645,12 @@ const Page = () => {
           }}
         >
           <NewHomepage onPourIntoCupClick={() => setIsDonationModalOpen(true)} />
+          
+          {/* Simple Notification Modal - Mobile */}
+          <SimpleNotificationModal
+            isOpen={showNotificationModal}
+            onClose={closeNotificationModal}
+          />
         </div>
       )}
       
@@ -3877,6 +3898,12 @@ const Page = () => {
             </div>
           )}
 
+          {/* Simple Notification Modal - Desktop */}
+          <SimpleNotificationModal
+            isOpen={showNotificationModal}
+            onClose={closeNotificationModal}
+          />
+
           </div>
         </div>
       )}
@@ -5518,6 +5545,8 @@ const Page = () => {
         onClose={handleComingSoonModalClose}
         featureName={comingSoonFeature}
       />
+
+
 
     </div>
   );

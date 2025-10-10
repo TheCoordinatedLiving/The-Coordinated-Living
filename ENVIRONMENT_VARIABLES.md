@@ -22,6 +22,10 @@ NEXT_PUBLIC_WHATSAPP_CHANNEL_LINK=https://chat.whatsapp.com/YOUR_CHANNEL_LINK
 
 # Airtable Configuration (if using Airtable)
 # Add your Airtable API key and base ID here
+
+# Push Notifications Configuration
+NEXT_PUBLIC_VAPID_PUBLIC_KEY=BL2vQ3x-TSeGAlPqXI1Qsygeb7b4khxx7W1xJQAkXq2PwFv_v-FN0Hvw_fe3-Ot1VfuPO8ZhxDoVD8NTWK1c8m0
+VAPID_PRIVATE_KEY=jTeldqmW4l22tI-y1VYV_dYBCc1A_nszcSiD4ikz0kM
 ```
 
 ## Important Notes
