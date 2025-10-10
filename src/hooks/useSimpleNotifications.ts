@@ -59,15 +59,19 @@ export const useSimpleNotifications = () => {
         return true;
       }
       
-      // Request permission - this should trigger the browser modal
-      let permission;
-      try {
-        permission = await Notification.requestPermission();
-        console.log('Notification permission result:', permission);
-      } catch (permissionError) {
-        console.error('Failed to request notification permission:', permissionError);
-        throw new Error('Failed to request notification permission: ' + permissionError.message);
+      // Check if we're in a secure context (HTTPS or localhost)
+      if (!window.isSecureContext) {
+        setState(prev => ({ 
+          ...prev, 
+          isLoading: false, 
+          error: 'Notifications require a secure context (HTTPS)' 
+        }));
+        return false;
       }
+      
+      // Request permission - this should trigger the browser modal
+      const permission = await Notification.requestPermission();
+      console.log('Notification permission result:', permission);
 
       if (permission !== 'granted') {
         setState(prev => ({
@@ -190,9 +194,15 @@ export const useSimpleNotifications = () => {
     }
 
     try {
-      // Check if we're in a secure context (HTTPS or localhost)
+      // Check if we're in a secure context and notifications are supported
+      if (!('Notification' in window)) {
+        console.error('Notifications not supported');
+        return false;
+      }
+
+      // Check if we're in a secure context
       if (!window.isSecureContext) {
-        console.error('Notifications require a secure context (HTTPS or localhost)');
+        console.error('Notifications require a secure context (HTTPS)');
         return false;
       }
 
@@ -202,37 +212,12 @@ export const useSimpleNotifications = () => {
         return false;
       }
 
-      // Check if Notification constructor is properly available
-      if (!Notification.prototype) {
-        console.error('Notification prototype not available');
-        return false;
-      }
-
-      // Try to create notification with error handling
-      let notification;
-      try {
-        notification = new Notification(title, {
-          body: body,
-          icon: '/favicon.ico',
-          tag: 'new-content',
-          data: { url: url || '/' }
-        });
-      } catch (constructorError) {
-        console.error('Notification constructor failed:', constructorError);
-        // Try alternative approach using service worker
-        if ('serviceWorker' in navigator) {
-          navigator.serviceWorker.ready.then(registration => {
-            registration.showNotification(title, {
-              body: body,
-              icon: '/favicon.ico',
-              tag: 'new-content',
-              data: { url: url || '/' }
-            });
-          });
-          return true;
-        }
-        return false;
-      }
+      const notification = new Notification(title, {
+        body: body,
+        icon: '/favicon.ico',
+        tag: 'new-content',
+        data: { url: url || '/' }
+      });
 
       notification.onclick = () => {
         notification.close();
@@ -244,6 +229,10 @@ export const useSimpleNotifications = () => {
       return true;
     } catch (error) {
       console.error('Failed to send notification:', error);
+      // If it's the illegal constructor error, provide a helpful message
+      if (error instanceof Error && error.message.includes('illegal constructor')) {
+        console.error('Notification constructor error - this may be due to browser restrictions or context issues');
+      }
       return false;
     }
   }, [state.isEnabled, state.permission]);
