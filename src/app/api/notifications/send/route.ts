@@ -105,7 +105,7 @@ export async function POST(request: NextRequest) {
       }
     });
 
-  } catch (error) {
+  } catch (error: unknown) {
     console.error('Error sending notifications:', error);
     return NextResponse.json(
       { error: 'Failed to send notifications' },
@@ -141,8 +141,8 @@ export async function GET() {
       try {
         await webpush.sendNotification(subscription, testPayload);
         return { success: true, index };
-      } catch (error) {
-        return { success: false, index, error: error.message };
+      } catch (error: unknown) {
+        return { success: false, index, error: error instanceof Error ? error.message : 'Unknown error' };
       }
     });
 
@@ -157,7 +157,7 @@ export async function GET() {
       totalSubscriptions: subscriptions.length
     });
 
-  } catch (error) {
+  } catch (error: unknown) {
     console.error('Error sending test notification:', error);
     return NextResponse.json(
       { error: 'Failed to send test notification' },
