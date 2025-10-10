@@ -87,15 +87,18 @@ export async function GET(request: NextRequest) {
           console.error('❌ Failed to send push notification:', error);
           
           // Remove invalid subscriptions
-          if (error.statusCode === 410 || error.statusCode === 404) {
-            notificationStorage.removeSubscription(subscription.endpoint);
-            console.log('🗑️ Removed invalid subscription');
+          if (error && typeof error === 'object' && 'statusCode' in error) {
+            const statusCode = (error as { statusCode: number }).statusCode;
+            if (statusCode === 410 || statusCode === 404) {
+              notificationStorage.removeSubscription(subscription.endpoint);
+              console.log('🗑️ Removed invalid subscription');
+            }
           }
           
           return { 
             success: false, 
             endpoint: subscription.endpoint, 
-            error: error.message 
+            error: error instanceof Error ? error.message : 'Unknown error'
           };
         }
       })
@@ -126,7 +129,7 @@ export async function GET(request: NextRequest) {
   } catch (error: unknown) {
     console.error('❌ Error checking for new content:', error);
     return NextResponse.json(
-      { error: 'Failed to check for new content', details: error.message },
+      { error: 'Failed to check for new content', details: error instanceof Error ? error.message : 'Unknown error' },
       { status: 500 }
     );
   }

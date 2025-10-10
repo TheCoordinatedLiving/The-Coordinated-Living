@@ -28,7 +28,7 @@ export async function POST(request: NextRequest) {
   } catch (error: unknown) {
     console.error('❌ Error triggering notifications:', error);
     return NextResponse.json(
-      { error: 'Failed to trigger notifications', details: error.message },
+      { error: 'Failed to trigger notifications', details: error instanceof Error ? error.message : 'Unknown error' },
       { status: 500 }
     );
   }
