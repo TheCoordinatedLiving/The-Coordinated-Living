@@ -110,7 +110,7 @@ export const useSimpleNotifications = () => {
         throw new Error('VAPID public key not configured');
       }
 
-      // Convert VAPID key to Uint8Array
+      // Convert VAPID key to Uint8Array (from web.dev codelab)
       const urlBase64ToUint8Array = (base64String: string): Uint8Array => {
         const padding = '='.repeat((4 - base64String.length % 4) % 4);
         const base64 = (base64String + padding)
@@ -126,12 +126,22 @@ export const useSimpleNotifications = () => {
         return outputArray;
       };
 
-      const applicationServerKey = urlBase64ToUint8Array(vapidKey);
-      console.log('VAPID key converted:', applicationServerKey);
+      // Check if already subscribed
+      const existingSubscription = await readyRegistration.pushManager.getSubscription();
+      if (existingSubscription) {
+        console.log('User is already subscribed:', existingSubscription);
+        setState(prev => ({ 
+          ...prev, 
+          isEnabled: true, 
+          isLoading: false, 
+          permission: 'granted' 
+        }));
+        return true;
+      }
 
       const subscription = await readyRegistration.pushManager.subscribe({
         userVisibleOnly: true,
-        applicationServerKey: applicationServerKey
+        applicationServerKey: urlBase64ToUint8Array(vapidKey)
       });
       console.log('Push subscription created:', subscription);
 
