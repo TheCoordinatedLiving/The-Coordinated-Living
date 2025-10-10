@@ -60,8 +60,14 @@ export const useSimpleNotifications = () => {
       }
       
       // Request permission - this should trigger the browser modal
-      const permission = await Notification.requestPermission();
-      console.log('Notification permission result:', permission);
+      let permission;
+      try {
+        permission = await Notification.requestPermission();
+        console.log('Notification permission result:', permission);
+      } catch (permissionError) {
+        console.error('Failed to request notification permission:', permissionError);
+        throw new Error('Failed to request notification permission: ' + permissionError.message);
+      }
 
       if (permission !== 'granted') {
         setState(prev => ({
@@ -184,12 +190,49 @@ export const useSimpleNotifications = () => {
     }
 
     try {
-      const notification = new Notification(title, {
-        body: body,
-        icon: '/favicon.ico',
-        tag: 'new-content',
-        data: { url: url || '/' }
-      });
+      // Check if we're in a secure context (HTTPS or localhost)
+      if (!window.isSecureContext) {
+        console.error('Notifications require a secure context (HTTPS or localhost)');
+        return false;
+      }
+
+      // Check if Notification constructor is available
+      if (typeof Notification === 'undefined') {
+        console.error('Notification constructor not available');
+        return false;
+      }
+
+      // Check if Notification constructor is properly available
+      if (!Notification.prototype) {
+        console.error('Notification prototype not available');
+        return false;
+      }
+
+      // Try to create notification with error handling
+      let notification;
+      try {
+        notification = new Notification(title, {
+          body: body,
+          icon: '/favicon.ico',
+          tag: 'new-content',
+          data: { url: url || '/' }
+        });
+      } catch (constructorError) {
+        console.error('Notification constructor failed:', constructorError);
+        // Try alternative approach using service worker
+        if ('serviceWorker' in navigator) {
+          navigator.serviceWorker.ready.then(registration => {
+            registration.showNotification(title, {
+              body: body,
+              icon: '/favicon.ico',
+              tag: 'new-content',
+              data: { url: url || '/' }
+            });
+          });
+          return true;
+        }
+        return false;
+      }
 
       notification.onclick = () => {
         notification.close();
