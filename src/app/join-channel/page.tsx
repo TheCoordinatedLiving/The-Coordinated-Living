@@ -11,7 +11,7 @@ export default function JoinChannelPage() {
   const router = useRouter();
   const [isVisible, setIsVisible] = useState(false);
   const [showEmailModal, setShowEmailModal] = useState(false);
-  const [showMobileMoneyModal, setShowMobileMoneyModal] = useState(false);
+  // const [showMobileMoneyModal, setShowMobileMoneyModal] = useState(false);
   const [toast, setToast] = useState<{
     message: string;
     type: 'success' | 'error';
@@ -69,9 +69,9 @@ export default function JoinChannelPage() {
     setShowEmailModal(true);
   };
 
-  const handleMobileMoneyClick = () => {
-    setShowMobileMoneyModal(true);
-  };
+  // const handleMobileMoneyClick = () => {
+  //   setShowMobileMoneyModal(true);
+  // };
 
 // const paystackSecretKey = process.env.PAYSTACK_SECRET_KEY  || 'sk_test_e85988fa08e6452ebc108c7cf0f8aef6f206ca51';
 
@@ -86,7 +86,7 @@ export default function JoinChannelPage() {
         body: JSON.stringify({
           email: email,
           phoneNumber: phoneNumber,
-          planCode: 'PLN_mic7hyck7v0dfxk' // Your actual Paystack plan code
+          planCode: 'PLN_v93tl7igiyswmu6' // Live Paystack plan code
         }),
       });
 
@@ -113,57 +113,57 @@ export default function JoinChannelPage() {
     setShowEmailModal(false);
   };
 
-  const handleMobileMoneyModalClose = () => {
-    setShowMobileMoneyModal(false);
-  };
+  // const handleMobileMoneyModalClose = () => {
+  //   setShowMobileMoneyModal(false);
+  // };
 
-  const handleMobileMoneySubmit = async (email: string, phoneNumber: string) => {
-    try {
-      // Call the normal transaction API for mobile money (supports MoMo)
-      const response = await fetch('/api/paystack/initialize', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email: email, // This will be empty string for mobile money
-          phoneNumber: phoneNumber,
-          amount: (PAYMENT_AMOUNT * 100).toString(), // Convert to kobo
-          type: 'channel',
-          paymentType: 'momo'
-        }),
-      });
+  // const handleMobileMoneySubmit = async (email: string, phoneNumber: string) => {
+  //   try {
+  //     // Call the normal transaction API for mobile money (supports MoMo)
+  //     const response = await fetch('/api/paystack/initialize', {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify({
+  //         email: email, // This will be empty string for mobile money
+  //         phoneNumber: phoneNumber,
+  //         amount: (PAYMENT_AMOUNT * 100).toString(), // Convert to kobo
+  //         type: 'channel',
+  //         paymentType: 'momo'
+  //       }),
+  //     });
 
-      const data = await response.json();
+  //     const data = await response.json();
 
-      if (data.status && data.data.authorization_url) {
-        // Store channel payment data for success page
-        const channelData = {
-          amount: PAYMENT_AMOUNT,
-          email: email,
-          phoneNumber: phoneNumber
-        };
-        sessionStorage.setItem('channelData', JSON.stringify(channelData));
-        sessionStorage.setItem('cameFromChannel', 'true');
+  //     if (data.status && data.data.authorization_url) {
+  //       // Store channel payment data for success page
+  //       const channelData = {
+  //         amount: PAYMENT_AMOUNT,
+  //         email: email,
+  //         phoneNumber: phoneNumber
+  //       };
+  //       sessionStorage.setItem('channelData', JSON.stringify(channelData));
+  //       sessionStorage.setItem('cameFromChannel', 'true');
         
-        // Also store in localStorage as backup
-        localStorage.setItem('channelData', JSON.stringify(channelData));
-        localStorage.setItem('cameFromChannel', 'true');
+  //       // Also store in localStorage as backup
+  //       localStorage.setItem('channelData', JSON.stringify(channelData));
+  //       localStorage.setItem('cameFromChannel', 'true');
         
-        // Redirect to Paystack checkout
-        window.location.href = data.data.authorization_url;
-      } else {
-        throw new Error(data.message || 'Failed to initialize payment');
-      }
-    } catch (error) {
-      console.error('Mobile money payment error:', error);
-      setToast({
-        message: error instanceof Error ? error.message : 'Failed to process payment. Please try again.',
-        type: 'error',
-        isVisible: true
-      });
-    }
-  };
+  //       // Redirect to Paystack checkout
+  //       window.location.href = data.data.authorization_url;
+  //     } else {
+  //       throw new Error(data.message || 'Failed to initialize payment');
+  //     }
+  //   } catch (error) {
+  //     console.error('Mobile money payment error:', error);
+  //     setToast({
+  //       message: error instanceof Error ? error.message : 'Failed to process payment. Please try again.',
+  //       type: 'error',
+  //       isVisible: true
+  //     });
+  //   }
+  // };
 
   const closeToast = () => {
     setToast(prev => ({ ...prev, isVisible: false }));
@@ -293,7 +293,7 @@ export default function JoinChannelPage() {
           </button>
           
           {/* Pay with Mobile Money Link */}
-          <div className="text-center mt-4">
+          {/* <div className="text-center mt-4">
             <button
               onClick={handleMobileMoneyClick}
               className="text-white hover:text-gray-200 underline transition-colors text-sm"
@@ -301,7 +301,7 @@ export default function JoinChannelPage() {
             >
               Pay with Mobile Money
             </button>
-          </div>
+          </div> */}
         </div>
         
         {/* Page content will be added here */}
@@ -317,13 +317,13 @@ export default function JoinChannelPage() {
       />
 
       {/* Mobile Money Modal */}
-      <EmailInputModal
+      {/* <EmailInputModal
         isOpen={showMobileMoneyModal}
         onClose={handleMobileMoneyModalClose}
         onEmailSubmit={handleMobileMoneySubmit}
         amount={PAYMENT_AMOUNT}
         paymentType="momo"
-      />
+      /> */}
 
       {/* Toast */}
       <Toast
