@@ -1,17 +1,18 @@
-name: Check for New Content
+# CRON JOB COMMENTED OUT - NO LONGER NEEDED
+# name: Check for New Content
 
-on:
-  schedule:
-    # Run every 10 minutes
-    - cron: '*/10 * * * *'
-  workflow_dispatch: # Allow manual triggering
+# on:
+#   schedule:
+#     # Run every 10 minutes
+#     - cron: '*/10 * * * *'
+#   workflow_dispatch: # Allow manual triggering
 
-jobs:
-  check-content:
-    runs-on: ubuntu-latest
+# jobs:
+#   check-content:
+#     runs-on: ubuntu-latest
     
-    steps:
-      - name: Check for new content
-        run: |
-          curl -X GET "${{ secrets.SITE_URL }}/api/notifications/check-content" \
-            -H "Authorization: Bearer ${{ secrets.CRON_SECRET }}"
+#     steps:
+#       - name: Check for new content
+#         run: |
+#           curl -X GET "${{ secrets.SITE_URL }}/api/notifications/check-content" \
+#             -H "Authorization: Bearer ${{ secrets.CRON_SECRET }}"
