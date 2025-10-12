@@ -1,5 +1,12 @@
 // CRON JOB COMMENTED OUT - NO LONGER NEEDED
-// import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
+
+// Disabled cron job - returns 404
+export async function GET(request: NextRequest) {
+  return NextResponse.json({ error: 'Cron job disabled' }, { status: 404 });
+}
+
+// Original code commented out below:
 // import { fetchPosts, fetchGuides, AirtablePost, AirtableGuide } from '@/lib/airtable';
 // import { sendNotification } from '@/lib/onesignal';
 

@@ -1,5 +1,12 @@
 // CRON JOB COMMENTED OUT - NO LONGER NEEDED
-// import { NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
+
+// Disabled check-content endpoint - returns 404
+export async function GET() {
+  return NextResponse.json({ error: 'Check content endpoint disabled' }, { status: 404 });
+}
+
+// Original code commented out below:
 // import { fetchPosts, fetchGuides, AirtablePost, AirtableGuide } from '@/lib/airtable';
 
 // // Store the last known content state
