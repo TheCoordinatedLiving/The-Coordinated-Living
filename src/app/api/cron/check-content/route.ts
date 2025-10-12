@@ -1,8 +1,8 @@
 // CRON JOB COMMENTED OUT - NO LONGER NEEDED
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 
 // Disabled cron job - returns 404
-export async function GET(request: NextRequest) {
+export async function GET() {
   return NextResponse.json({ error: 'Cron job disabled' }, { status: 404 });
 }
 
