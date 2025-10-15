@@ -53,6 +53,12 @@ export const metadata: Metadata = {
     siteName: "The Coordinated Living",
     images: [
       {
+        url: "/browser-logo.png",
+        width: 512,
+        height: 512,
+        alt: "THE COORDINATED LIVING Logo",
+      },
+      {
         url: "/coordinated-new.webp",
         width: 1200,
         height: 630,
@@ -64,7 +70,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "THE COORDINATED LIVING",
     description: "Welcome to a space dedicated to helping you find hope and guidance in life. Discover resources to help you build a closer relationship with the Lord, find purpose, and anchor your life in faith that provides lasting hope.",
-    images: ["/coordinated-new.webp"],
+    images: ["/browser-logo.png", "/coordinated-new.webp"],
   },
   robots: {
     index: true,
@@ -93,6 +99,10 @@ export default function RootLayout({
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="preload" href="/coordinated-new.webp" as="image" type="image/webp" />
         <link rel="icon" href="/coordinated.ico" />
+        {/* Logo meta tags for search engines */}
+        <meta property="og:logo" content="/browser-logo.png" />
+        <meta name="logo" content="/browser-logo.png" />
+        <link rel="logo" href="/browser-logo.png" />
         {/* OneSignal SDK */}
         <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
         <script

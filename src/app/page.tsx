@@ -11,9 +11,6 @@ import FullTermsContent from '../components/FullTermsContent';
 import AskAQuestion from './windows/AskAQuestion';
 import DonationModal from '../components/DonationModal';
 import ComingSoonModal from '../components/ComingSoonModal';
-// import SimpleNotificationModal from '../components/SimpleNotificationModal';
-// import { useSimpleNotificationModal } from '../hooks/useSimpleNotificationModal';
-import { useContentNotifications } from '../hooks/useContentNotifications';
 
 const Loader = () => {
   const logoRef = useRef(null);
@@ -662,11 +659,6 @@ const Page = () => {
   const [showHomepage, setShowHomepage] = useState(false);
   const [homepageVisible, setHomepageVisible] = useState(false);
   
-  // Notification modal
-  // const { showModal: showNotificationModal, closeModal: closeNotificationModal } = useSimpleNotificationModal();
-  
-  // Check for new content and send notifications
-  useContentNotifications();
   
   
   // Handle skipLoader parameter for smooth navigation from mobile pages
@@ -1646,11 +1638,6 @@ const Page = () => {
         >
           <NewHomepage onPourIntoCupClick={() => setIsDonationModalOpen(true)} />
           
-          {/* Simple Notification Modal - Mobile */}
-          {/* <SimpleNotificationModal
-            isOpen={showNotificationModal}
-            onClose={closeNotificationModal}
-          /> */}
         </div>
       )}
       
@@ -3898,11 +3885,6 @@ const Page = () => {
             </div>
           )}
 
-          {/* Simple Notification Modal - Desktop */}
-          {/* <SimpleNotificationModal
-            isOpen={showNotificationModal}
-            onClose={closeNotificationModal}
-          /> */}
 
           </div>
         </div>
