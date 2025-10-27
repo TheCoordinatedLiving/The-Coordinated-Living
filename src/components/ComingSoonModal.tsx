@@ -9,15 +9,11 @@ interface ComingSoonModalProps {
 }
 
 export default function ComingSoonModal({ isOpen, onClose, featureName }: ComingSoonModalProps) {
-  const [isVisible, setIsVisible] = useState(false);
-
   useEffect(() => {
     if (isOpen) {
-      setIsVisible(true);
       // Prevent body scroll when modal is open
       document.body.style.overflow = 'hidden';
     } else {
-      setIsVisible(false);
       // Restore body scroll when modal is closed
       document.body.style.overflow = 'unset';
     }
