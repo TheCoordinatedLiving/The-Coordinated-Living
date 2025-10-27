@@ -10,6 +10,7 @@ import PostTemplate from '../components/PostTemplate';
 import FullTermsContent from '../components/FullTermsContent';
 import AskAQuestion from './windows/AskAQuestion';
 import DonationModal from '../components/DonationModal';
+import ComingSoonModal from '../components/ComingSoonModal';
 
 const Loader = () => {
   const logoRef = useRef(null);
@@ -139,6 +140,10 @@ const NewHomepage = ({ onPourIntoCupClick }: { onPourIntoCupClick: () => void })
   const [showTermsModal, setShowTermsModal] = useState(false);
   const [postsCount, setPostsCount] = useState(0);
   
+  // Coming Soon modal state
+  const [showComingSoonModal, setShowComingSoonModal] = useState(false);
+  const [comingSoonFeature, setComingSoonFeature] = useState('');
+  
   // Fetch posts count from Airtable
   useEffect(() => {
     const fetchPostsCount = async () => {
@@ -166,14 +171,21 @@ const NewHomepage = ({ onPourIntoCupClick }: { onPourIntoCupClick: () => void })
     }
   };
 
-  // Join Channel navigation handler
+  // Coming Soon modal handlers
   const handleJoinChannelClick = () => {
-    router.push('/join-channel');
+    // Show Coming Soon modal instead of navigating
+    setComingSoonFeature('Join Our Channels');
+    setShowComingSoonModal(true);
   };
 
   const handlePourIntoCupClick = () => {
     // Open donation modal for actual donations
     onPourIntoCupClick();
+  };
+
+  const handleComingSoonModalClose = () => {
+    setShowComingSoonModal(false);
+    setComingSoonFeature('');
   };
 
   // Donation functionality handled in main Page component
@@ -545,6 +557,13 @@ const NewHomepage = ({ onPourIntoCupClick }: { onPourIntoCupClick: () => void })
           </div>
         </div>
       )}
+
+      {/* Coming Soon Modal */}
+      <ComingSoonModal
+        isOpen={showComingSoonModal}
+        onClose={handleComingSoonModalClose}
+        featureName={comingSoonFeature}
+      />
     </div>
   );
 };
@@ -581,6 +600,10 @@ const Page = () => {
   
   // Donation modal state
   const [isDonationModalOpen, setIsDonationModalOpen] = useState(false);
+  
+  // Coming Soon modal state
+  const [showComingSoonModal, setShowComingSoonModal] = useState(false);
+  const [comingSoonFeature, setComingSoonFeature] = useState('');
   
   const handleDonationModalClose = () => {
     setIsDonationModalOpen(false);
@@ -1584,14 +1607,21 @@ const Page = () => {
 
   // Donation modal handlers (already defined above)
 
-  // Join Channel navigation handler
+  // Coming Soon modal handlers
   const handleJoinChannelClick = () => {
-    router.push('/join-channel');
+    // Show Coming Soon modal instead of navigating
+    setComingSoonFeature('Join Our Channels');
+    setShowComingSoonModal(true);
   };
 
   const handlePourIntoCupClick = () => {
     // Open donation modal for actual donations
     setIsDonationModalOpen(true);
+  };
+
+  const handleComingSoonModalClose = () => {
+    setShowComingSoonModal(false);
+    setComingSoonFeature('');
   };
 
 
@@ -5490,6 +5520,13 @@ const Page = () => {
       <DonationModal
         isOpen={isDonationModalOpen}
         onClose={handleDonationModalClose}
+      />
+
+      {/* Coming Soon Modal */}
+      <ComingSoonModal
+        isOpen={showComingSoonModal}
+        onClose={handleComingSoonModalClose}
+        featureName={comingSoonFeature}
       />
 
     </div>
