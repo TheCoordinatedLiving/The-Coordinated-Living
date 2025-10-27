@@ -131,6 +131,7 @@ const WelcomeScreen = ({ onEnterClick }: { onEnterClick: () => void }) => {
 
 // New Homepage Component
 const NewHomepage = ({ onPourIntoCupClick }: { onPourIntoCupClick: () => void }) => {
+  const router = useRouter();
   const homepageRef = useRef<HTMLDivElement>(null);
   const statusBarRef = useRef<HTMLDivElement>(null);
   const iconsRef = useRef<HTMLDivElement>(null);
