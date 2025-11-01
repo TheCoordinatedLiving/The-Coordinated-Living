@@ -10,7 +10,7 @@ interface PaymentSuccessProps {
 export default function PaymentSuccess({ onClose }: PaymentSuccessProps) {
   const [copied, setCopied] = useState(false);
 
-  // WhatsApp channel link - you'll need to replace this with your actual channel link
+  // WhatsApp community link - you'll need to replace this with your actual community link
   const whatsappChannelLink = process.env.NEXT_PUBLIC_WHATSAPP_CHANNEL_LINK || "https://chat.whatsapp.com/YOUR_CHANNEL_LINK";
 
   const copyToClipboard = async () => {
@@ -53,16 +53,16 @@ export default function PaymentSuccess({ onClose }: PaymentSuccessProps) {
         <div className="text-center mb-8">
           <h2 className="text-2xl font-bold text-gray-900 mb-2">Payment Successful!</h2>
           <p className="text-gray-600">
-            Welcome to our exclusive channel! You can now join our WhatsApp community.
+            Welcome to our exclusive community! You can now join our WhatsApp community.
           </p>
         </div>
 
         {/* WhatsApp Join Section */}
         <div className="space-y-4">
           <div className="bg-gray-50 rounded-lg p-4">
-            <h3 className="font-semibold text-gray-900 mb-2">Join Our WhatsApp Channel</h3>
+            <h3 className="font-semibold text-gray-900 mb-2">Join Our WhatsApp Community</h3>
             <p className="text-sm text-gray-600 mb-4">
-              Click the button below to join our exclusive WhatsApp channel and start receiving your content.
+              Click the button below to join our exclusive WhatsApp community and start receiving your content.
             </p>
             
             {/* WhatsApp Button */}
@@ -77,7 +77,7 @@ export default function PaymentSuccess({ onClose }: PaymentSuccessProps) {
                 height={24}
                 className="w-6 h-6"
               />
-              <span className="font-semibold">Join WhatsApp Channel</span>
+              <span className="font-semibold">Join WhatsApp Community</span>
             </button>
           </div>
 
@@ -96,7 +96,7 @@ export default function PaymentSuccess({ onClose }: PaymentSuccessProps) {
         {/* Additional Info */}
         <div className="mt-6 p-4 bg-blue-50 rounded-lg">
           <p className="text-sm text-blue-800">
-            <strong>Note:</strong> If you have any issues joining the channel, please contact our support team.
+            <strong>Note:</strong> If you have any issues joining the community, please contact our support team.
           </p>
         </div>
       </div>

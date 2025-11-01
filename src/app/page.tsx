@@ -174,7 +174,7 @@ const NewHomepage = ({ onPourIntoCupClick }: { onPourIntoCupClick: () => void })
   // Coming Soon modal handlers
   const handleJoinChannelClick = () => {
     // Show Coming Soon modal instead of navigating
-    setComingSoonFeature('Join Our Channels');
+    setComingSoonFeature('Join Our Community');
     setShowComingSoonModal(true);
   };
 
@@ -807,7 +807,7 @@ const Page = () => {
   // Ultra-wide screen detection - Optimized to reduce flickering
   const [isUltraWide, setIsUltraWide] = useState(false);
   
-  const mobileItems = ['ABOUT ME', 'POST', 'ASK ME A QUESTION', 'JOIN OUR CHANNEL', 'GUIDES', 'POUR INTO MY CUP', 'TERMS AND CONDITIONS'];
+  const mobileItems = ['ABOUT ME', 'POST', 'ASK ME A QUESTION', 'JOIN OUR COMMUNITY', 'GUIDES', 'POUR INTO MY CUP', 'TERMS AND CONDITIONS'];
   
   // Mobile navigation state
   const [currentMobileIndex, setCurrentMobileIndex] = useState(0);
@@ -1609,7 +1609,7 @@ const Page = () => {
   // Coming Soon modal handlers
   const handleJoinChannelClick = () => {
     // Show Coming Soon modal instead of navigating
-    setComingSoonFeature('Join Our Channels');
+    setComingSoonFeature('Join Our Community');
     setShowComingSoonModal(true);
   };
 
@@ -1908,20 +1908,20 @@ const Page = () => {
                           </div>
                         </div>
                       </div>
-                    ) : activeMobileItem === 'JOIN OUR CHANNEL' ? (
+                    ) : activeMobileItem === 'JOIN OUR COMMUNITY' ? (
                                               <div className="w-full h-full flex flex-col">
-                          {/* Banner Image with JOIN OUR CHANNEL text */}
+                          {/* Banner Image with JOIN OUR COMMUNITY text */}
                          <div className="relative w-full md:h-[600px] lg:h-[700px] tablet-banner ipad-banner" style={{ height: 'clamp(300px, 45vh, 500px)', width: '100vw', marginLeft: 'calc(-50vw + 50%)', marginRight: 'calc(-50vw + 50%)', position: 'absolute', top: 'calc(-50vh + 50% - clamp(150px, 22.5vh, 250px))' }}>
                           <Image
                             src="/about-me-mobile-banner-2.png"
-                            alt="Join Our Channel Banner"
+                            alt="Join Our Community Banner"
                             fill
                             className="object-cover"
                           />
-                          {/* CHANNEL text overlay */}
+                          {/* COMMUNITY text overlay */}
                           <div className="absolute bottom-0 left-0 right-0 flex items-center justify-center md:bottom-4 lg:bottom-8 tablet-title ipad-title" style={{ paddingBottom: '20%', paddingTop: '10%' }}>
                             <h1 className="text-white text-base xs:text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold px-2 xs:px-3 sm:px-4 text-center" style={{ fontFamily: 'Amita, serif' }}>
-                              CHANNEL
+                              COMMUNITY
                             </h1>
                           </div>
                         </div>
@@ -1950,10 +1950,10 @@ const Page = () => {
                             {/* Body content - Roboto font */}
                             <div className="space-y-4 xs:space-y-6 text-sm xs:text-base leading-relaxed pb-20 xs:pb-32" style={{ fontFamily: 'Roboto, sans-serif' }}>
                               <p>
-                                Are you longing for an in-depth exploration of God&apos;s Word and its application to the complexities of life? Our videos, delivered through an exclusive paid WhatsApp channel, provide detailed teaching and deeper insights. Join our community to journey further into understanding how His grace abounds even in the most profound changing scenes of life and cultivate an intimate relationship with the Lord.
+                                Are you longing for an in-depth exploration of God&apos;s Word and its application to the complexities of life? Our videos, delivered through an exclusive paid WhatsApp community, provide detailed teaching and deeper insights. Join our community to journey further into understanding how His grace abounds even in the most profound changing scenes of life and cultivate an intimate relationship with the Lord.
                               </p>
                               
-                              {/* Join Channel Button */}
+                              {/* Join Community Button */}
                               <div className="flex justify-center pt-8">
                                 <button 
                                   className="flex items-center space-x-3 px-8 py-3 bg-white hover:bg-gray-100 font-bold rounded-full transition-colors duration-200 shadow-lg"
@@ -1967,7 +1967,7 @@ const Page = () => {
                                     height={24}
                                     className="w-6 h-6"
                                   />
-                                  <span className="text-sm xs:text-base">Join Channel</span>
+                                  <span className="text-sm xs:text-base">Join Community</span>
                                 </button>
                               </div>
                             </div>
@@ -2287,10 +2287,10 @@ const Page = () => {
                         className={`w-6 h-6 md:w-7 md:h-7 tab-icon ${isActive ? 'active' : ''}`}
                       />
                     ),
-                    'JOIN OUR CHANNEL': (
+                    'JOIN OUR COMMUNITY': (
                       <Image
                         src="/join-channel-tab.svg"
-                        alt="Join Our Channel"
+                        alt="Join Our Community"
                         width={24}
                         height={24}
                         className={`w-6 h-6 md:w-7 md:h-7 tab-icon ${isActive ? 'active' : ''}`}
@@ -3616,10 +3616,10 @@ const Page = () => {
                         }
                       }}
                     >
-                      Are you longing for an in-depth exploration of God&apos;s Word and its application to the complexities of life? Our videos, delivered through an exclusive paid WhatsApp channel, provide detailed teaching and deeper insights. Join our community to journey further into understanding how His grace abounds even in the most profound changing scenes of life and cultivate an intimate relationship with the Lord.
+                      Are you longing for an in-depth exploration of God&apos;s Word and its application to the complexities of life? Our videos, delivered through an exclusive paid WhatsApp community, provide detailed teaching and deeper insights. Join our community to journey further into understanding how His grace abounds even in the most profound changing scenes of life and cultivate an intimate relationship with the Lord.
                     </p>
                     
-                    {/* Join Channel Button */}
+                    {/* Join Community Button */}
                     <div 
                       className="flex justify-start opacity-0 video-button"
                       ref={(el) => {
@@ -3644,7 +3644,7 @@ const Page = () => {
                     >
                       <Image
                         src="/join-channel-new.svg"
-                        alt="Join Channel"
+                        alt="Join Community"
                         width={200}
                         height={60}
                         className="cursor-pointer hover:opacity-80 transition-opacity"
@@ -3724,7 +3724,7 @@ const Page = () => {
               >
                 Return to Desk
               </button>
-              {/* Modal content - split layout like join channel */}
+              {/* Modal content - split layout like join community */}
               <div className="absolute inset-0 flex items-center justify-center p-16">
                 <div className="relative z-10 flex items-center justify-between w-full max-w-6xl">
                   {/* Left side - Content */}

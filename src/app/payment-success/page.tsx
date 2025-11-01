@@ -59,7 +59,7 @@ function PaymentSuccessContent() {
   console.log('Reference:', reference);
   console.log('Trxref:', trxref);
 
-  // WhatsApp channel link
+  // WhatsApp community link
   const whatsappChannelLink = process.env.NEXT_PUBLIC_WHATSAPP_CHANNEL_LINK || "https://chat.whatsapp.com/YOUR_CHANNEL_LINK";
 
   // Handle redirect when shouldRedirect is true
@@ -333,7 +333,7 @@ function PaymentSuccessContent() {
   console.log('paymentData?.type:', paymentData?.type);
   console.log('isDonation:', isDonation);
   console.log('Will show donation content:', isDonation);
-  console.log('Will show channel content:', !isDonation);
+  console.log('Will show community content:', !isDonation);
 
   // Get donation amount and currency from payment data or stored data
   const getDonationData = () => {
@@ -452,7 +452,7 @@ function PaymentSuccessContent() {
     );
   }
 
-  // Render channel success content (default)
+  // Render community success content (default)
   return (
     <div className="min-h-screen flex items-center justify-center p-4" style={{ backgroundColor: '#2F4C6C' }}>
       <div className="max-w-lg w-full mx-4 text-center">
@@ -483,15 +483,15 @@ function PaymentSuccessContent() {
         {/* Welcome Message */}
         <div className="mb-8">
           <p className={`text-white text-lg leading-relaxed`}>
-            <span className={`${amita.className} font-bold`}>Welcome!</span> <span className={`${roboto.className}`}>You&apos;re officially part of a community dedicated to navigating life&apos;s struggles and finding purpose in Christ. I&apos;m honored to have you here. This channel is for us to walk together in faith, sharing insights and growing closer to the Lord.</span>
+            <span className={`${amita.className} font-bold`}>Welcome!</span> <span className={`${roboto.className}`}>You&apos;re officially part of a community dedicated to navigating life&apos;s struggles and finding purpose in Christ. I&apos;m honored to have you here. This community is for us to walk together in faith, sharing insights and growing closer to the Lord.</span>
           </p>
         </div>
 
 
-        {/* Channel Information */}
+        {/* Community Information */}
         <div className="mb-8">
           <p className={`${roboto.className} text-white text-lg leading-relaxed`}>
-            Since this is an exclusive community, please remember that the channel link is just for you. Please do not share it with others. Your support allows me to create this content, and keeping the channel private helps us honour everyone&apos;s investment.
+            Since this is an exclusive community, please remember that the community link is just for you. Please do not share it with others. Your support allows me to create this content, and keeping the community private helps us honour everyone&apos;s investment.
           </p>
         </div>
 
@@ -502,13 +502,13 @@ function PaymentSuccessContent() {
           </p>
         </div>
 
-        {/* Join Channel Button */}
+        {/* Join Community Button */}
         <div className="text-center">
           <button
             onClick={openWhatsApp}
             className="w-full py-4 px-6 bg-white hover:bg-gray-100 rounded-full transition-all duration-200 transform hover:scale-105 shadow-lg mb-4"
           >
-            <span className={`${roboto.className} font-medium text-lg`} style={{ color: '#2F4C6C' }}>Join Channel Now</span>
+            <span className={`${roboto.className} font-medium text-lg`} style={{ color: '#2F4C6C' }}>Join Community Now</span>
           </button>
           
           

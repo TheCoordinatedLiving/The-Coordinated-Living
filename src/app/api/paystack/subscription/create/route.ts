@@ -63,7 +63,7 @@ export async function POST(request: NextRequest) {
             {
               display_name: "Payment Type",
               variable_name: "payment_type",
-              value: "Join Channel Subscription"
+              value: "Join Community Subscription"
             },
             ...(phoneNumber && phoneNumber.trim() !== '' ? [{
               display_name: "Phone Number",

@@ -90,7 +90,7 @@ export async function POST(request: NextRequest) {
             {
               display_name: "Payment Type",
               variable_name: "payment_type",
-              value: type === 'donation' ? 'Pour into my cup' : 'Join Channel'
+              value: type === 'donation' ? 'Pour into my cup' : 'Join Community'
             },
             {
               display_name: "Payment Method",

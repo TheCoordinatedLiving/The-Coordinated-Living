@@ -68,9 +68,9 @@ export default function ComingSoonModal({ isOpen, onClose, featureName }: Coming
           </h2>
 
           {/* Feature-specific message */}
-          {featureName === 'Join Our Channels' && (
+          {featureName === 'Join Our Community' && (
             <p className="text-sm text-gray-500 mb-6">
-              We&apos;re setting up our exclusive WhatsApp channels. You&apos;ll be able to join our community soon!
+              We&apos;re setting up our exclusive WhatsApp community. You&apos;ll be able to join our community soon!
             </p>
           )}
 

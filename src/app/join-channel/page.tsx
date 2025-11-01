@@ -206,7 +206,7 @@ export default function JoinChannelPage() {
         >
           <Image 
             src="/join-channel-mobile-logo.svg" 
-            alt="Channel Logo" 
+            alt="Community Logo" 
             width={64}
             height={64}
             className="w-16 h-16 animate-spin"
@@ -221,7 +221,7 @@ export default function JoinChannelPage() {
         
         {/* Information Sections */}
         <div className="w-full max-w-md space-y-6">
-          {/* About the Channel */}
+          {/* About the Community */}
           <div className="flex items-center space-x-4">
             <div className="flex-shrink-0 w-12 h-12 flex items-center justify-center">
               {animations.infoJoinChannel && (
@@ -234,9 +234,9 @@ export default function JoinChannelPage() {
               )}
             </div>
             <div className="flex-1">
-              <h3 className="text-white text-lg font-bold mb-2">About the Channel</h3>
+              <h3 className="text-white text-lg font-bold mb-2">About the Community</h3>
               <p className="text-white text-sm opacity-90 leading-relaxed">
-                Join our Paid WhatsApp channel for in-depth exploration of God&apos;s Word and its application to the complexities of life.
+                Join our Paid WhatsApp community for in-depth exploration of God&apos;s Word and its application to the complexities of life.
               </p>
             </div>
           </div>
@@ -282,7 +282,7 @@ export default function JoinChannelPage() {
           </div>
         </div>
         
-        {/* Join Our Channel Button */}
+        {/* Join Our Community Button */}
         <div className="w-full max-w-md mt-8">
           <button
             className="w-full py-4 px-6 rounded-full font-bold text-lg transition-all duration-200 hover:opacity-90 active:scale-95"
