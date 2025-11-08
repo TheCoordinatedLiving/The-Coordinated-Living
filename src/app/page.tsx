@@ -171,11 +171,10 @@ const NewHomepage = ({ onPourIntoCupClick }: { onPourIntoCupClick: () => void })
     }
   };
 
-  // Coming Soon modal handlers
+  // Join Channel handler
   const handleJoinChannelClick = () => {
-    // Show Coming Soon modal instead of navigating
-    setComingSoonFeature('Join Our Community');
-    setShowComingSoonModal(true);
+    // Navigate to join channel page
+    router.push('/join-channel');
   };
 
   const handlePourIntoCupClick = () => {
@@ -589,6 +588,7 @@ const NewHomepage = ({ onPourIntoCupClick }: { onPourIntoCupClick: () => void })
 // };
 
 const Page = () => {
+  const router = useRouter();
   const [isLoaded, setIsLoaded] = useState(false);
   const [experienceVisible, setExperienceVisible] = useState(false);
   const [laptopZoomed, setLaptopZoomed] = useState(false);
@@ -1606,11 +1606,10 @@ const Page = () => {
 
   // Donation modal handlers (already defined above)
 
-  // Coming Soon modal handlers
+  // Join Channel handler
   const handleJoinChannelClick = () => {
-    // Show Coming Soon modal instead of navigating
-    setComingSoonFeature('Join Our Community');
-    setShowComingSoonModal(true);
+    // Navigate to join channel page
+    router.push('/join-channel');
   };
 
   const handlePourIntoCupClick = () => {
