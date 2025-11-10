@@ -104,7 +104,7 @@ export default function EmailInputModal({
           <p className="text-gray-600">
             {paymentType === 'momo' 
               ? `Enter your WhatsApp number to proceed with Mobile Money payment of`
-              : `Enter your email address to proceed with payment of`
+              : `⁠Enter your details below to proceed with payment of`
             } <span className="font-bold" style={{ color: '#2F4C6C' }}>GHS {amount}</span>
           </p>
         </div>
@@ -164,7 +164,7 @@ export default function EmailInputModal({
           <p className="text-sm" style={{ color: '#FFFFFF' }}>
             <strong>Note:</strong> {paymentType === 'momo' 
               ? 'You will receive a prompt on your mobile device to complete the Mobile Money payment.'
-              : 'You will be redirected to Paystack\'s secure payment page to complete your transaction.'
+              : 'For your security,you will be redirected to Paystack\'s secure payment page to complete your transaction.'
             }
           </p>
         </div>
