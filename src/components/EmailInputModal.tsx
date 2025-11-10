@@ -98,14 +98,12 @@ export default function EmailInputModal({
 
         {/* Header */}
         <div className="text-center mb-8">
-          <h2 className="text-2xl font-bold mb-2" style={{ fontFamily: 'Amita, cursive', color: '#2F4C6C' }}>
-            {paymentType === 'momo' ? 'Complete Your Mobile Money Payment' : 'Complete Your Payment'}
-          </h2>
           <p className="text-gray-600">
             {paymentType === 'momo' 
               ? `Enter your WhatsApp number to proceed with Mobile Money payment of`
-              : `⁠Enter your details below to proceed with payment of`
-            } <span className="font-bold" style={{ color: '#2F4C6C' }}>GHS {amount}</span>
+              : `Please enter your details below`
+            }
+            {paymentType === 'momo' && <span className="font-bold" style={{ color: '#2F4C6C' }}> GHS {amount}</span>}
           </p>
         </div>
 
@@ -164,7 +162,7 @@ export default function EmailInputModal({
           <p className="text-sm" style={{ color: '#FFFFFF' }}>
             <strong>Note:</strong> {paymentType === 'momo' 
               ? 'You will receive a prompt on your mobile device to complete the Mobile Money payment.'
-              : 'For your security,you will be redirected to Paystack\'s secure payment page to complete your transaction.'
+              : 'For your security, you will be redirected to Paystack to complete transaction.'
             }
           </p>
         </div>
