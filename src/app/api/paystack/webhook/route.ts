@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import crypto from 'crypto';
 import { createOrUpdateSubscriber } from '@/lib/airtable';
+import { createOrUpdateSubscription } from '@/lib/airtable-subscriptions';
 
 export async function POST(request: NextRequest) {
   try {
@@ -61,7 +62,7 @@ export async function POST(request: NextRequest) {
         paymentType: paymentType
       });
 
-      // Sync transaction to Airtable
+      // Sync transaction to Airtable - create both subscriber and subscription records
       try {
         const subscriberData = {
           'Email': data.customer?.email || '',
@@ -80,7 +81,27 @@ export async function POST(request: NextRequest) {
           'Created At': data.created_at,
         };
 
-        await createOrUpdateSubscriber(subscriberData);
+        // Create/update subscriber record
+        const subscriberResult = await createOrUpdateSubscriber(subscriberData);
+        
+        // If this is a subscription payment, also create a subscription record
+        if (data.plan?.plan_code && subscriberResult?.id) {
+          // Calculate expiration date (30 days for monthly, adjust as needed)
+          const expirationDate = new Date();
+          expirationDate.setDate(expirationDate.getDate() + 30);
+          
+          await createOrUpdateSubscription({
+            'Name': `${subscriberData['Full Name']} - ${data.plan.plan_code}`,
+            'Email': data.customer?.email || '',
+            'Whatsapp Number': phoneNumberField?.value || data.customer?.phone || '',
+            'Subscription Package': data.plan.plan_code, // Will be empty if not a valid option
+            'Amount Paid': data.amount / 100,
+            'Expiration Date': expirationDate.toISOString(),
+          }, subscriberResult.id);
+          
+          console.log('Subscription record created in Airtable');
+        }
+        
         console.log('Transaction synced to Airtable:', data.reference);
       } catch (error) {
         console.error('Error syncing transaction to Airtable:', error);
@@ -180,7 +201,7 @@ export async function POST(request: NextRequest) {
         status: data.status
       });
 
-      // Sync subscription to Airtable
+      // Sync subscription to Airtable - create both subscriber and subscription records
       try {
         const subscriberData = {
           'Email': data.customer?.email || '',
@@ -198,7 +219,34 @@ export async function POST(request: NextRequest) {
           'Created At': data.created_at,
         };
 
-        await createOrUpdateSubscriber(subscriberData);
+        // Create/update subscriber record
+        const subscriberResult = await createOrUpdateSubscriber(subscriberData);
+        
+        // Create subscription record
+        if (subscriberResult?.id) {
+          // Calculate expiration date based on plan interval
+          const expirationDate = new Date();
+          if (data.plan?.interval === 'monthly') {
+            expirationDate.setMonth(expirationDate.getMonth() + 1);
+          } else if (data.plan?.interval === 'yearly') {
+            expirationDate.setFullYear(expirationDate.getFullYear() + 1);
+          } else {
+            // Default to 30 days
+            expirationDate.setDate(expirationDate.getDate() + 30);
+          }
+          
+          await createOrUpdateSubscription({
+            'Name': `${subscriberData['Full Name']} - ${data.plan?.plan_code || 'Subscription'}`,
+            'Email': data.customer?.email || '',
+            'Whatsapp Number': data.customer?.phone || data.customer?.international_format_phone || '',
+            'Subscription Package': data.plan?.plan_code || '', // Will be empty if not a valid option
+            'Amount Paid': data.amount / 100,
+            'Expiration Date': expirationDate.toISOString(),
+          }, subscriberResult.id);
+          
+          console.log('Subscription record created in Airtable');
+        }
+        
         console.log('Subscription synced to Airtable:', data.subscription_code);
       } catch (error) {
         console.error('Error syncing subscription to Airtable:', error);

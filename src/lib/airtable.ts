@@ -11,7 +11,7 @@ if (!apiKey || !baseId) {
 // Lazy initialization of Airtable base
 let base: Airtable.Base | null = null;
 
-const getAirtableBase = () => {
+export const getAirtableBase = () => {
   if (!base && apiKey && baseId) {
     base = new Airtable({
       apiKey: apiKey,
@@ -292,26 +292,38 @@ export const fetchGuideById = async (id: string): Promise<AirtableGuide | null> 
   }
 };
 
-// Subscriber and Subscription types
+// Subscriber and Subscription types - Updated to match actual Airtable fields
 export interface AirtableSubscriber {
   id?: string;
   fields: {
+    'Name'?: string;
     'Email'?: string;
-    'Phone Number'?: string;
-    'Full Name'?: string;
-    'Transaction Reference'?: string;
-    'Amount'?: number;
-    'Currency'?: string;
-    'Status'?: string;
-    'Payment Type'?: string;
-    'Paid At'?: string;
-    'Subscription Code'?: string;
-    'Plan Code'?: string;
-    'Customer Code'?: string;
+    'WhatsApp Number'?: string;
+    'Subscription Status'?: string; // Formula field - read only
+    'Whatsapp Status'?: string;
+    'Expiration Date Rollup (from Subscriptions)'?: string; // Rollup field - read only
     'Created At'?: string;
-    'Updated At'?: string;
+    'Last modified'?: string;
+    'Subscriptions'?: string[]; // Link to Subscriptions table
   };
 }
+
+export interface AirtableSubscription {
+  id?: string;
+  fields: {
+    'Name'?: string;
+    'Subscriber'?: string[]; // Link to Subscribers table (array of record IDs)
+    'Email'?: string;
+    'Whatsapp Number'?: string;
+    'Subscription Package'?: string; // Single select
+    'Amount Paid'?: number;
+    'Expiration Date'?: string; // Date field
+    'Created At'?: string;
+  };
+}
+
+// Note: createOrUpdateSubscription is exported from airtable-subscriptions.ts
+// Import it directly from there to avoid circular dependencies
 
 // Function to create or update a subscriber record in Airtable
 export const createOrUpdateSubscriber = async (
@@ -323,64 +335,73 @@ export const createOrUpdateSubscriber = async (
       throw new Error('Airtable not configured - missing API key or Base ID');
     }
 
-    // Check if subscriber exists by email or transaction reference
-    const email = subscriberData['Email'];
-    const transactionRef = subscriberData['Transaction Reference'];
+    // Filter out undefined/null values and convert data types appropriately
+    // This helps avoid INVALID_VALUE_FOR_COLUMN errors
+    const cleanFields: Record<string, any> = {};
     
-    let existingRecord = null;
+    // Helper to format dates for Airtable
+    // Airtable accepts ISO 8601 date strings (YYYY-MM-DDTHH:mm:ss.sssZ) or just date (YYYY-MM-DD)
+    const formatDate = (dateValue: string | Date): string => {
+      if (!dateValue) return '';
+      const date = typeof dateValue === 'string' ? new Date(dateValue) : dateValue;
+      if (isNaN(date.getTime())) return '';
+      // Try ISO string first (full datetime)
+      return date.toISOString();
+    };
     
-    if (email) {
-      const records = await airtableBase('Subscribers')
-        .select({
-          filterByFormula: `{Email} = "${email}"`,
-          maxRecords: 1,
-        })
-        .firstPage();
-      
-      if (records.length > 0) {
-        existingRecord = records[0];
-      }
+    // Map our data fields to actual Airtable Subscribers table field names:
+    // Name, Email, WhatsApp Number, Subscription Status (formula - read only), 
+    // Whatsapp Status, Expiration Date Rollup (rollup - read only),
+    // Created At, Last modified, Subscriptions (link)
+    
+    // Name - from Full Name
+    if (subscriberData['Full Name']) {
+      cleanFields['Name'] = String(subscriberData['Full Name']).trim();
     }
     
-    // If not found by email, try transaction reference
-    if (!existingRecord && transactionRef) {
-      const records = await airtableBase('Subscribers')
-        .select({
-          filterByFormula: `{Transaction Reference} = "${transactionRef}"`,
-          maxRecords: 1,
-        })
-        .firstPage();
-      
-      if (records.length > 0) {
-        existingRecord = records[0];
-      }
+    // Email - add email to Subscribers table
+    if (subscriberData['Email']) {
+      cleanFields['Email'] = String(subscriberData['Email']).trim();
     }
-
-    if (existingRecord) {
-      // Update existing record
-      const updatedRecord = await airtableBase('Subscribers').update([
-        {
-          id: existingRecord.id,
-          fields: {
-            ...subscriberData,
-            'Updated At': new Date().toISOString(),
-          },
-        },
-      ]);
-      
-      return {
-        id: updatedRecord[0].id,
-        fields: updatedRecord[0].fields as AirtableSubscriber['fields'],
-      };
-    } else {
-      // Create new record
+    
+    // WhatsApp Number - from Phone Number
+    if (subscriberData['Phone Number']) {
+      cleanFields['WhatsApp Number'] = String(subscriberData['Phone Number']).trim();
+    }
+    
+    // Whatsapp Status - can be set if provided, otherwise leave empty
+    if (subscriberData['Whatsapp Status']) {
+      cleanFields['Whatsapp Status'] = String(subscriberData['Whatsapp Status']).trim();
+    }
+    
+    // Created At - SKIP this field as it's computed/read-only in Airtable
+    // Airtable automatically sets this when a record is created
+    // Don't try to set it manually
+    
+    // Last modified - SKIP this field as it's auto-managed by Airtable
+    // Don't set it manually, let Airtable handle it
+    
+    // Note: Subscription Status is a formula field (read-only)
+    // Note: Expiration Date Rollup is a rollup field (read-only)
+    // Note: Subscriptions link will be created when we create the subscription record
+    
+    // Ensure Name field is provided (it might be required)
+    if (!cleanFields['Name'] && subscriberData['Full Name']) {
+      cleanFields['Name'] = String(subscriberData['Full Name']).trim();
+    }
+    
+    // If still no name, use email or a default
+    if (!cleanFields['Name']) {
+      cleanFields['Name'] = subscriberData['Email'] || 'Unknown Subscriber';
+    }
+    
+    console.log('Creating subscriber with fields:', JSON.stringify(cleanFields, null, 2));
+    
+    try {
+      // Create new record directly
       const newRecord = await airtableBase('Subscribers').create([
         {
-          fields: {
-            ...subscriberData,
-            'Created At': new Date().toISOString(),
-            'Updated At': new Date().toISOString(),
-          },
+          fields: cleanFields,
         },
       ]);
       
@@ -388,10 +409,50 @@ export const createOrUpdateSubscriber = async (
         id: newRecord[0].id,
         fields: newRecord[0].fields as AirtableSubscriber['fields'],
       };
+    } catch (createError: any) {
+      // Extract detailed error information
+      let errorMessage = 'Unknown error';
+      let fieldName = 'unknown';
+      
+      if (createError?.error === 'UNKNOWN_FIELD_NAME' || createError?.error?.includes('UNKNOWN_FIELD_NAME')) {
+        const errorDetails = createError.errorDetails || createError;
+        fieldName = errorDetails?.fieldName || 'unknown';
+        errorMessage = `Field "${fieldName}" does not exist in Airtable.`;
+      } else if (createError?.error === 'INVALID_VALUE_FOR_COLUMN' || createError?.error?.includes('INVALID_VALUE_FOR_COLUMN')) {
+        const errorDetails = createError.errorDetails || createError;
+        fieldName = errorDetails?.fieldName || errorDetails?.field || 'unknown';
+        errorMessage = `Invalid value for field "${fieldName}". Check data type and format.`;
+        
+        // Log what we tried to send
+        console.error('Failed to create record. Fields attempted:', JSON.stringify(cleanFields, null, 2));
+        console.error('Error details:', JSON.stringify(createError, null, 2));
+      } else {
+        errorMessage = createError?.error || createError?.message || 'Unknown error';
+      }
+      
+      throw new Error(`${errorMessage} Full error: ${JSON.stringify(createError)}`);
     }
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error creating/updating subscriber:', error);
-    throw error;
+    
+    // Extract more detailed error information
+    let errorMessage = 'Unknown error';
+    if (error instanceof Error) {
+      errorMessage = error.message;
+    } else if (error?.error) {
+      errorMessage = error.error;
+    } else if (error?.message) {
+      errorMessage = error.message;
+    } else if (typeof error === 'string') {
+      errorMessage = error;
+    } else if (error?.statusCode) {
+      errorMessage = `Airtable API error (${error.statusCode}): ${error.error || error.message || 'Unknown error'}`;
+    }
+    
+    // Log full error for debugging
+    console.error('Full error details:', JSON.stringify(error, null, 2));
+    
+    throw new Error(errorMessage);
   }
 };
 
