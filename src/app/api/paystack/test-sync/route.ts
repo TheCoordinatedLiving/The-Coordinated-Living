@@ -124,13 +124,14 @@ export async function POST(request: NextRequest) {
           console.error('Error syncing to Airtable:', error);
           
           // Extract detailed error message
+          const err = error as { message?: string; error?: string };
           let errorMessage = 'Unknown error';
           if (error instanceof Error) {
             errorMessage = error.message;
-          } else if (error?.error) {
-            errorMessage = error.error;
-          } else if (error?.message) {
-            errorMessage = error.message;
+          } else if (err?.error) {
+            errorMessage = err.error;
+          } else if (err?.message) {
+            errorMessage = err.message;
           } else if (typeof error === 'string') {
             errorMessage = error;
           }
