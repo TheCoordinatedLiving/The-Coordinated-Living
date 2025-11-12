@@ -225,6 +225,12 @@ export default function TestSyncPage() {
                     
                     const currency = String(r.subscriberData?.Currency || 'GHS');
                     
+                    const status = String(
+                      r.subscriberData?.Status 
+                      || r.subscriptionRecord?.fields?.Status 
+                      || 'N/A'
+                    );
+                    
                     // Debug log
                     console.log('Rendering result:', { email, fullName, rawData: r });
                     
@@ -257,7 +263,7 @@ export default function TestSyncPage() {
                           </div>
                           <div className="text-gray-600 flex items-start">
                             <strong className="text-gray-700 mr-2 min-w-[100px]">Status:</strong> 
-                            <span>{r.subscriberData?.Status || r.subscriptionRecord?.fields?.Status || 'N/A'}</span>
+                            <span>{status}</span>
                           </div>
                         </div>
                         {r.subscriberRecord?.id && (
