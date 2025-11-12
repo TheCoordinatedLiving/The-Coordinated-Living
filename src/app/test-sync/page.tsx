@@ -217,9 +217,11 @@ export default function TestSyncPage() {
                       || 'N/A'
                     );
                     
-                    const amount = r.subscriberData?.Amount 
+                    const amount = String(
+                      r.subscriberData?.Amount 
                       || r.subscriptionRecord?.fields?.['Amount Paid'] 
-                      || 'N/A';
+                      || 'N/A'
+                    );
                     
                     const currency = String(r.subscriberData?.Currency || 'GHS');
                     
