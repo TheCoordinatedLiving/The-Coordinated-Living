@@ -189,31 +189,39 @@ export default function TestSyncPage() {
                 <div className="space-y-2">
                   {result.results.map((r, idx: number) => {
                     // Get email from subscriberData or subscriptionRecord - check both locations
-                    const email = r.subscriberData?.Email 
+                    const email = String(
+                      r.subscriberData?.Email 
                       || r.subscriberData?.['Email']
                       || r.subscriptionRecord?.fields?.Email 
                       || r.subscriptionRecord?.fields?.['Email']
-                      || 'No email found';
+                      || 'No email found'
+                    );
                     
-                    const fullName = r.subscriberData?.['Full Name'] 
+                    const fullName = String(
+                      r.subscriberData?.['Full Name'] 
                       || r.subscriberData?.FullName 
                       || r.subscriberRecord?.fields?.Name 
-                      || 'N/A';
+                      || 'N/A'
+                    );
                     
-                    const phone = r.subscriberData?.['Phone Number'] 
+                    const phone = String(
+                      r.subscriberData?.['Phone Number'] 
                       || r.subscriberData?.PhoneNumber 
                       || r.subscriptionRecord?.fields?.['Whatsapp Number'] 
-                      || 'N/A';
+                      || 'N/A'
+                    );
                     
-                    const reference = r.subscriberData?.['Transaction Reference'] 
+                    const reference = String(
+                      r.subscriberData?.['Transaction Reference'] 
                       || r.subscriberData?.TransactionReference 
-                      || 'N/A';
+                      || 'N/A'
+                    );
                     
                     const amount = r.subscriberData?.Amount 
                       || r.subscriptionRecord?.fields?.['Amount Paid'] 
                       || 'N/A';
                     
-                    const currency = r.subscriberData?.Currency || 'GHS';
+                    const currency = String(r.subscriberData?.Currency || 'GHS');
                     
                     // Debug log
                     console.log('Rendering result:', { email, fullName, rawData: r });
