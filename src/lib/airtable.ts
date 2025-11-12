@@ -308,6 +308,28 @@ export interface AirtableSubscriber {
   };
 }
 
+// Input type for createOrUpdateSubscriber - accepts both input field names and Airtable field names
+export type SubscriberInputData = {
+  'Full Name'?: string; // Maps to 'Name' in Airtable
+  'Phone Number'?: string; // Maps to 'WhatsApp Number' in Airtable
+  'Email'?: string;
+  'Whatsapp Status'?: string;
+  'Transaction Reference'?: string;
+  'Amount'?: number;
+  'Currency'?: string;
+  'Status'?: string;
+  'Payment Type'?: string;
+  'Paid At'?: string;
+  'Subscription Code'?: string;
+  'Plan Code'?: string;
+  'Customer Code'?: string;
+  'Created At'?: string;
+  'Updated At'?: string;
+  // Also accept direct Airtable field names for flexibility
+  'Name'?: string;
+  'WhatsApp Number'?: string;
+} & Partial<AirtableSubscriber['fields']>;
+
 export interface AirtableSubscription {
   id?: string;
   fields: {
@@ -327,7 +349,7 @@ export interface AirtableSubscription {
 
 // Function to create or update a subscriber record in Airtable
 export const createOrUpdateSubscriber = async (
-  subscriberData: AirtableSubscriber['fields']
+  subscriberData: SubscriberInputData
 ): Promise<AirtableSubscriber | null> => {
   try {
     const airtableBase = getAirtableBase();
@@ -457,11 +479,11 @@ export const createOrUpdateSubscriber = async (
 
 // Function to batch create or update subscribers
 export const batchCreateOrUpdateSubscribers = async (
-  subscribersData: AirtableSubscriber['fields'][]
-): Promise<{ success: number; failed: number; errors: Array<{ subscriber: AirtableSubscriber['fields']; error: string }> }> => {
+  subscribersData: SubscriberInputData[]
+): Promise<{ success: number; failed: number; errors: Array<{ subscriber: SubscriberInputData; error: string }> }> => {
   let success = 0;
   let failed = 0;
-  const errors: Array<{ subscriber: AirtableSubscriber['fields']; error: string }> = [];
+  const errors: Array<{ subscriber: SubscriberInputData; error: string }> = [];
 
   for (const subscriberData of subscribersData) {
     try {
