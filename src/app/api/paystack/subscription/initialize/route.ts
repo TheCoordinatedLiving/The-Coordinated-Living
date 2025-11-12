@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(request: NextRequest) {
   try {
-    const { email, phoneNumber, planCode } = await request.json();
+    const { email, phoneNumber, fullName, planCode } = await request.json();
 
     if (!email || !planCode) {
       return NextResponse.json(
@@ -69,6 +69,11 @@ export async function POST(request: NextRequest) {
               variable_name: "plan_code",
               value: planCode
             },
+            ...(fullName && fullName.trim() !== '' ? [{
+              display_name: "Full Name",
+              variable_name: "full_name",
+              value: fullName
+            }] : []),
             ...(phoneNumber && phoneNumber.trim() !== '' ? [{
               display_name: "Phone Number",
               variable_name: "phone_number",

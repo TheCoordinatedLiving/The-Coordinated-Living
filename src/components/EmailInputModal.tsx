@@ -6,7 +6,7 @@ import Toast from './Toast';
 interface EmailInputModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onEmailSubmit: (email: string, phoneNumber: string) => void;
+  onEmailSubmit: (email: string, phoneNumber: string, fullName: string) => void;
   amount: number;
   paymentType?: 'regular' | 'momo';
 }
@@ -20,6 +20,7 @@ export default function EmailInputModal({
 }: EmailInputModalProps) {
   const [email, setEmail] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
+  const [fullName, setFullName] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const [toast, setToast] = useState<{
@@ -57,7 +58,8 @@ export default function EmailInputModal({
     try {
       // For MOMO payments, pass empty email string
       const emailToSubmit = paymentType === 'momo' ? '' : email;
-      await onEmailSubmit(emailToSubmit, phoneNumber);
+      const nameToSubmit = paymentType === 'momo' ? '' : fullName;
+      await onEmailSubmit(emailToSubmit, phoneNumber, nameToSubmit);
     } catch {
       setToast({
         message: 'Failed to process payment. Please try again.',
@@ -72,6 +74,7 @@ export default function EmailInputModal({
   const handleClose = () => {
     setEmail('');
     setPhoneNumber('');
+    setFullName('');
     setError('');
     setToast({ message: '', type: 'success', isVisible: false });
     onClose();
@@ -110,21 +113,38 @@ export default function EmailInputModal({
         {/* Email Form */}
         <form onSubmit={handleSubmit} className="space-y-6">
           {paymentType === 'regular' && (
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                Email Address
-              </label>
-              <input
-                type="email"
-                id="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Enter your email address"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-colors text-gray-900 placeholder-gray-500"
-                required={paymentType === 'regular'}
-                disabled={isLoading}
-              />
-            </div>
+            <>
+              <div>
+                <label htmlFor="fullName" className="block text-sm font-medium text-gray-700 mb-2">
+                  Full Name
+                </label>
+                <input
+                  type="text"
+                  id="fullName"
+                  value={fullName}
+                  onChange={(e) => setFullName(e.target.value)}
+                  placeholder="Enter your full name"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-colors text-gray-900 placeholder-gray-500"
+                  required={paymentType === 'regular'}
+                  disabled={isLoading}
+                />
+              </div>
+              <div>
+                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                  Email Address
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Enter your email address"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-colors text-gray-900 placeholder-gray-500"
+                  required={paymentType === 'regular'}
+                  disabled={isLoading}
+                />
+              </div>
+            </>
           )}
 
           <div>
@@ -149,7 +169,7 @@ export default function EmailInputModal({
           {/* Submit Button */}
           <button
             type="submit"
-            disabled={isLoading || (paymentType === 'regular' && !email) || !phoneNumber}
+            disabled={isLoading || (paymentType === 'regular' && (!email || !fullName)) || !phoneNumber}
             className="w-full py-4 px-6 rounded-full font-bold text-lg transition-all duration-200 hover:bg-[#2F4C6C] hover:text-white active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
             style={{ backgroundColor: '#FFFFFF', color: '#2F4C6C' }}
           >

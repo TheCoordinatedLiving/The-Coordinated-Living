@@ -75,7 +75,7 @@ export default function JoinChannelPage() {
 
 // const paystackSecretKey = process.env.PAYSTACK_SECRET_KEY  || 'sk_test_e85988fa08e6452ebc108c7cf0f8aef6f206ca51';
 
-  const handleEmailSubmit = async (email: string, phoneNumber: string) => {
+  const handleEmailSubmit = async (email: string, phoneNumber: string, fullName: string) => {
     try {
       // Call our API endpoint to initialize Paystack subscription
       const response = await fetch('/api/paystack/subscription/initialize', {
@@ -86,6 +86,7 @@ export default function JoinChannelPage() {
         body: JSON.stringify({
           email: email,
           phoneNumber: phoneNumber,
+          fullName: fullName,
           planCode: 'PLN_v93tl7igiyswmu6' // Live Paystack plan code
         }),
       });
