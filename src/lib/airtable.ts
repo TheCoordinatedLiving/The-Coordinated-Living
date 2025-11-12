@@ -291,3 +291,130 @@ export const fetchGuideById = async (id: string): Promise<AirtableGuide | null> 
     return null;
   }
 };
+
+// Subscriber and Subscription types
+export interface AirtableSubscriber {
+  id?: string;
+  fields: {
+    'Email'?: string;
+    'Phone Number'?: string;
+    'Full Name'?: string;
+    'Transaction Reference'?: string;
+    'Amount'?: number;
+    'Currency'?: string;
+    'Status'?: string;
+    'Payment Type'?: string;
+    'Paid At'?: string;
+    'Subscription Code'?: string;
+    'Plan Code'?: string;
+    'Customer Code'?: string;
+    'Created At'?: string;
+    'Updated At'?: string;
+  };
+}
+
+// Function to create or update a subscriber record in Airtable
+export const createOrUpdateSubscriber = async (
+  subscriberData: AirtableSubscriber['fields']
+): Promise<AirtableSubscriber | null> => {
+  try {
+    const airtableBase = getAirtableBase();
+    if (!airtableBase) {
+      throw new Error('Airtable not configured - missing API key or Base ID');
+    }
+
+    // Check if subscriber exists by email or transaction reference
+    const email = subscriberData['Email'];
+    const transactionRef = subscriberData['Transaction Reference'];
+    
+    let existingRecord = null;
+    
+    if (email) {
+      const records = await airtableBase('Subscribers')
+        .select({
+          filterByFormula: `{Email} = "${email}"`,
+          maxRecords: 1,
+        })
+        .firstPage();
+      
+      if (records.length > 0) {
+        existingRecord = records[0];
+      }
+    }
+    
+    // If not found by email, try transaction reference
+    if (!existingRecord && transactionRef) {
+      const records = await airtableBase('Subscribers')
+        .select({
+          filterByFormula: `{Transaction Reference} = "${transactionRef}"`,
+          maxRecords: 1,
+        })
+        .firstPage();
+      
+      if (records.length > 0) {
+        existingRecord = records[0];
+      }
+    }
+
+    if (existingRecord) {
+      // Update existing record
+      const updatedRecord = await airtableBase('Subscribers').update([
+        {
+          id: existingRecord.id,
+          fields: {
+            ...subscriberData,
+            'Updated At': new Date().toISOString(),
+          },
+        },
+      ]);
+      
+      return {
+        id: updatedRecord[0].id,
+        fields: updatedRecord[0].fields as AirtableSubscriber['fields'],
+      };
+    } else {
+      // Create new record
+      const newRecord = await airtableBase('Subscribers').create([
+        {
+          fields: {
+            ...subscriberData,
+            'Created At': new Date().toISOString(),
+            'Updated At': new Date().toISOString(),
+          },
+        },
+      ]);
+      
+      return {
+        id: newRecord[0].id,
+        fields: newRecord[0].fields as AirtableSubscriber['fields'],
+      };
+    }
+  } catch (error) {
+    console.error('Error creating/updating subscriber:', error);
+    throw error;
+  }
+};
+
+// Function to batch create or update subscribers
+export const batchCreateOrUpdateSubscribers = async (
+  subscribersData: AirtableSubscriber['fields'][]
+): Promise<{ success: number; failed: number; errors: any[] }> => {
+  let success = 0;
+  let failed = 0;
+  const errors: any[] = [];
+
+  for (const subscriberData of subscribersData) {
+    try {
+      await createOrUpdateSubscriber(subscriberData);
+      success++;
+    } catch (error) {
+      failed++;
+      errors.push({
+        subscriber: subscriberData,
+        error: error instanceof Error ? error.message : 'Unknown error',
+      });
+    }
+  }
+
+  return { success, failed, errors };
+};

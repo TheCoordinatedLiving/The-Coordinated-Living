@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import crypto from 'crypto';
+import { createOrUpdateSubscriber } from '@/lib/airtable';
 
 export async function POST(request: NextRequest) {
   try {
@@ -46,7 +47,11 @@ export async function POST(request: NextRequest) {
       const { data } = event;
       
       // Check if this is a donation or channel payment
-      const paymentType = data.metadata?.payment_type || 'channel';
+      const metadata = data.metadata?.custom_fields || [];
+      const paymentTypeField = metadata.find((f: any) => f.variable_name === 'payment_type');
+      const phoneNumberField = metadata.find((f: any) => f.variable_name === 'phone_number');
+      const fullNameField = metadata.find((f: any) => f.variable_name === 'full_name');
+      const paymentType = paymentTypeField?.value || data.metadata?.payment_type || 'channel';
       
       console.log('Payment successful:', {
         reference: data.reference,
@@ -55,6 +60,32 @@ export async function POST(request: NextRequest) {
         status: data.status,
         paymentType: paymentType
       });
+
+      // Sync transaction to Airtable
+      try {
+        const subscriberData = {
+          'Email': data.customer?.email || '',
+          'Phone Number': phoneNumberField?.value || data.customer?.phone || '',
+          'Full Name': fullNameField?.value || 
+            `${data.customer?.first_name || ''} ${data.customer?.last_name || ''}`.trim() || '',
+          'Transaction Reference': data.reference,
+          'Amount': data.amount / 100, // Convert from kobo to currency unit
+          'Currency': data.currency || 'GHS',
+          'Status': data.status,
+          'Payment Type': paymentType,
+          'Paid At': data.paid_at || data.created_at,
+          'Subscription Code': data.plan?.plan_code || '',
+          'Plan Code': data.plan?.plan_code || '',
+          'Customer Code': data.customer?.customer_code || '',
+          'Created At': data.created_at,
+        };
+
+        await createOrUpdateSubscriber(subscriberData);
+        console.log('Transaction synced to Airtable:', data.reference);
+      } catch (error) {
+        console.error('Error syncing transaction to Airtable:', error);
+        // Don't fail the webhook if Airtable sync fails
+      }
 
       // Handle donation-specific logic
       if (paymentType === 'Pour into my cup') {
@@ -99,6 +130,37 @@ export async function POST(request: NextRequest) {
         gateway_response: data.gateway_response
       });
 
+      // Sync failed transaction to Airtable (for record keeping)
+      try {
+        const metadata = data.metadata?.custom_fields || [];
+        const phoneNumberField = metadata.find((f: any) => f.variable_name === 'phone_number');
+        const fullNameField = metadata.find((f: any) => f.variable_name === 'full_name');
+        const paymentTypeField = metadata.find((f: any) => f.variable_name === 'payment_type');
+
+        const subscriberData = {
+          'Email': data.customer?.email || '',
+          'Phone Number': phoneNumberField?.value || data.customer?.phone || '',
+          'Full Name': fullNameField?.value || 
+            `${data.customer?.first_name || ''} ${data.customer?.last_name || ''}`.trim() || '',
+          'Transaction Reference': data.reference,
+          'Amount': data.amount / 100, // Convert from kobo to currency unit
+          'Currency': data.currency || 'GHS',
+          'Status': data.status,
+          'Payment Type': paymentTypeField?.value || 'Unknown',
+          'Paid At': data.created_at, // Use created_at for failed payments
+          'Subscription Code': '',
+          'Plan Code': '',
+          'Customer Code': data.customer?.customer_code || '',
+          'Created At': data.created_at,
+        };
+
+        await createOrUpdateSubscriber(subscriberData);
+        console.log('Failed transaction synced to Airtable:', data.reference);
+      } catch (error) {
+        console.error('Error syncing failed transaction to Airtable:', error);
+        // Don't fail the webhook if Airtable sync fails
+      }
+
       // Here you can add failed payment logic:
       // - Send payment failure notification
       // - Retry payment logic
@@ -118,6 +180,31 @@ export async function POST(request: NextRequest) {
         status: data.status
       });
 
+      // Sync subscription to Airtable
+      try {
+        const subscriberData = {
+          'Email': data.customer?.email || '',
+          'Phone Number': data.customer?.phone || data.customer?.international_format_phone || '',
+          'Full Name': `${data.customer?.first_name || ''} ${data.customer?.last_name || ''}`.trim() || '',
+          'Transaction Reference': data.subscription_code,
+          'Amount': data.amount / 100, // Convert from kobo to currency unit
+          'Currency': data.plan?.currency || 'GHS',
+          'Status': data.status,
+          'Payment Type': 'Subscription',
+          'Paid At': data.next_payment_date || data.created_at,
+          'Subscription Code': data.subscription_code,
+          'Plan Code': data.plan?.plan_code || '',
+          'Customer Code': data.customer?.customer_code || '',
+          'Created At': data.created_at,
+        };
+
+        await createOrUpdateSubscriber(subscriberData);
+        console.log('Subscription synced to Airtable:', data.subscription_code);
+      } catch (error) {
+        console.error('Error syncing subscription to Airtable:', error);
+        // Don't fail the webhook if Airtable sync fails
+      }
+
       // Here you can add subscription creation logic:
       // - Send welcome email
       // - Grant channel access
@@ -134,6 +221,31 @@ export async function POST(request: NextRequest) {
         customer_email: data.customer.email,
         status: data.status
       });
+
+      // Update subscription status in Airtable
+      try {
+        const subscriberData = {
+          'Email': data.customer?.email || '',
+          'Phone Number': data.customer?.phone || data.customer?.international_format_phone || '',
+          'Full Name': `${data.customer?.first_name || ''} ${data.customer?.last_name || ''}`.trim() || '',
+          'Transaction Reference': data.subscription_code,
+          'Amount': data.amount / 100, // Convert from kobo to currency unit
+          'Currency': data.plan?.currency || 'GHS',
+          'Status': data.status, // This will be 'cancelled' or 'disabled'
+          'Payment Type': 'Subscription',
+          'Paid At': data.next_payment_date || data.created_at,
+          'Subscription Code': data.subscription_code,
+          'Plan Code': data.plan?.plan_code || '',
+          'Customer Code': data.customer?.customer_code || '',
+          'Created At': data.created_at,
+        };
+
+        await createOrUpdateSubscriber(subscriberData);
+        console.log('Subscription status updated in Airtable:', data.subscription_code);
+      } catch (error) {
+        console.error('Error updating subscription in Airtable:', error);
+        // Don't fail the webhook if Airtable sync fails
+      }
 
       // Here you can add subscription disable logic:
       // - Revoke channel access
