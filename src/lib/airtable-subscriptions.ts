@@ -82,9 +82,10 @@ export const createOrUpdateSubscription = async (
     // Don't try to set it manually
 
     // Create new subscription record
+    // Type assertion needed because Airtable expects Partial<FieldSet> but we're using Record<string, unknown>
     const newRecord = await airtableBase('Subscriptions').create([
       {
-        fields: cleanFields,
+        fields: cleanFields as unknown as Record<string, string | number | string[] | undefined>,
       },
     ]);
 
