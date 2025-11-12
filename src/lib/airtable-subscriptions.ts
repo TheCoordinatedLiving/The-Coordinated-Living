@@ -1,4 +1,3 @@
-import Airtable from 'airtable';
 import { getAirtableBase } from './airtable';
 import { AirtableSubscription } from './airtable';
 
@@ -29,7 +28,7 @@ export const createOrUpdateSubscription = async (
     // Name, Subscriber (link), Email, Whatsapp Number, 
     // Subscription Package (single select), Amount Paid, Expiration Date, Created At
     
-    const cleanFields: Record<string, any> = {};
+    const cleanFields: Record<string, unknown> = {};
     
     // Name
     if (subscriptionData['Name']) {
@@ -89,31 +88,32 @@ export const createOrUpdateSubscription = async (
       },
     ]);
 
-    return {
-      id: newRecord[0].id,
-      fields: newRecord[0].fields as AirtableSubscription['fields'],
-    };
-  } catch (error: any) {
-    console.error('Error creating/updating subscription:', error);
-    
-    // Extract more detailed error information
-    let errorMessage = 'Unknown error';
-    if (error instanceof Error) {
-      errorMessage = error.message;
-    } else if (error?.error) {
-      errorMessage = error.error;
-    } else if (error?.message) {
-      errorMessage = error.message;
-    } else if (typeof error === 'string') {
-      errorMessage = error;
-    } else if (error?.statusCode) {
-      errorMessage = `Airtable API error (${error.statusCode}): ${error.error || error.message || 'Unknown error'}`;
+      return {
+        id: newRecord[0].id,
+        fields: newRecord[0].fields as AirtableSubscription['fields'],
+      };
+    } catch (error: unknown) {
+      console.error('Error creating/updating subscription:', error);
+      
+      // Extract more detailed error information
+      const err = error as { message?: string; error?: string; statusCode?: number };
+      let errorMessage = 'Unknown error';
+      if (error instanceof Error) {
+        errorMessage = error.message;
+      } else if (err?.error) {
+        errorMessage = err.error;
+      } else if (err?.message) {
+        errorMessage = err.message;
+      } else if (typeof error === 'string') {
+        errorMessage = error;
+      } else if (err?.statusCode) {
+        errorMessage = `Airtable API error (${err.statusCode}): ${err.error || err.message || 'Unknown error'}`;
+      }
+      
+      // Log full error for debugging
+      console.error('Full error details:', JSON.stringify(error, null, 2));
+      
+      throw new Error(errorMessage);
     }
-    
-    // Log full error for debugging
-    console.error('Full error details:', JSON.stringify(error, null, 2));
-    
-    throw new Error(errorMessage);
-  }
 };
 

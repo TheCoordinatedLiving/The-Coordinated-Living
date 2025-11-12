@@ -5,7 +5,7 @@ import Airtable from 'airtable';
  * List all fields in the Subscribers table
  * This helps identify which fields exist and what they're named
  */
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     const apiKey = process.env.AIRTABLE_API_KEY;
     const baseId = process.env.AIRTABLE_BASE_ID;
@@ -74,19 +74,21 @@ export async function GET(request: NextRequest) {
           fields: records[0].fields,
         } : null,
       });
-    } catch (tableError: any) {
+    } catch (tableError: unknown) {
+      const err = tableError as { error?: string; message?: string };
       return NextResponse.json({
         status: false,
-        message: `Error accessing Subscribers table: ${tableError?.error || tableError?.message || 'Unknown error'}`,
-        error: tableError,
+        message: `Error accessing Subscribers table: ${err?.error || err?.message || 'Unknown error'}`,
+        error: err,
         suggestion: 'Make sure you have a table named "Subscribers" in your Airtable base',
       });
     }
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const err = error as { message?: string; error?: string };
     return NextResponse.json({
       status: false,
       message: 'Failed to connect to Airtable',
-      error: error?.message || error?.error || 'Unknown error',
+      error: err?.message || err?.error || 'Unknown error',
     });
   }
 }

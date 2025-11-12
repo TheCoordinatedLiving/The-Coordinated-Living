@@ -51,7 +51,7 @@ interface PaystackSubscription {
     email: string;
     customer_code: string;
     phone?: string;
-    metadata?: any;
+    metadata?: Record<string, unknown>;
     risk_action: string;
     international_format_phone?: string;
   };

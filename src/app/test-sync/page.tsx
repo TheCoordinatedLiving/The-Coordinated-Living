@@ -2,9 +2,31 @@
 
 import { useState } from 'react';
 
+interface SyncResult {
+  status: boolean;
+  message: string;
+  summary?: {
+    total: number;
+    successful: number;
+    failed: number;
+  };
+  results?: Array<{
+    scenario: string;
+    success: boolean;
+    subscriberData: Record<string, unknown>;
+    subscriberRecord?: { id: string; fields: Record<string, unknown> };
+    subscriptionRecord?: { id: string; fields: Record<string, unknown> };
+  }>;
+  errors?: Array<{
+    scenario: string;
+    subscriberData: Record<string, unknown>;
+    error: string;
+  }>;
+}
+
 export default function TestSyncPage() {
   const [loading, setLoading] = useState(false);
-  const [result, setResult] = useState<any>(null);
+  const [result, setResult] = useState<SyncResult | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   const testSync = async (scenario: 'new_subscription' | 'renewal', count: number = 1) => {
@@ -165,7 +187,7 @@ export default function TestSyncPage() {
               <div className="mb-4">
                 <h3 className="font-semibold mb-2 text-gray-700">Synced Records:</h3>
                 <div className="space-y-2">
-                  {result.results.map((r: any, idx: number) => {
+                  {result.results.map((r, idx: number) => {
                     // Get email from subscriberData or subscriptionRecord - check both locations
                     const email = r.subscriberData?.Email 
                       || r.subscriberData?.['Email']
@@ -264,7 +286,7 @@ export default function TestSyncPage() {
               <div className="mb-4">
                 <h3 className="font-semibold mb-2 text-red-700">Errors:</h3>
                 <div className="space-y-2">
-                  {result.errors.map((e: any, idx: number) => (
+                  {result.errors.map((e, idx: number) => (
                     <div key={idx} className="bg-red-50 p-3 rounded text-sm">
                       <div className="text-red-800">{e.error}</div>
                     </div>
@@ -288,7 +310,7 @@ export default function TestSyncPage() {
           <h3 className="font-semibold text-blue-800 mb-2">How to Use:</h3>
           <ol className="list-decimal list-inside space-y-1 text-sm text-blue-700">
             <li>Click a button above to simulate a subscription payment</li>
-            <li>The data will be synced to your Airtable "Subscribers" table</li>
+            <li>The data will be synced to your Airtable &quot;Subscribers&quot; table</li>
             <li>Check your Airtable dashboard to see the new records</li>
             <li>For renewals, use the same email to test update functionality</li>
           </ol>

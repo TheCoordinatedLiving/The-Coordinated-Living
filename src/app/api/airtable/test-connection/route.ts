@@ -4,7 +4,7 @@ import Airtable from 'airtable';
 /**
  * Test Airtable connection and check if Subscribers table exists
  */
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     const apiKey = process.env.AIRTABLE_API_KEY;
     const baseId = process.env.AIRTABLE_BASE_ID;
@@ -94,9 +94,10 @@ export async function GET(request: NextRequest) {
           'Updated At',
         ].filter(field => !fieldNames.includes(field)),
       });
-    } catch (tableError: any) {
+    } catch (tableError: unknown) {
       // Table might not exist or have wrong name
-      const errorMessage = tableError?.error || tableError?.message || 'Unknown error';
+      const err = tableError as { error?: string; message?: string };
+      const errorMessage = err?.error || err?.message || 'Unknown error';
       
       return NextResponse.json({
         status: false,
@@ -107,11 +108,12 @@ export async function GET(request: NextRequest) {
         suggestion: 'Make sure you have a table named "Subscribers" in your Airtable base',
       });
     }
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const err = error as { message?: string; error?: string };
     return NextResponse.json({
       status: false,
       message: 'Failed to connect to Airtable',
-      error: error?.message || error?.error || 'Unknown error',
+      error: err?.message || err?.error || 'Unknown error',
       configured: false,
     });
   }

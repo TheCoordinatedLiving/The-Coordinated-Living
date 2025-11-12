@@ -5,7 +5,7 @@ import Airtable from 'airtable';
  * Get the actual field structure from Subscribers and Subscriptions tables
  * This helps us see what fields actually exist
  */
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     const apiKey = process.env.AIRTABLE_API_KEY;
     const baseId = process.env.AIRTABLE_BASE_ID;
@@ -18,7 +18,25 @@ export async function GET(request: NextRequest) {
     }
 
     const base = new Airtable({ apiKey }).base(baseId);
-    const result: any = {
+    const result: {
+      status: boolean;
+      tables: {
+        Subscribers?: {
+          exists: boolean;
+          fieldNames?: string[];
+          recordCount?: number;
+          sampleRecord?: unknown;
+          error?: string;
+        };
+        Subscriptions?: {
+          exists: boolean;
+          fieldNames?: string[];
+          recordCount?: number;
+          sampleRecord?: unknown;
+          error?: string;
+        };
+      };
+    } = {
       status: true,
       tables: {},
     };
@@ -46,10 +64,11 @@ export async function GET(request: NextRequest) {
             }
           : null,
       };
-    } catch (subscribersError: any) {
+    } catch (subscribersError: unknown) {
+      const error = subscribersError as { error?: string; message?: string };
       result.tables.Subscribers = {
         exists: false,
-        error: subscribersError?.error || subscribersError?.message || 'Unknown error',
+        error: error?.error || error?.message || 'Unknown error',
       };
     }
 
@@ -76,19 +95,21 @@ export async function GET(request: NextRequest) {
             }
           : null,
       };
-    } catch (subscriptionsError: any) {
+    } catch (subscriptionsError: unknown) {
+      const error = subscriptionsError as { error?: string; message?: string };
       result.tables.Subscriptions = {
         exists: false,
-        error: subscriptionsError?.error || subscriptionsError?.message || 'Unknown error',
+        error: error?.error || error?.message || 'Unknown error',
       };
     }
 
     return NextResponse.json(result);
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const err = error as { message?: string; error?: string };
     return NextResponse.json({
       status: false,
       message: 'Failed to connect to Airtable',
-      error: error?.message || error?.error || 'Unknown error',
+      error: err?.message || err?.error || 'Unknown error',
     });
   }
 }

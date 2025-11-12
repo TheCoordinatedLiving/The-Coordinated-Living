@@ -337,17 +337,7 @@ export const createOrUpdateSubscriber = async (
 
     // Filter out undefined/null values and convert data types appropriately
     // This helps avoid INVALID_VALUE_FOR_COLUMN errors
-    const cleanFields: Record<string, any> = {};
-    
-    // Helper to format dates for Airtable
-    // Airtable accepts ISO 8601 date strings (YYYY-MM-DDTHH:mm:ss.sssZ) or just date (YYYY-MM-DD)
-    const formatDate = (dateValue: string | Date): string => {
-      if (!dateValue) return '';
-      const date = typeof dateValue === 'string' ? new Date(dateValue) : dateValue;
-      if (isNaN(date.getTime())) return '';
-      // Try ISO string first (full datetime)
-      return date.toISOString();
-    };
+    const cleanFields: Record<string, unknown> = {};
     
     // Map our data fields to actual Airtable Subscribers table field names:
     // Name, Email, WhatsApp Number, Subscription Status (formula - read only), 
@@ -409,44 +399,53 @@ export const createOrUpdateSubscriber = async (
         id: newRecord[0].id,
         fields: newRecord[0].fields as AirtableSubscriber['fields'],
       };
-    } catch (createError: any) {
+    } catch (createError: unknown) {
       // Extract detailed error information
+      const err = createError as { 
+        error?: string; 
+        message?: string; 
+        errorDetails?: { fieldName?: string; field?: string };
+        statusCode?: number;
+      };
+      
       let errorMessage = 'Unknown error';
       let fieldName = 'unknown';
       
-      if (createError?.error === 'UNKNOWN_FIELD_NAME' || createError?.error?.includes('UNKNOWN_FIELD_NAME')) {
-        const errorDetails = createError.errorDetails || createError;
-        fieldName = errorDetails?.fieldName || 'unknown';
+      if (err?.error === 'UNKNOWN_FIELD_NAME' || err?.error?.includes('UNKNOWN_FIELD_NAME')) {
+        const errorDetails = err.errorDetails || err;
+        fieldName = (errorDetails as { fieldName?: string })?.fieldName || 'unknown';
         errorMessage = `Field "${fieldName}" does not exist in Airtable.`;
-      } else if (createError?.error === 'INVALID_VALUE_FOR_COLUMN' || createError?.error?.includes('INVALID_VALUE_FOR_COLUMN')) {
-        const errorDetails = createError.errorDetails || createError;
-        fieldName = errorDetails?.fieldName || errorDetails?.field || 'unknown';
+      } else if (err?.error === 'INVALID_VALUE_FOR_COLUMN' || err?.error?.includes('INVALID_VALUE_FOR_COLUMN')) {
+        const errorDetails = err.errorDetails || err;
+        fieldName = (errorDetails as { fieldName?: string; field?: string })?.fieldName || 
+                   (errorDetails as { fieldName?: string; field?: string })?.field || 'unknown';
         errorMessage = `Invalid value for field "${fieldName}". Check data type and format.`;
         
         // Log what we tried to send
         console.error('Failed to create record. Fields attempted:', JSON.stringify(cleanFields, null, 2));
         console.error('Error details:', JSON.stringify(createError, null, 2));
       } else {
-        errorMessage = createError?.error || createError?.message || 'Unknown error';
+        errorMessage = err?.error || err?.message || 'Unknown error';
       }
       
       throw new Error(`${errorMessage} Full error: ${JSON.stringify(createError)}`);
     }
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const err = error as { message?: string; error?: string; statusCode?: number };
     console.error('Error creating/updating subscriber:', error);
     
     // Extract more detailed error information
     let errorMessage = 'Unknown error';
     if (error instanceof Error) {
       errorMessage = error.message;
-    } else if (error?.error) {
-      errorMessage = error.error;
-    } else if (error?.message) {
-      errorMessage = error.message;
+    } else if (err?.error) {
+      errorMessage = err.error;
+    } else if (err?.message) {
+      errorMessage = err.message;
     } else if (typeof error === 'string') {
       errorMessage = error;
-    } else if (error?.statusCode) {
-      errorMessage = `Airtable API error (${error.statusCode}): ${error.error || error.message || 'Unknown error'}`;
+    } else if (err?.statusCode) {
+      errorMessage = `Airtable API error (${err.statusCode}): ${err.error || err.message || 'Unknown error'}`;
     }
     
     // Log full error for debugging
@@ -459,10 +458,10 @@ export const createOrUpdateSubscriber = async (
 // Function to batch create or update subscribers
 export const batchCreateOrUpdateSubscribers = async (
   subscribersData: AirtableSubscriber['fields'][]
-): Promise<{ success: number; failed: number; errors: any[] }> => {
+): Promise<{ success: number; failed: number; errors: Array<{ subscriber: AirtableSubscriber['fields']; error: string }> }> => {
   let success = 0;
   let failed = 0;
-  const errors: any[] = [];
+  const errors: Array<{ subscriber: AirtableSubscriber['fields']; error: string }> = [];
 
   for (const subscriberData of subscribersData) {
     try {
@@ -470,9 +469,10 @@ export const batchCreateOrUpdateSubscribers = async (
       success++;
     } catch (error) {
       failed++;
+      const err = error instanceof Error ? error : new Error('Unknown error');
       errors.push({
         subscriber: subscriberData,
-        error: error instanceof Error ? error.message : 'Unknown error',
+        error: err.message,
       });
     }
   }

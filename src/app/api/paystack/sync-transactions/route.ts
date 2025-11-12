@@ -20,11 +20,11 @@ interface PaystackTransaction {
       variable_name: string;
       value: string;
     }>;
-    [key: string]: any;
+    [key: string]: unknown;
   };
-  log?: any;
+  log?: unknown;
   fees?: number;
-  fees_split?: any;
+  fees_split?: unknown;
   authorization?: {
     authorization_code: string;
     bin: string;
@@ -68,14 +68,14 @@ interface PaystackTransaction {
     createdAt: string;
     updatedAt: string;
   };
-  split?: any;
-  order_id?: any;
+  split?: unknown;
+  order_id?: unknown;
   paidAt?: string;
   createdAt: string;
   requested_amount: number;
-  pos_transaction_data?: any;
-  source?: any;
-  fees_breakdown?: any;
+  pos_transaction_data?: unknown;
+  source?: unknown;
+  fees_breakdown?: unknown;
 }
 
 interface PaystackTransactionResponse {
@@ -152,9 +152,9 @@ export async function POST(request: NextRequest) {
     // Transform Paystack transactions to Airtable format
     const subscribersData = paystackData.data.map((transaction) => {
       const metadata = transaction.metadata?.custom_fields || [];
-      const paymentTypeField = metadata.find(f => f.variable_name === 'payment_type');
-      const phoneNumberField = metadata.find(f => f.variable_name === 'phone_number');
-      const fullNameField = metadata.find(f => f.variable_name === 'full_name');
+      const paymentTypeField = metadata.find((f: { variable_name: string }) => f.variable_name === 'payment_type');
+      const phoneNumberField = metadata.find((f: { variable_name: string }) => f.variable_name === 'phone_number');
+      const fullNameField = metadata.find((f: { variable_name: string }) => f.variable_name === 'full_name');
 
       return {
         'Email': transaction.customer.email || '',
@@ -185,7 +185,7 @@ export async function POST(request: NextRequest) {
         totalTransactions: paystackData.meta.total,
         synced: syncResult.success,
         failed: syncResult.failed,
-        errors: syncResult.errors,
+        errors: syncResult.errors.length > 0 ? syncResult.errors : undefined,
         pagination: {
           page: paystackData.meta.page,
           perPage: paystackData.meta.perPage,

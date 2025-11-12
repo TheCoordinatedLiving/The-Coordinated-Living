@@ -49,9 +49,9 @@ export async function POST(request: NextRequest) {
       
       // Check if this is a donation or channel payment
       const metadata = data.metadata?.custom_fields || [];
-      const paymentTypeField = metadata.find((f: any) => f.variable_name === 'payment_type');
-      const phoneNumberField = metadata.find((f: any) => f.variable_name === 'phone_number');
-      const fullNameField = metadata.find((f: any) => f.variable_name === 'full_name');
+      const paymentTypeField = metadata.find((f: { variable_name: string }) => f.variable_name === 'payment_type');
+      const phoneNumberField = metadata.find((f: { variable_name: string }) => f.variable_name === 'phone_number');
+      const fullNameField = metadata.find((f: { variable_name: string }) => f.variable_name === 'full_name');
       const paymentType = paymentTypeField?.value || data.metadata?.payment_type || 'channel';
       
       console.log('Payment successful:', {
@@ -154,9 +154,9 @@ export async function POST(request: NextRequest) {
       // Sync failed transaction to Airtable (for record keeping)
       try {
         const metadata = data.metadata?.custom_fields || [];
-        const phoneNumberField = metadata.find((f: any) => f.variable_name === 'phone_number');
-        const fullNameField = metadata.find((f: any) => f.variable_name === 'full_name');
-        const paymentTypeField = metadata.find((f: any) => f.variable_name === 'payment_type');
+        const phoneNumberField = metadata.find((f: { variable_name: string }) => f.variable_name === 'phone_number');
+        const fullNameField = metadata.find((f: { variable_name: string }) => f.variable_name === 'full_name');
+        const paymentTypeField = metadata.find((f: { variable_name: string }) => f.variable_name === 'payment_type');
 
         const subscriberData = {
           'Email': data.customer?.email || '',

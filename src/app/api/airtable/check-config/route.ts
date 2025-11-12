@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from 'next/server';
  * Check Airtable configuration status
  * This endpoint helps verify that Airtable environment variables are set correctly
  */
-export async function GET(request: NextRequest) {
+export async function GET() {
   const apiKey = process.env.AIRTABLE_API_KEY;
   const baseId = process.env.AIRTABLE_BASE_ID;
 

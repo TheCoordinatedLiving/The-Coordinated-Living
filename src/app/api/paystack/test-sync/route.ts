@@ -142,7 +142,7 @@ export async function POST(request: NextRequest) {
             scenario: testScenario,
             subscriberData,
             error: errorMessage,
-            errorDetails: error, // Include full error for debugging
+            errorDetails: error as Record<string, unknown>, // Include full error for debugging
           });
         }
       }
@@ -173,7 +173,7 @@ export async function POST(request: NextRequest) {
 }
 
 // GET endpoint to show available scenarios
-export async function GET(request: NextRequest) {
+export async function GET() {
   return NextResponse.json({
     status: true,
     message: 'Test sync endpoint for simulating subscription payments',
