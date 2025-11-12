@@ -120,7 +120,7 @@ export async function POST(request: NextRequest) {
             subscriberRecord: subscriberResult,
             subscriptionRecord: subscriptionResult,
           });
-        } catch (error: any) {
+        } catch (error: unknown) {
           console.error('Error syncing to Airtable:', error);
           
           // Extract detailed error message
