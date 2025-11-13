@@ -381,9 +381,12 @@ export const createOrUpdateSubscriber = async (
       cleanFields['WhatsApp Number'] = String(subscriberData['Phone Number']).trim();
     }
     
-    // Whatsapp Status - can be set if provided, otherwise leave empty
+    // Whatsapp Status - set to provided value, or default to "Yet to be added"
     if (subscriberData['Whatsapp Status']) {
       cleanFields['Whatsapp Status'] = String(subscriberData['Whatsapp Status']).trim();
+    } else {
+      // Default status for new subscribers
+      cleanFields['Whatsapp Status'] = 'Yet to be added';
     }
     
     // Created At - SKIP this field as it's computed/read-only in Airtable
