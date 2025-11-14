@@ -96,22 +96,37 @@ export async function POST(request: NextRequest) {
             'Created At': subscriberData['Created At'],
           });
           
-          // Calculate expiration date (30 days from now for monthly subscription)
+          // Determine subscription package based on plan code
+          // For testing: monthly plans = 3 months, yearly plans = 12 months
+          let subscriptionPackage = '3 months'; // Default
+          const planCode = subscriberData['Plan Code']?.toLowerCase() || '';
+          if (planCode.includes('year') || planCode.includes('12') || planCode.includes('annual')) {
+            subscriptionPackage = '12 months';
+          } else if (planCode.includes('3') || planCode.includes('quarter')) {
+            subscriptionPackage = '3 months';
+          }
+          
+          // Calculate expiration date based on subscription package
           const expirationDate = new Date();
-          expirationDate.setDate(expirationDate.getDate() + 30);
+          if (subscriptionPackage === '12 months') {
+            expirationDate.setFullYear(expirationDate.getFullYear() + 1);
+          } else {
+            // Default to 3 months
+            expirationDate.setMonth(expirationDate.getMonth() + 3);
+          }
           
           // Then, create the subscription record
-          // Note: Subscription Package is a single-select field - leave it empty for now
-          // You'll need to set the valid options in Airtable or update this to match your options
           const subscriptionResult = await createOrUpdateSubscription({
             'Name': `${subscriberData['Full Name']} - ${subscriberData['Plan Code']}`,
             'Email': subscriberData['Email'],
             'Whatsapp Number': subscriberData['Phone Number'],
-            // 'Subscription Package': subscriberData['Plan Code'] || 'Monthly', // Skip for now - needs valid option
+            'Subscription Package': subscriptionPackage,
             'Amount Paid': subscriberData['Amount'],
             'Expiration Date': expirationDate.toISOString(),
             'Created At': subscriberData['Created At'],
           }, subscriberResult?.id);
+          
+          console.log('Test subscription created with package:', subscriptionPackage);
           
           results.push({
             scenario: testScenario,

@@ -3,6 +3,63 @@ import crypto from 'crypto';
 import { createOrUpdateSubscriber } from '@/lib/airtable';
 import { createOrUpdateSubscription } from '@/lib/airtable-subscriptions';
 
+/**
+ * Maps Paystack plan information to Airtable subscription package values
+ * Returns "3 months" or "12 months" based on plan interval, name, or metadata
+ */
+function mapPlanToSubscriptionPackage(plan: any, metadata?: any): string {
+  // Check metadata first for explicit package selection
+  if (metadata?.custom_fields) {
+    const packageField = metadata.custom_fields.find(
+      (f: { variable_name: string }) => f.variable_name === 'subscription_package' || f.variable_name === 'package'
+    );
+    if (packageField?.value) {
+      const packageValue = String(packageField.value).toLowerCase();
+      if (packageValue.includes('3') || packageValue.includes('three')) {
+        return '3 months';
+      }
+      if (packageValue.includes('12') || packageValue.includes('twelve') || packageValue.includes('year')) {
+        return '12 months';
+      }
+    }
+  }
+
+  // Check plan interval
+  if (plan?.interval === 'yearly' || plan?.interval === 'annually') {
+    return '12 months';
+  }
+
+  // Check plan name or description for duration indicators
+  const planName = String(plan?.name || '').toLowerCase();
+  const planDescription = String(plan?.description || '').toLowerCase();
+  const combinedText = `${planName} ${planDescription}`;
+
+  // Check for 12 months indicators
+  if (combinedText.includes('12') || combinedText.includes('twelve') || combinedText.includes('year')) {
+    return '12 months';
+  }
+
+  // Check for 3 months indicators
+  if (combinedText.includes('3') || combinedText.includes('three') || combinedText.includes('quarter')) {
+    return '3 months';
+  }
+
+  // If interval is monthly, default to 3 months (assuming most monthly plans are 3-month packages)
+  // You can adjust this logic based on your actual plan structure
+  if (plan?.interval === 'monthly') {
+    // Check plan code for hints
+    const planCode = String(plan?.plan_code || '').toLowerCase();
+    if (planCode.includes('12') || planCode.includes('year')) {
+      return '12 months';
+    }
+    // Default monthly to 3 months if no other indicators found
+    return '3 months';
+  }
+
+  // Default fallback - you may want to adjust this
+  return '3 months';
+}
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.text();
@@ -86,20 +143,54 @@ export async function POST(request: NextRequest) {
         
         // If this is a subscription payment, also create a subscription record
         if (data.plan?.plan_code && subscriberResult?.id) {
-          // Calculate expiration date (30 days for monthly, adjust as needed)
+          // Map plan to subscription package (3 months or 12 months)
+          const subscriptionPackage = mapPlanToSubscriptionPackage(data.plan, data.metadata);
+          
+          console.log('Plan data:', {
+            plan_code: data.plan?.plan_code,
+            interval: data.plan?.interval,
+            name: data.plan?.name,
+            description: data.plan?.description,
+            mapped_package: subscriptionPackage
+          });
+          
+          // Calculate expiration date based on subscription package
           const expirationDate = new Date();
-          expirationDate.setDate(expirationDate.getDate() + 30);
+          if (subscriptionPackage === '12 months') {
+            expirationDate.setFullYear(expirationDate.getFullYear() + 1);
+          } else {
+            // Default to 3 months (90 days)
+            expirationDate.setMonth(expirationDate.getMonth() + 3);
+          }
           
-          await createOrUpdateSubscription({
-            'Name': `${subscriberData['Full Name']} - ${data.plan.plan_code}`,
-            'Email': data.customer?.email || '',
-            'Whatsapp Number': phoneNumberField?.value || data.customer?.phone || '',
-            'Subscription Package': data.plan.plan_code, // Will be empty if not a valid option
-            'Amount Paid': data.amount / 100,
-            'Expiration Date': expirationDate.toISOString(),
-          }, subscriberResult.id);
-          
-          console.log('Subscription record created in Airtable');
+          try {
+            await createOrUpdateSubscription({
+              'Name': `${subscriberData['Full Name']} - ${data.plan.plan_code}`,
+              'Email': data.customer?.email || '',
+              'Whatsapp Number': phoneNumberField?.value || data.customer?.phone || '',
+              'Subscription Package': subscriptionPackage,
+              'Amount Paid': data.amount / 100,
+              'Expiration Date': expirationDate.toISOString(),
+            }, subscriberResult.id);
+            
+            console.log('Subscription record created in Airtable with package:', subscriptionPackage);
+          } catch (subscriptionError) {
+            console.error('Error creating subscription with package:', subscriptionPackage, subscriptionError);
+            // Try again without the package field to see if that's the issue
+            try {
+              await createOrUpdateSubscription({
+                'Name': `${subscriberData['Full Name']} - ${data.plan.plan_code}`,
+                'Email': data.customer?.email || '',
+                'Whatsapp Number': phoneNumberField?.value || data.customer?.phone || '',
+                'Amount Paid': data.amount / 100,
+                'Expiration Date': expirationDate.toISOString(),
+              }, subscriberResult.id);
+              console.log('Subscription created without package field - package value may be invalid');
+            } catch (retryError) {
+              console.error('Error creating subscription even without package:', retryError);
+              throw retryError;
+            }
+          }
         }
         
         console.log('Transaction synced to Airtable:', data.reference);
@@ -224,27 +315,54 @@ export async function POST(request: NextRequest) {
         
         // Create subscription record
         if (subscriberResult?.id) {
-          // Calculate expiration date based on plan interval
+          // Map plan to subscription package (3 months or 12 months)
+          const subscriptionPackage = mapPlanToSubscriptionPackage(data.plan, data.metadata);
+          
+          console.log('Subscription.create - Plan data:', {
+            plan_code: data.plan?.plan_code,
+            interval: data.plan?.interval,
+            name: data.plan?.name,
+            description: data.plan?.description,
+            mapped_package: subscriptionPackage
+          });
+          
+          // Calculate expiration date based on subscription package
           const expirationDate = new Date();
-          if (data.plan?.interval === 'monthly') {
-            expirationDate.setMonth(expirationDate.getMonth() + 1);
-          } else if (data.plan?.interval === 'yearly') {
+          if (subscriptionPackage === '12 months') {
             expirationDate.setFullYear(expirationDate.getFullYear() + 1);
           } else {
-            // Default to 30 days
-            expirationDate.setDate(expirationDate.getDate() + 30);
+            // Default to 3 months (90 days)
+            expirationDate.setMonth(expirationDate.getMonth() + 3);
           }
           
-          await createOrUpdateSubscription({
-            'Name': `${subscriberData['Full Name']} - ${data.plan?.plan_code || 'Subscription'}`,
-            'Email': data.customer?.email || '',
-            'Whatsapp Number': data.customer?.phone || data.customer?.international_format_phone || '',
-            'Subscription Package': data.plan?.plan_code || '', // Will be empty if not a valid option
-            'Amount Paid': data.amount / 100,
-            'Expiration Date': expirationDate.toISOString(),
-          }, subscriberResult.id);
-          
-          console.log('Subscription record created in Airtable');
+          try {
+            await createOrUpdateSubscription({
+              'Name': `${subscriberData['Full Name']} - ${data.plan?.plan_code || 'Subscription'}`,
+              'Email': data.customer?.email || '',
+              'Whatsapp Number': data.customer?.phone || data.customer?.international_format_phone || '',
+              'Subscription Package': subscriptionPackage,
+              'Amount Paid': data.amount / 100,
+              'Expiration Date': expirationDate.toISOString(),
+            }, subscriberResult.id);
+            
+            console.log('Subscription record created in Airtable with package:', subscriptionPackage);
+          } catch (subscriptionError) {
+            console.error('Error creating subscription with package:', subscriptionPackage, subscriptionError);
+            // Try again without the package field to see if that's the issue
+            try {
+              await createOrUpdateSubscription({
+                'Name': `${subscriberData['Full Name']} - ${data.plan?.plan_code || 'Subscription'}`,
+                'Email': data.customer?.email || '',
+                'Whatsapp Number': data.customer?.phone || data.customer?.international_format_phone || '',
+                'Amount Paid': data.amount / 100,
+                'Expiration Date': expirationDate.toISOString(),
+              }, subscriberResult.id);
+              console.log('Subscription created without package field - package value may be invalid');
+            } catch (retryError) {
+              console.error('Error creating subscription even without package:', retryError);
+              throw retryError;
+            }
+          }
         }
         
         console.log('Subscription synced to Airtable:', data.subscription_code);
