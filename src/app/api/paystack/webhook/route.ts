@@ -7,7 +7,21 @@ import { createOrUpdateSubscription } from '@/lib/airtable-subscriptions';
  * Maps Paystack plan information to Airtable subscription package values
  * Returns "3 months" or "12 months" based on plan interval, name, or metadata
  */
-function mapPlanToSubscriptionPackage(plan: any, metadata?: any): string {
+interface PaystackPlan {
+  plan_code?: string;
+  interval?: string;
+  name?: string;
+  description?: string;
+}
+
+interface PaystackMetadata {
+  custom_fields?: Array<{
+    variable_name: string;
+    value: string;
+  }>;
+}
+
+function mapPlanToSubscriptionPackage(plan: PaystackPlan | null | undefined, metadata?: PaystackMetadata): string {
   // Check metadata first for explicit package selection
   if (metadata?.custom_fields) {
     const packageField = metadata.custom_fields.find(

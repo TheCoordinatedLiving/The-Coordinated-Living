@@ -102,7 +102,7 @@ export const createOrUpdateSubscription = async (
             try {
               const record = await airtableBase('Subscriptions').find(subId);
               subscriptionRecords.push(record);
-            } catch (err) {
+            } catch {
               // Skip if record doesn't exist
               console.log(`Subscription ${subId} not found, skipping`);
             }
@@ -220,7 +220,7 @@ export const createOrUpdateSubscription = async (
         message?: string; 
         error?: string; 
         statusCode?: number;
-        errorDetails?: any;
+        errorDetails?: Record<string, unknown>;
       };
       let errorMessage = 'Unknown error';
       
