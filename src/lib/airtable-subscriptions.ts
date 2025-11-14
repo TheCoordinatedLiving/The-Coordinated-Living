@@ -240,14 +240,14 @@ export const createOrUpdateSubscription = async (
       const errorString = JSON.stringify(error).toLowerCase();
       if (errorString.includes('invalid') || errorString.includes('enum') || errorString.includes('option')) {
         console.error('⚠️ INVALID FIELD VALUE ERROR - The Subscription Package value may not match Airtable options');
-        console.error('Attempted value:', cleanFields['Subscription Package']);
+        console.error('Attempted value:', subscriptionData['Subscription Package']);
         console.error('This usually means the value must exactly match one of the options in Airtable');
         console.error('Please check your Airtable field options and ensure they match: "3 months" or "12 months"');
       }
       
       // Log full error for debugging
       console.error('Full error details:', JSON.stringify(error, null, 2));
-      console.error('Fields attempted:', JSON.stringify(cleanFields, null, 2));
+      console.error('Subscription data attempted:', JSON.stringify(subscriptionData, null, 2));
       
       throw new Error(errorMessage);
     }
