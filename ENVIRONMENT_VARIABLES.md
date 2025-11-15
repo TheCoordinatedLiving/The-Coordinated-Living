@@ -20,8 +20,9 @@ NEXT_PUBLIC_WHATSAPP_CHANNEL_LINK=https://chat.whatsapp.com/YOUR_CHANNEL_LINK
 # Email Configuration (if using email features)
 # Add your email service configuration here
 
-# Airtable Configuration (if using Airtable)
-# Add your Airtable API key and base ID here
+# Airtable Configuration (REQUIRED for subscriber sync)
+AIRTABLE_API_KEY=your_airtable_api_key_here
+AIRTABLE_BASE_ID=your_airtable_base_id_here
 
 # OneSignal Push Notifications Configuration
 ONESIGNAL_REST_API_KEY=your_onesignal_rest_api_key_here
