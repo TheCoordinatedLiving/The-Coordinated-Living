@@ -17,8 +17,8 @@ NEXT_PUBLIC_BASE_URL=https://www.thecoordinatedliving.com
 # WhatsApp Channel Link
 NEXT_PUBLIC_WHATSAPP_CHANNEL_LINK=https://chat.whatsapp.com/YOUR_CHANNEL_LINK
 
-# Email Configuration (if using email features)
-# Add your email service configuration here
+# Email Configuration (Resend)
+RESEND_API_KEY=re_your_resend_api_key_here
 
 # Airtable Configuration (REQUIRED for subscriber sync)
 AIRTABLE_API_KEY=your_airtable_api_key_here

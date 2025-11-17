@@ -505,3 +505,182 @@ export const batchCreateOrUpdateSubscribers = async (
 
   return { success, failed, errors };
 };
+
+// Donation types for Airtable
+export interface AirtableDonation {
+  id?: string;
+  fields: {
+    'Email'?: string;
+    'Phone number'?: string; // Note: lowercase "number" as per Airtable
+    'Amount'?: number;
+    'Payment Date'?: string; // Transaction reference/payment date
+  };
+}
+
+// Input type for donation data
+export type DonationInputData = {
+  'Email'?: string;
+  'Phone Number'?: string; // Accept both variations in input
+  'Phone number'?: string; // Accept lowercase version
+  'Amount'?: number;
+  'payment'?: string; // Transaction reference (will be mapped to 'Payment Date')
+  'Payment Date'?: string; // Direct field name
+};
+
+// Function to create or update a donation record in Airtable
+export const createOrUpdateDonation = async (
+  donationData: DonationInputData
+): Promise<AirtableDonation | null> => {
+  try {
+    const airtableBase = getAirtableBase();
+    if (!airtableBase) {
+      throw new Error('Airtable not configured - missing API key or Base ID');
+    }
+
+    const cleanFields: Record<string, unknown> = {};
+
+    // Email - can be null
+    if (donationData['Email']) {
+      cleanFields['Email'] = String(donationData['Email']).trim();
+    }
+
+    // Phone number - can be null (note: lowercase "number" in Airtable)
+    // Accept both "Phone Number" and "Phone number" in input
+    const phoneNumber = donationData['Phone number'] || donationData['Phone Number'];
+    if (phoneNumber) {
+      cleanFields['Phone number'] = String(phoneNumber).trim();
+    }
+
+    // Amount - required
+    if (donationData['Amount'] !== undefined && donationData['Amount'] !== null) {
+      const numValue = typeof donationData['Amount'] === 'number'
+        ? donationData['Amount']
+        : parseFloat(String(donationData['Amount']));
+      if (!isNaN(numValue)) {
+        cleanFields['Amount'] = numValue;
+      }
+    }
+
+    // Payment Date - required (Airtable Date field, so we need to provide a date)
+    // Use current date if not provided, or parse the provided date
+    let paymentDate: string | undefined;
+    const paymentDateInput = donationData['Payment Date'];
+    const paymentReference = donationData['payment']; // Transaction reference (for logging, not stored in Payment Date)
+    
+    if (paymentDateInput) {
+      // Try to parse as date string
+      const parsedDate = new Date(paymentDateInput);
+      if (!isNaN(parsedDate.getTime())) {
+        // Valid date - format as YYYY-MM-DD for Airtable
+        paymentDate = parsedDate.toISOString().split('T')[0];
+      }
+    }
+    
+    // If no valid date provided, use current date
+    if (!paymentDate) {
+      paymentDate = new Date().toISOString().split('T')[0];
+    }
+    
+    cleanFields['Payment Date'] = paymentDate;
+
+    // Ensure at least Amount and Payment Date are provided
+    if (!cleanFields['Amount'] || !cleanFields['Payment Date']) {
+      throw new Error('Amount and Payment Date are required for donations');
+    }
+    
+    // Log transaction reference if provided (for debugging)
+    if (paymentReference) {
+      console.log('Donation transaction reference:', paymentReference);
+    }
+
+    console.log('Creating donation with fields:', JSON.stringify(cleanFields, null, 2));
+
+    try {
+      // Create new donation record
+      const newRecord = await airtableBase('Donations').create([
+        {
+          fields: cleanFields as unknown as Record<string, string | number | string[] | undefined>,
+        },
+      ]);
+
+      return {
+        id: newRecord[0].id,
+        fields: newRecord[0].fields as AirtableDonation['fields'],
+      };
+    } catch (createError: unknown) {
+      const err = createError as {
+        error?: string;
+        message?: string;
+        errorDetails?: { fieldName?: string; field?: string };
+        statusCode?: number;
+      };
+
+      let errorMessage = 'Unknown error';
+      let fieldName = 'unknown';
+
+      if (err?.error === 'UNKNOWN_FIELD_NAME' || err?.error?.includes('UNKNOWN_FIELD_NAME')) {
+        // Extract the actual field name from the error message
+        const errorMessageText = err.message || JSON.stringify(createError);
+        const fieldMatch = errorMessageText.match(/Unknown field name: ["']([^"']+)["']/i);
+        fieldName = fieldMatch ? fieldMatch[1] : ((err.errorDetails as { fieldName?: string })?.fieldName || 'unknown');
+        errorMessage = `Field "${fieldName}" does not exist in Airtable Donations table. Please check the exact field name in your Airtable base.`;
+      } else if (err?.error === 'INVALID_VALUE_FOR_COLUMN' || err?.error?.includes('INVALID_VALUE_FOR_COLUMN')) {
+        const errorDetails = err.errorDetails || err;
+        fieldName = (errorDetails as { fieldName?: string; field?: string })?.fieldName ||
+                   (errorDetails as { fieldName?: string; field?: string })?.field || 'unknown';
+        errorMessage = `Invalid value for field "${fieldName}". Check data type and format.`;
+
+        console.error('Failed to create donation record. Fields attempted:', JSON.stringify(cleanFields, null, 2));
+        console.error('Error details:', JSON.stringify(createError, null, 2));
+      } else {
+        errorMessage = err?.error || err?.message || 'Unknown error';
+      }
+
+      throw new Error(`${errorMessage} Full error: ${JSON.stringify(createError)}`);
+    }
+  } catch (error: unknown) {
+    const err = error as { message?: string; error?: string; statusCode?: number };
+    console.error('Error creating/updating donation:', error);
+
+    let errorMessage = 'Unknown error';
+    if (error instanceof Error) {
+      errorMessage = error.message;
+    } else if (err?.error) {
+      errorMessage = err.error;
+    } else if (err?.message) {
+      errorMessage = err.message;
+    } else if (typeof error === 'string') {
+      errorMessage = error;
+    } else if (err?.statusCode) {
+      errorMessage = `Airtable API error (${err.statusCode}): ${err.error || err.message || 'Unknown error'}`;
+    }
+
+    console.error('Full error details:', JSON.stringify(error, null, 2));
+    throw new Error(errorMessage);
+  }
+};
+
+// Function to batch create or update donations
+export const batchCreateOrUpdateDonations = async (
+  donationsData: DonationInputData[]
+): Promise<{ success: number; failed: number; errors: Array<{ donation: DonationInputData; error: string }> }> => {
+  let success = 0;
+  let failed = 0;
+  const errors: Array<{ donation: DonationInputData; error: string }> = [];
+
+  for (const donationData of donationsData) {
+    try {
+      await createOrUpdateDonation(donationData);
+      success++;
+    } catch (error) {
+      failed++;
+      const err = error instanceof Error ? error : new Error('Unknown error');
+      errors.push({
+        donation: donationData,
+        error: err.message,
+      });
+    }
+  }
+
+  return { success, failed, errors };
+};

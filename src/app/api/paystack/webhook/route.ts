@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import crypto from 'crypto';
-import { createOrUpdateSubscriber, getAirtableBase } from '@/lib/airtable';
+import { createOrUpdateSubscriber, getAirtableBase, createOrUpdateDonation } from '@/lib/airtable';
 import { AirtableSubscription } from '@/lib/airtable';
+import { sendDonationConfirmationEmail } from '@/lib/email';
 
 /**
  * Maps Paystack plan information to Airtable subscription package values
@@ -308,6 +309,53 @@ export async function POST(request: NextRequest) {
           email: data.customer.email,
           reference: data.reference
         });
+
+        // Sync donation to Airtable Donations table
+        try {
+          // Get payment date from transaction
+          const paymentDate = data.paid_at || data.paidAt || data.created_at;
+          // Format date as YYYY-MM-DD for Airtable
+          const formattedDate = paymentDate ? new Date(paymentDate).toISOString().split('T')[0] : new Date().toISOString().split('T')[0];
+
+          const donationData = {
+            'Email': data.customer?.email || undefined,
+            'Phone Number': phoneNumberField?.value || data.customer?.phone || undefined,
+            'Amount': data.amount / 100, // Convert from kobo to currency unit
+            'Payment Date': formattedDate,
+            'payment': data.reference, // Transaction reference (for logging)
+          };
+
+          await createOrUpdateDonation(donationData);
+          console.log('Donation synced to Airtable Donations table:', data.reference);
+        } catch (error) {
+          console.error('Error syncing donation to Airtable:', error);
+          // Don't fail the webhook if donation sync fails
+        }
+
+        // Send donation confirmation email if user provided an email
+        const donorEmail = data.customer?.email;
+        if (donorEmail) {
+          try {
+            const emailResult = await sendDonationConfirmationEmail(
+              donorEmail,
+              data.amount / 100, // Convert from kobo to currency unit
+              data.currency || 'GHS',
+              data.reference
+            );
+
+            if (emailResult.success) {
+              console.log('Donation confirmation email sent to:', donorEmail);
+            } else {
+              console.error('Failed to send donation confirmation email:', emailResult.error);
+              // Don't fail the webhook if email fails
+            }
+          } catch (emailError) {
+            console.error('Error sending donation confirmation email:', emailError);
+            // Don't fail the webhook if email fails
+          }
+        } else {
+          console.log('No email provided for donation, skipping confirmation email');
+        }
       } else {
         // Handle channel payment logic
         console.log('Channel payment processed:', {
