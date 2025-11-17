@@ -5,8 +5,8 @@ import { Resend } from 'resend';
  */
 export async function sendDonationConfirmationEmail(
   donorEmail: string,
-  donationAmount: number,
-  currency: string = 'GHS',
+  _donationAmount: number, // Not used in template but kept for API consistency
+  _currency: string = 'GHS', // Not used in template but kept for API consistency
   transactionReference?: string
 ): Promise<{ success: boolean; messageId?: string; error?: string }> {
   try {
