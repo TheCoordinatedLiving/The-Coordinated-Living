@@ -21,13 +21,6 @@ export async function sendDonationConfirmationEmail(
 
     const resend = new Resend(process.env.RESEND_API_KEY);
 
-    // Format amount with currency
-    const formattedAmount = new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: currency,
-      minimumFractionDigits: 2,
-    }).format(donationAmount);
-
     // Email subject
     const subject = 'Thank You for Pouring Into My Cup - The Coordinated Living';
 
