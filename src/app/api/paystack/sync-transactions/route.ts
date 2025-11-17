@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { batchCreateOrUpdateSubscribers } from '@/lib/airtable';
+import { batchCreateOrUpdateSubscribers, batchCreateOrUpdateDonations } from '@/lib/airtable';
 
 interface PaystackTransaction {
   id: number;
@@ -149,33 +149,83 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Separate donations from other transactions
+    const donations: Array<{
+      'Email'?: string;
+      'Phone Number'?: string;
+      'Amount': number;
+      'Payment Date': string; // Airtable Date field
+      'payment'?: string; // Transaction reference (for logging)
+    }> = [];
+    const subscribersData: Array<{
+      'Email': string;
+      'Phone Number': string;
+      'Full Name': string;
+      'Transaction Reference': string;
+      'Amount': number;
+      'Currency': string;
+      'Status': string;
+      'Payment Type': string;
+      'Paid At': string;
+      'Subscription Code': string;
+      'Plan Code': string;
+      'Customer Code': string;
+      'Created At': string;
+    }> = [];
+
     // Transform Paystack transactions to Airtable format
-    const subscribersData = paystackData.data.map((transaction) => {
+    paystackData.data.forEach((transaction) => {
       const metadata = transaction.metadata?.custom_fields || [];
       const paymentTypeField = metadata.find((f: { variable_name: string }) => f.variable_name === 'payment_type');
       const phoneNumberField = metadata.find((f: { variable_name: string }) => f.variable_name === 'phone_number');
       const fullNameField = metadata.find((f: { variable_name: string }) => f.variable_name === 'full_name');
+      const paymentType = paymentTypeField?.value || 'Unknown';
 
-      return {
-        'Email': transaction.customer.email || '',
-        'Phone Number': phoneNumberField?.value || transaction.customer.phone || '',
-        'Full Name': fullNameField?.value || 
-          `${transaction.customer.first_name || ''} ${transaction.customer.last_name || ''}`.trim() || '',
-        'Transaction Reference': transaction.reference,
-        'Amount': transaction.amount / 100, // Convert from kobo to currency unit
-        'Currency': transaction.currency,
-        'Status': transaction.status,
-        'Payment Type': paymentTypeField?.value || 'Unknown',
-        'Paid At': transaction.paid_at || transaction.paidAt || transaction.created_at,
-        'Subscription Code': transaction.plan?.plan_code || '',
-        'Plan Code': transaction.plan?.plan_code || '',
-        'Customer Code': transaction.customer.customer_code,
-        'Created At': transaction.created_at,
-      };
+      // Check if this is a donation ("Pour into my cup")
+      if (paymentType === 'Pour into my cup') {
+        // Get payment date from transaction (paid_at or created_at)
+        const paymentDate = transaction.paid_at || transaction.paidAt || transaction.created_at;
+        // Format date as YYYY-MM-DD for Airtable
+        const formattedDate = paymentDate ? new Date(paymentDate).toISOString().split('T')[0] : new Date().toISOString().split('T')[0];
+        
+        // Add to donations array
+        donations.push({
+          'Email': transaction.customer.email || undefined,
+          'Phone Number': phoneNumberField?.value || transaction.customer.phone || undefined,
+          'Amount': transaction.amount / 100, // Convert from kobo to currency unit
+          'Payment Date': formattedDate, // Use actual payment date (Airtable Date field)
+          'payment': transaction.reference, // Transaction reference (for logging/debugging)
+        });
+      } else {
+        // Add to subscribers array (non-donation transactions)
+        subscribersData.push({
+          'Email': transaction.customer.email || '',
+          'Phone Number': phoneNumberField?.value || transaction.customer.phone || '',
+          'Full Name': fullNameField?.value || 
+            `${transaction.customer.first_name || ''} ${transaction.customer.last_name || ''}`.trim() || '',
+          'Transaction Reference': transaction.reference,
+          'Amount': transaction.amount / 100, // Convert from kobo to currency unit
+          'Currency': transaction.currency,
+          'Status': transaction.status,
+          'Payment Type': paymentType,
+          'Paid At': transaction.paid_at || transaction.paidAt || transaction.created_at,
+          'Subscription Code': transaction.plan?.plan_code || '',
+          'Plan Code': transaction.plan?.plan_code || '',
+          'Customer Code': transaction.customer.customer_code,
+          'Created At': transaction.created_at,
+        });
+      }
     });
 
-    // Sync to Airtable
-    const syncResult = await batchCreateOrUpdateSubscribers(subscribersData);
+    // Sync donations to Donations table
+    const donationSyncResult = donations.length > 0
+      ? await batchCreateOrUpdateDonations(donations)
+      : { success: 0, failed: 0, errors: [] };
+
+    // Sync non-donation transactions to Subscribers table
+    const subscriberSyncResult = subscribersData.length > 0
+      ? await batchCreateOrUpdateSubscribers(subscribersData)
+      : { success: 0, failed: 0, errors: [] };
 
     return NextResponse.json({
       status: true,
@@ -183,9 +233,18 @@ export async function POST(request: NextRequest) {
       data: {
         transactionsFetched: paystackData.data.length,
         totalTransactions: paystackData.meta.total,
-        synced: syncResult.success,
-        failed: syncResult.failed,
-        errors: syncResult.errors.length > 0 ? syncResult.errors : undefined,
+        donations: {
+          count: donations.length,
+          synced: donationSyncResult.success,
+          failed: donationSyncResult.failed,
+          errors: donationSyncResult.errors.length > 0 ? donationSyncResult.errors : undefined,
+        },
+        subscribers: {
+          count: subscribersData.length,
+          synced: subscriberSyncResult.success,
+          failed: subscriberSyncResult.failed,
+          errors: subscriberSyncResult.errors.length > 0 ? subscriberSyncResult.errors : undefined,
+        },
         pagination: {
           page: paystackData.meta.page,
           perPage: paystackData.meta.perPage,
