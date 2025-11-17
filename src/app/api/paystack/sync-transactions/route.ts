@@ -154,7 +154,8 @@ export async function POST(request: NextRequest) {
       'Email'?: string;
       'Phone Number'?: string;
       'Amount': number;
-      'payment': string;
+      'Payment Date': string; // Airtable Date field
+      'payment'?: string; // Transaction reference (for logging)
     }> = [];
     const subscribersData: Array<{
       'Email': string;

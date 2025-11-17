@@ -523,8 +523,8 @@ export type DonationInputData = {
   'Phone Number'?: string; // Accept both variations in input
   'Phone number'?: string; // Accept lowercase version
   'Amount'?: number;
-  'payment'?: string; // Transaction reference (will be mapped to 'Payment Date')
-  'Payment Date'?: string; // Direct field name
+  'payment'?: string; // Transaction reference (for logging, will be mapped to 'Payment Date')
+  'Payment Date'?: string; // Direct field name (Airtable Date field)
 };
 
 // Function to create or update a donation record in Airtable
