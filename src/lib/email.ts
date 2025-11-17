@@ -6,6 +6,7 @@ import { Resend } from 'resend';
 export async function sendDonationConfirmationEmail(
   donorEmail: string,
   _donationAmount: number, // Not used in template but kept for API consistency
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   _currency: string = 'GHS', // Not used in template but kept for API consistency
   transactionReference?: string
 ): Promise<{ success: boolean; messageId?: string; error?: string }> {
