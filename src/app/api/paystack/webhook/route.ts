@@ -182,6 +182,14 @@ async function createOrUpdateSubscription(
 }
 
 export async function POST(request: NextRequest) {
+  // Log webhook received (for debugging production issues)
+  console.log('=== WEBHOOK RECEIVED ===');
+  console.log('Timestamp:', new Date().toISOString());
+  console.log('Environment check - PAYSTACK_SECRET_KEY exists:', !!process.env.PAYSTACK_SECRET_KEY);
+  console.log('Environment check - RESEND_API_KEY exists:', !!process.env.RESEND_API_KEY);
+  console.log('Environment check - AIRTABLE_API_KEY exists:', !!process.env.AIRTABLE_API_KEY);
+  console.log('Environment check - AIRTABLE_BASE_ID exists:', !!process.env.AIRTABLE_BASE_ID);
+  
   try {
     const body = await request.text();
     const signature = request.headers.get('x-paystack-signature');
@@ -220,6 +228,8 @@ export async function POST(request: NextRequest) {
     }
 
     const event = JSON.parse(body);
+    console.log('Webhook event type:', event.event);
+    console.log('Webhook event reference:', event.data?.reference);
 
     // Handle successful payment
     if (event.event === 'charge.success') {
@@ -312,6 +322,9 @@ export async function POST(request: NextRequest) {
 
         // Sync donation to Airtable Donations table
         try {
+          console.log('Attempting to sync donation to Airtable...');
+          console.log('Airtable base check:', !!getAirtableBase());
+          
           // Get payment date from transaction
           const paymentDate = data.paid_at || data.paidAt || data.created_at;
           // Format date as YYYY-MM-DD for Airtable
@@ -325,33 +338,52 @@ export async function POST(request: NextRequest) {
             'payment': data.reference, // Transaction reference (for logging)
           };
 
-          await createOrUpdateDonation(donationData);
-          console.log('Donation synced to Airtable Donations table:', data.reference);
+          console.log('Donation data to sync:', JSON.stringify(donationData, null, 2));
+          const donationResult = await createOrUpdateDonation(donationData);
+          console.log('Donation synced to Airtable Donations table successfully:', data.reference);
+          console.log('Airtable record ID:', donationResult?.id);
         } catch (error) {
           console.error('Error syncing donation to Airtable:', error);
+          console.error('Error details:', error instanceof Error ? error.message : JSON.stringify(error));
+          console.error('Error stack:', error instanceof Error ? error.stack : 'No stack trace');
           // Don't fail the webhook if donation sync fails
         }
 
         // Send donation confirmation email if user provided an email
         const donorEmail = data.customer?.email;
+        console.log('Donor email check:', donorEmail ? `Email provided: ${donorEmail}` : 'No email provided');
+        
         if (donorEmail) {
-          try {
-            const emailResult = await sendDonationConfirmationEmail(
-              donorEmail,
-              data.amount / 100, // Convert from kobo to currency unit
-              data.currency || 'GHS',
-              data.reference
-            );
+          // Check if it's a temp email (mobile money)
+          const isTempEmail = donorEmail.includes('@mobile.money') || donorEmail.includes('@coordinated-living.gh') || donorEmail.includes('temp-');
+          
+          if (isTempEmail) {
+            console.log('Skipping email send - temp email detected:', donorEmail);
+          } else {
+            try {
+              console.log('Attempting to send donation confirmation email to:', donorEmail);
+              console.log('RESEND_API_KEY check:', !!process.env.RESEND_API_KEY);
+              
+              const emailResult = await sendDonationConfirmationEmail(
+                donorEmail,
+                data.amount / 100, // Convert from kobo to currency unit
+                data.currency || 'GHS',
+                data.reference
+              );
 
-            if (emailResult.success) {
-              console.log('Donation confirmation email sent to:', donorEmail);
-            } else {
-              console.error('Failed to send donation confirmation email:', emailResult.error);
+              if (emailResult.success) {
+                console.log('✅ Donation confirmation email sent successfully to:', donorEmail);
+                console.log('Email message ID:', emailResult.messageId);
+              } else {
+                console.error('❌ Failed to send donation confirmation email:', emailResult.error);
+                // Don't fail the webhook if email fails
+              }
+            } catch (emailError) {
+              console.error('❌ Error sending donation confirmation email:', emailError);
+              console.error('Email error details:', emailError instanceof Error ? emailError.message : JSON.stringify(emailError));
+              console.error('Email error stack:', emailError instanceof Error ? emailError.stack : 'No stack trace');
               // Don't fail the webhook if email fails
             }
-          } catch (emailError) {
-            console.error('Error sending donation confirmation email:', emailError);
-            // Don't fail the webhook if email fails
           }
         } else {
           console.log('No email provided for donation, skipping confirmation email');
@@ -365,6 +397,7 @@ export async function POST(request: NextRequest) {
         });
       }
       
+      console.log('=== WEBHOOK PROCESSING COMPLETE ===');
       return NextResponse.json({ status: true, message: 'Webhook processed successfully' });
     }
 
