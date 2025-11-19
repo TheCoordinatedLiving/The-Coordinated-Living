@@ -4,6 +4,12 @@ import { createOrUpdateSubscriber, getAirtableBase, createOrUpdateDonation } fro
 import { AirtableSubscription } from '@/lib/airtable';
 import { sendDonationConfirmationEmail } from '@/lib/email';
 
+// Explicitly set runtime to Node.js (required for crypto and other Node.js APIs)
+export const runtime = 'nodejs';
+
+// Disable body parsing limits for webhooks
+export const maxDuration = 30;
+
 /**
  * Maps Paystack plan information to Airtable subscription package values
  * Returns "3 months" or "6 months" based on plan interval, name, or metadata
@@ -185,14 +191,21 @@ export async function POST(request: NextRequest) {
   // Log webhook received (for debugging production issues)
   console.log('=== WEBHOOK RECEIVED ===');
   console.log('Timestamp:', new Date().toISOString());
+  console.log('Request method:', request.method);
+  console.log('Request URL:', request.url);
   console.log('Environment check - PAYSTACK_SECRET_KEY exists:', !!process.env.PAYSTACK_SECRET_KEY);
   console.log('Environment check - RESEND_API_KEY exists:', !!process.env.RESEND_API_KEY);
   console.log('Environment check - AIRTABLE_API_KEY exists:', !!process.env.AIRTABLE_API_KEY);
   console.log('Environment check - AIRTABLE_BASE_ID exists:', !!process.env.AIRTABLE_BASE_ID);
   
   try {
+    // Read raw body for signature verification
     const body = await request.text();
+    console.log('Body length:', body.length);
+    console.log('Body preview (first 200 chars):', body.substring(0, 200));
+    
     const signature = request.headers.get('x-paystack-signature');
+    console.log('Signature header present:', !!signature);
 
     if (!signature) {
       console.error('No Paystack signature found');
@@ -247,7 +260,9 @@ export async function POST(request: NextRequest) {
         amount: data.amount,
         email: data.customer.email,
         status: data.status,
-        paymentType: paymentType
+        paymentType: paymentType,
+        metadata: JSON.stringify(data.metadata),
+        custom_fields: JSON.stringify(metadata)
       });
 
       // Sync transaction to Airtable - create both subscriber and subscription records
@@ -313,11 +328,28 @@ export async function POST(request: NextRequest) {
       }
 
       // Handle donation-specific logic
-      if (paymentType === 'Pour into my cup') {
+      // Check for donation payment type (case-insensitive and flexible matching)
+      const isDonation = paymentType && (
+        paymentType.toLowerCase().includes('donation') ||
+        paymentType.toLowerCase().includes('pour into my cup') ||
+        paymentType === 'Pour into my cup' ||
+        paymentType === 'donation' ||
+        paymentType === 'Donation'
+      );
+      
+      console.log('Payment type check:', {
+        paymentType: paymentType,
+        isDonation: isDonation,
+        willProcessDonation: isDonation
+      });
+      
+      if (isDonation) {
+        console.log('=== DONATION DETECTED ===');
         console.log('Donation processed:', {
           amount: data.amount,
           email: data.customer.email,
-          reference: data.reference
+          reference: data.reference,
+          paymentType: paymentType
         });
 
         // Sync donation to Airtable Donations table
