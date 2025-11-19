@@ -181,9 +181,11 @@ export async function POST(request: NextRequest) {
       const fullNameField = metadata.find((f: { variable_name: string }) => f.variable_name === 'full_name');
       
       // Try multiple ways to get payment_type
-      let paymentType = paymentTypeField?.value;
+      let paymentType: string | undefined = paymentTypeField?.value;
       if (!paymentType && transaction.metadata?.payment_type) {
-        paymentType = transaction.metadata.payment_type;
+        const metadataPaymentType = transaction.metadata.payment_type;
+        // Ensure it's a string
+        paymentType = typeof metadataPaymentType === 'string' ? metadataPaymentType : String(metadataPaymentType);
       }
       paymentType = paymentType || 'Unknown';
 
