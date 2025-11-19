@@ -12,7 +12,8 @@ export const maxDuration = 30;
 
 /**
  * Maps Paystack plan information to Airtable subscription package values
- * Returns "3 months" or "6 months" based on plan interval, name, or metadata
+ * Returns "1 month", "3 months", or "6 months" based on plan interval, name, or metadata
+ * Default is "1 month" if no indicators are found
  */
 interface PaystackPlan {
   plan_code?: string;
@@ -36,11 +37,17 @@ function mapPlanToSubscriptionPackage(plan: PaystackPlan | null | undefined, met
     );
     if (packageField?.value) {
       const packageValue = String(packageField.value).toLowerCase();
+      // Check for 6 months first (most specific)
+      if (packageValue.includes('6') || packageValue.includes('six')) {
+        return '6 months';
+      }
+      // Check for 3 months
       if (packageValue.includes('3') || packageValue.includes('three')) {
         return '3 months';
       }
-      if (packageValue.includes('6') || packageValue.includes('six')) {
-        return '6 months';
+      // Check for 1 month
+      if (packageValue.includes('1') || packageValue.includes('one')) {
+        return '1 month';
       }
     }
   }
@@ -50,7 +57,7 @@ function mapPlanToSubscriptionPackage(plan: PaystackPlan | null | undefined, met
   const planDescription = String(plan?.description || '').toLowerCase();
   const combinedText = `${planName} ${planDescription}`;
 
-  // Check for 6 months indicators
+  // Check for 6 months indicators (most specific, check first)
   if (combinedText.includes('6') || combinedText.includes('six')) {
     return '6 months';
   }
@@ -60,19 +67,32 @@ function mapPlanToSubscriptionPackage(plan: PaystackPlan | null | undefined, met
     return '3 months';
   }
 
-  // If interval is monthly, default to 3 months
+  // Check for 1 month indicators
+  if (combinedText.includes('1 month') || combinedText.includes('one month')) {
+    return '1 month';
+  }
+
+  // If interval is monthly, check plan code for hints
   if (plan?.interval === 'monthly') {
-    // Check plan code for hints
     const planCode = String(plan?.plan_code || '').toLowerCase();
+    // Check for 6 months
     if (planCode.includes('6') || planCode.includes('six')) {
       return '6 months';
     }
-    // Default monthly to 3 months if no other indicators found
-    return '3 months';
+    // Check for 3 months
+    if (planCode.includes('3') || planCode.includes('three')) {
+      return '3 months';
+    }
+    // Check for 1 month
+    if (planCode.includes('1') || planCode.includes('one')) {
+      return '1 month';
+    }
+    // Default monthly to 1 month if no other indicators found
+    return '1 month';
   }
 
-  // Default fallback
-  return '3 months';
+  // Default fallback - changed from 3 months to 1 month
+  return '1 month';
 }
 
 /**
@@ -120,7 +140,7 @@ async function createOrUpdateSubscription(
       cleanFields['Whatsapp Number'] = String(subscriptionData['Whatsapp Number']).trim();
     }
 
-    // Subscription Package (single select) - "3 months" or "6 months"
+    // Subscription Package (single select) - "1 month", "3 months", or "6 months"
     if (subscriptionData['Subscription Package'] && String(subscriptionData['Subscription Package']).trim()) {
       const packageValue = String(subscriptionData['Subscription Package']).trim();
       console.log('Setting Subscription Package to:', packageValue);
@@ -453,9 +473,29 @@ export async function POST(request: NextRequest) {
         // Create/update subscriber record (only for non-donations)
         const subscriberResult = await createOrUpdateSubscriber(subscriberData);
 
+        // CRITICAL: Double-check this is NOT a donation before creating subscription
+        // Even if we reached here, verify one more time
+        const finalPaymentTypeCheck = paymentTypeLower || '';
+        const isDefinitelyDonation = finalPaymentTypeCheck && (
+          finalPaymentTypeCheck.includes('donation') ||
+          finalPaymentTypeCheck.includes('pour into my cup') ||
+          finalPaymentTypeCheck.includes('pour into') ||
+          finalPaymentTypeCheck.includes('pour')
+        );
+        
+        if (isDefinitelyDonation) {
+          console.error('❌ BLOCKED: Donation detected in subscription creation path. NOT creating subscription record.');
+          console.log('=== WEBHOOK PROCESSING COMPLETE (DONATION BLOCKED) ===');
+          return NextResponse.json({ 
+            status: true, 
+            message: 'Donation detected - subscription creation blocked' 
+          });
+        }
+
         // If this is a subscription payment, also create a subscription record
-        if (data.plan?.plan_code && subscriberResult?.id) {
-          // Map plan to subscription package (3 months or 6 months)
+        // ONLY create subscription if there's a plan code AND it's not a donation
+        if (data.plan?.plan_code && subscriberResult?.id && !isDefinitelyDonation) {
+          // Map plan to subscription package (1 month, 3 months, or 6 months)
           const subscriptionPackage = mapPlanToSubscriptionPackage(data.plan, data.metadata);
 
           console.log('Plan data:', {
@@ -470,9 +510,11 @@ export async function POST(request: NextRequest) {
           const expirationDate = new Date();
           if (subscriptionPackage === '6 months') {
             expirationDate.setMonth(expirationDate.getMonth() + 6);
-          } else {
-            // Default to 3 months
+          } else if (subscriptionPackage === '3 months') {
             expirationDate.setMonth(expirationDate.getMonth() + 3);
+          } else {
+            // Default to 1 month
+            expirationDate.setMonth(expirationDate.getMonth() + 1);
           }
 
           await createOrUpdateSubscription({
@@ -552,7 +594,7 @@ export async function POST(request: NextRequest) {
 
         // Create subscription record
         if (subscriberResult?.id) {
-          // Map plan to subscription package (3 months or 6 months)
+          // Map plan to subscription package (1 month, 3 months, or 6 months)
           const subscriptionPackage = mapPlanToSubscriptionPackage(data.plan, data.metadata);
 
           console.log('Subscription.create - Plan data:', {
@@ -567,9 +609,11 @@ export async function POST(request: NextRequest) {
           const expirationDate = new Date();
           if (subscriptionPackage === '6 months') {
             expirationDate.setMonth(expirationDate.getMonth() + 6);
-          } else {
-            // Default to 3 months
+          } else if (subscriptionPackage === '3 months') {
             expirationDate.setMonth(expirationDate.getMonth() + 3);
+          } else {
+            // Default to 1 month
+            expirationDate.setMonth(expirationDate.getMonth() + 1);
           }
 
           await createOrUpdateSubscription({
