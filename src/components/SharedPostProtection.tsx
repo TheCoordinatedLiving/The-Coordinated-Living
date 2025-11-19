@@ -11,7 +11,7 @@ export default function SharedPostProtection() {
 
     // Prevent common keyboard shortcuts
     const handleKeyDown = (e: KeyboardEvent) => {
-      // Prevent copy, cut, paste, select all
+      // Prevent copy, cut, paste, select alls
       if ((e.ctrlKey || e.metaKey) && (e.key === 'c' || e.key === 'x' || e.key === 'v' || e.key === 'a')) {
         e.preventDefault();
       }
