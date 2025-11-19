@@ -179,10 +179,37 @@ export async function POST(request: NextRequest) {
       const paymentTypeField = metadata.find((f: { variable_name: string }) => f.variable_name === 'payment_type');
       const phoneNumberField = metadata.find((f: { variable_name: string }) => f.variable_name === 'phone_number');
       const fullNameField = metadata.find((f: { variable_name: string }) => f.variable_name === 'full_name');
-      const paymentType = paymentTypeField?.value || 'Unknown';
+      
+      // Try multiple ways to get payment_type
+      let paymentType = paymentTypeField?.value;
+      if (!paymentType && transaction.metadata?.payment_type) {
+        paymentType = transaction.metadata.payment_type;
+      }
+      paymentType = paymentType || 'Unknown';
 
-      // Check if this is a donation ("Pour into my cup")
-      if (paymentType === 'Pour into my cup') {
+      // Check if this is a donation (case-insensitive and flexible matching)
+      // Use the same detection logic as the webhook
+      const paymentTypeLower = paymentType ? String(paymentType).toLowerCase().trim() : '';
+      const hasPlanCode = !!transaction.plan?.plan_code;
+      
+      let isDonation = paymentTypeLower && (
+        paymentTypeLower.includes('donation') ||
+        paymentTypeLower.includes('pour into my cup') ||
+        paymentTypeLower.includes('pour into') ||
+        paymentType === 'Pour into my cup' ||
+        paymentType === 'donation' ||
+        paymentType === 'Donation'
+      );
+      
+      // Additional safeguard: If there's no plan code and payment type suggests donation, treat as donation
+      if (!isDonation && !hasPlanCode && paymentTypeLower) {
+        if (paymentTypeLower.includes('pour') || paymentTypeLower.includes('donation')) {
+          isDonation = true;
+        }
+      }
+
+      // Check if this is a donation
+      if (isDonation) {
         // Get payment date from transaction (paid_at or created_at)
         const paymentDate = transaction.paid_at || transaction.paidAt || transaction.created_at;
         // Format date as YYYY-MM-DD for Airtable
