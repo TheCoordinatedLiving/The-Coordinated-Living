@@ -659,7 +659,67 @@ const Page = () => {
   const [showHomepage, setShowHomepage] = useState(false);
   const [homepageVisible, setHomepageVisible] = useState(false);
   
+  // Dimming timer state - gradually dims site until 9 PM GMT
+  const [dimmingOpacity, setDimmingOpacity] = useState(0);
   
+  // Store the start time when component mounts (when dimming begins)
+  const dimmingStartTimeRef = useRef<number | null>(null);
+  
+  // Calculate and update dimming opacity based on time until 9 PM GMT
+  useEffect(() => {
+    // Initialize start time on first mount
+    if (dimmingStartTimeRef.current === null) {
+      const now = new Date();
+      const gmtNow = new Date(now.toLocaleString('en-US', { timeZone: 'GMT' }));
+      dimmingStartTimeRef.current = gmtNow.getTime();
+    }
+    
+    const updateDimming = () => {
+      const now = new Date();
+      
+      // Get current time in GMT
+      const gmtNow = new Date(now.toLocaleString('en-US', { timeZone: 'GMT' }));
+      const currentTime = gmtNow.getTime();
+      
+      // Set target time to 9 PM GMT today
+      const targetTime = new Date(gmtNow);
+      targetTime.setHours(21, 0, 0, 0); // 9 PM GMT
+      const targetTimeMs = targetTime.getTime();
+      
+      // If it's already past 9 PM GMT, set to next day
+      if (currentTime >= targetTimeMs) {
+        targetTime.setDate(targetTime.getDate() + 1);
+        const newTargetTimeMs = targetTime.getTime();
+        
+        // If we're past 9 PM, set opacity to 1 (totally black)
+        setDimmingOpacity(1);
+        return;
+      }
+      
+      // Calculate total time from start to 9 PM GMT (in milliseconds)
+      const totalTimeUntil9PM = targetTimeMs - (dimmingStartTimeRef.current || currentTime);
+      
+      // Calculate elapsed time from start
+      const elapsedTime = currentTime - (dimmingStartTimeRef.current || currentTime);
+      
+      // Calculate opacity: 0 at start, 1 at 9 PM GMT
+      // Opacity increases linearly as time progresses
+      let opacity = elapsedTime / totalTimeUntil9PM;
+      
+      // Clamp opacity between 0 and 1
+      opacity = Math.max(0, Math.min(1, opacity));
+      
+      setDimmingOpacity(opacity);
+    };
+    
+    // Update immediately
+    updateDimming();
+    
+    // Update every minute for smooth gradual dimming
+    const interval = setInterval(updateDimming, 60000);
+    
+    return () => clearInterval(interval);
+  }, []);
   
   // Handle skipLoader parameter for smooth navigation from mobile pages
   useEffect(() => {
@@ -5526,6 +5586,18 @@ const Page = () => {
         onClose={handleComingSoonModalClose}
         featureName={comingSoonFeature}
       />
+
+      {/* Gradual Dimming Overlay - Dims site until 9 PM GMT */}
+      {dimmingOpacity > 0 && (
+        <div
+          className="fixed inset-0 z-[9999] pointer-events-none"
+          style={{
+            backgroundColor: 'rgba(0, 0, 0, 1)',
+            opacity: dimmingOpacity,
+            transition: 'opacity 1s ease-in-out'
+          }}
+        />
+      )}
 
     </div>
   );
