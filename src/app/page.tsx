@@ -686,12 +686,8 @@ const Page = () => {
       targetTime.setHours(21, 0, 0, 0); // 9 PM GMT
       const targetTimeMs = targetTime.getTime();
       
-      // If it's already past 9 PM GMT, set to next day
+      // If it's already past 9 PM GMT, set opacity to 1 (totally black)
       if (currentTime >= targetTimeMs) {
-        targetTime.setDate(targetTime.getDate() + 1);
-        const newTargetTimeMs = targetTime.getTime();
-        
-        // If we're past 9 PM, set opacity to 1 (totally black)
         setDimmingOpacity(1);
         return;
       }
