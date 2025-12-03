@@ -659,9 +659,6 @@ const Page = () => {
   const [showHomepage, setShowHomepage] = useState(false);
   const [homepageVisible, setHomepageVisible] = useState(false);
   
-  // Dimming state - site is dark immediately
-  const dimmingOpacity = 1;
-  
   // Handle skipLoader parameter for smooth navigation from mobile pages
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -5528,15 +5525,6 @@ const Page = () => {
         featureName={comingSoonFeature}
       />
 
-      {/* Dark Overlay - Site is dimmed immediately */}
-      <div
-        className="fixed inset-0 z-[9999] pointer-events-none"
-        style={{
-          backgroundColor: 'rgba(0, 0, 0, 1)',
-          opacity: dimmingOpacity,
-          transition: 'opacity 1s ease-in-out'
-        }}
-      />
 
     </div>
   );
