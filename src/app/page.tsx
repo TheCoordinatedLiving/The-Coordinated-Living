@@ -660,7 +660,7 @@ const Page = () => {
   const [homepageVisible, setHomepageVisible] = useState(false);
   
   // Dimming state - site is dark immediately
-  const [dimmingOpacity, setDimmingOpacity] = useState(1);
+  const dimmingOpacity = 1;
   
   // Handle skipLoader parameter for smooth navigation from mobile pages
   useEffect(() => {
