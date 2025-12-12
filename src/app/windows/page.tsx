@@ -62,6 +62,7 @@ const WindowsHomeScreen = () => {
   const [isAboutMeOpen, setIsAboutMeOpen] = useState(false);
   const [isTermsOpen, setIsTermsOpen] = useState(false);
   const [lastOpenedModal, setLastOpenedModal] = useState<string | null>(null);
+  const [activeWindow, setActiveWindow] = useState<'aboutMe' | 'terms' | null>(null);
 
   const openQuestionWindow = () => {
     setIsQuestionWindowOpen(true);
@@ -94,9 +95,10 @@ const WindowsHomeScreen = () => {
       openResourcesWindow();
     }
   };
-  
+
   const handleAboutMeClick = () => {
     setIsAboutMeOpen(true);
+    setActiveWindow('aboutMe');
   };
 
   const handleCloseAboutMe = () => {
@@ -105,93 +107,106 @@ const WindowsHomeScreen = () => {
 
   return (
     <div className="windows-home-screen absolute inset-0 opacity-0">
-        {/* Clickable desktop area for deselection */}
-        <div 
-            className="absolute inset-0 z-0"
-        />
-        
-        <Image
+      {/* Clickable desktop area for deselection */}
+      <div
+        className="absolute inset-0 z-0"
+      />
+
+      <Image
         src="/windows/homewall.png"
         layout="fill"
         objectFit="cover"
         alt="Windows Home Screen Wallpaper"
-        />
+      />
 
-        {/* Desktop Icons */}
-        <div className="absolute top-5 left-5 z-10 flex flex-col space-y-4">
-            {/* About Me Icon */}
-            <div 
-                className="flex flex-col items-center space-y-2 w-24 text-center cursor-pointer p-2 rounded-md"
-                onClick={(e) => { e.stopPropagation(); handleAboutMeClick(); }}
-            >
-                <Image
-                    src="/windows/about-me.svg"
-                    width={60}
-                    height={60}
-                    alt="About Me"
-                />
-                <p className="text-white text-sm font-medium" style={{ textShadow: '1px 1px 3px rgba(0, 0, 0, 0.5)' }}>
-                    About Me
-                </p>
-            </div>
-            {/* Coordinated Living Icon */}
-            <div 
-                className="flex flex-col items-center space-y-2 w-24 text-center cursor-pointer p-2 rounded-md"
-                onClick={() => {
-                    // Create smooth zoom-out transition back to experience page
-                    const container = document.querySelector('.windows-home-screen');
-                    if (container) {
-                        gsap.to(container, {
-                            scale: 0.8,
-                            opacity: 0,
-                            duration: 1.2,
-                            ease: 'power2.inOut',
-                            onComplete: () => {
-                                // Navigate back to the experience page with coordinated.webp
-                                window.location.href = '/?fromWindows=true';
-                            }
-                        });
-                    } else {
-                        // Fallback if container not found
-                        window.location.href = '/?fromWindows=true';
-                    }
-                }}
-            >
-                <Image
-                    src="/windows/coord-logo.svg"
-                    width={60}
-                    height={60}
-                    alt="Coordinated Living"
-                />
-                <p className="text-white text-sm font-medium" style={{ textShadow: '1px 1px 3px rgba(0, 0, 0, 0.5)' }}>
-                    Home
-                </p>
-            </div>
-            
-            {/* Terms Icon */}
-            <div 
-                className="flex flex-col items-center space-y-2 w-24 text-center cursor-pointer p-2 rounded-md"
-                onClick={() => {
-                    setIsTermsOpen(true);
-                }}
-            >
-                <Image
-                    src="/terms.svg"
-                    width={60}
-                    height={60}
-                    alt="Terms"
-                />
-                <p className="text-white text-sm font-medium" style={{ textShadow: '1px 1px 3px rgba(0, 0, 0, 0.5)' }}>
-                    Terms
-                </p>
-            </div>
+      {/* Desktop Icons */}
+      <div className="absolute top-5 left-5 z-10 flex flex-col space-y-4">
+        {/* About Me Icon */}
+        <div
+          className="flex flex-col items-center space-y-2 w-24 text-center cursor-pointer p-2 rounded-md"
+          onClick={(e) => { e.stopPropagation(); handleAboutMeClick(); }}
+        >
+          <Image
+            src="/windows/about-me.svg"
+            width={60}
+            height={60}
+            alt="About Me"
+          />
+          <p className="text-white text-sm font-medium" style={{ textShadow: '1px 1px 3px rgba(0, 0, 0, 0.5)' }}>
+            About Me
+          </p>
+        </div>
+        {/* Coordinated Living Icon */}
+        <div
+          className="flex flex-col items-center space-y-2 w-24 text-center cursor-pointer p-2 rounded-md"
+          onClick={() => {
+            // Create smooth zoom-out transition back to experience page
+            const container = document.querySelector('.windows-home-screen');
+            if (container) {
+              gsap.to(container, {
+                scale: 0.8,
+                opacity: 0,
+                duration: 1.2,
+                ease: 'power2.inOut',
+                onComplete: () => {
+                  // Navigate back to the experience page with coordinated.webp
+                  window.location.href = '/?fromWindows=true';
+                }
+              });
+            } else {
+              // Fallback if container not found
+              window.location.href = '/?fromWindows=true';
+            }
+          }}
+        >
+          <Image
+            src="/windows/coord-logo.svg"
+            width={60}
+            height={60}
+            alt="Coordinated Living"
+          />
+          <p className="text-white text-sm font-medium" style={{ textShadow: '1px 1px 3px rgba(0, 0, 0, 0.5)' }}>
+            Home
+          </p>
         </div>
 
-        <GlassTaskbar onAskQuestionClick={openQuestionWindow} onResourcesClick={toggleKeep} />
-        {isQuestionWindowOpen && <AskAQuestion onClose={closeQuestionWindow} isOnTop={lastOpenedModal === 'question'} />}
-        {isKeepOpen && <GoogleKeep onClose={closeResourcesWindow} isOnTop={lastOpenedModal === 'resources'} />}
-        {isAboutMeOpen && <AboutMeWindow onClose={handleCloseAboutMe} />}
-        {isTermsOpen && <TermsWindow onClose={() => setIsTermsOpen(false)} />}
+        {/* Terms Icon */}
+        <div
+          className="flex flex-col items-center space-y-2 w-24 text-center cursor-pointer p-2 rounded-md"
+          onClick={() => {
+            setIsTermsOpen(true);
+            setActiveWindow('terms');
+          }}
+        >
+          <Image
+            src="/terms.svg"
+            width={60}
+            height={60}
+            alt="Terms"
+          />
+          <p className="text-white text-sm font-medium" style={{ textShadow: '1px 1px 3px rgba(0, 0, 0, 0.5)' }}>
+            Terms
+          </p>
+        </div>
+      </div>
+
+      <GlassTaskbar onAskQuestionClick={openQuestionWindow} onResourcesClick={toggleKeep} />
+      {isQuestionWindowOpen && <AskAQuestion onClose={closeQuestionWindow} isOnTop={lastOpenedModal === 'question'} />}
+      {isKeepOpen && <GoogleKeep onClose={closeResourcesWindow} isOnTop={lastOpenedModal === 'resources'} />}
+      {isAboutMeOpen && (
+        <AboutMeWindow
+          onClose={handleCloseAboutMe}
+          isActive={activeWindow === 'aboutMe'}
+          onFocus={() => setActiveWindow('aboutMe')}
+        />
+      )}
+      {isTermsOpen && (
+        <TermsWindow
+          onClose={() => setIsTermsOpen(false)}
+          isActive={activeWindow === 'terms'}
+          onFocus={() => setActiveWindow('terms')}
+        />
+      )}
     </div>
   );
 };
@@ -218,11 +233,11 @@ const WindowsExperiencePage = () => {
   // Fade-in effect for the whole page
   useEffect(() => {
     if (containerRef.current) {
-      gsap.fromTo(containerRef.current, 
+      gsap.fromTo(containerRef.current,
         { opacity: 0 },
-        { 
-          opacity: 1, 
-          duration: 1.0, 
+        {
+          opacity: 1,
+          duration: 1.0,
           ease: 'power2.inOut'
         }
       );
