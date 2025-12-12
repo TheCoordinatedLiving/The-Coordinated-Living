@@ -25,9 +25,10 @@ export async function sendDonationConfirmationEmail(
     // Email subject
     const subject = 'Thank You for Pouring Into My Cup - The Coordinated Living';
 
-    // Get base URL for logo (use environment variable or default)
+    // Get base URL for logo and shape (use environment variable or default)
     const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.thecoordinatedliving.com';
     const logoUrl = `${baseUrl}/email-temp-logo.png`;
+    const shapeUrl = `${baseUrl}/email-temp-shape.png`;
 
     // HTML email template - Gmail compatible with wrapper table for background color
     const htmlContent = `
@@ -45,9 +46,26 @@ export async function sendDonationConfirmationEmail(
                 <!-- Inner content table - A4-like width -->
                 <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="550" style="background-color: #5D3D6E; max-width: 550px; width: 100%;">
                   <tr>
-                    <td align="left" style="padding: 35px 35px 25px 35px; background-color: #5D3D6E;">
-                      <!-- Logo -->
-                      <img src="${logoUrl}" alt="The Coordinated Living" style="max-width: 180px; height: auto; display: block;" />
+                    <td align="left" valign="top" style="padding: 35px 35px 25px 35px; background-color: #5D3D6E;">
+                      <!-- Header row with logo and shape -->
+                      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                        <tr>
+                          <td align="left" valign="top" style="padding: 0;">
+                            <!-- Logo -->
+                            <img src="${logoUrl}" alt="The Coordinated Living" style="max-width: 180px; height: auto; display: block;" />
+                          </td>
+                          <td align="right" valign="top" style="padding: 0; width: 150px; height: 150px; overflow: hidden;">
+                            <!-- Decorative Shape - Top Right (partially visible, clipped) -->
+                            <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="250" height="250" style="margin-top: -50px; margin-right: -50px;">
+                              <tr>
+                                <td style="padding: 0;">
+                                  <img src="${shapeUrl}" alt="" style="width: 250px; height: 250px; display: block;" />
+                                </td>
+                              </tr>
+                            </table>
+                          </td>
+                        </tr>
+                      </table>
                     </td>
                   </tr>
                   <tr>
@@ -74,7 +92,7 @@ export async function sendDonationConfirmationEmail(
                           With warmth and blessings,
                         </p>
                         
-                        <p style="font-size: 16px; line-height: 1.8; margin: 0 0 30px 0; color: #ffffff; font-family: 'Brush Script MT', cursive, serif;">
+                        <p style="font-size: 20px; line-height: 1.8; margin: 0 0 30px 0; color: #ffffff; font-weight: bold;">
                           Lesley
                         </p>
                         
@@ -96,10 +114,9 @@ export async function sendDonationConfirmationEmail(
                     <td align="center" style="padding: 0 35px 35px 35px; background-color: #5D3D6E;">
                       <!-- Footer Links -->
                       <div style="text-align: center; color: #ffffff; font-size: 14px; line-height: 1.8;">
-                        <p style="margin: 0 0 5px 0; color: #ffffff;">
-                          <a href="mailto:letstalk@thecoordinatedliving.com" style="color: #ffffff; text-decoration: none;">letstalk@thecoordinatedliving.com</a>
-                        </p>
                         <p style="margin: 0; color: #ffffff;">
+                          <a href="mailto:letstalk@thecoordinatedliving.com" style="color: #ffffff; text-decoration: none;">letstalk@thecoordinatedliving.com</a>
+                          <span style="color: #ffffff; margin: 0 8px;"> </span>
                           <a href="https://www.thecoordinatedliving.com" style="color: #ffffff; text-decoration: none;">www.thecoordinatedliving.com</a>
                         </p>
                       </div>
