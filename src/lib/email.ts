@@ -25,7 +25,11 @@ export async function sendDonationConfirmationEmail(
     // Email subject
     const subject = 'Thank You for Pouring Into My Cup - The Coordinated Living';
 
-    // HTML email template
+    // Get base URL for logo (use environment variable or default)
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.thecoordinatedliving.com';
+    const logoUrl = `${baseUrl}/email-temp-logo.png`;
+
+    // HTML email template - Gmail compatible with wrapper table for background color
     const htmlContent = `
       <!DOCTYPE html>
       <html>
@@ -33,52 +37,78 @@ export async function sendDonationConfirmationEmail(
           <meta charset="utf-8">
           <meta name="viewport" content="width=device-width, initial-scale=1.0">
         </head>
-        <body style="font-family: Arial, sans-serif; line-height: 1.8; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
-          <div style="background-color: #ffffff; padding: 40px; border: 1px solid #e0e0e0; border-radius: 10px;">
-            <p style="font-size: 16px; margin-bottom: 20px;">
-              Hello there,
-            </p>
-            
-            <p style="font-size: 16px; margin-bottom: 20px;">
-              I wanted to send this quick, personal note because I am grateful for your decision to pour into my cup.
-            </p>
-            
-            <p style="font-size: 16px; margin-bottom: 20px;">
-              Your support is a blessing that sustains The Coordinated Living. More than just the funds, it's what keeps this platform up and active. It enables me to keep sharing the guides, posts, and personal insights designed to help others find peace and confidence in their walk with the Lord.
-            </p>
-            
-            <p style="font-size: 16px; margin-bottom: 20px;">
-              Thank you for joining me on this journey. I look forward to serving you with meaningful resources in the weeks ahead, and I am praying for you.
-            </p>
-            
-            <p style="font-size: 16px; margin-top: 30px; margin-bottom: 10px;">
-              With warmth and blessings,
-            </p>
-            
-            <p style="font-size: 16px; margin-bottom: 5px;">
-              <strong>Lesley</strong>
-            </p>
-            
-            <p style="font-size: 16px; margin-bottom: 30px;">
-              <a href="https://www.thecoordinatedliving.com/" style="color: #5C3262; text-decoration: none;">The Coordinated Living</a>
-            </p>
-            
-            ${transactionReference ? `
-            <div style="background-color: #f8f9fa; padding: 15px; border-radius: 8px; margin-top: 30px; border-left: 4px solid #5C3262;">
-              <p style="margin: 0; font-size: 12px; color: #666;">
-                <strong>Transaction Reference:</strong><br>
-                <span style="font-family: monospace; color: #333; font-size: 11px;">${transactionReference}</span>
-              </p>
-            </div>
-            ` : ''}
-          </div>
-          
-          <div style="text-align: center; margin-top: 20px; padding: 20px; color: #666; font-size: 12px;">
-            <p style="margin: 0;">
-              This is an automated confirmation email. Please do not reply to this message.<br>
-              For inquiries, contact us at <a href="mailto:letstalk@thecoordinatedliving.com" style="color: #5C3262;">letstalk@thecoordinatedliving.com</a>
-            </p>
-          </div>
+        <body style="margin: 0; padding: 0; font-family: Arial, sans-serif;">
+          <!-- Outer wrapper table for Gmail compatibility -->
+          <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #5D3D6E; margin: 0; padding: 0;">
+            <tr>
+              <td align="center" style="padding: 0;">
+                <!-- Inner content table -->
+                <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" style="background-color: #5D3D6E; max-width: 600px; width: 100%;">
+                  <tr>
+                    <td align="left" style="padding: 40px 40px 30px 40px; background-color: #5D3D6E;">
+                      <!-- Logo -->
+                      <img src="${logoUrl}" alt="The Coordinated Living" style="max-width: 200px; height: auto; display: block;" />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td align="left" style="padding: 0 40px 30px 40px; background-color: #5D3D6E;">
+                      <!-- Main Content -->
+                      <div style="color: #ffffff; text-align: left;">
+                        <p style="font-size: 16px; line-height: 1.8; margin: 0 0 20px 0; color: #ffffff;">
+                          Hello there,
+                        </p>
+                        
+                        <p style="font-size: 16px; line-height: 1.8; margin: 0 0 20px 0; color: #ffffff;">
+                          I wanted to send this quick, personal note because I am grateful for your decision to pour into my cup.
+                        </p>
+                        
+                        <p style="font-size: 16px; line-height: 1.8; margin: 0 0 20px 0; color: #ffffff;">
+                          Your support is a blessing that sustains The Coordinated Living. More than just the funds, it's what keeps this platform up and active. It enables me to keep sharing the guides, posts, and personal insights designed to help others find peace and confidence in their walk with the Lord.
+                        </p>
+                        
+                        <p style="font-size: 16px; line-height: 1.8; margin: 0 0 20px 0; color: #ffffff;">
+                          Thank you for joining me on this journey. I look forward to serving you with meaningful resources in the weeks ahead, and I am praying for you.
+                        </p>
+                        
+                        <p style="font-size: 16px; line-height: 1.8; margin: 30px 0 10px 0; color: #ffffff;">
+                          With warmth and blessings,
+                        </p>
+                        
+                        <p style="font-size: 16px; line-height: 1.8; margin: 0 0 30px 0; color: #ffffff; font-family: 'Brush Script MT', cursive, serif;">
+                          Lesley
+                        </p>
+                        
+                        ${transactionReference ? `
+                        <p style="font-size: 14px; line-height: 1.8; margin: 30px 0 0 0; color: #ffffff; font-weight: bold;">
+                          Transaction Reference: ${transactionReference}
+                        </p>
+                        ` : ''}
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td align="center" style="padding: 30px 40px 20px 40px; background-color: #5D3D6E;">
+                      <!-- White Line Separator -->
+                      <div style="border-top: 1px solid #ffffff; width: 100%; margin: 0 auto;"></div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td align="center" style="padding: 0 40px 40px 40px; background-color: #5D3D6E;">
+                      <!-- Footer Links -->
+                      <div style="text-align: center; color: #ffffff; font-size: 14px; line-height: 1.8;">
+                        <p style="margin: 0 0 5px 0; color: #ffffff;">
+                          <a href="mailto:letstalk@thecoordinatedliving.com" style="color: #ffffff; text-decoration: none;">letstalk@thecoordinatedliving.com</a>
+                        </p>
+                        <p style="margin: 0; color: #ffffff;">
+                          <a href="https://www.thecoordinatedliving.com" style="color: #ffffff; text-decoration: none;">www.thecoordinatedliving.com</a>
+                        </p>
+                      </div>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
         </body>
       </html>
     `;
