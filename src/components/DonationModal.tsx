@@ -48,8 +48,8 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
         throw new Error('Please enter a valid amount');
       }
 
-      if (donationAmount < 1) {
-        throw new Error('Minimum donation amount is 1.00 GHS');
+      if (donationAmount < 10) {
+        throw new Error('Minimum donation amount is 10.00 GHS');
       }
 
       // Email or phone validation
@@ -246,16 +246,16 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
                 onChange={(e) => setAmount(e.target.value)}
                 className="w-full px-4 py-3 rounded-lg border-2 border-white text-white placeholder-gray-300 focus:ring-2 focus:ring-white focus:outline-none bg-transparent"
                 placeholder="Enter your preferred amount"
-                min="1"
+                min="10"
                 step="0.01"
                 required
               />
             </div>
             
             {/* Amount validation message */}
-            {amount && parseFloat(amount) < 1 && (
+            {amount && parseFloat(amount) < 10 && (
               <p className="text-red-300 text-sm mt-2">
-                Please make donation 1.00 GHS and above
+                Please make donation 10.00 GHS and above
               </p>
             )}
           </div>

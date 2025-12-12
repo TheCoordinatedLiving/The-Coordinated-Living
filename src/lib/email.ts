@@ -42,16 +42,16 @@ export async function sendDonationConfirmationEmail(
           <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #5D3D6E; margin: 0; padding: 0;">
             <tr>
               <td align="center" style="padding: 0;">
-                <!-- Inner content table -->
-                <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" style="background-color: #5D3D6E; max-width: 600px; width: 100%;">
+                <!-- Inner content table - A4-like width -->
+                <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="550" style="background-color: #5D3D6E; max-width: 550px; width: 100%;">
                   <tr>
-                    <td align="left" style="padding: 40px 40px 30px 40px; background-color: #5D3D6E;">
+                    <td align="left" style="padding: 35px 35px 25px 35px; background-color: #5D3D6E;">
                       <!-- Logo -->
-                      <img src="${logoUrl}" alt="The Coordinated Living" style="max-width: 200px; height: auto; display: block;" />
+                      <img src="${logoUrl}" alt="The Coordinated Living" style="max-width: 180px; height: auto; display: block;" />
                     </td>
                   </tr>
                   <tr>
-                    <td align="left" style="padding: 0 40px 30px 40px; background-color: #5D3D6E;">
+                    <td align="left" style="padding: 0 35px 25px 35px; background-color: #5D3D6E;">
                       <!-- Main Content -->
                       <div style="color: #ffffff; text-align: left;">
                         <p style="font-size: 16px; line-height: 1.8; margin: 0 0 20px 0; color: #ffffff;">
@@ -87,13 +87,13 @@ export async function sendDonationConfirmationEmail(
                     </td>
                   </tr>
                   <tr>
-                    <td align="center" style="padding: 30px 40px 20px 40px; background-color: #5D3D6E;">
+                    <td align="center" style="padding: 25px 35px 15px 35px; background-color: #5D3D6E;">
                       <!-- White Line Separator -->
                       <div style="border-top: 1px solid #ffffff; width: 100%; margin: 0 auto;"></div>
                     </td>
                   </tr>
                   <tr>
-                    <td align="center" style="padding: 0 40px 40px 40px; background-color: #5D3D6E;">
+                    <td align="center" style="padding: 0 35px 35px 35px; background-color: #5D3D6E;">
                       <!-- Footer Links -->
                       <div style="text-align: center; color: #ffffff; font-size: 14px; line-height: 1.8;">
                         <p style="margin: 0 0 5px 0; color: #ffffff;">
