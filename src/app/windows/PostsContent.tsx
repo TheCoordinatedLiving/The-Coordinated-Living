@@ -280,25 +280,53 @@ const PostsContent = () => {
   }, []);
 
   // Filter posts based on search query
-  const filteredPosts = posts.filter(post => {
-    const titleMatch = post.title.toLowerCase().includes(searchQuery.toLowerCase());
-    
-    // Search in the new content field first, with fallback to legacy fields
-    if (post.content) {
-      const contentMatch = post.content.toLowerCase().includes(searchQuery.toLowerCase());
-      return titleMatch || contentMatch;
+  const filteredPosts = (() => {
+    // If search query is empty, show all posts
+    if (!searchQuery.trim()) {
+      return posts.map((post, index) => ({
+        ...post,
+        x: 20 + (index % 3) * 280,
+        y: 20 + Math.floor(index / 3) * 200
+      }));
     }
     
-    // Fallback to legacy fields if content is not available
-    const leftContentText = (post.leftContent || '').toLowerCase();
-    const rightContentText = (post.rightContent || '').toLowerCase();
-    const bottomContentText = (post.bottomRightContent || '').toLowerCase();
-    
-    return titleMatch || 
-           leftContentText.includes(searchQuery.toLowerCase()) ||
-           rightContentText.includes(searchQuery.toLowerCase()) ||
-           bottomContentText.includes(searchQuery.toLowerCase());
-  });
+    // Filter posts based on search query
+    const query = searchQuery.toLowerCase().trim();
+    return posts.filter(post => {
+      const titleMatch = post.title.toLowerCase().includes(query);
+      
+      // Search in the new content field first, with fallback to legacy fields
+      if (post.content) {
+        const contentMatch = post.content.toLowerCase().includes(query);
+        return titleMatch || contentMatch;
+      }
+      
+      // Fallback to legacy fields if content is not available
+      const leftContentText = (post.leftContent || '').toLowerCase();
+      const rightContentText = (post.rightContent || '').toLowerCase();
+      const bottomContentText = (post.bottomRightContent || '').toLowerCase();
+      
+      return titleMatch || 
+             leftContentText.includes(query) ||
+             rightContentText.includes(query) ||
+             bottomContentText.includes(query);
+    }).map((post, index) => ({
+      ...post,
+      // Reposition filtered posts to arrange them properly from top
+      x: 20 + (index % 3) * 280,
+      y: 20 + Math.floor(index / 3) * 200
+    }));
+  })();
+
+  // Scroll to top when search query changes
+  const containerRef = useRef<HTMLDivElement>(null);
+  
+  useEffect(() => {
+    if (containerRef.current) {
+      // Scroll to top whenever search query changes (including when cleared)
+      containerRef.current.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }, [searchQuery]);
 
   const handleCardClick = (post: PostWithPosition) => {
     const postIndex = filteredPosts.findIndex(p => p.id === post.id);
@@ -329,7 +357,7 @@ const PostsContent = () => {
 
 
   return (
-    <div className="p-8 w-full h-full overflow-y-auto bg-gray-50">
+    <div ref={containerRef} className="p-8 w-full h-full overflow-y-auto bg-gray-50">
       {/* Header Section */}
       <div className="flex justify-between items-start mb-8">
         <div className="max-w-xl">

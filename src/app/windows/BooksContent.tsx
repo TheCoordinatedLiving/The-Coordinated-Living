@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { getAllGuides, Guide } from '../../lib/guides';
 
@@ -81,8 +81,17 @@ const BooksContent = () => {
     book.description.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  // Scroll to top when search query changes
+  const containerRef = useRef<HTMLDivElement>(null);
+  
+  useEffect(() => {
+    if (containerRef.current && searchQuery) {
+      containerRef.current.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }, [searchQuery]);
+
   return (
-    <div className="p-8 w-full h-full overflow-y-auto bg-white">
+    <div ref={containerRef} className="p-8 w-full h-full overflow-y-auto bg-white">
       {/* Header Section */}
       <div className="flex justify-between items-start mb-12">
         <div className="max-w-xl">
