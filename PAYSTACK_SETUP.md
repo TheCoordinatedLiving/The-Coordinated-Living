@@ -4,7 +4,8 @@ This document outlines the setup required for the Paystack payment integration.
 
 ## Environment Variables
 
-Add the following environment variables to your `.env.local` file:
+All Paystack-related environment variables are already configured in the **Vercel project → Settings → Environment Variables** for the live site.  
+For **local development**, add the same variables to your `.env.local` file:
 
 ```env
 # Paystack Configuration
