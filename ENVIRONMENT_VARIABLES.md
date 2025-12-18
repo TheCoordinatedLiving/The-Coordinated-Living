@@ -4,7 +4,8 @@ This file contains the environment variables needed for the Coordinated Living a
 
 ## Required Environment Variables
 
-Create a `.env.local` file in your project root with the following variables:
+All of these variables are already configured in the **Vercel project → Settings → Environment Variables** for production.  
+For **local development**, create a `.env.local` file in your project root with the same variables:
 
 ```env
 # Paystack Configuration (Live Keys)
@@ -24,15 +25,12 @@ RESEND_API_KEY=re_your_resend_api_key_here
 AIRTABLE_API_KEY=your_airtable_api_key_here
 AIRTABLE_BASE_ID=your_airtable_base_id_here
 
-# OneSignal Push Notifications Configuration
-ONESIGNAL_REST_API_KEY=your_onesignal_rest_api_key_here
-ONESIGNAL_APP_ID=9e0ff598-168f-4e83-979f-c6e19991d297
-```
 
 ## Important Notes
 
 - **Never commit your `.env.local` file to version control**
 - The `.env.local` file should be added to your `.gitignore`
+- Treat Vercel’s Environment Variables UI as the **source of truth** for live keys – keep your local `.env.local` in sync with what’s set in Vercel
 - **Replace the placeholder keys with your actual live Paystack keys from your Paystack dashboard**
 - Update the WhatsApp channel link with your actual channel URL
 - Add any additional environment variables as needed for your specific setup
