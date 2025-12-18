@@ -15,33 +15,78 @@ This guide will help you set up Airtable as a Content Management System (CMS) fo
 ## Step 2: Set Up Tables
 
 ### Posts Table
-Create a table called "Posts" with the following fields:
+Create a table called **"Posts"** with the following fields (names must match exactly, including capitalization and spaces):
 
-| Field Name | Field Type | Description |
-|------------|------------|-------------|
-| `Title` | Single line text | Post title |
-| `Content` | Long text | Main post content |
-| `Image 1` | Attachment | First image for the post |
-| `Image 2` | Attachment | Second image for the post |
-| `Published` | Checkbox | Whether the post is published (default: checked) |
-| `Order` | Number | Display order (1, 2, 3, etc.) |
-| `Created Date` | Date | When the post should be published (can be future date for scheduling) |
-| `Left Content` | Long text | Left column content (legacy) |
-| `Right Content` | Long text | Right column content (legacy) |
-| `Bottom Right Content` | Long text | Bottom right content (legacy) |
+| Field Name              | Field Type  | Description |
+|-------------------------|------------|-------------|
+| `Title`                 | Single line text | Post title |
+| `Content`               | Long text  | Main post content (right column) |
+| `Image 1`               | Attachment | First image for the post |
+| `Image 2`               | Attachment | Second image for the post |
+| `Published`             | Checkbox   | Whether the post is published (default: checked) |
+| `Order`                 | Number     | Display order (1, 2, 3, etc.) – used as a secondary sort |
+| `Created Date`          | Date       | When the post should be published (can be a future date for scheduling) |
+| `Left Content`          | Long text  | Left column content (legacy) |
+| `Right Content`         | Long text  | Right column content (legacy) |
+| `Bottom Right Content`  | Long text  | Bottom right content (legacy) |
 
 ### Guides Table
-Create a table called "Guides" with the following fields:
+Create a table called **"Guides"** with these fields (matching the code in `lib/airtable.ts`):
 
-| Field Name | Field Type | Description |
-|------------|------------|-------------|
-| `title` | Single line text | Guide title |
-| `description` | Long text | Guide description |
-| `content` | Long text | Full guide content (optional) |
-| `downloadUrl` | URL | Link to downloadable file (optional) |
-| `published` | Checkbox | Whether the guide is published (default: checked) |
-| `order` | Number | Display order (1, 2, 3, etc.) |
-| `createdDate` | Date | When the guide was created |
+| Field Name      | Field Type  | Description |
+|-----------------|------------|-------------|
+| `Title`         | Single line text | Guide title |
+| `Description`   | Long text  | Guide description |
+| `Download URL`  | URL        | Link to downloadable file (optional) |
+| `Book Cover`    | Attachment | Guide/book cover image (optional) |
+| `Published`     | Checkbox   | Whether the guide is published (default: checked) |
+| `Order`         | Number     | Display order (1, 2, 3, etc.) |
+| `Created Date`  | Date       | When the guide was created |
+
+### Subscribers Table
+Create a table called **"Subscribers"**. These field names are what the code expects when creating or reading subscribers:
+
+| Field Name                               | Field Type         | Description |
+|------------------------------------------|--------------------|-------------|
+| `Name`                                   | Single line text   | Subscriber’s name (comes from “Full Name” in forms) |
+| `Email`                                  | Email              | Subscriber’s email |
+| `WhatsApp Number`                        | Single line text   | Subscriber’s WhatsApp / phone number (from “Phone Number”) |
+| `Whatsapp Status`                        | Single select / text | Status of adding them to WhatsApp (e.g. “Yet to be added”) |
+| `Subscription Status`                    | Formula            | Read‑only status based on linked subscriptions (optional) |
+| `Expiration Date Rollup (from Subscriptions)` | Rollup      | Read‑only rollup of latest expiration date from `Subscriptions` (optional) |
+| `Created At`                             | Created time       | Auto‑set by Airtable (do not set from code) |
+| `Last modified`                          | Last modified time | Auto‑set by Airtable (do not set from code) |
+| `Subscriptions`                          | Link to another record (Subscriptions) | Links this subscriber to records in the **Subscriptions** table |
+
+> The API accepts friendly input fields like `Full Name` and `Phone Number`, but it maps them to the Airtable fields above (`Name`, `WhatsApp Number`, etc.).
+
+### Subscriptions Table (recommended)
+
+While most of the logic for syncing subscriptions lives elsewhere, the code expects a **"Subscriptions"** table with these fields:
+
+| Field Name            | Field Type         | Description |
+|-----------------------|--------------------|-------------|
+| `Name`                | Single line text   | Subscription record name/label |
+| `Subscriber`          | Link to another record (Subscribers) | The related subscriber |
+| `Email`               | Email              | Subscriber email (duplicated for convenience) |
+| `Whatsapp Number`     | Single line text   | Subscriber WhatsApp number |
+| `Subscription Package`| Single select      | Package name (e.g. “Monthly”, “Quarterly”) |
+| `Amount Paid`         | Number             | Amount paid for this subscription |
+| `Expiration Date`     | Date               | When this subscription expires |
+| `Created At`          | Created time       | Auto‑set by Airtable |
+
+This table powers rollups and formula fields used in `Subscribers`.
+
+### Donations Table
+
+Create a table called **"Donations"**. The donation sync code (`createOrUpdateDonation` in `lib/airtable.ts`) expects these field names:
+
+| Field Name     | Field Type  | Description |
+|----------------|------------|-------------|
+| `Email`        | Email      | Donor’s email address (optional) |
+| `Phone number` | Single line text | Donor’s phone number (note: lowercase **n** in “number”) |
+| `Amount`       | Number     | Donation amount (required) |
+| `Payment Date` | Date       | Date of the donation / payment (required; defaults to “today” if omitted) |
 
 ## Step 3: Get Your API Credentials
 
