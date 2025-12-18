@@ -1,76 +1,75 @@
-# Email Setup for Ask Me A Question Feature
+# Email Setup (Resend)
+
+This project now uses **Resend** for all emails (Ask Me A Question + donation confirmations).
 
 ## ✅ What's Already Done
 
-1. **Nodemailer is installed** - Already in your `package.json`
-2. **API Route created** - `src/app/api/send-email/route.ts` is ready
-3. **Frontend integration** - Your `AskAQuestion.tsx` component is already configured to call the API
+1. **Resend is installed** – already in `package.json`
+2. **Ask Me A Question API** – `src/app/api/send-email/route.ts` sends messages via Resend
+3. **Donation confirmation email** – `src/lib/email.ts` (`sendDonationConfirmationEmail`) sends thank‑you emails via Resend
+4. **Frontend wiring** – the Ask A Question window already calls the `/api/send-email` route
 
 ## 🔧 Setup Steps
 
-### Step 1: Create Environment Variables
+### Step 1: Environment Variables
 
-Create a `.env.local` file in your project root with these credentials:
+Create (or update) `.env.local` in the project root:
 
 ```env
-EMAIL_USER=ohenegyan159@gmail.com
-EMAIL_PASS=gwev nzah mjec ofym
+RESEND_API_KEY=your_resend_api_key_here
+NEXT_PUBLIC_SITE_URL=https://www.thecoordinatedliving.com
 ```
 
-### Step 2: Gmail App Password Setup
+- **RESEND_API_KEY**: from your Resend project (Dashboard → API keys)
+- **NEXT_PUBLIC_SITE_URL**: used to build the logo URL in the donation email (`/email-temp-logo.png`)
 
-The `EMAIL_PASS` should be an **App Password**, not your regular Gmail password:
+### Step 2: Configure Resend Sender
 
-1. Go to your Google Account settings
-2. Enable 2-Factor Authentication if not already enabled
-3. Go to Security → App passwords
-4. Generate a new app password for "Mail"
-5. Use that 16-character password as your `EMAIL_PASS`
+In the Resend dashboard:
 
-### Step 3: Test the Email Functionality
+1. Add and verify the domain you want to send from (e.g. `thecoordinatedliving.com`)
+2. Add/verify the sender address `letstalk@thecoordinatedliving.com`
+3. Make sure this address is allowed to send in your Resend project
 
-1. Start your development server: `npm run dev`
-2. Navigate to the "Ask Me A Question" window
-3. Fill in the form and click "Send"
-4. Check your email at `letstalk@thecoordinatedliving.com`
+The code sends from:
 
-## 📧 How It Works
+- Ask Me A Question: `from: 'letstalk@thecoordinatedliving.com'`
+- Donation confirmation: `from: 'The Coordinated Living <letstalk@thecoordinatedliving.com>'`
 
-- **From**: Users fill out the form in the Gmail interface
-- **To**: All emails are sent to `letstalk@thecoordinatedliving.com`
-- **Subject**: Uses the subject line from the form
-- **Message**: Includes the user's email and message content
-- **Format**: Sends both plain text and HTML versions
+### Step 3: Test “Ask Me A Question”
 
-## 🔒 Security Notes
+1. Run the dev server: `npm run dev`
+2. Open the **Ask Me A Question** window
+3. Fill in your email, subject, and message
+4. Submit the form
+5. Check `letstalk@thecoordinatedliving.com` – you should see the forwarded message (reply‑to set to the user’s email)
 
-- The `.env.local` file is already in your `.gitignore`
-- App passwords are more secure than regular passwords
-- The API validates all required fields before sending
+### Step 4: Test Donation Confirmation Email
 
-## 🐛 Troubleshooting
+1. With `RESEND_API_KEY` configured, make a **test donation** through the site
+2. After a successful transaction, `sendDonationConfirmationEmail` will:
+   - Send a thank‑you email to the donor’s email address
+   - Include a warm message from Lesley
+   - Optionally include the **transaction reference** when available
 
-If emails aren't sending:
+## 📧 What Gets Sent
 
-1. Check that `.env.local` exists and has correct credentials
-2. Verify the app password is correct
-3. Check the browser console for any errors
-4. Check the terminal/server logs for API errors
+- **Ask Me A Question**
+  - **To**: `letstalk@thecoordinatedliving.com`
+  - **Reply‑To**: user’s email
+  - **Subject**: user’s subject (or `"New Message from Ask Me A Question"`)
+  - **Body**: includes user email, subject, and formatted message
 
-## 📱 Email Preview
+- **Donation Confirmation**
+  - **To**: donor’s email
+  - **Subject**: “Thank You for Pouring Into My Cup - The Coordinated Living”
+  - **HTML**: branded purple template with logo and message from Lesley
+  - **Text**: plain‑text fallback with the same message
 
-The emails you'll receive will look like this:
+## 🔒 Security & Troubleshooting
 
-```
-Subject: [User's Subject]
-
-New message from Ask Me A Question:
-
-From: user@example.com
-Subject: [User's Subject]
-Message:
-[User's message content]
-
----
-This message was sent from the Coordinated Living website.
-``` 
+- **Never commit** `.env.local` to Git
+- If emails fail:
+  - Confirm `RESEND_API_KEY` is set and valid
+  - Check that `letstalk@thecoordinatedliving.com` is a verified sender in Resend
+  - Look at the browser console and server logs for the `/api/send-email` and donation flows
