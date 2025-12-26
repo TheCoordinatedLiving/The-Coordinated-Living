@@ -246,6 +246,11 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Log which key type is being used (for debugging - first 8 chars only for security)
+    const keyType = paystackSecretKey.startsWith('sk_live_') ? 'LIVE' : 
+                    paystackSecretKey.startsWith('sk_test_') ? 'TEST' : 'UNKNOWN';
+    console.log(`[Paystack Webhook] Using ${keyType} key (${paystackSecretKey.substring(0, 8)}...)`);
+
     // Verify the signature
     const hash = crypto
       .createHmac('sha512', paystackSecretKey)

@@ -25,10 +25,6 @@ RESEND_API_KEY=re_your_resend_api_key_here
 AIRTABLE_API_KEY=your_airtable_api_key_here
 AIRTABLE_BASE_ID=your_airtable_base_id_here
 
-# OneSignal Push Notifications Configuration
-ONESIGNAL_REST_API_KEY=your_onesignal_rest_api_key_here
-ONESIGNAL_APP_ID=9e0ff598-168f-4e83-979f-c6e19991d297
-```
 
 ## Important Notes
 

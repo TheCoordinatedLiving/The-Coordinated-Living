@@ -73,8 +73,6 @@ export default function JoinChannelPage() {
   //   setShowMobileMoneyModal(true);
   // };
 
-// const paystackSecretKey = process.env.PAYSTACK_SECRET_KEY  || 'sk_test_e85988fa08e6452ebc108c7cf0f8aef6f206ca51';
-
   const handleEmailSubmit = async (email: string, phoneNumber: string, fullName: string) => {
     try {
       // Call our API endpoint to initialize Paystack subscription

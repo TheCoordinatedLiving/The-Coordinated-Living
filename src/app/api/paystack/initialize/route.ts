@@ -51,8 +51,8 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    // Get Paystack secret key from environment variables or use test key
-    const paystackSecretKey = process.env.PAYSTACK_SECRET_KEY ;
+    // Get Paystack secret key from environment variables
+    const paystackSecretKey = process.env.PAYSTACK_SECRET_KEY;
     
     if (!paystackSecretKey) {
       console.error('PAYSTACK_SECRET_KEY is not set in environment variables');
@@ -61,6 +61,11 @@ export async function POST(request: NextRequest) {
         { status: 500 }
       );
     }
+
+    // Log which key type is being used (for debugging - first 8 chars only for security)
+    const keyType = paystackSecretKey.startsWith('sk_live_') ? 'LIVE' : 
+                    paystackSecretKey.startsWith('sk_test_') ? 'TEST' : 'UNKNOWN';
+    console.log(`[Paystack Initialize] Using ${keyType} key (${paystackSecretKey.substring(0, 8)}...)`);
 
     // Initialize Paystack transaction
     const callbackUrl = type === 'donation' 
